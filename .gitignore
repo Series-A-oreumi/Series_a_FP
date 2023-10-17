@@ -3,8 +3,8 @@ django_env
 .vscode
 db_password.txt
 *.json
-secrets
-secrets.json
+secret
+secret.json
 
 # Django #
 *.log
