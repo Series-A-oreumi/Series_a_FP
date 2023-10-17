@@ -1,10 +1,10 @@
 # add
-.DS_Store
 django_env
 .vscode
 db_password.txt
 *.json
 secrets
+secrets.json
 
 # Django #
 *.log
@@ -120,5 +120,3 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
-
-secrets.py
