@@ -57,8 +57,17 @@ class Comment(models.Model):
 #         comment = kwargs['instance']
 #         post = comment.post
 #         content = f'{post.title}에 댓글을 남겼습니다.'
-        
-#         noti = Notification.objects.create(sender=comment.writer,receiver=post.writer,content=content)
+
+#         # noti = Notification.objects.create(sender=comment.writer,receiver=post.writer,content=content)
+#         if comment.parent_comment is None:
+#             noti = Notification.objects.create(
+#                 sender=comment.writer, receiver=post.writer, content=content)
+#         else:
+#             parent_comment = comment.parent_comment
+#             noti_content = f'{parent_comment.content}에 대댓글을 달았습니다.'
+#             noti = Notification.objects.create(
+#                 sender=comment.writer, receiver=parent_comment.writer, content=noti_content)
+
 
 # post_save.connect(comment_action, sender=Comment)
 		

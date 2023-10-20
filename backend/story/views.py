@@ -54,7 +54,7 @@ class StoryPost(APIView):
             response_data = {
                 'id': post.id,
                 'author': post.author.username,
-                'images': post.images.url,  # 이미지 파일 URL
+                'images': post.images,  # 이미지 파일 URL
                 'title': post.title,
                 'content': post.content,
                 'hashtags': [hashtag.name for hashtag in post.hashtags.all()]  # 해시태그 목록
