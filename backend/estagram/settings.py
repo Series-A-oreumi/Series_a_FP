@@ -53,7 +53,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', # <- 가능한 높게 위치시켜야 
+    'corsheaders.middleware.CorsMiddleware',
+
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -63,7 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True # <- 모든 호스트 허용
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'estagram.urls'
 

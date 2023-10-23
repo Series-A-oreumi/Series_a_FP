@@ -16,7 +16,7 @@ class LoginSerializer(serializers.ModelSerializer):
         password = attrs.get("password")
 
         if email and password:
-            user = User.objects.filter(email=email).first()
+            user = UserProfile.objects.filter(email=email).first()
             if user:
                 if user.password == password:
                     return user
@@ -25,7 +25,7 @@ class LoginSerializer(serializers.ModelSerializer):
             else:
                 raise serializers.ValidationError("User does not exist")
     class Meta:
-        model = User
+        model = UserProfile
         fields = ["email", "password"]
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -45,7 +45,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop("password2")
-        user = UserProfile.objects.create(user=self.context['request'].user, **validated_data)
+        user = UserProfile.objects.create(**validated_data)
         return user
 
     def validate(self, attrs):
