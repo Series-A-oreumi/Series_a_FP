@@ -5,6 +5,7 @@ db_password.txt
 *.json
 secret
 secret.json
+secrets
 
 # Django #
 *.log

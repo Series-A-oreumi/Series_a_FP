@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <title>Register</title>
+</head>
+
+<body>
+    <div class="register-container">
+        <div class="square-box margin">
+            <span class="register-logo"><img src="../imgs/user/Estagram.png"></span>
+            <div class="register-text">빠르고 쉽게 가입할 수 있습니다.</div>
+            <form class="login-form" method="POST" id="register-form">
+                <input type="email" name="email" placeholder="이메일" class="login-input" id="email">
+                <input type="password" name="password" placeholder="비밀번호" class="login-input" id="password">
+                <input type="password" name="password2" placeholder="비밀번호 확인" class="login-input" id="password2">
+                <input type="text" name="username" placeholder="이름" class="login-input" id="username">
+                <input type="text" name="nickname" placeholder="닉네임" class="login-input" id="nickname">
+                <select name="bootcamp" class="login-input" id="bootcamp">
+                    <option selected disabled>부트캠프 선택</option>
+                    <option value="백엔드 1기">백엔드 오르미 1기</option>
+                    <option value="백엔드 2기">백엔드 오르미 2기</option>
+                    <option value="백엔드 3기">백엔드 오르미 3기</option>
+                    <option value="AI 1기">AI WASSUP 1기</option>
+                </select>
+                <button type="submit" class="login-button">가입하기</button>
+            </form>
+            <div class="login-reco">
+                <p>계정이 있으신가요?<a href="login.html">로그인</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../js/register.js"></script>
+</body>
+
+</html>
