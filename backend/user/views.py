@@ -14,6 +14,15 @@ from rest_framework.authtoken.models import Token
 
 from rest_framework.authtoken.models import Token
 
+class UserProfileView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserProfileSerializer
+
+    queryset = UserProfile.objects.all()
+
+    def get_object(self):
+        return self.request.user
+    
 class LoginView(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
@@ -40,7 +49,6 @@ class RegisterView(APIView):
     serializer_class = RegistrationSerializer
 
     def post(self, request):
-        print(request.data)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
