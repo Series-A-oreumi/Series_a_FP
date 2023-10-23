@@ -2,8 +2,10 @@
 const toggleBtns = document.querySelectorAll('.toggle-btn');
 const toggleContainers = document.querySelectorAll('.toggle-container');
 
+
 toggleBtns.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (event) => {
+        event.stopPropagation();
         toggleContainers.forEach((container) => {
             container.classList.remove('active');
         });
@@ -11,6 +13,13 @@ toggleBtns.forEach((btn, index) => {
         toggleContainers[index].classList.add('active');
     });
 });
+
+document.addEventListener('click', () => {
+    toggleContainers.forEach((container) => {
+        container.classList.remove('active');
+    });
+});
+
 
 
 // api
