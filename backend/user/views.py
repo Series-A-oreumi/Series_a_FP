@@ -16,7 +16,7 @@ class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
 
     def get_token(self, obj):
-        user = User.objects.filter(email=obj.get("email")).first()
+        user = UserProfile.objects.filter(email=obj.get("email")).first()
         return user.token()
 
     def post(self, request):
@@ -36,6 +36,7 @@ class RegisterView(APIView):
     serializer_class = RegistrationSerializer
 
     def post(self, request):
+        print(request.data)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
