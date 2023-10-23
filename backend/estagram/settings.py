@@ -48,7 +48,6 @@ INSTALLED_APPS = [
      # framework
     'rest_framework',
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt',
 
     # app
     'user',
