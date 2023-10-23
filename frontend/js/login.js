@@ -12,19 +12,30 @@ document.addEventListener('DOMContentLoaded', function () {
             password: password,
         };
 
-        const apiUrl = 'http://localhost:8000/api/login/';
+        const apiUrl = 'http://localhost:8000/api/login';
 
-        axios.post(apiUrl, data)
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
             .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('로그인 실패');
+                }
+            })
+            .then(data => {
+                const token = data.token;
+                localStorage.setItem('token', token);
                 alert('로그인 성공');
-                window.location.href = '/home.html';
+                // window.location.href = '/home.html';
             })
             .catch(error => {
-                if (error.response && error.response.data) {
-                    alert('로그인 실패: ' + error.response.data);
-                } else {
-                    alert('로그인 실패: 알 수 없는 오류');
-                }
+                alert('로그인 실패: ' + error.message);
             });
     });
 });
