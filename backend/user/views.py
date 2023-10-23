@@ -9,8 +9,20 @@ from rest_framework.generics import GenericAPIView, RetrieveAPIView
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 
 
+from rest_framework.authtoken.models import Token
+
+class UserProfileView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserProfileSerializer
+
+    queryset = UserProfile.objects.all()
+
+    def get_object(self):
+        return self.request.user
+    
 class LoginView(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
@@ -24,6 +36,7 @@ class LoginView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         return Response(self.get_token(serializer.data), status=status.HTTP_200_OK)
 
+
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -36,14 +49,9 @@ class RegisterView(APIView):
     serializer_class = RegistrationSerializer
 
     def post(self, request):
-        print(request.data)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
 
-
-# 테스트용
-def home(request):
-    return render(request, 'home.html')
