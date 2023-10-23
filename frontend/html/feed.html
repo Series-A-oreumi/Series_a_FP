@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <title>Estagram</title>
+    <link rel="stylesheet" href="/frontend/css/reset.css">
+    <link rel="stylesheet" href="/frontend/css/common.css">
+    <link rel="stylesheet" href="/frontend/css/style.css">
+    <link rel="shortcut icon" href="/frontend/imgs/instagram.png">
+
+    <style>
+        .detail_link{
+            display:block;
+            width:100%;
+            height:100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- nav바 시작-->
+    <nav id="container">
+        <header id="header">
+            <section class="h_inner">
+
+                <h1 class="logo">
+                    <a href="#">
+                        <div class="sprite_insta_icon"></div>
+                        <div>
+                            <div class="sprite_write_logo"></div>
+                        </div>
+                    </a>
+                </h1>
+
+                <div class="search_field">
+                    <form class="search-form" action="#" method="post">
+                        <input class="tag-search" type="text" name="tag" placeholder="태그검색" pattern="#?[\wㄱ-ㅎ|ㅏ-ㅣ|가-힣]+" title="특수문자, 공백 입력불가" required >
+                        <div class="fake_field">
+                            <span class=sprite_small_search_icon></span>
+                            <span>태그검색</span>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="right_icons">
+                    <div class="sprite_camera_icon"><a href="#"></a></div>
+                    <div class="sprite_compass_icon"><a href="#"></a></div>
+                    <div class="sprite_heart_icon_outline"><a href="#"></a></div>
+
+                    <!-- 로그인 여부에 따라 변경요망 -->
+                    <div class="sprite_user_icon_outline"><a href="#"></a></div>
+                </div>
+            </section>
+        </header>
+    </nav>
+    <!--nav바 종료-->
+
+    <!-- main 시작-->
+    <section id="main_container">
+        <section class="inner">
+            <div class="contents_box">
+                <!-- 데이터를 여기에 동적으로 추가할 것입니다. -->
+            </div>
+        </section>
+    </section>
+
+    <!-- main 종료 -->
+
+
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- <script src="{% static 'js/insta.js' %}"></script> -->
+    <script src="/frontend/js/feed.js" type="module"></script>
+</body>
+</html>
+
+
+
+
+
+
