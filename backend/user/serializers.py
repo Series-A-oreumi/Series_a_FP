@@ -21,9 +21,9 @@ class LoginSerializer(serializers.ModelSerializer):
                 if user.password == password:
                     return user
                 else:
-                    raise serializers.ValidationError("Incorrect password")
+                    raise serializers.ValidationError("비밀번호가 일치하지 않습니다.")
             else:
-                raise serializers.ValidationError("User does not exist")
+                raise serializers.ValidationError("사용자가 존재하지 않습니다.")
 
     class Meta:
         model = UserProfile
