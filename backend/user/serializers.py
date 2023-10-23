@@ -24,6 +24,7 @@ class LoginSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError("Incorrect password")
             else:
                 raise serializers.ValidationError("User does not exist")
+
     class Meta:
         model = UserProfile
         fields = ["email", "password"]
