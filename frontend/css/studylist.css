@@ -1,0 +1,251 @@
+/* banner */
+.banner-link {
+    background-color: #EDFAF7;
+}
+
+.banner-container {
+    display: flex;
+    max-width: 1200px;
+    height: 330px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.banner-left,
+.banner-right {
+    flex: 1 1;
+    margin: auto 0;
+}
+
+.banner-title {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: 700;
+    padding: 0;
+    margin: 0 0 15px;
+}
+
+.banner-subtext {
+    display: block;
+    font-size: 22px;
+}
+
+/* content */
+/* select-main */
+.main-btn {
+    min-height: 60rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.select-section {
+    max-width: 1300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+    margin-top: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    padding: 0px 20px;
+}
+
+.select-section-category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.select-section-main {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 40px;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.study-category-inactive {
+    color: #444;
+}
+
+.study-category-text {
+    cursor: pointer;
+}
+
+.write-btn {
+    border: solid 1px black;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+/* select-sub */
+.sub-btn {
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 15px;
+
+}
+
+.sub-container {
+    display: flex;
+    justify-content: space-between
+}
+
+.select-sub-category {
+    display: flex;
+    gap: 10px;
+}
+
+.sub-select-container {
+    width: 140px;
+    height: 38px;
+}
+
+.sub-select-btn {
+    -webkit-box-pack: justify;
+    padding-left: 18px;
+    padding-right: 10px;
+    width: 140px;
+    height: 38px;
+    border: 1px solid rgb(227, 227, 227);
+    color: rgb(100, 100, 100);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 36px;
+    margin-bottom: 8px;
+    gap: 10px;
+}
+
+button {
+    outline: none;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.sub-select-text {
+    width: 100px;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
+.sub-select-btn-container {
+    -webkit-box-pack: justify;
+    justify-content: space-evenly;
+    padding-left: 18px;
+    padding-right: 10px;
+
+    border: 1px solid rgb(227, 227, 227);
+    color: rgb(100, 100, 100);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+
+    -webkit-box-align: center;
+
+    border-radius: 20px;
+    margin-bottom: 8px;
+    /* display: none; */
+}
+
+.sub-select-drop {
+    width: 110px;
+    height: 114px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.toggle-container {
+    display: none;
+}
+
+.toggle-container.active {
+    display: block;
+}
+
+.drop-1 {
+    height: 114px;
+}
+
+.drop-2 {
+    height: 152px;
+}
+
+.sub-select-choice {
+    width: 410px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 14px;
+    justify-content: space-evenly
+}
+
+
+.stack-icon img {
+    width: 80%;
+}
+
+.stack-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(227, 227, 227);
+}
+
+.javaScript {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7df1e;
+}
+
+.search-container {
+    display: flex;
+    width: 300px;
+    height: 34px;
+    padding: 0 20px;
+    align-items: center;
+    grid-gap: 10px;
+    gap: 10px;
+    border-radius: 36px;
+    background: #f5f5f5;
+    position: relative;
+}
+
+.search-bar {
+    width: 300px;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.sub-select-btn-container div {
+    cursor: pointer;
+}
