@@ -77,7 +77,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     
 # 게시글 작성
 class CreatePostSerializer(serializers.ModelSerializer):
-    author = PostAuthorSerializer(read_only=True)
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())  # 현재 인증된 사용자를 게시물 작성자로 자동 할당
     images = PostImageSerializer(required=False) # 일단 하나의 이미지만 보낼 수 있도록 설정 -> 추후 여러개 이미지를 보낼 수 있도록 수정 예정
     class Meta:
         model = Post
