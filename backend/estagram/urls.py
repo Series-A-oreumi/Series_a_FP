@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('user.urls')), # user url
     path('api/story/', include('story.urls')), # story url
+    path('api/study/', include('study.urls')), # study url
 ]
 
 # 임시 media url 설정
