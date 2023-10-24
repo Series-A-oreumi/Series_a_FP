@@ -13,8 +13,6 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 
-from rest_framework.authtoken.models import Token
-
 class UserProfileView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserProfileSerializer
