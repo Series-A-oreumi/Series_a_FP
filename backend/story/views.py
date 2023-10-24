@@ -1,17 +1,19 @@
 from django.shortcuts import get_object_or_404
 from .models import Post, Comment, Hashtag
-from django.contrib.auth.models import User
+from user.models import UserProfile
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import CommentSerializer, CreateCommentSerializer, CreatePostSerializer, LikeSerializer, PostDetailSerializer , PostSerializer
 
 
 class StoryList(APIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,) # get 요청은 누구나가능. 그 외 요청은 로그인 한 유저만 가능
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,) # get 요청은 누구나가능. 그 외 요청은 로그인 한 유저만 가능
 
     def get(self, request):
         try:
@@ -25,6 +27,7 @@ class StoryList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class StoryPost(CreateAPIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
     serializer_class = CreatePostSerializer
@@ -83,6 +86,7 @@ class StoryPost(CreateAPIView):
 #                         data={"error": "Invalid pk values"})
     
 class StoryUpdateDelete(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly] # 로그인 한 유저만 가능
 
     def get_post(self, post_id):
@@ -137,6 +141,7 @@ class StoryUpdateDelete(APIView):
 
 
 class Like(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     # 좋아요 기능
@@ -155,6 +160,9 @@ class Like(APIView):
             return Response({"detail": "Post liked successfully."}, status=status.HTTP_201_CREATED)
 
 class ToggleLike(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
 
@@ -186,6 +194,7 @@ class ToggleLike(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class CommentCreate(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated] # 로그인 한 유저만 접근가능
     
     # 댓글 작성
@@ -233,6 +242,7 @@ class CommentCreate(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class CommentUpdateDelete(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_comment(self, comment_id):
