@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const imgdiv = document.createElement('div');
         const image = document.createElement("img");
         // 사진도 일단 예시로만 
-        image.src = "/frontend/media/post/2020/05/08/tiger/iOtAhiyj.jpg"
+        image.src = "../media/post/2020/05/08/tiger/iOtAhiyj.jpg"
         image.alt = "피드이미지";
 
         imgdiv.appendChild(image)
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const profileImg = document.createElement("div");
         profileImg.className = "profile_img";
         const img = document.createElement("img");
-        img.src = "/frontend/media/accounts/tiger/uAqIxqLO.jpg";
+        img.src = "../media/accounts/tiger/uAqIxqLO.jpg";
         // img.src = post.author.profile.picture.url; (현재 프로필 이미지를 따로 만들어두지 않아서 일단 기본으로 하고 추후 변경예정!)
         img.alt = "프로필 이미지";
         profileImg.appendChild(img);
