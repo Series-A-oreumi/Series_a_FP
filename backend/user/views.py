@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from .models import *
@@ -27,22 +28,31 @@ class LoginView(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
 
-    def get_token(self, obj):
-        user = UserProfile.objects.filter(email=obj.get("email")).first()
-        return user.token()
-
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response(self.get_token(serializer.data), status=status.HTTP_200_OK)
+        if serializer.is_valid():
+            user = serializer.validated_data.get("user")  # 유저 객체 가져오기
+            refresh = serializer.validated_data.get("refresh")
+            access = serializer.validated_data.get("access")
+            
+            user_info = UserProfileSerializer(user)
 
+            data = {
+                'user': user_info.data,
+                'refresh': refresh,
+                'access': access,
+            }
+            
+            return Response(data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+# 로그아웃은 프론트에서 jwt 토근 삭제하는 방법이 훨씬 나을듯!
+# class LogoutView(APIView):
+#     permission_classes = (IsAuthenticated,)
 
-class LogoutView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def post(self, request):
-        request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+#     def post(self, request):
+#         request.user.auth_token.delete()
+#         return Response(status=status.HTTP_200_OK)
 
 class RegisterView(APIView):
     permission_classes = (AllowAny,)
@@ -52,6 +62,9 @@ class RegisterView(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            # return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
 
