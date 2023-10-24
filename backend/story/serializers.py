@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Hashtag, Like, Post, Comment, PostImage
-from django.contrib.auth.models import User
+from user.models import UserProfile
 
 # 해시 태그
 class HashtagSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class CommentSerializer(serializers.ModelSerializer):
 # 게시글 작성유저
 class PostAuthorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = UserProfile
         fields = ['pk', 'username']
 
 # 스토리 이미지
