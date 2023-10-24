@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'user',
     'chat',
     'story',
+    'study',
 ]
 
 REST_FRAMEWORK = {
