@@ -13,32 +13,51 @@
 
 <body>
     <div class="banner-link">
-        <div class="banner-container">
-            <div class="banner-left">
-                <h2 class="banner-title">스터디와 프로젝트에 참가하세요</h2>
-                <span class="banner-subtext">함께할 팀원 찾기 👀</span>
+        <div class="slick-list">
+            <div class="banner-container" id="banner1">
+                <div class="banner-left">
+                    <div class="banner-inner">
+                        <h2 class=" banner-title">스터디와 프로젝트에 참가하세요</h2>
+                        <div class="banner-subtext">함께할 팀원 찾기 👀</div>
+                    </div>
+                    <div>
+                        <img src="../imgs/study/banner_icon.png" style="width: 200px;">
+                    </div>
+                </div>
             </div>
-            <div class="banner-right">
-                <img src="../imgs/user/test.jpg" style="max-width: 50%;">
+            <div class="banner-container" id="banner2">
+                <div class="banner-left">
+                    <div class="banner-inner">
+                        <h2 class=" banner-title">오르미 일상 ing...</h2>
+                        <div class="banner-subtext">스토리 구경하러 가기 😉</div>
+                    </div>
+                    <div>
+                        <img src="../imgs/study/banner_icon2.png" style="max-width: 450px;">
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
+
 
     <div class="main-btn">
         <div class="select-section">
             <section class="select-section-category">
                 <div class="select-section-main">
-                    <div class="study-category-active">
+                    <div class="study-category">
                         <span class="study-category-text">전체</span>
                     </div>
-                    <div class="study-category-inactive">
+                    <div class="study-category">
                         <span class="study-category-text">스터디</span>
                     </div>
-                    <div class="study-category-inactive">
+                    <div class="study-category">
                         <span class="study-category-text">프로젝트</span>
                     </div>
                 </div>
-                <div class="write-btn">글 작성</div>
+                <a href="#">
+                    <div class="write-btn">글 작성</div>
+                </a>
             </section>
 
 
@@ -46,8 +65,8 @@
                 <div class="sub-btn">
                     <div class="select-sub-category">
                         <div class="sub-select-container">
-                            <button class="sub-select-btn toggle-btn">
-                                <div class="sub-select-text">정렬</div>
+                            <button class="sub-select-btn toggle-btn" id="sortToggle">
+                                <div class="sub-select-text" id="sortText">정렬</div>
                                 <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
                                     <path fill="#cccccc"
                                         d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z">
@@ -55,7 +74,7 @@
                                 </svg>
                             </button>
                             <div class="toggle-container">
-                                <div class="sub-select-btn-container sub-select-drop drop-1">
+                                <div class="sub-select-btn-container sub-select-drop drop-1" id="sortContainer">
                                     <div id="latest">최신순</div>
                                     <div id="popularity">인기순</div>
                                     <div id="deadline">마감순</div>
@@ -66,76 +85,77 @@
 
                     <div class="select-sub-category">
                         <div class="sub-select-container">
-                            <button class="sub-select-btn toggle-btn">
-                                <div class="sub-select-text">기술 스택</div>
+                            <button class="sub-select-btn" id="stackToggle">
+                                <div class="sub-select-text" id="stackText">기술 스택</div>
                                 <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
                                     <path fill="#cccccc"
                                         d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z">
                                     </path>
                                 </svg>
                             </button>
-                            <div class="toggle-container">
-                                <div class="sub-select-btn-container sub-select-choice">
+                            <div id="stackToggleContainer">
+                                <div class="sub-select-btn-container sub-select-choice" id="stackContainer">
                                     <div id="javaScript" class="sub-select-btn">
                                         <div class="stack-icon">
-                                            <span class="stack-icon javaScript">
+                                            <span class="javaScript">
                                                 <img src="../imgs/study/javascript_icon.png">
                                             </span>
                                         </div>
                                         <span>JavaScript</span>
                                     </div>
-                                    <div id="python" class="sub-select-btn">
+                                    <div id="Python" class="sub-select-btn">
                                         <div class="stack-icon">
-                                            <span class="stack-icon">
+                                            <span>
                                                 <img src="../imgs/study/python_icon.png">
                                             </span>
                                         </div>
                                         <span>Python</span>
                                     </div>
-                                    <div id="java" class="sub-select-btn">
+                                    <div id="Java" class="sub-select-btn">
                                         <div class="stack-icon">
-                                            <span class="stack-icon">
+                                            <span>
                                                 <img src="../imgs/study/java_icon.png">
                                             </span>
                                         </div>
                                         <sapn>Java</sapn>
                                     </div>
 
-                                    <div id="django" class="sub-select-btn">
+                                    <div id="Django" class="sub-select-btn">
                                         <div class="stack-icon">
-                                            <span class="stack-icon">
+                                            <span>
                                                 <img src="../imgs/study/django_icon.png">
                                             </span>
                                         </div>
                                         <sapn>Django</sapn>
                                     </div>
 
-                                    <div id="spring" class="sub-select-btn">
+                                    <div id="Spring" class="sub-select-btn">
                                         <div class="stack-icon">
-                                            <span class="stack-icon">
+                                            <span>
                                                 <img src="../imgs/study/spring_icon.png">
                                             </span>
                                         </div>
                                         <sapn>Spring</sapn>
                                     </div>
 
-                                    <div id="react" class="sub-select-btn">
+                                    <div id="React" class="sub-select-btn">
                                         <div class="stack-icon">
-                                            <span class="stack-icon">
+                                            <span>
                                                 <img src="../imgs/study/react_icon.png">
                                             </span>
                                         </div>
                                         <sapn>React</sapn>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
                     <div class="select-sub-category">
                         <div class="sub-select-container">
-                            <button class="sub-select-btn toggle-btn">
-                                <div class="sub-select-text">포지션</div>
+                            <button class="sub-select-btn toggle-btn" id="positionToggle">
+                                <div class="sub-select-text" id="positionText">포지션</div>
                                 <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
                                     <path fill="#cccccc"
                                         d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z">
@@ -143,7 +163,7 @@
                                 </svg>
                             </button>
                             <div class="toggle-container">
-                                <div class="sub-select-btn-container sub-select-drop drop-2">
+                                <div class="sub-select-btn-container sub-select-drop drop-2" id="positionContainer">
                                     <div id="all">전체</div>
                                     <div id="frontend">프론트엔드</div>
                                     <div id="backend">백엔드</div>
@@ -163,11 +183,85 @@
     </div>
 
 
-
     <section id="main_container">
         <section class="inner">
             <div class="contents_box">
-                <!-- 데이터를 여기에 동적으로 추가할 것입니다. -->
+                <div class="card">
+
+                    <!-- 테스트 -->
+                    <!-- 상단 -->
+                    <div class="card_top">
+                        <div class="tag_list">
+                            <div class="top_tag">
+                                <div class="tag_study">🌠스터디</div>
+                            </div>
+                            <div class="deadlineTag">🔥마감코앞</div>
+                        </div>
+                        <div class="heart_btn">
+                            <div class="sprite_heart_icon_outline">
+                                <img src="../imgs/study/pinkheart.png">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 중간 -->
+                    <a href="#">
+                        <div class="post_content">
+                            <div class="post_content_main">
+                                <div class="deadline">마감일 | 2023.10.31</div>
+                                <div class="post_title">프리랜서 육성 플랫폼 디자이너 구합니다!</div>
+                            </div>
+                            <div class="post_content_tag">
+                                <div class="position_tag">
+                                    <li class="position_tag_item">디자이너</li>
+                                </div>
+                                <div class="stack_tag">
+                                    <ul>
+                                        <li class="stack-icon">
+                                            <span class="stack-icon javaScript">
+                                                <img src="../imgs/study/javascript_icon.png">
+                                            </span>
+                                        </li>
+                                        <li class="stack-icon">
+                                            <span class="stack-icon django">
+                                                <img src="../imgs/study/django_icon.png">
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- 하단 -->
+                    <div class="card_bottom study_border">
+                        <a href="#">
+                            <div class="user_container">
+                                <div class="profile_img">
+                                    <img src="../imgs/user/test.jpg">
+                                </div>
+                                <div class="user_name">
+                                    <div class="nick_name m_text">김유저</div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="card_bottom_right">
+                            <div class="views_container">
+                                <div class="views_icon"><img src="../imgs/study/viewsicon.png"></div>
+                                <div class="views">33</div>
+                            </div>
+                            <div class="conmment_container">
+                                <div class="comment_icon">
+                                    <img src="../imgs/study/commenticon.png">
+                                </div>
+                                <div class="comment">20</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 테스트용 -->
+
             </div>
         </section>
     </section>
