@@ -71,13 +71,23 @@ toggleBtns.forEach((btn, index) => {
         if (isOpen[index]) {
             toggleContainers[index].classList.remove('active');
         } else {
-            toggleContainers.forEach((container) => {
-                container.classList.remove('active');
+            toggleContainers.forEach((container, i) => {
+                if (i !== index) {
+                    container.classList.remove('active');
+                    isOpen[i] = false;
+                }
             });
             toggleContainers[index].classList.add('active');
         }
 
         isOpen[index] = !isOpen[index];
+    });
+});
+
+// 다른 토글 버튼 클릭 시 기술스택 컨테이너 닫기
+toggleBtns.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+        stackToggleContainer.classList.remove('active');
     });
 });
 

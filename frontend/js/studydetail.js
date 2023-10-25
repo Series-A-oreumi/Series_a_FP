@@ -114,7 +114,6 @@ function createDetailSection2(data) {
 // 댓글 작성자 이게 맞나..?
 function createDetailSection3(data) {
 
-
     return `
         <div class="comment-list">
             <div class="comment-inner">
