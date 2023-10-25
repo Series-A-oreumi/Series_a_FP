@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'chat',
     'story',
     'study',
+
+    # s3 storage
+    'storages',
 ]
 
 REST_FRAMEWORK = {
@@ -99,23 +102,23 @@ WSGI_APPLICATION = 'estagram.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': secrets["postgresql_name"], # 데이터베이스 이름
-#         'USER': secrets["postgresql_user"],
-#         'PASSWORD': secrets["postgresql_pwd"],
-#         'HOST': secrets["postgresql_host"],
-#         'PORT': secrets["postgresql_port"],
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': secrets["postgresql_name"], # 데이터베이스 이름
+        'USER': secrets["postgresql_user"],
+        'PASSWORD': secrets["postgresql_pwd"],
+        'HOST': secrets["postgresql_host"],
+        'PORT': secrets["postgresql_port"],
+    }
+}
 
 
 # Password validation

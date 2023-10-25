@@ -3,11 +3,10 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.tokens import AccessToken
 from .serializers import StudySerializer
 from .models import Stack, Study
 from user.models import UserProfile
-
+from user.utils import get_user_from_token
 
 # 스터디 목록 
 class StudyList(APIView):
@@ -32,17 +31,9 @@ class StudyCreate(APIView):
     
     def post(self, request):
         
-        # JWT 토큰에서 사용자 정보 디코드
-        token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]  # JWT 토큰 추출
-        access_token = AccessToken(token)
-        user_id = access_token.payload['user_id']
+        # 요청한 유저 가져오기
+        user = get_user_from_token(request)
 
-         # 사용자 정보 가져오기
-        try:
-            user = UserProfile.objects.get(id=user_id)
-        except UserProfile.DoesNotExist:
-            return Response({'detail': '사용자를 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
-        
         serializer = StudySerializer(data=request.data)
         if serializer.is_valid():
             study = serializer.save(author=user)

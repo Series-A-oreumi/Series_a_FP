@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Study, Comment, Stack
-from story.serializers import PostAuthorSerializer
+from user.serializers import UserProfileSerializer
 
 class StackSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,7 +14,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class StudySerializer(serializers.ModelSerializer):
-    author = PostAuthorSerializer(read_only=True) # 스터디 게시한 사람
+    author = UserProfileSerializer(read_only=True) # 스터디 게시한 사람
     likes_users = serializers.SerializerMethodField(read_only=True) # 좋아요를 누른 유저 목록을 가져올 필드를 추가합니다.
     stacks = StackSerializer(many=True, read_only=True) # 해당 스터디 기술 스택
     participant_users = serializers.SerializerMethodField(read_only=True) # 스터디 및 프로젝트 참여자 목록
