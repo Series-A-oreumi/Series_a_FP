@@ -9,9 +9,9 @@ class UserProfile(models.Model):
     bootcamp = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.email
+        return self.nickname
 
-    def token(self):
+    def get_token(self):
         refresh = RefreshToken.for_user(self)
         return {
             "refresh": str(refresh),

@@ -30,7 +30,36 @@ a{
     background: url('../imgs/background01.png') no-repeat -272px -182px;
     width: 22px;
     height: 24px;
+    cursor: pointer;
+    position: relative;
+    
 }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 100%;
+    right: 0;
+  }
+
+  .sprite_user_icon_outline:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+
 
 .sprite_heart_icon_outline {
     display: inline-block;
@@ -119,7 +148,7 @@ a{
 
 
 body{
-    background:#fafafa;
+    background:#fff;
 }
 
 
@@ -268,9 +297,9 @@ body{
 
 .contents{
     max-width: 614px;
-    border: 1px solid rgba(0,0,0,0.09);
+    border-bottom: 1px solid rgba(0,0,0,0.09);
     border-radius: 3px;
-    margin-bottom: 60px;
+    margin-bottom: 10px;
     background: white;
 }
 
@@ -279,7 +308,8 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 
 
@@ -335,6 +365,8 @@ body{
 
 .contents .img_section img{
     width: 100%;
+    height: 668px;
+    border-radius: 0.5%;
 }
 
 
@@ -342,7 +374,8 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding-top:10px;
+    padding-bottom: 10px;
 }
 
 .contents .bottom_icons .left_icons{
@@ -350,7 +383,7 @@ body{
 }
 
 .contents .bottom_icons .left_icons > div{
-    margin-right: 10px;
+    margin-right: 20px;
     cursor:pointer;
 }
 
@@ -364,8 +397,10 @@ body{
 
 
 .contents .likes{
-    padding: 5px 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     color:#262626;
+    font-size: 15px;
 }
 
 
@@ -373,7 +408,9 @@ body{
     display:flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 20px;
+    padding-top: 10px;
+    padding-bottom:10px;
+    cursor: pointer;
 }
 .contents .comment_container .comment{
     display:flex;
@@ -401,7 +438,6 @@ body{
 
 .contents .comment_field{
     min-height:56px;
-    padding: 0 20px;
     position: relative;
 }
 
@@ -437,7 +473,8 @@ body{
     display: inline-block;
     padding-right: 25px;
     margin-top: 10px;
-    padding: 10px 20px;
+    padding-top: 10px;
+    padding-bottom:10px;
 }
 
 
@@ -634,17 +671,46 @@ body{
 
 }
 
+/* feedDetail modal */
+.modal_overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+}
 
+.modal_window {
+    background: white;
+    backdrop-filter: blur(13.5px);
+    -webkit-backdrop-filter: blur(13.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 800px;
+    height: 600px;
+    position: relative;
+    padding: 10px;
+}
 
+.modal_title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 20px;
+}
 
-
-
-
-
-
-
-
-
+.modal_title_side{
+    flex: 0 0 40px;
+    text-align: center;
+}
 
 
 

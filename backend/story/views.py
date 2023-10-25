@@ -1,17 +1,17 @@
 from django.shortcuts import get_object_or_404
-from .models import Post, Comment, Hashtag
-from django.contrib.auth.models import User
+from .models import Post, Comment, Hashtag, PostImage
+from user.models import UserProfile
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
-from .serializers import CommentSerializer, CreateCommentSerializer, CreatePostSerializer, LikeSerializer, PostDetailSerializer , PostSerializer
-
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .serializers import CommentSerializer, CreateCommentSerializer,LikeSerializer, PostDetailSerializer , PostSerializer
+from user.utils import get_user_from_token, S3ImgUploader
 class StoryList(APIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,) # get 요청은 누구나가능. 그 외 요청은 로그인 한 유저만 가능
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,) # get 요청은 누구나가능. 그 외 요청은 로그인 한 유저만 가능
 
     def get(self, request):
         try:
@@ -25,16 +25,33 @@ class StoryList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class StoryPost(CreateAPIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
-    serializer_class = CreatePostSerializer
 
     def post(self, request, format=None):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+       # 요청한 유저 가져오기
+        user = get_user_from_token(request)
+        
+        # 이미지 가져오기
+        images = request.FILES.getlist('images') # 이미지는 request.data가 아닌 request.FILES로 불러오기
+        
+        # post 생성 (직접할당)
+        post = Post.objects.create(author=user, title=request.data['title'], content=request.data['content'])
+
+        # 이미지 저장
+        for image in images:
+            img_upload = S3ImgUploader(image) # S3ImgUploader class 담기
+            img = img_upload.upload() # upload 메소드 실행
+            PostImage.objects.create(post=post, images=img)
+
+        message = {
+            "success" : "게시물이 성공적으로 생성되었습니다."
+        }
+
+        return Response(message, status=status.HTTP_201_CREATED)
+    
+        
     
 # class StoryPost(APIView): 
 #     permission_classes = (IsAuthenticatedOrReadOnly,)
@@ -83,6 +100,7 @@ class StoryPost(CreateAPIView):
 #                         data={"error": "Invalid pk values"})
     
 class StoryUpdateDelete(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly] # 로그인 한 유저만 가능
 
     def get_post(self, post_id):
@@ -97,8 +115,11 @@ class StoryUpdateDelete(APIView):
         if post is None:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
+        # 요청한 유저 가져오기
+        user = get_user_from_token(request)
+
         # 조회수 증가
-        if request.user != post.author: # 해당 게시글을 작성한 유저와 다르다면
+        if user != post.author: # 해당 게시글을 작성한 유저와 다르다면
             post.views += 1 # 조회수 1 증가
             post.save()
        
@@ -111,8 +132,10 @@ class StoryUpdateDelete(APIView):
         if post is None:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        user = get_user_from_token(request)
+
         # 권한 확인: 현재 사용자가 게시물의 작성자인지 확인
-        if post.author != request.user:
+        if post.author != user:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         serializer = PostSerializer(post, data=request.data, partial=True) # partial = True -> 부분적으로 수정가능하도록!
@@ -128,8 +151,11 @@ class StoryUpdateDelete(APIView):
         if post is None:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        # 요청한 유저 가져오기
+        user = get_user_from_token(request)
+
         # 권한 확인: 현재 사용자가 게시물의 작성자인지 확인
-        if post.author != request.user:
+        if post.author != user:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         post.delete()
@@ -137,6 +163,7 @@ class StoryUpdateDelete(APIView):
 
 
 class Like(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     # 좋아요 기능
@@ -144,7 +171,7 @@ class Like(APIView):
         post = get_object_or_404(Post, pk=post_id)
 
         # 현재 사용자
-        user = request.user
+        user = get_user_from_token(request)
     
         # 게시물에 대한 좋아요를 추가하거나 이미 좋아요가 있는 경우 취소
         if user in post.likes.all():
@@ -155,10 +182,13 @@ class Like(APIView):
             return Response({"detail": "Post liked successfully."}, status=status.HTTP_201_CREATED)
 
 class ToggleLike(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
 
-        user = request.user
+        user = get_user_from_token(request)
 
         # 로그인 한 유저가 아니면 접근불가
         if not user.is_authenticated:
@@ -186,6 +216,7 @@ class ToggleLike(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class CommentCreate(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated] # 로그인 한 유저만 접근가능
     
     # 댓글 작성
@@ -205,15 +236,18 @@ class CommentCreate(APIView):
             # parent_comment 필드를 입력받았는지 확인
             parent_comment_id = request.data.get('parent_comment')
 
+            user = get_user_from_token(request)
+
             # 대댓글이라면
             if parent_comment_id:
                 try:
                     parent_comment = Comment.objects.get(pk=parent_comment_id)
                 except Comment.DoesNotExist:
                     return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "부모 댓글을 찾을 수 없습니다."})
+                
 
                 comment = Comment(
-                    author=request.user,
+                    author=user,
                     post=post,
                     content=content,
                     parent_comment=parent_comment
@@ -222,7 +256,7 @@ class CommentCreate(APIView):
             # 대댓글이 아닌 기본 댓글이라면
             else:
                 comment = Comment(
-                    author=request.user,
+                    author=user,
                     post=post,
                     content=content
                 )
@@ -233,6 +267,7 @@ class CommentCreate(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class CommentUpdateDelete(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_comment(self, comment_id):
@@ -246,9 +281,11 @@ class CommentUpdateDelete(APIView):
         comment = self.get_comment(comment_id)
         if comment is None:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        user = get_user_from_token(request)
 
         # 권한 확인: 현재 사용자가 댓글의 작성자인지 확인
-        if comment.author != request.user:
+        if comment.author != user:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         serializer = CommentSerializer(comment, data=request.data, partial=True) # partial = True -> 부분적으로 수정가능하도록!)
@@ -264,8 +301,10 @@ class CommentUpdateDelete(APIView):
         if comment is None:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        user = get_user_from_token(request)
+
         # 권한 확인: 현재 사용자가 댓글의 작성자인지 확인
-        if comment.author != request.user:
+        if comment.author != user:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         comment.delete()
