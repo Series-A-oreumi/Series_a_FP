@@ -1,6 +1,3 @@
-// api
-const apiEndpoint = "http://localhost:8000/api/study/";
-
 
 // 제목 ,유저
 // 유저 아이콘 데이터이름 확인 필요
@@ -159,17 +156,31 @@ function createDetaile(data) {
     section3.innerHTML += detail3;
 }
 
+
+
+
+
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
+    const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = "http://localhost:8000/api/study/";
+
     try {
-        const response = await fetch(apiEndpoint);
+        const response = await fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
 
         const postData = await response.json();
 
-        createPost(postData);
+        createDetaile(postData);
     } catch (error) {
         console.error('Error:', error);
     }

@@ -195,8 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // api
-const apiEndpoint = "http://localhost:8000/api/study/";
-
 const heartBtn = document.getElementById("heartBtn");
 const heartImage = document.getElementById("heartImage");
 
@@ -341,15 +339,25 @@ function createPost(data) {
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
+    const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = "http://localhost:8000/api/study/";
+
     try {
-        const response = await fetch(apiEndpoint);
+        const response = await fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
 
         const postData = await response.json();
 
-        createPost(postData);
+        createDetaile(postData);
     } catch (error) {
         console.error('Error:', error);
     }
