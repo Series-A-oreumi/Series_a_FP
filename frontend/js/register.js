@@ -46,8 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => {
                     if (response.ok) {
-                        alert('회원가입 성공');
-                        window.location.href = '../html/login.html'; // 로그인 페이지 URL로 이동
+                        window.location.href = '../html/feed.html'; // 로그인 페이지 URL로 이동
                     } else {
                         response.json().then(data => {
                             alert('회원가입 실패: ' + JSON.stringify(data));
