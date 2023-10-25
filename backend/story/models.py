@@ -16,11 +16,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-		
-    # 해당 게시글에 달린 댓글들
-    def comments(self):
-        ''' Get all comments '''
-        return self.comment_post
     
     # 해당 게시글에 달린 댓글들 수
     def comments_count(self):
