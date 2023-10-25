@@ -27,43 +27,115 @@
 
 <body>
     <!-- nav바 시작-->
-    <nav id="container">
-        <header id="header">
-            <section class="h_inner">
-
-                <h1 class="logo">
-                    <a href="#">
-                        <div class="sprite_insta_icon"></div>
-                        <div>
-                            <div class="sprite_write_logo"></div>
-                        </div>
-                    </a>
-                </h1>
-
-                <div class="search_field">
-                    <form class="search-form" action="#" method="post">
-                        <input class="tag-search" type="text" name="tag" placeholder="태그검색" pattern="#?[\wㄱ-ㅎ|ㅏ-ㅣ|가-힣]+" title="특수문자, 공백 입력불가" required >
-                        <div class="fake_field">
-                            <span class=sprite_small_search_icon></span>
-                            <span>태그검색</span>
-                        </div>
-                    </form>
-                </div>
-
-
-                <div class="right_icons">
-                    <div class="sprite_camera_icon"><a href="#"></a></div>
-                    <div class="sprite_compass_icon"><a href="#"></a></div>
-                    <div class="sprite_heart_icon_outline"><a href="#"></a></div>
+    <header class="desktop">
+        <div class="nav-container">
+          <div class="nav-hamburger">
+            <button href="#" id='hamburger' onclick="toggleSidebar()"><img
+                src="../imgs/common/hamburger.png"
+                alt="햄버거"
+                class="hamburger"
+            /></button>
+          </div>
+            <a href="" class="logo-link">
+                <img
+                src="../imgs/common/Estagram.png"
+                alt="헤더 로고"
+                class="title-logo"/></a>
+            <div class="nav-buttons">
+                <a href=""
+                ><img src="../imgs/common/chat.png" alt="채팅" class="icon"
+                /></a>
+                <a href=""
+                ><img src="../imgs/common/alarm.png" alt="알림" class="icon"
+                /></a>
 
                     <!-- 로그인 여부에 따라 변경요망 -->
-                    <div class="sprite_user_icon_outline"><a href="#"></a></div>
-                </div>
-            </section>
-        </header>
-    </nav>
+                    <div class="sprite_user_icon_outline"><a href="#"></a>
+                      <div class="dropdown-content">
+                        <a href="#">프로필 보기</a>
+                        <a href="#"class="logout-button">로그아웃</a>
+                      </div>
+                    </div>
+            </div>
+        </div>
+    </header>
     <!--nav바 종료-->
 
+
+    <!-- side바 시작 -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-container">
+          <div class="sidebar-hamburger">
+            <button href="#" id='hamburger2' onclick="toggleSidebar()"><img
+              src="../imgs/common/hamburger.png"
+              alt="햄버거"
+              class="hamburger"
+            /></button>
+          </div>
+          <a href="" class="logo-link">
+            <img
+            src="../imgs/common/Estagram.png"
+            alt="헤더 로고"
+            class="title-logo"/></a>
+        </div>
+          <div id="side1">
+            <div class="sidebar-list">
+              <a href="#">
+                  <img src="../imgs/common/home.svg"/>
+                  <span class="sidebar-text">홈</span>
+              </a>
+            </div>
+            <div class="sidebar-list">
+              <a href="#">
+                  <img src="../imgs/common/search.svg"  />
+                  <span class="sidebar-text">검색</span>
+              </a>
+            </div>
+          
+            <div class="sidebar-list">
+              <a href="#">
+                  <img src="../imgs/common/explore.svg"  />
+                  <span class="sidebar-text">탐색</span>
+              </a>
+            </div>
+          
+            <div class="sidebar-list">
+              <a href="#">
+                  <img src="../imgs/common/create.svg" />
+                  <span class="sidebar-text">글 작성</span>
+              </a>
+            </div>
+          
+            <div class="sidebar-list">
+              <a href="#">
+                  <img src="../imgs/common/study.svg" />
+                  <span class="sidebar-text">스터디</span>
+              </a>
+            </div>
+          
+            <div class="sidebar-list">
+              <a href="#">
+                  <img src="../imgs/common/project.svg"  />
+                  <span class="sidebar-text">프로젝트</span>
+              </a>
+            </div>
+          
+            <div class="sidebar-list">
+              <a href="#">
+                  <img src="../imgs/common/profile.svg" class="sidebar-profile"/>
+                  <span class="sidebar-text">프로필</span>
+              </a>
+            </div>
+          
+            <div class="sidebar-list">
+              <a href="#">
+                  <img src="../imgs/common/settings.svg" />
+                  <span class="sidebar-text">설정</span>
+              </a>
+            </div>
+          </div>
+        </div>
+    <!-- side바 종료 -->
     <!-- main 시작-->
     <section id="main_container">
         <section class="inner">
@@ -73,13 +145,34 @@
         </section>
     </section>
 
+    <!-- feedDetail modal 창 -->
+    <div id="modal_add_feed"class="modal_overlay">
+      <div class="modal_window">
+        <div class="modal_title">
+          <div class="modal_title_side"></div>
+          <div> 새 게시물 </div>
+          <div class="modal_title_side">
+              <span id="close_modal" class="material-icons-outlined">
+                  close
+              </span>
+              <div class="contents_box">
+                <!-- 데이터를 여기에 동적으로 추가할 것입니다. -->
+            </div>
+          </div>
+          
+      </div>
+  </div>
+</div>
     <!-- main 종료 -->
 
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- <script src="{% static 'js/insta.js' %}"></script> -->
-    <script src="../js/feed.js" type="module"></script>
+    <script src="/frontend/js/feed.js" type="module"></script>
+    <script src="/frontend/js/sidebar.js"></script>
+    <script src="/frontend/js/login.js"></script>
+
 </body>
 </html>
 

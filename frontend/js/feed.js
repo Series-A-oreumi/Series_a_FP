@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const profileImg = document.createElement("div");
             profileImg.className = "profile_img";
             const img = document.createElement("img");
-            img.src = "/frontend/media/accounts/tiger/uAqIxqLO.jpg";
+            img.src = "../imgs/common/profile.png";
             // img.src = post.author.profile.picture.url; (현재 프로필 이미지를 따로 만들어두지 않아서 일단 기본으로 하고 추후 변경예정!)
             img.alt = "프로필 이미지";
             profileImg.appendChild(img);
@@ -51,17 +51,32 @@ document.addEventListener("DOMContentLoaded", async function () {
             userName.className = "user_name";
             const nickName = document.createElement("div");
             nickName.className = "nick_name m_text";
+            
             const postTime = formatTimeAgo(`${post.created_at}`);
-            nickName.textContent = `${post.author.username} • ${postTime}`; // 요것도 아직 닉네임 설정 안해서 username으로 함. 추후 변경예정!
+            
+            // 사용자 이름 설정 및 스타일 지정
+            const usernameSpan = document.createElement("span");
+            usernameSpan.textContent = post.author.username;
+            usernameSpan.style.color = "black";  // 사용자 이름의 글자색을 여기에 지정
+            
+            // postTime 설정 및 스타일 지정
+            const postTimeSpan = document.createElement("span");
+            postTimeSpan.textContent = ` • ${postTime}`;
+            postTimeSpan.style.color = "#888"; 
+            nickName.appendChild(usernameSpan);
+            nickName.appendChild(postTimeSpan);
+            // const country = document.createElement("div");
+            // country.className = "country s_text";
+            // country.textContent = "Seoul, South Korea"; // 요것도 아직 지역 필드 없어서 서울로 임의로 설정 추후 변경 예정!
+            // userName.appendChild(country);
             userName.appendChild(nickName);
-            const country = document.createElement("div");
-            country.className = "country s_text";
-            country.textContent = "Seoul, South Korea"; // 요것도 아직 지역 필드 없어서 서울로 임의로 설정 추후 변경 예정!
-            userName.appendChild(country);
             userContainer.appendChild(userName);
             
             // 토글 기능 추가 해야함!
-
+            // 포스트 내용 추가
+            const content = document.createElement("div");
+            content.className = "content";
+            content.textContent = post.content; // 포스트 내용을 여기에 추가
 
             // 포스트 이미지 추가
             const imgSection = document.createElement('div');
@@ -148,11 +163,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             
             likeText.appendChild(likeCountSpan);
 
-
-            // 포스트 내용 추가
-            const content = document.createElement("div");
-            content.className = "content";
-            content.textContent = post.content; // 포스트 내용을 여기에 추가
         
             // 댓글 개수 표시
             const commentContainer = document.createElement('div')
@@ -162,6 +172,22 @@ document.addEventListener("DOMContentLoaded", async function () {
             
             // 댓글 개수를 표시합니다.
             comment.textContent = `댓글 ${post.comments_count}개 모두보기`;
+            comment.addEventListener('click', function () {             
+                // 모달을 열도록 설정
+                const modal = document.getElementById("modal_add_feed");
+                modal.style.top = window.scrollY + 'px'; 
+                modal.style.display = "flex";
+                document.body.style.overflowY = "hidden";
+
+                // 모달 닫기 코드
+                const buttonCloseModal = document.getElementById("close_modal");
+                buttonCloseModal.addEventListener("click", e => {
+                    modal.style.display = "none";
+                    document.body.style.overflowY = "visible";
+                });
+            });
+
+            comment.id = `comment-all-${post.pk}`;
             commentContainer.appendChild(comment);
 
             // 부모 엘리먼트를 선택하거나 생성합니다.
@@ -198,10 +224,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // 나머지 요소들을 article에 추가
             article.appendChild(header);
+            article.appendChild(content);
             article.appendChild(imgSection);
             article.appendChild(bottomIcons);
             article.appendChild(likeText);
-            article.appendChild(content);
             article.appendChild(commentContainer);
             article.appendChild(commentAdd);
         
@@ -214,3 +240,5 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     
 });
+
+
