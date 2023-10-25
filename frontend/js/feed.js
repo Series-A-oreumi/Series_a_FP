@@ -35,14 +35,19 @@ document.addEventListener("DOMContentLoaded", async function () {
             const userContainer = document.createElement("div");
             userContainer.className = "user_container";
             // 프로필 이미지 추가
+            const profileLink = document.createElement('a'); // 삭제하기 꼭 (테스트 추가한 부분)
+            profileLink.href = "../html/profile.html"; // 삭제하기 꼭 (테스트 추가한 부분)
+
             const profileImg = document.createElement("div");
             profileImg.className = "profile_img";
             const img = document.createElement("img");
             img.src = "../imgs/common/profile.png";
             // img.src = post.author.profile.picture.url; (현재 프로필 이미지를 따로 만들어두지 않아서 일단 기본으로 하고 추후 변경예정!)
             img.alt = "프로필 이미지";
-            profileImg.appendChild(img);
-            userContainer.appendChild(profileImg);
+            profileImg.appendChild(img); 
+            profileLink.appendChild(profileImg); // 삭제하기 꼭 (테스트 추가한 부분)
+            userContainer.appendChild(profileLink); // 변경하기 꼭 (테스트 추가한 부분)
+            
     
             header.appendChild(userContainer);
         
@@ -84,11 +89,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             const postImg = document.createElement('div');
             postImg.className = "trans_inner";   
+
             const imgdiv = document.createElement('div');
             const image = document.createElement("img");
             // 사진도 일단 예시로만 
             image.src = "/frontend/media/post/2020/05/08/tiger/김치찌개.png"
             image.alt = "피드이미지";
+            
 
             imgdiv.appendChild(image)
             postImg.appendChild(imgdiv)
