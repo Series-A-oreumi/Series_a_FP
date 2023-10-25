@@ -1,0 +1,524 @@
+a {
+    text-decoration: none;
+}
+
+/* banner */
+.banner-link {
+    width: 100%;
+    height: 330px;
+    margin: 0 auto;
+    overflow-x: hidden;
+}
+
+.slick-list {
+    display: flex;
+    transition: .3s ease-out;
+    height: 100%;
+}
+
+.banner-container {
+    display: flex;
+    width: 100%;
+    height: 330px;
+    margin: 0 auto;
+    flex: 0 0 100%;
+    transition: transform 1s;
+    align-items: center;
+}
+
+#banner1 {
+    background-color: #ffeae9;
+}
+
+#banner2 {
+    background-color: #EDFAF7;
+}
+
+/* .banner-left,
+.banner-right {
+    display: flex;
+    flex: 1 1;
+    margin: auto 0;
+} */
+
+.banner-left {
+    padding: 400px;
+    display: flex;
+    gap: 250px;
+    align-items: center;
+}
+
+/* .banner-right {
+    min-width: 600vh;
+} */
+
+
+.banner-title {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: 700;
+    padding: 0;
+    margin: 0 0 15px;
+}
+
+.banner-subtext {
+    display: block;
+    font-size: 22px;
+}
+
+/* content */
+/* select-main */
+.main-btn {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.select-section {
+    max-width: 1300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+    margin-top: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    padding: 0px 20px;
+}
+
+.select-section-category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.select-section-main {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 40px;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.study-category.active {
+    color: black;
+}
+
+.study-category {
+    color: #444;
+}
+
+.study-category-text {
+    cursor: pointer;
+}
+
+.write-btn {
+    border: solid 1px black;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+/* select-sub */
+.sub-btn {
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 15px;
+
+}
+
+.sub-container {
+    display: flex;
+    justify-content: space-between
+}
+
+.select-sub-category {
+    display: flex;
+    gap: 10px;
+}
+
+.sub-select-container {
+    width: 140px;
+    height: 38px;
+}
+
+.sub-select-btn {
+    -webkit-box-pack: justify;
+    padding-left: 18px;
+    padding-right: 10px;
+    width: 137px;
+    height: 50px;
+    border: 1px solid rgb(227, 227, 227);
+    color: rgb(100, 100, 100);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 36px;
+    margin-bottom: 8px;
+    gap: 10px;
+}
+
+button {
+    outline: none;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.sub-select-btn:hover {
+    border: 1px solid #d1d1d1;
+}
+
+.sub-select-text {
+    width: 100px;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    font-weight: 700;
+}
+
+.sub-select-text:hover {
+    font-weight: 700;
+}
+
+/* .sub-select-btn:active {
+    border: 1px solid rgb(0, 185, 174);
+    color: rgb(0, 185, 174);
+} */
+
+.sub-select-btn-container {
+    -webkit-box-pack: justify;
+    justify-content: space-evenly;
+    padding-left: 18px;
+    padding-right: 10px;
+    border: 1px solid #d1d1d1;
+    color: rgb(100, 100, 100);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    -webkit-box-align: center;
+    border-radius: 20px;
+    margin-bottom: 8px;
+
+}
+
+.sub-select-drop {
+    width: 110px;
+    height: 114px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.toggle-container,
+#stackToggleContainer {
+    position: absolute;
+    background-color: white;
+    display: none;
+    z-index: 1;
+}
+
+.toggle-container.active,
+#stackToggleContainer.active {
+    position: absolute;
+    background-color: white;
+    display: block;
+    z-index: 1;
+
+}
+
+.drop-1 {
+    height: 114px;
+}
+
+.drop-2 {
+    height: 190px;
+}
+
+.sub-select-choice {
+    width: 345px;
+    height: 184px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 14px;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    gap: 5px;
+    margin: 3px;
+}
+
+.select-stack,
+.selected-sort,
+.selected-position {
+    color: rgb(0, 185, 174);
+}
+
+.sub-select-btn-container div {
+    cursor: pointer;
+}
+
+
+.stack-icon img {
+    width: 80%;
+}
+
+.stack-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(227, 227, 227);
+}
+
+.stack-icon span {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.javaScript {
+    background-color: #f7df1e;
+}
+
+.search-container {
+    display: flex;
+    width: 300px;
+    height: 34px;
+    padding: 0 20px;
+    align-items: center;
+    grid-gap: 10px;
+    gap: 10px;
+    border-radius: 36px;
+    background: #f5f5f5;
+    position: relative;
+}
+
+.search-bar {
+    width: 300px;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.sub-select-btn-container div {
+    cursor: pointer;
+}
+
+
+
+/* card */
+.inner {
+    width: 1310px;
+    display: flex;
+    justify-content: start;
+    margin: auto;
+    gap: 20px;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.contents_box {
+    padding: 20px 25px 0;
+    width: 300px;
+    height: 325px;
+    background: #fff;
+    border: 2px solid #d1d1d1;
+    border-radius: 30px;
+    position: relative;
+    transition: .2s ease-in;
+}
+
+.card {
+    display: grid;
+    grid-template-rows: 1fr 4fr 1fr
+}
+
+.card_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.card_top div,
+.top_tag div {
+    font-weight: 800;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -.04em;
+}
+
+.tag_list {
+    display: flex;
+    grid-gap: 3px;
+    gap: 5px;
+}
+
+.tag_study {
+    border-radius: 20px;
+    padding: 4px 12px;
+    background: #efefef;
+    color: #656565;
+}
+
+.tag_project {
+    border-radius: 20px;
+    padding: 4px 12px;
+    background: #efefef;
+    color: #656565;
+}
+
+.deadlineTag {
+    border-radius: 20px;
+    padding: 4px 12px;
+    background: #FEB4B4;
+    color: #FF3535;
+}
+
+.heart_btn {
+    display: flex;
+}
+
+/* 좋아요 수정 필요 */
+.sprite_heart_icon_outline img {
+    width: 30px;
+}
+
+
+.sprite_heart_icon_outline.on {
+    background: url('../imgs/background01.png') no-repeat -26px -261px;
+    animation: heart_bounce 1s linear;
+}
+
+.deadline {
+    display: flex;
+    font-size: 14px;
+    grid-gap: 8px;
+    gap: 8px;
+    color: #999;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.post_title {
+    font-size: 17px;
+    min-height: 50px;
+    line-height: 28px;
+    font-weight: 700;
+    letter-spacing: -.05em;
+    margin: 7px 0 10px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    word-break: break-all;
+    overflow: hidden;
+    color: black;
+}
+
+.position_tag {
+    height: 22px;
+    display: flex;
+    margin-bottom: 20px;
+    grid-gap: 3px;
+    gap: 3px;
+}
+
+.position_tag_item {
+    list-style: none;
+    padding: 3px 10px;
+    grid-gap: 5px;
+    gap: 5px;
+    background: #f2f4f8;
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3e86f5;
+}
+
+ul {
+    display: flex;
+    gap: 5px;
+}
+
+.card_bottom {
+    display: flex;
+    font-size: 14px;
+    font-weight: 500;
+    justify-content: space-between;
+    letter-spacing: -.04em;
+    margin-top: 8px;
+}
+
+.study_border {
+    border-top: 2px solid #f2f2f2;
+    padding: 5px 0;
+}
+
+.user_container {
+    display: flex;
+    align-items: center
+}
+
+.profile_img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.profile_img img {
+    width: 100%;
+    height: 100%;
+}
+
+.user_container .user_name {
+    color: #262626;
+}
+
+.user_container .nick_name {
+    font-size: 14px;
+    font-weight: bold;
+
+}
+
+.card_bottom_right {
+    display: flex;
+    grid-gap: 10px;
+    gap: 10px;
+}
+
+.views_container,
+.conmment_container {
+    display: flex;
+    align-items: center;
+    color: #999;
+}
+
+.views_icon img,
+.comment_icon img {
+    width: 80%;
+    height: 80%;
+}

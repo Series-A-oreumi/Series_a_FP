@@ -37,6 +37,10 @@ link {
     pointer-events: none;
 }
 
+.flex {
+    display: flexs;
+}
+
 
 .flex-box {
     display: flex;
