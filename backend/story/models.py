@@ -1,17 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
+from user.models import UserProfile
 from django.db.models.signals import post_save
 
 class Post(models.Model):
     # 게시글 모델
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_author') # 작성자
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='post_author') # 작성자
     title = models.CharField(max_length=200, null=True, blank=True) # 제목
     content = models.CharField(max_length=200, null=True, blank=True) # 내용
 
     views = models.IntegerField(default=0) # 조회수
     created_at = models.DateTimeField(auto_now_add=True) # 생성날짜
     updated_at = models.DateTimeField(auto_now=True) # 수정날짜
-    likes = models.ManyToManyField(User, related_name='post_likes', blank=True) # 좋아요
+    likes = models.ManyToManyField(UserProfile, related_name='post_likes', blank=True) # 좋아요
     hashtags = models.ManyToManyField('story.Hashtag', blank=True, related_name='post_hashtags')
 
     def __str__(self):
@@ -45,7 +45,7 @@ class PostImage(models.Model):
 class Comment(models.Model):
     # 댓글 모델
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comment_post') 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_author')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='comment_author')
     content = models.CharField(max_length=1000)
 
     # 대댓글을 위한 필드
@@ -65,7 +65,7 @@ class Comment(models.Model):
 class Like(models.Model):
     # 좋아요 모델
     post = models.ForeignKey(Post,on_delete=models.CASCADE, related_name='like_post')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='like_user')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='like_user')
     liked = models.BooleanField(default=False)
 
     def __str__(self):
