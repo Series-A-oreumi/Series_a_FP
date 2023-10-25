@@ -12,6 +12,21 @@ document.addEventListener('DOMContentLoaded', function () {
             const password2 = document.getElementById('password2').value;
             const bootcamp = document.getElementById('bootcamp').value;
 
+
+            // 추가: 비밀번호 길이
+            if (password.length < 8) {
+                alert('비밀번호는 8자리 이상이어야 합니다.');
+                return;
+            }
+
+            // 추가: 숫자, 문자, 특수 문자 중 2개 이상 조합
+            const passwordRegex = /(?=(.*\d))(?=(.*[a-zA-Z]))(?=(.*[\W]))/;
+            if (!passwordRegex.test(password)) {
+                alert('비밀번호는 숫자, 문자, 특수 문자 중 최소 2개 이상의 조합이어야 합니다.');
+                return;
+            }
+
+
             const data = {
                 email: email,
                 username: username,
