@@ -101,7 +101,7 @@ class StoryPost(CreateAPIView):
     
 class StoryUpdateDelete(APIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly] # 로그인 한 유저만 가능
+    permission_classes = [IsAuthenticated] # 로그인 한 유저만 가능
 
     def get_post(self, post_id):
         try:
@@ -189,10 +189,6 @@ class ToggleLike(APIView):
         post = get_object_or_404(Post, pk=post_id)
 
         user = get_user_from_token(request)
-
-        # 로그인 한 유저가 아니면 접근불가
-        if not user.is_authenticated:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
         
         try:
             like = Like.objects.get(user=user, post=post)
@@ -200,14 +196,20 @@ class ToggleLike(APIView):
             if like.liked:
                 like.delete()
                 post.likes.remove(user)
-                return Response(status=status.HTTP_204_NO_CONTENT)
+                messages = {
+                    'success' : f'{post.author} 게시물 좋아요를 취소했습니다.' 
+                }
+                return Response(messages, status=status.HTTP_204_NO_CONTENT)
             # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
             else:
                 like.liked = True
                 like.save()
                 post.likes.add(user)
-                serializer = LikeSerializer(like)
-                return Response(serializer.data)
+                messages = {
+                    'success' : f'{post.author} 게시물 좋아요를 눌렀습니다.' 
+                }
+                return Response(messages, status=status.HTTP_201_CREATED)
+            
         except Like.DoesNotExist:
             # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
             like = Like(user=user, post=post, liked=True)
