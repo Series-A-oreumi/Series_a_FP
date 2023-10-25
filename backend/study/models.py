@@ -99,6 +99,11 @@ class Study(models.Model):
         if self.likes.count():
             return self.likes.count()
         return 0
+    
+     # 해당 게시글에 달린 댓글들 수
+    def comments_count(self):
+        ''' Get all comments '''
+        return self.comments_study.count()
 
 class Comment(models.Model):
     study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name='comments_study')
@@ -107,4 +112,4 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.study
+        return self.study.title
