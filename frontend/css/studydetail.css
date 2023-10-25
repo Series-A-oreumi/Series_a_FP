@@ -1,0 +1,267 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.top-section {
+    width: 1200px;
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    padding-bottom: 50px;
+}
+
+.views-box {
+    display: flex;
+    gap: 13px;
+}
+
+.views,
+.likes {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    color: #616161;
+}
+
+.views img,
+.likes img {
+    width: 20px;
+}
+
+.likes {
+    cursor: pointer;
+}
+
+.title {
+    width: 1200px;
+    margin: auto;
+    font-size: 30px;
+    font-weight: 700;
+    padding-bottom: 40px;
+}
+
+.user-section {
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 3px solid #f2f2f2;
+    padding-bottom: 40px;
+}
+
+.user-section a {
+    display: flex;
+    align-items: center;
+}
+
+.user-icon img {
+    max-width: 80px;
+    border: 1px white solid;
+    border-radius: 50%;
+}
+
+.user-title {
+    color: #333;
+    font-weight: 600;
+}
+
+.created_at {
+    color: #717171;
+}
+
+.post-detail {
+    width: 1200px;
+    height: 500px;
+    margin: auto;
+    padding: 40px 0 20px 0;
+}
+
+.detail-info {
+
+    margin-top: 20px;
+}
+
+.detail-row {
+    display: flex;
+    gap: 35px;
+    padding-bottom: 35px;
+}
+
+
+.detail-row-inner {
+    display: flex;
+    gap: 32px;
+    width: 30%;
+    align-items: center;
+}
+
+.sub-title {
+    color: #717171;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sub-content {
+    color: #333;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.position_tag_item {
+    list-style: none;
+    padding: 3px 10px;
+    grid-gap: 5px;
+    gap: 5px;
+    background: #f2f4f8;
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3e86f5;
+}
+
+.stack-icon img {
+    width: 80%;
+}
+
+.stack-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(227, 227, 227);
+}
+
+.stack-icon span {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.javaScript {
+    background-color: #f7df1e;
+}
+
+ul {
+    display: flex;
+    gap: 5px;
+}
+
+.detail-content {
+    margin-top: 60px;
+}
+
+.study-text {
+    font-size: 25px;
+    font-weight: 600;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f2f2f2;
+}
+
+
+.post-likes {
+    width: 1200px;
+    margin: auto;
+
+}
+
+.post-likes div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.comment-section {
+    width: 1200px;
+    margin: auto;
+}
+
+.comment-count {
+    font-weight: 700;
+    font-size: 20px;
+    margin: 50px 0 20px 0;
+}
+
+.comment-form {
+    width: 1200px;
+    margin: auto;
+}
+
+.comment-input {
+    display: flex;
+}
+
+.comment-user-icon {
+    margin-right: 20px;
+}
+
+.comment-user-icon img {
+    display: block;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #e1e1e1;
+}
+
+.comment-input textarea {
+    font-family: inherit;
+    padding: 1rem 1rem 1.5rem;
+    outline: none;
+    border: 2px solid #e1e1e1;
+    border-radius: 16px;
+    width: 100%;
+    min-height: 100px;
+    margin-bottom: 10px;
+    resize: none;
+    font-size: 16px;
+}
+
+.comment-form-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin: 16px 0;
+}
+
+.comment-form-btn button {
+    padding: 10px 20px;
+    background: #333;
+    border-radius: 50px;
+    font-weight: 700;
+    color: #fff;
+    font-size: 16px;
+    align-items: center;
+}
+
+.comment-list {
+    margin-bottom: 100px;
+}
+
+.comment-inner {
+    display: flex;
+    align-items: center;
+    padding: 30px 0 30px 0;
+    border-bottom: 2px solid #f2f2f2;
+}
+
+.user-name {
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.comment-created-at {
+    color: #333;
+}
+
+.comment-user-info {
+    margin-bottom: 7px;
+}

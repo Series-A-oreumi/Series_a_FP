@@ -1,4 +1,4 @@
-//베너
+//배너
 document.addEventListener("DOMContentLoaded", function () {
     let currentBanner = 1;
     const bannerCount = 2;
@@ -15,13 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
         moveBanners();
     }
 
-    // Banner transition on page load
     moveBanners();
 
-    // Banner transition every 5 seconds
     setInterval(nextBanner, 5000);
 
-    // Banner transition function
     function moveBanners() {
         const translateValue = -(currentBanner - 1) * bannerWidth;
         banners.forEach((banner, index) => {
@@ -136,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const stackOptionButtons = stackToggleContainer.querySelectorAll(".sub-select-btn");
     const stackText = stackToggleBtn.querySelector('.sub-select-text');
 
-    const selectedStacks = []; // 배열로 선택된 스택을 추적합니다.
+    const selectedStacks = [];
 
     stackToggleBtn.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -147,7 +144,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Close container when clicking outside
     document.addEventListener('click', (event) => {
         if (!stackToggleBtn.contains(event.target) && !stackToggleContainer.contains(event.target)) {
             stackToggleContainer.classList.remove('active');
@@ -159,7 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
             e.stopPropagation();
             const stackName = option.textContent;
             if (option.classList.contains("select-stack")) {
-                // 선택 해제된 스택을 배열에서 제거하고 텍스트에서도 삭제합니다.
                 const index = selectedStacks.indexOf(stackName);
                 if (index !== -1) {
                     selectedStacks.splice(index, 1);
@@ -167,13 +162,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.classList.remove("select-stack");
                 option.style.borderColor = '';
             } else {
-                // 선택된 스택을 배열에 추가하고 텍스트에 추가합니다.
                 selectedStacks.push(stackName);
                 option.classList.add("select-stack");
                 option.style.borderColor = 'rgb(0, 185, 174)';
             }
 
-            // 선택된 스택들의 텍스트를 쉼표로 구분하여 표시합니다.
             stackText.textContent = selectedStacks.join(', ');
 
             if (selectedStacks.length === 0) {
@@ -208,9 +201,9 @@ heartBtn.addEventListener("click", () => {
     isHearted = !isHearted;
 
     if (isHearted) {
-        heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 하트를 누른 경우 채워진 하트 이미지로 변경
+        heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 하트를 누른 경우
     } else {
-        heartImage.src = "Series_a_FP\frontend\imgs\study\grayheart.png"; // 하트를 취소한 경우 빈 하트 이미지로 변경
+        heartImage.src = "Series_a_FP\frontend\imgs\study\grayheart.png"; // 하트를 취소한 경우
     }
 });
 
