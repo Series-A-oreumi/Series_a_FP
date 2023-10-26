@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                             // JWT 토큰을 로컬 스토리지에 저장
                             localStorage.setItem('access_token', data.access);
-                
+                            localStorage.setItem('refresh_token', data.refresh);
                             window.location.href = '../html/feed.html'; // feed 페이지 URL로 이동
                         });
                         

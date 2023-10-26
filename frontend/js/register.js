@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // 추가: 숫자, 문자, 특수 문자 중 2개 이상 조합
-            const passwordRegex = /(?=(.*\d))(?=(.*[a-zA-Z]))(?=(.*[\W]))/;
-            if (!passwordRegex.test(password)) {
-                alert('비밀번호는 숫자, 문자, 특수 문자 중 최소 2개 이상의 조합이어야 합니다.');
-                return;
-            }
+            // // 추가: 숫자, 문자, 특수 문자 중 2개 이상 조합
+            // const passwordRegex = /(?=(.*\d))(?=(.*[a-zA-Z]))(?=(.*[\W]))/;
+            // if (!passwordRegex.test(password)) {
+            //     alert('비밀번호는 숫자, 문자, 특수 문자 중 최소 2개 이상의 조합이어야 합니다.');
+            //     return;
+            // }
 
 
             const data = {
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = '../html/feed.html'; // 로그인 페이지 URL로 이동
+                        window.location.href = '../html/login.html'; // 로그인 페이지 URL로 이동
                     } else {
                         response.json().then(data => {
                             alert('회원가입 실패: ' + JSON.stringify(data));

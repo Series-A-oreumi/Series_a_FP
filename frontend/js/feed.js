@@ -2,7 +2,6 @@
 import { formatTimeAgo } from "./format.js" 
 import { checkAccessTokenValidity } from "./auth.js"
 
-
 // 페이지 로딩이 완료되면 실행됩니다.
 document.addEventListener("DOMContentLoaded", async function () {
     
