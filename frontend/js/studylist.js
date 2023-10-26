@@ -195,43 +195,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // api
-const heartBtn = document.getElementById("heartBtn");
-const heartImage = document.getElementById("heartImage");
+// const heartBtn = document.getElementById("heartBtn");
+// const heartImage = document.getElementById("heartImage");
 
-let isHearted = false;
-if (isHearted) {
-    heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 이미 하트를 누른 게시글인 경우
-}
+// let isHearted = false;
+// if (isHearted) {
+//     heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 이미 하트를 누른 게시글인 경우
+// }
 
 // 하트 버튼
-heartBtn.addEventListener("click", () => {
+// heartBtn.addEventListener("click", () => {
 
-    isHearted = !isHearted;
+//     isHearted = !isHearted;
 
-    if (isHearted) {
-        heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 하트를 누른 경우
-    } else {
-        heartImage.src = "Series_a_FP\frontend\imgs\study\grayheart.png"; // 하트를 취소한 경우
-    }
-});
+//     if (isHearted) {
+//         heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 하트를 누른 경우
+//     } else {
+//         heartImage.src = "Series_a_FP\frontend\imgs\study\grayheart.png"; // 하트를 취소한 경우
+//     }
+// });
 
 
 // 상단
 function createCardTop(data) {
     let tagStudy = '';
     let tagProject = '';
+    let deadlineTag = '';
 
-    if (data.study) {
+    if (data.project_study === 'study') {
         tagStudy = `<div class="tag_study">🌠스터디</div>`;
-    }
-
-    if (data.project) {
+    } else {
         tagProject = `<div class="tag_project">🧪프로젝트</div>`;
     }
 
+    const currentTime = new Date();
+    const endAtTime = new Date(data.end_at);
+    const timeDifference = endAtTime - currentTime;
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+
+    if (timeDifference < oneDayInMilliseconds && timeDifference >= 0) {
+        // 마감일이 오늘
+        deadlineTag = `<div class="deadlineTag">🔥마감코앞</div>`;
+    } else if (timeDifference < oneDayInMilliseconds * 10 && timeDifference >= oneDayInMilliseconds) {
+        // 마감일이 10일 이내
+        const daysLeft = Math.floor(timeDifference / oneDayInMilliseconds);
+        deadlineTag = `<div class="deadlineTag">마감 ${daysLeft}일전</div>`;
+    }
+
+
     const heartImageSrc = data.likes
-        ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
-        : "Series_a_FP/frontend/imgs/study/grayheart.png";
+        ? "../imgs/study/pinkheart.png"
+        : "../imgs/study/grayheart.png";
 
     return `
         <div class="card_top">
@@ -240,7 +254,7 @@ function createCardTop(data) {
                     ${tagStudy}
                     ${tagProject}
                 </div>
-                <div class="deadlineTag">${data.deadlineTag}</div>
+                ${deadlineTag}
             </div>
             <div class="heart_btn">
                 <div class="sprite_heart_icon_outline">
@@ -253,7 +267,12 @@ function createCardTop(data) {
 
 // 중간
 // post url 연결 필요
+
 function createPostContent(data) {
+    const endAt = data.end_at;
+    const formattedEndDate = formatDate(endAt);
+    const studyDetailURL = `http://localhost:8000/api/study/${data.id}/`;
+
     let stackTags = '';
     if (data.stacks && data.stacks.length > 0) {
         stackTags = `
@@ -261,8 +280,8 @@ function createPostContent(data) {
                 <ul>
                     ${data.stacks.map(stack => `
                         <li class="stack-icon">
-                            <span class="stack-icon ${stack}">
-                                <img src="Series_a_FP/frontend/imgs/study/${stack}_icon.png">
+                            <span class="stack-icon ${stack.name}">
+                                <img src="../imgs/study/${stack.name}_icon.png">
                             </span>
                         </li>
                     `).join('')}
@@ -272,11 +291,11 @@ function createPostContent(data) {
     }
 
     return `
-        <a href="#">
+        <a href="${studyDetailURL}">
             <div class="post_content">
                 <div class="post_content_main">
-                    <div class="deadline">마감일 | ${data.deadline}</div>
-                    <div class="post_title">${data.post_title}</div>
+                    <div class="deadline">마감일 | ${formattedEndDate}</div>
+                    <div class="post_title">${data.title}</div>
                 </div>
                 <div class="post_content_tag">
                     <div class="position_tag">
@@ -289,31 +308,45 @@ function createPostContent(data) {
     `;
 }
 
+// 날짜 형식 변경 함수
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    return formattedDate.replace(/\//g, '.');
+}
+
+
 // 하단
 // 유저 프로필 사진 변경해야 함
 // 댓글 모델 확인 필요
-// 유저 url 연결 필요
+// 유저 url 경로 확인하기
+// 이미지 경로 바꾸기!!!!!!!!!!!!
 function createCardBottom(data) {
 
-    const totalComments = data.comments.length;
+    const totalComments = data.comments_count;
+    const userProfileURL = `/user/${data.id}/`;
+
 
     return `
         <div class="card_bottom study_border">
-            <a href="#">
+            <a href="${userProfileURL}">
                 <div class "user_container">
-                    <div class="profile_img"><img src="${data.profile_img}"></div>
                     <div class="user_name">
-                        <div class="nick_name m_text">${data.nick_name}</div>
+                        <div class="user-name-text">${data.author.username}</div>
+                        <div class="email-text">👥 ${data.author.email}</div>
                     </div>
                 </div>
             </a>
             <div class="card_bottom_right">
                 <div class="views_container">
-                    <div class="views_icon"><img src="Series_a_FP/frontend/imgs/study/viewsicon.png"></div>
+                    <div class="views_icon">
+                        <img src="../imgs/study/viewsicon.png">
+                        
+                    </div>
                     <div class="views">${data.views}</div>
                 </div>
                 <div class="conmment_container">
-                    <div class="comment_icon"><img src="Series_a_FP/frontend/imgs/study/commenticon.png"></div>
+                    <div class="comment_icon"><img src="../imgs/study/commenticon.png"></div>
                     <div class="comment">${totalComments}</div>
                 </div>
             </div>
@@ -339,14 +372,14 @@ function createPost(data) {
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
-    const accessToken = localStorage.getItem('access_token');
+    // const accessToken = localStorage.getItem('access_token');
     const apiEndpoint = "http://localhost:8000/api/study/";
 
     try {
         const response = await fetch(apiEndpoint, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${accessToken}`,
+                // 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -355,12 +388,16 @@ async function fetchDataFromAPI() {
             throw new Error('Failed to fetch data');
         }
 
-        const postData = await response.json();
+        const postDataArray = await response.json();
 
-        createDetaile(postData);
+        postDataArray.forEach(data => {
+            createPost(data);
+        });
+
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
 fetchDataFromAPI();
+

@@ -318,7 +318,7 @@ button {
 
 }
 
-.javaScript {
+.javascript {
     background-color: #f7df1e;
 }
 
@@ -365,7 +365,7 @@ button {
 .contents_box {
     padding: 20px 25px 0;
     width: 300px;
-    height: 325px;
+    height: 330px;
     background: #fff;
     border: 2px solid #d1d1d1;
     border-radius: 30px;
@@ -375,7 +375,7 @@ button {
 
 .card {
     display: grid;
-    grid-template-rows: 1fr 4fr 1fr
+    grid-template-rows: 1fr 3.5fr 1fr
 }
 
 .card_top {
@@ -518,14 +518,20 @@ ul {
     height: 100%;
 }
 
-.user_container .user_name {
+
+.user-name-text {
+    font-size: 15px;
+    font-weight: bold;
     color: #262626;
+    margin: 3px;
+    overflow: hidden;
 }
 
-.user_container .nick_name {
-    font-size: 14px;
-    font-weight: bold;
-
+.email-text {
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 3px;
+    overflow: hidden;
 }
 
 .card_bottom_right {

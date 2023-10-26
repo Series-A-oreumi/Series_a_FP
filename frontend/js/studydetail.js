@@ -1,7 +1,16 @@
+// 날짜 형식 변경 함수
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    return formattedDate.replace(/\//g, '.');
+}
+
 
 // 제목 ,유저
 // 유저 아이콘 데이터이름 확인 필요
 function createDetailSection1(data) {
+    const createAt = data.created_at
+    const formattedEndDate = formatDate(createAt);
 
     return `
         <div class="title">${data.title}</div>
@@ -10,10 +19,13 @@ function createDetailSection1(data) {
                 <div class="user-icon">
                     ${data.usericon}
                 </div>
-                <div class="user-title">${data.author}</div>
+                <div class="user-section-inner">
+                    <div class="user-title">${data.author.username}</div>
+                    <div class="email-text">👥 ${data.author.email}</div>
+                </div>
             </a>
-            <div>|</div>
-            <div class="created_at">${data.created_at}</div>
+            <div class="created_at">|</div>
+            <div class="created_at">${formattedEndDate}</div>
         </div>
     `;
 }
@@ -27,8 +39,8 @@ function createDetailSection2(data) {
                 <ul>
                     ${data.stacks.map(stack => `
                         <li class="stack-icon">
-                            <span class="stack-icon ${stack}">
-                                <img src="Series_a_FP/frontend/imgs/study/${stack}_icon.png">
+                            <span class="stack-icon ${stack.name}">
+                                <img src="../imgs/study/${stack.name}_icon.png">
                             </span>
                         </li>
                     `).join('')}
@@ -36,11 +48,34 @@ function createDetailSection2(data) {
             </div>
         `;
     }
-    const totalLikes = data.likes.length;
 
     const heartImageSrc = data.likes
-        ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
-        : "Series_a_FP/frontend/imgs/study/grayheart.png";
+        ? "../imgs/study/pinkheart.png"
+        : "../imgs/study/grayheart.png";
+
+    // const heartImageSrc = data.likes
+    //     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
+    //     : "Series_a_FP/frontend/imgs/study/grayheart.png";
+
+
+    const startAt = data.start_at
+    const formattedStartDate = formatDate(startAt);
+
+    let Period = '';
+    if (data.period === "6") {
+        Period = `<div class="sub-content">6개월 이상</div>`;
+    } else if (data.period === "0") {
+        Period = `<div class="sub-content">기간 미정</div>`;
+    } else {
+        Period = `<div class="sub-content">${data.period}개월</div>`;
+    }
+
+    let Project = '';
+    if (data.project_study === 'project') {
+        Project = `<div class="study-text">프로젝트 소개</div>`
+    } else {
+        Project = `<div class="study-text">스터디 소개</div>`
+    }
 
     return `
         <div class="post-detail">
@@ -62,7 +97,7 @@ function createDetailSection2(data) {
                 </div>
                 <div class="detail-row-inner">
                     <div class="sub-title">시작 예정</div>
-                    <div class="sub-content">${data.start_at}</div>
+                    <div class="sub-content">${formattedStartDate}</div>
                 </div>
             </div>
             <div class="detail-row">
@@ -72,7 +107,7 @@ function createDetailSection2(data) {
                 </div>
                 <div class="detail-row-inner">
                     <div class="sub-title">예상 기간</div>
-                    <div class="sub-content">${data.period}</div>
+                    ${Period}
                 </div>
             </div>
             <div class="detail-row">
@@ -85,7 +120,7 @@ function createDetailSection2(data) {
             </div>
         </div>
         <div class="detail-content">
-            <div class="study-text">${data.project_study} 소개</div>
+            ${Project}
             <div class="content">
                 ${data.content}
             </div>
@@ -99,7 +134,7 @@ function createDetailSection2(data) {
             </div>
             <div class="likes">
                 <img src="${heartImageSrc}">
-                <div>${totalLikes}</div>
+                <div>${data.likes}</div>
             </div>
         </div>
     </div>
@@ -162,14 +197,14 @@ function createDetaile(data) {
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
-    const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = "http://localhost:8000/api/study/";
+    // const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = "http://localhost:8000/api/study/${data.id}/";
 
     try {
         const response = await fetch(apiEndpoint, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${accessToken}`,
+                // 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             }
         });
