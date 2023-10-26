@@ -59,7 +59,6 @@ class StudyDetailSerializer(serializers.ModelSerializer):
 
         participant_users = study.participants.all()
         # 참여자 유저들의 정보를 시리얼라이즈하여 반환.
-        print(participant_users)
         return [user.username for user in participant_users]
     
     def get_comments_count(self, study):
