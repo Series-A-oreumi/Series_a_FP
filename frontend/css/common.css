@@ -211,7 +211,7 @@ button{
 
 /* sidebar시작 */
 .sidebarHidden {
-    display: none; /* 숨김 처리 */
+    transform: translateX(-250px);
 }
 
 #sidebar {
@@ -221,13 +221,13 @@ button{
     z-index: 9999;
     top: 0;
     left: 0;
-    background-color: #fff; /* Background color */
+    background-color: #fff;
     overflow-x: hidden;
     transition: 0.5s;
-    display:none;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    transform: translateX(-250px);
 }
 
 

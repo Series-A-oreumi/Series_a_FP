@@ -65,6 +65,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             usernameSpan.textContent = post.author.username;
             usernameSpan.style.color = "black";  // 사용자 이름의 글자색을 여기에 지정
             
+            //모달 게시물 헤더
+            const postOwner = document.createElement("div");
+            postOwner.textContent = `${post.author.username} 님의 게시물`;  // 여기서 username을 사용하고 있습니다. 실제로 사용하는 데이터 필드로 변경해주세요.
+            postOwner.className = "post_owner";
+            
             // postTime 설정 및 스타일 지정
             const postTimeSpan = document.createElement("span");
             postTimeSpan.textContent = ` • ${postTime}`;
@@ -75,8 +80,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             // country.className = "country s_text";
             // country.textContent = "Seoul, South Korea"; // 요것도 아직 지역 필드 없어서 서울로 임의로 설정 추후 변경 예정!
             // userName.appendChild(country);
+            userContainer.appendChild(postOwner);
             userName.appendChild(nickName);
             userContainer.appendChild(userName);
+            const modalTitleCenter = document.querySelector(".modal_title_center");
+            modalTitleCenter.innerHTML = ""; // 기존에 있던 내용을 비워줍니다.
+            modalTitleCenter.appendChild(postOwner);
             
             // 토글 기능 추가 해야함!
             // 포스트 내용 추가
@@ -101,6 +110,36 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgdiv.appendChild(image)
             postImg.appendChild(imgdiv)
             imgSection.appendChild(postImg)
+
+            image.addEventListener("click", function () {
+                // 이미 모달이 열려있는지 확인
+                const isModalOpen = document.getElementById("modal_add_feed").style.display === "flex";
+            
+                if (!isModalOpen) {
+                    // 모달을 열도록 설정
+                    const modal = document.getElementById("modal_add_feed");
+                    modal.style.top = window.scrollY + 'px'; 
+                    modal.style.display = "flex";
+                    document.body.style.overflowY = "hidden";
+            
+                    // 모달 닫기 코드
+                    const buttonCloseModal = document.getElementById("close_modal");
+                    buttonCloseModal.addEventListener("click", e => {
+                        modal.style.display = "none";
+                        document.body.style.overflowY = "visible";
+                    });
+            
+                    // 빈 화면 클릭하여 모달 닫기
+                    const modalOverlay = document.querySelector(".modal_overlay");
+                    modalOverlay.addEventListener("click", e => {
+                        if (e.target === modalOverlay) {
+                            modal.style.display = "none";
+                            document.body.style.overflowY = "visible";
+                        }
+                    });
+                }
+            });
+
     
              // 좋아요 버튼을 선택하고 클릭 이벤트를 처리
             const likeButton = document.createElement('div');
@@ -192,6 +231,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                 buttonCloseModal.addEventListener("click", e => {
                     modal.style.display = "none";
                     document.body.style.overflowY = "visible";
+                });
+
+                // 빈 화면 클릭하여 모달 닫기
+                const modalOverlay = document.querySelector(".modal_overlay");
+                modalOverlay.addEventListener("click", e => {
+                    if (e.target === modalOverlay) {
+                        modal.style.display = "none";
+                        document.body.style.overflowY = "visible";
+                    }
                 });
             });
 
