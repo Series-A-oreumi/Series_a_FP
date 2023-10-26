@@ -3,15 +3,15 @@ from .models import Post, Comment, Hashtag, PostImage
 from user.models import UserProfile
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
+# from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import CommentSerializer, CreateCommentSerializer,LikeSerializer, PostDetailSerializer , PostSerializer
 from user.utils import get_user_from_token, S3ImgUploader
+from user.permissions import IsTokenValid  # 커스텀 권한 클래스 임포트
+
 class StoryList(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = (IsAuthenticated,) # get 요청은 누구나가능. 그 외 요청은 로그인 한 유저만 가능
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def get(self, request):
         try:
@@ -21,12 +21,11 @@ class StoryList(APIView):
         
         # PostSerializer를 사용하여 직렬화
         serializer = PostSerializer(posts, many=True)  
-    
+        
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class StoryPost(CreateAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def post(self, request, format=None):
 
@@ -100,8 +99,7 @@ class StoryPost(CreateAPIView):
 #                         data={"error": "Invalid pk values"})
     
 class StoryDetail(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated] # 로그인 한 유저만 가능
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def get_post(self, post_id):
         try:
@@ -163,9 +161,7 @@ class StoryDetail(APIView):
 
 
 class Like(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
     # 좋아요 기능
     def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
@@ -182,8 +178,7 @@ class Like(APIView):
             return Response({"detail": "Post liked successfully."}, status=status.HTTP_201_CREATED)
 
 class ToggleLike(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
@@ -218,8 +213,7 @@ class ToggleLike(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class CommentCreate(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated] # 로그인 한 유저만 접근가능
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
     
     # 댓글 작성
     def post(self, request, post_id):
@@ -269,8 +263,7 @@ class CommentCreate(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class CommentUpdateDelete(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def get_comment(self, comment_id):
         try:

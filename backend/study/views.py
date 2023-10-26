@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+
+from user.permissions import IsTokenValid
 from .serializers import CommentCreateSerializer, CommentSerializer, StudyCreateSerializer, StudyDetailSerializer, StudySerializer
 from .models import Comment, Stack, Study
 from user.models import UserProfile
@@ -15,7 +17,7 @@ from django.db import transaction
 class StudyList(APIView):
 
     # 로그인 한 유저만 가능
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
     
     def get(self, request):
         try:
@@ -32,8 +34,7 @@ class StudyList(APIView):
 # studycreate (API 테스트 정상작동) -> 프론트와 논의 필요!
 class StudyCreate(APIView):
 
-    # 로그인 한 유저만 접속가능
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
     
     def post(self, request):
         
@@ -64,7 +65,7 @@ class StudyCreate(APIView):
 # study detail & edit & delete (API 테스트 정상작동) -> 수정부분은 프론트와 논의필요!
 class StudyDetail(APIView):
    
-    permission_classes = [IsAuthenticated] # 로그인 한 유저만 가능
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def get_study(self, study_id):
         try:
@@ -148,7 +149,7 @@ class StudyJoin(APIView):
 
 # comment create (API 테스트 정상작동)
 class CommentCreate(APIView):
-    permission_classes = [IsAuthenticated] # 로그인 한 유저만 접근가능
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
     
     # 댓글 작성
     def post(self, request, study_id):
@@ -175,7 +176,7 @@ class CommentCreate(APIView):
 # comment edit & delete (API 테스트 정상작동)
 class CommentUpdateDelete(APIView):
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def get_comment(self, comment_id):
         try:

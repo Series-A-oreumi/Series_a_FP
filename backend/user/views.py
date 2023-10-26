@@ -13,14 +13,14 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 
-class UserProfileView(RetrieveAPIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = UserProfileSerializer
+# class UserProfileView(RetrieveAPIView):
+#     permission_classes = (IsAuthenticated,)
+#     serializer_class = UserProfileSerializer
 
-    queryset = UserProfile.objects.all()
+#     queryset = UserProfile.objects.all()
 
-    def get_object(self):
-        return self.request.user
+#     def get_object(self):
+#         return self.request.user
     
 class LoginView(GenericAPIView):
     permission_classes = (AllowAny,)
@@ -40,7 +40,6 @@ class LoginView(GenericAPIView):
                 'refresh': refresh,
                 'access': access,
             }
-            
             return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
