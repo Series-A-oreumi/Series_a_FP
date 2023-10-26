@@ -372,14 +372,14 @@ function createPost(data) {
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
-    // const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('access_token');
     const apiEndpoint = "http://localhost:8000/api/study/";
 
     try {
         const response = await fetch(apiEndpoint, {
             method: 'GET',
             headers: {
-                // 'Authorization': `Bearer ${accessToken}`,
+                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             }
         });
