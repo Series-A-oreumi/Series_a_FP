@@ -1,3 +1,55 @@
+// 필터링
+// 스터디, 프로젝트
+document.addEventListener("DOMContentLoaded", function () {
+    const studyCategories = document.querySelectorAll('.study-category');
+    const cards = document.querySelectorAll('.contents_box');
+
+    studyCategories[0].classList.add('active');
+
+    studyCategories.forEach(category => {
+        category.addEventListener('click', () => {
+            studyCategories.forEach(tag => {
+                tag.classList.remove('active');
+            });
+            category.classList.add('active');
+        });
+    });
+});
+
+//이거 왜 적용 안됨?
+document.addEventListener("DOMContentLoaded", function () {
+    const studyCategory = document.getElementById("studyCategory");
+    const projectCategory = document.getElementById("projectCategory");
+    const allCategory = document.getElementById("allCategory");
+    const contentBox = document.querySelector("#contentBox");
+
+    studyCategory.addEventListener("click", function () {
+        filterContent("study");
+    });
+
+    projectCategory.addEventListener("click", function () {
+        filterContent("project");
+    });
+
+    function filterContent(filterType) {
+        contentBox.forEach((post) => {
+            const tagStudy = post.querySelector(".tag_study");
+            const tagProject = post.querySelector(".tag_project");
+
+            if (filterType === "study" && tagStudy) {
+                post.style.display = "block";
+            } else if (filterType === "project" && tagProject) {
+                post.style.display = "block";
+            } else if (allCategory) {
+                post.style.display = "block";
+            } else {
+                post.style.display = "none";
+            }
+        });
+    }
+});
+
+
 //배너
 document.addEventListener("DOMContentLoaded", function () {
     let currentBanner = 1;
@@ -14,9 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         moveBanners();
     }
-
     moveBanners();
-
     setInterval(nextBanner, 5000);
 
     function moveBanners() {
@@ -26,37 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
-// 필터링-스터디, 프로젝트
-// db연결 후 테스트 해야 함!
-const studyCategories = document.querySelectorAll('.study-category');
-const cards = document.querySelectorAll('.card');
-
-studyCategories[0].classList.add('active');
-
-studyCategories.forEach(category => {
-    category.addEventListener('click', () => {
-        studyCategories.forEach(tag => {
-            tag.classList.remove('active');
-        });
-
-        category.classList.add('active');
-
-        const selectedTag = category.querySelector('.study-category-text').textContent;
-
-        cards.forEach(card => {
-            card.style.display = 'none';
-        });
-
-        cards.forEach(card => {
-            const cardTag = card.querySelector('.tag_list .top_tag .study-category-text').textContent;
-            if (selectedTag === '전체' || selectedTag === cardTag) {
-                card.style.display = 'block';
-            }
-        });
-    });
-});
-
 
 
 // 메뉴 토글
@@ -333,7 +352,7 @@ function createCardBottom(data) {
                 <div class "user_container">
                     <div class="user_name">
                         <div class="user-name-text">${data.author.username}</div>
-                        <div class="email-text">👥 ${data.author.email}</div>
+                        <div class="email-text">${data.author.email}</div>
                     </div>
                 </div>
             </a>
@@ -359,7 +378,7 @@ function createPost(data) {
     const innerContainer = document.querySelector(".inner");
 
     const postHTML = `
-        <div class="contents_box">
+        <div class="contents_box" id="contentBox">
             <div class="card">
                 ${createCardTop(data)}
                 ${createPostContent(data)}
@@ -401,3 +420,9 @@ async function fetchDataFromAPI() {
 
 fetchDataFromAPI();
 
+
+
+
+
+
+// 최신순

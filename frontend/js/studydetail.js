@@ -143,26 +143,27 @@ function createDetailSection2(data) {
 
 // 댓글 목록
 // url 확인 필요
-// 댓글 작성자 이게 맞나..?
 function createDetailSection3(data) {
+
+
+
 
     return `
         <div class="comment-list">
             <div class="comment-inner">
                 <a href="#">
                     <div class="comment-user-icon">
-                        ${data.author}
+                        ${data.comments_list.icon}
                     </div>
                 </a>
                 <div>
                     <div class="comment-user-info">
                         <a href="#">
-                            <span class="user-name">${data.author}</span>
+                            <span class="user-name">${data.comments_list.author}</span>
                         </a>
-                        <span class="comment-created-at">${data.created_at}</span>
-
+                        <span class="comment-created-at">${formattedCommentDate}</span>
                     </div>
-                    <div class="user-comment">${data.content}</div>
+                    <div class="user-comment">${data.comments_list.content}</div>
                 </div>
             </div>
         </div>
