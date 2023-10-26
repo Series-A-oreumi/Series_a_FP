@@ -1,4 +1,4 @@
-//베너
+//배너
 document.addEventListener("DOMContentLoaded", function () {
     let currentBanner = 1;
     const bannerCount = 2;
@@ -15,13 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
         moveBanners();
     }
 
-    // Banner transition on page load
     moveBanners();
 
-    // Banner transition every 5 seconds
     setInterval(nextBanner, 5000);
 
-    // Banner transition function
     function moveBanners() {
         const translateValue = -(currentBanner - 1) * bannerWidth;
         banners.forEach((banner, index) => {
@@ -74,13 +71,23 @@ toggleBtns.forEach((btn, index) => {
         if (isOpen[index]) {
             toggleContainers[index].classList.remove('active');
         } else {
-            toggleContainers.forEach((container) => {
-                container.classList.remove('active');
+            toggleContainers.forEach((container, i) => {
+                if (i !== index) {
+                    container.classList.remove('active');
+                    isOpen[i] = false;
+                }
             });
             toggleContainers[index].classList.add('active');
         }
 
         isOpen[index] = !isOpen[index];
+    });
+});
+
+// 다른 토글 버튼 클릭 시 기술스택 컨테이너 닫기
+toggleBtns.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+        stackToggleContainer.classList.remove('active');
     });
 });
 
@@ -136,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const stackOptionButtons = stackToggleContainer.querySelectorAll(".sub-select-btn");
     const stackText = stackToggleBtn.querySelector('.sub-select-text');
 
-    const selectedStacks = []; // 배열로 선택된 스택을 추적합니다.
+    const selectedStacks = [];
 
     stackToggleBtn.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -147,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Close container when clicking outside
     document.addEventListener('click', (event) => {
         if (!stackToggleBtn.contains(event.target) && !stackToggleContainer.contains(event.target)) {
             stackToggleContainer.classList.remove('active');
@@ -159,7 +165,6 @@ document.addEventListener("DOMContentLoaded", function () {
             e.stopPropagation();
             const stackName = option.textContent;
             if (option.classList.contains("select-stack")) {
-                // 선택 해제된 스택을 배열에서 제거하고 텍스트에서도 삭제합니다.
                 const index = selectedStacks.indexOf(stackName);
                 if (index !== -1) {
                     selectedStacks.splice(index, 1);
@@ -167,13 +172,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.classList.remove("select-stack");
                 option.style.borderColor = '';
             } else {
-                // 선택된 스택을 배열에 추가하고 텍스트에 추가합니다.
                 selectedStacks.push(stackName);
                 option.classList.add("select-stack");
                 option.style.borderColor = 'rgb(0, 185, 174)';
             }
 
-            // 선택된 스택들의 텍스트를 쉼표로 구분하여 표시합니다.
             stackText.textContent = selectedStacks.join(', ');
 
             if (selectedStacks.length === 0) {
@@ -192,8 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // api
-const apiEndpoint = "http://localhost:8000/api/story/";
-
 const heartBtn = document.getElementById("heartBtn");
 const heartImage = document.getElementById("heartImage");
 
@@ -208,9 +209,9 @@ heartBtn.addEventListener("click", () => {
     isHearted = !isHearted;
 
     if (isHearted) {
-        heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 하트를 누른 경우 채워진 하트 이미지로 변경
+        heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 하트를 누른 경우
     } else {
-        heartImage.src = "Series_a_FP\frontend\imgs\study\grayheart.png"; // 하트를 취소한 경우 빈 하트 이미지로 변경
+        heartImage.src = "Series_a_FP\frontend\imgs\study\grayheart.png"; // 하트를 취소한 경우
     }
 });
 
@@ -338,213 +339,28 @@ function createPost(data) {
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
+    const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = "http://localhost:8000/api/study/";
+
     try {
-        const response = await fetch(apiEndpoint);
+        const response = await fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }
 
         const postData = await response.json();
 
-        createPost(postData);
+        createDetaile(postData);
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
 fetchDataFromAPI();
-
-
-// test
-// document.addEventListener("DOMContentLoaded", async function () {
-//     try {
-//         // const response = await fetch("http://localhost:8000/api/study/");
-//         const response = await fetch("http://localhost:8000/api/story/");
-//         const posts = await response.json();
-
-//         const contentsBox = document.querySelector(".contents_box");
-
-//         posts.forEach(post => {
-//             const card = createCardElement(post);
-//             contentsBox.appendChild(card);
-//         });
-//     } catch (error) {
-//         console.error("데이터를 가져오는 중 오류 발생:", error);
-//     }
-// });
-
-// function createCardElement(post) {
-//     const card = document.createElement("div");
-//     card.className = "card";
-
-//     const cardTop = createCardTopElement(post);
-//     const content = createContentElement(post);
-//     const cardBottom = createCardBottomElement(post);
-
-//     card.appendChild(cardTop);
-//     card.appendChild(content);
-//     card.appendChild(cardBottom);
-
-//     return card;
-// }
-
-// function createCardTopElement(post) {
-//     const cardTop = document.createElement("div");
-//     cardTop.className = "card_top";
-
-
-//     const topTag = document.createElement("div");
-//     topTag.className = "top_tag";
-//     const tagStudy = document.createElement("div");
-//     tagStudy.className = "tag_study";
-//     const tagProject = document.createElement("div");
-//     tagProject.className = "tag_project";
-
-//     topTag.appendChild(tagProject);
-//     topTag.appendChild(tagStudy);
-
-//     const deadlineTag = document.createElement("div");
-//     deadlineTag.className = "tag_deadline";
-
-
-//     const likeButton = document.createElement('div');
-//     likeButton.className = 'sprite_heart_icon_outline';
-//     likeButton.setAttribute('data-name', 'heartbeat');
-//     likeButton.setAttribute('data-post-id', post.pk);
-//     likeButton.addEventListener("click", async function () {
-//         const postId = likeButton.getAttribute("data-post-id");
-
-//         try {
-//             const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
-//                 method: "POST",
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                 },
-//             });
-
-//             if (response.ok) {
-//                 const data = await response.json();
-//                 if (data.liked) {
-//                     likeButton.classList.add("on");
-//                 } else {
-//                     likeButton.classList.remove("on");
-//                 }
-//             } else {
-//                 console.error("좋아요 토글 중 오류 발생:", response.status);
-//             }
-//         } catch (error) {
-//             console.error("좋아요 토글 중 오류 발생:", error);
-//         }
-//     });
-
-//     const heartBtn = document.createElement('div');
-//     heartBtn.className = 'heart_btn';
-//     heartBtn.appendChild(likeButton);
-
-//     cardTop.appendChild(topTag);
-//     cardTop.appendChild(deadlineTag);
-//     cardTop.appendChild(heartBtn);
-
-//     return cardTop;
-// }
-
-// function createContentElement(post) {
-//     const content = document.createElement("div");
-//     content.className = "post_content";
-
-//     const contentMain = document.createElement("div");
-//     contentMain.className = "post_content_main";
-//     const contentTag = document.createElement("div");
-//     contentTag.className = "post_content_tag";
-
-//     const deadline = document.createElement("div");
-//     deadline.className = "deadline";
-//     deadline.textContent = `마감일 | ${post.deadline}`;
-//     const postTitle = document.createElement("div");
-//     postTitle.className = "post_title";
-
-//     contentMain.appendChild(deadline);
-//     contentMain.appendChild(postTitle);
-
-
-//     const positionTag = document.createElement("div");
-//     positionTag.className = "position_tag";
-//     positionTag.textContent = post.position;
-
-//     const stackTag = document.createElement("div");
-//     stackTag.className = "stack_tag";
-
-//     contentTag.appendChild(positionTag);
-//     contentTag.appendChild(stackTag);
-
-//     content.appendChild(contentMain);
-//     content.appendChild(contentTag);
-
-//     return content;
-// }
-
-// function createCardBottomElement(post) {
-//     const cardBottom = document.createElement("div");
-//     cardBottom.className = "card_bottom";
-
-//     const userContainer = document.createElement("div");
-//     userContainer.className = "user_container";
-
-//     const profileImg = document.createElement("div");
-//     profileImg.className = "profile_img";
-//     const img = document.createElement("img");
-//     img.src = "/frontend/media/accounts/tiger/uAqIxqLO.jpg";
-//     img.alt = "프로필 이미지";
-//     profileImg.appendChild(img);
-//     userContainer.appendChild(profileImg);
-
-//     const userName = document.createElement("div");
-//     userName.className = "user_name";
-//     const nickName = document.createElement("div");
-//     nickName.className = "nick_name m_text";
-//     nickName.textContent = post.author.username;
-//     userName.appendChild(nickName);
-
-//     cardBottom.appendChild(userContainer);
-//     cardBottom.appendChild(userName);
-
-//     const cardBtRightDiv = document.createElement("div");
-//     cardBtRightDiv.className = "card_bottom_right";
-
-//     const viewsDiv = document.createElement("div");
-//     viewsDiv.className = "views_container";
-
-//     const viewsIcon = document.createElement('div');
-//     viewsIcon.className = "views_icon";
-//     const viewimg = document.createElement("img");
-//     viewimg.src = "/frontend/imgs/study/viewsicon.png";
-//     const views = document.createElement('div');
-//     views.className = "views";
-//     views.textContent = post.views_count;
-
-//     viewsIcon.appendChild(viewimg);
-//     viewsDiv.appendChild(viewsIcon);
-//     viewsDiv.appendChild(views);
-
-//     const commentDiv = document.createElement("div");
-//     commentDiv.className = "comment_container";
-
-//     const commentIcon = document.createElement('div');
-//     commentIcon.className = "comment_icon";
-//     const commentimg = document.createElement("img");
-//     commentimg.src = "/frontend/imgs/study/commenticon.png";
-//     const comment = document.createElement('div');
-//     comment.className = "comment";
-//     comment.textContent = post.comments_count;
-
-//     commentIcon.appendChild(commentimg);
-//     commentDiv.appendChild(commentIcon);
-//     commentDiv.appendChild(comment);
-
-//     cardBtRightDiv.appendChild(viewsDiv);
-//     cardBtRightDiv.appendChild(commentDiv);
-
-//     cardBottom.appendChild(cardBtRightDiv);
-
-//     return cardBottom;
-// }
