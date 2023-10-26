@@ -99,7 +99,7 @@ class StoryPost(CreateAPIView):
 #         return Response(status=status.HTTP_404_NOT_FOUND,
 #                         data={"error": "Invalid pk values"})
     
-class StoryUpdateDelete(APIView):
+class StoryDetail(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated] # 로그인 한 유저만 가능
 
