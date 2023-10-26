@@ -4,11 +4,14 @@ from django.contrib.auth import authenticate
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
+# profile
 class UserProfileSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = UserProfile
         fields = ['id', 'username', 'email', 'nickname', 'bootcamp']
 
+# login
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(min_length=8)
     password = serializers.CharField(min_length=8, write_only=True)
@@ -42,6 +45,7 @@ class LoginSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ["email", "password"]
 
+# register
 class RegistrationSerializer(serializers.ModelSerializer):
     BOOTCAMP_CHOICES = (
         ('백엔드 1기', '백엔드 오르미 1기'),
