@@ -3,18 +3,22 @@
 function closeSidebar() {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("overlay");
-    sidebar.classList.add("sidebarHidden");
+    
+    sidebar.style.transform = "translateX(-250px)"; // 초기에도 왼쪽으로 이동
     overlay.style.display = "none";
-    sidebar.style.display = "none";
 }
-
 
 function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("overlay");
 
     sidebar.classList.toggle("sidebarHidden");
-    overlay.style.display = (sidebar.classList.contains("sidebarHidden")) ? "none" : "block";
-    sidebar.style.display = (sidebar.classList.contains("sidebarHidden")) ? "none" : "block";
-}
 
+    if (sidebar.classList.contains("sidebarHidden")) {
+        sidebar.style.transform = "translateX(-250px)"; // 왼쪽으로 이동
+        overlay.style.display = "none";
+    } else {
+        sidebar.style.transform = "translateX(0)"; // 다시 나타나게
+        overlay.style.display = "block";
+    }
+}
