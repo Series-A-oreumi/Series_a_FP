@@ -59,11 +59,12 @@ INSTALLED_APPS = [
     'storages',
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
+# 초기 인증 제거 -> 추후에 필요하면 살리면 될듯
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     )
+# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # <- 가능한 높게 위치시켜야 
