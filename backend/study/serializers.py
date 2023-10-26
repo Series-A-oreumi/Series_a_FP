@@ -26,7 +26,7 @@ class StudySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Study
-        fields = ('author', 'title', 'content', 'end_at', 'views', 'comments_count', 'project_study', 
+        fields = ('pk', 'author', 'title', 'content', 'end_at', 'views', 'comments_count', 'project_study', 
                   'likes_users', 'online_offline', 'field', 'stacks', 'public_private')
 
     def get_likes_users(self, post):
@@ -59,6 +59,7 @@ class StudyDetailSerializer(serializers.ModelSerializer):
 
         participant_users = study.participants.all()
         # 참여자 유저들의 정보를 시리얼라이즈하여 반환.
+        print(participant_users)
         return [user.username for user in participant_users]
     
     def get_comments_count(self, study):
@@ -78,6 +79,26 @@ class StudyDetailSerializer(serializers.ModelSerializer):
 
 # studycreate
 class StudyCreateSerializer(serializers.ModelSerializer):
+     # stacks 필드를 ListField로 정의하여 문자열 리스트로 처리
+    stacks = serializers.ListField(child=serializers.CharField(max_length=12), write_only=True, required=False)
+
     class Meta:
         model = Study
-        fields = '__all__'
+        fields = '__all__' 
+
+    # stacks를 name으로 입력받고 pk값으로 변환해서 저장
+    def to_internal_value(self, data):
+        stack_names = data.get('stacks', [])
+
+        stack_pks = []
+        for stack_name in stack_names:
+            try:
+                stack, created = Stack.objects.get_or_create(name=stack_name)
+                stack_pks.append(stack.pk)
+            except Stack.DoesNotExist:
+                # 스택이 존재하지 않을 경우 처리
+                pass
+
+        # 변환된 스택의 기본 키 값을 'stacks' 필드에 설정
+        data['stacks'] = stack_pks
+        return super().to_internal_value(data)
