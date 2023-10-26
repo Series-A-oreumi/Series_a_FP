@@ -62,9 +62,20 @@ a {
     border-radius: 50%;
 }
 
+.user-section-inner {
+    display: flex;
+    gap: 5px;
+    align-items: flex-end
+}
+
 .user-title {
     color: #333;
     font-weight: 600;
+}
+
+.email-text {
+    color: #999;
+    font-size: 14px;
 }
 
 .created_at {

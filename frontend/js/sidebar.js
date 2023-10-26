@@ -1,6 +1,20 @@
+// document.getElementById("sidebar").style.display = "none";
+
+function closeSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    sidebar.classList.add("sidebarHidden");
+    overlay.style.display = "none";
+    sidebar.style.display = "none";
+}
+
+
 function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
 
-    // 'sidebarHidden' 클래스를 토글하여 나타났다가 숨겨진 상태로 전환합니다.
     sidebar.classList.toggle("sidebarHidden");
+    overlay.style.display = (sidebar.classList.contains("sidebarHidden")) ? "none" : "block";
+    sidebar.style.display = (sidebar.classList.contains("sidebarHidden")) ? "none" : "block";
 }
+

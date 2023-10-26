@@ -1,10 +1,12 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
 import { formatTimeAgo } from "./format.js" 
+import { checkAccessTokenValidity } from "./auth.js"
 
 
 // 페이지 로딩이 완료되면 실행됩니다.
 document.addEventListener("DOMContentLoaded", async function () {
-    // const postContainer = document.getElementById("main_container");
+    
+    checkAccessTokenValidity() // 토큰 만료시간 확인
 
     // 로컬 스토리지에서 access_token 가져오기
     const accessToken = localStorage.getItem('access_token');

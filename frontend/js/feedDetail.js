@@ -1,13 +1,27 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
 import { formatTimeAgo } from "./format.js" 
-
+import { checkAccessTokenValidity } from "./auth.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 document.addEventListener("DOMContentLoaded", async function () {
     
+    checkAccessTokenValidity() // 토큰 만료시간 확인
+
+    // 로컬 스토리지에서 access_token 가져오기
+    const accessToken = localStorage.getItem('access_token');
+
     try {
         // 백엔드 API에서 포스트 데이터를 가져옵니다.
-        const response = await fetch("http://localhost:8000/api/story/1/"); // 현재는 post_id를 임의로 1로 두었지만 추후 ${post.pk}로 수정해야함!
+        const response = await // Fetch 요청 보내기
+        // 임시로 story/1 게시물로 선정 -> 추후 변경해야됨!
+        fetch("http://localhost:8000/api/story/1/", {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
+            'Content-Type': 'application/json'
+        },
+        }); 
+        // 현재는 post_id를 임의로 1로 두었지만 추후 ${post.pk}로 수정해야함!
         const post = await response.json();
         console.log(post)
 

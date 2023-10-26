@@ -68,7 +68,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     author = UserProfileSerializer(read_only=True)
     images = serializers.SerializerMethodField()
     hashtags = HashtagSerializer(many=True, read_only=True)  # HashtagSerializer를 사용하여 해시태그 이름을 가져옵니다.
-    comments = CommentSerializer(many=True)
+    comments = serializers.SerializerMethodField()
     likes_users = serializers.SerializerMethodField() # 좋아요를 누른 유저 목록을 가져올 필드를 추가합니다.
     # likes = PostAuthorSerializer(many=True)
     class Meta:
@@ -84,8 +84,10 @@ class PostDetailSerializer(serializers.ModelSerializer):
     def get_images(self, post):
         images = post.images.all()
         return PostImageSerializer(instance=images, many=True, context=self.context).data
-    
-    
+
+    def get_comments(self, post):
+        comments = post.comment_post.all()
+        return CommentSerializer(comments, many=True).data
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
