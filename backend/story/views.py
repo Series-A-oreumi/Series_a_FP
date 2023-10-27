@@ -1,21 +1,30 @@
 from django.shortcuts import get_object_or_404
-from .models import Post, Comment, Hashtag, PostImage
+from django.db.models import Q
+from user.serializers import UserProfileSerializer
+from .models import Like, Post, Comment, Hashtag, PostImage
 from user.models import UserProfile
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
-# from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import CommentSerializer, CreateCommentSerializer,LikeSerializer, PostDetailSerializer , PostSerializer
 from user.utils import get_user_from_token, S3ImgUploader
 from user.permissions import IsTokenValid  # 커스텀 권한 클래스 임포트
 
+# story list
 class StoryList(APIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def get(self, request):
         try:
+            user = get_user_from_token(request) # 현재 로그인 한 사용자
             posts = Post.objects.all().order_by('-created_at')[:30]
+
+            if user:
+                # posts 중에서 (public or author = 현재 로그인 한 사용자)인 게시물만 가져오기
+                posts = [
+                    post for post in posts if post.is_public or post.author == user
+                ]
         except Post.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
@@ -23,7 +32,8 @@ class StoryList(APIView):
         serializer = PostSerializer(posts, many=True)  
         
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
+# story post
 class StoryPost(CreateAPIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
@@ -50,7 +60,41 @@ class StoryPost(CreateAPIView):
 
         return Response(message, status=status.HTTP_201_CREATED)
     
-        
+
+# story search
+class StorySearch(APIView):
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
+
+    def get(self, request):
+        search_query = request.GET.get('search', '') # 쿼리스트링 url에서 검색어 가져오기
+        print(search_query)
+        if search_query:
+            # 유저 검색
+            users_result = UserProfile.objects.filter(
+                                                     Q(username__icontains=search_query) 
+                                                    |Q(nickname__icontains=search_query)
+                                                     )
+            user_serializer = UserProfileSerializer(users_result, many=True)
+
+             # 검색어와 관련된 해시태그를 찾음
+            hashtags = Hashtag.objects.filter(name__icontains=search_query)
+
+            # 검색된 해시태그를 가지고 있는 게시물을 찾음
+            posts_result = Post.objects.filter(hashtags__in=hashtags)
+
+            post_serializer = PostSerializer(posts_result, many=True)
+
+            # 검색 결과를 하나의 데이터 구조로 조합
+            search_results = {
+                "users": user_serializer.data,
+                "posts": post_serializer.data,
+            }
+
+            return Response(search_results)
+        messages = {
+            'Not Found' : '검색 결과가 없습니다'
+        }
+        return Response(messages)
     
 # class StoryPost(APIView): 
 #     permission_classes = (IsAuthenticatedOrReadOnly,)
@@ -97,7 +141,8 @@ class StoryPost(CreateAPIView):
 #             return Response(data=response_data, status=status.HTTP_201_CREATED)
 #         return Response(status=status.HTTP_404_NOT_FOUND,
 #                         data={"error": "Invalid pk values"})
-    
+
+# story detail
 class StoryDetail(APIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
@@ -159,24 +204,7 @@ class StoryDetail(APIView):
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-class Like(APIView):
-    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
-    # 좋아요 기능
-    def post(self, request, post_id):
-        post = get_object_or_404(Post, pk=post_id)
-
-        # 현재 사용자
-        user = get_user_from_token(request)
-    
-        # 게시물에 대한 좋아요를 추가하거나 이미 좋아요가 있는 경우 취소
-        if user in post.likes.all():
-            post.likes.remove(user)
-            return Response({"detail": "Post like removed successfully."}, status=status.HTTP_200_OK)
-        else:
-            post.likes.add(user)
-            return Response({"detail": "Post liked successfully."}, status=status.HTTP_201_CREATED)
-
+# like
 class ToggleLike(APIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
@@ -212,6 +240,7 @@ class ToggleLike(APIView):
             serializer = LikeSerializer(like)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+# comment create
 class CommentCreate(APIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
     
@@ -262,6 +291,7 @@ class CommentCreate(APIView):
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# comment update&delete
 class CommentUpdateDelete(APIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
