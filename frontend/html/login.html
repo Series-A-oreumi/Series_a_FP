@@ -11,26 +11,37 @@
 </head>
 
 <body>
-    <div class="container flex-box">
+    <div class="container flex-box" id="grid">
         <div class="login-container">
-            <div class="main-logo"><img src="../imgs/user/Estagram.png"></div>
-            <div class="login-text"><span style="font-family: Georgia;">Estagram</span>에서 이스트 소프트 부트캠프에 참가한 학생들과 함께 이야기를
-                나눠보세요.</div>
+            <div class="main-logo"><img src="../imgs/user/logover2.png"></div>
             <div>
-                <form method="post" class="login-form" id="login-form">
-                    <input type="email" name="email" placeholder="이메일" class="login-input" id="email">
-                    <input type="password" name="password" placeholder="비밀번호" class="login-input" id="password">
-                    <button type="submit" class="login-button">로그인</button>
-                </form>
-            </div>
-            <div class="wrapper">
-                <p class="line">또는</p>
-            </div>
-            <div class="login-reco">
-                <p>계정이 없으신가요?<a href="register.html">가입하기</a></p>
+                <div class="login-text">
+                    <span style="font-family: Georgia;">Estagram</span>
+                    에서 부트캠프에 참가한 학생들과 함께 이야기를나눠보세요.
+                </div>
+                <div>
+                    <form method="post" class="login-form" id="login-form">
+                        <input type="email" name="email" placeholder="이메일" class="login-input" id="email">
+                        <input type="password" name="password" placeholder="비밀번호" class="login-input" id="password">
+                        <button type="submit" class="login-button">로그인</button>
+                    </form>
+                </div>
+                <div class="wrapper">
+                    <p class="line">또는</p>
+                </div>
+                <div class="login-reco">
+                    <p>계정이 없으신가요?<a href="register.html">가입하기</a></p>
+                </div>
             </div>
         </div>
-        <img src="../imgs/user/test.jpg" class="login-img">
+        <div class="icon">
+            <img src="../imgs/user/icon4.png" class="login-img4">
+            <img src="../imgs/user/icon3.png" class="login-img3">
+            <img src="../imgs/user/icon2.png" class="login-img2">
+            <img src="../imgs/user/icon1.png" class="login-img1">
+        </div>
+
+        <!-- <img src="../imgs/user/test.jpg" class="login-img"> -->
     </div>
     <script type="text/javascript" src="../js/login.js"></script>
 </body>
