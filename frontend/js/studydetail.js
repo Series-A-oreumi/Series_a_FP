@@ -1,7 +1,7 @@
 // 날짜 형식 변경 함수
 function formatDate(dateString) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    const formattedDate = new Date(dateString).toLocaleDateString('Kr', options);
     return formattedDate.replace(/\//g, '.');
 }
 
@@ -11,11 +11,12 @@ function formatDate(dateString) {
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
+    const userProfileURL = `../html/profile.html?id=${data.id}`;
 
     return `
         <div class="title">${data.title}</div>
         <div class="user-section">
-            <a href="#">
+            <a href="${userProfileURL}">
                 <div class="user-icon">
                     ${data.usericon}
                 </div>
@@ -77,6 +78,15 @@ function createDetailSection2(data) {
         Project = `<div class="study-text">스터디 소개</div>`
     }
 
+    let OnOff = '';
+    if (data.online_offline === 'ON') {
+        OnOff = `<div class="sub-content">온라인</div>`
+    } else if (data.online_offline === 'OFF') {
+        OnOff = `<div class="sub-content">오프라인</div>`
+    } else {
+        OnOff = `<div class="sub-content">온/오프라인</div>`
+    }
+
     return `
         <div class="post-detail">
         <div class="detail-info">
@@ -87,13 +97,13 @@ function createDetailSection2(data) {
                 </div>
                 <div class="detail-row-inner">
                     <div class="sub-title">진행 방식</div>
-                    <div class="sub-content">${data.online_offline}</div>
+                    ${OnOff}
                 </div>
             </div>
             <div class="detail-row">
                 <div class="detail-row-inner">
                     <div class="sub-title">모집 정원</div>
-                    <div class="sub-content">${data.participants}명</div>
+                    <div class="sub-content">${data.participant_count}명</div>
                 </div>
                 <div class="detail-row-inner">
                     <div class="sub-title">시작 예정</div>
@@ -141,34 +151,108 @@ function createDetailSection2(data) {
     `;
 }
 
-// 댓글 목록
-// url 확인 필요
-// 댓글 작성자 이게 맞나..?
-function createDetailSection3(data) {
+// 댓글 수
+function createCommentCount(data) {
 
     return `
-        <div class="comment-list">
-            <div class="comment-inner">
-                <a href="#">
-                    <div class="comment-user-icon">
-                        ${data.author}
-                    </div>
-                </a>
-                <div>
-                    <div class="comment-user-info">
-                        <a href="#">
-                            <span class="user-name">${data.author}</span>
-                        </a>
-                        <span class="comment-created-at">${data.created_at}</span>
-
-                    </div>
-                    <div class="user-comment">${data.content}</div>
-                </div>
-            </div>
-        </div>
+        <div class="comment-count">댓글 ${data.comments_count}</div>
     `;
 }
 
+//댓글 목록 ver1
+// 유저 정보 불러오기 - 유저 프로필 연결 시 테스트 해야함
+// async function fetchUserProfile(userID) {
+//     const profileEndpoint = `http://localhost:8000/api/users/${userID}/profile`;
+
+//     try {
+//         const response = await fetch(profileEndpoint);
+//         if (!response.ok) {
+//             throw new Error('Failed to fetch user profile');
+//         }
+//         const userData = await response.json();
+//         return userData;
+//     } catch (error) {
+//         console.error('Error:', error);
+//     }
+// }
+
+// async function createDetailSection3(data) {
+//     let commentList = '';
+//     if (data.comments_list && data.comments_list.length > 0) {
+//         commentList = await Promise.all(data.comments_list.map(async (comment) => {
+//             const writeAt = comment.created_at;
+//             const formattedCommentDate = formatDate(writeAt);
+
+//             // 사용자 프로필 정보 가져오기
+//             const userProfile = await fetchUserProfile(comment.author);
+
+//             return `
+//                 <div class="comment-inner">
+//                     <a href="#">
+//                         <div class="comment-user-icon">
+//                             ${userProfile.username}의 아이콘
+//                         </div>
+//                     </a>
+//                     <div>
+//                         <div class="comment-user-info">
+//                             <a href="#">
+//                                 <span class="user-name">${userProfile.username}</span>
+//                             </a>
+//                             <span class="comment-created-at">${formattedCommentDate}</span>
+//                         </div>
+//                         <div class="user-comment">${comment.content}</div>
+//                     </div>
+//                 </div>
+//             `;
+//         }));
+//     }
+
+//     return `
+//         <div class="comment-list">
+//             ${commentList.join('')}
+//         </div>
+//     `;
+// }
+
+
+// 댓글 목록 ver2
+// 유저 url 경로 바꾸기
+function createDetailSection3(data) {
+    // const commentUserProfileURL = `../html/profile.html?id=${data.comments_list.author}`;
+
+    let commentList = '';
+    if (data.comments_list && data.comments_list.length > 0) {
+        commentList = data.comments_list.reverse().map(comment => {
+            const writeAt = comment.created_at;
+            const formattedCommentDate = formatDate(writeAt);
+
+            return `
+                <div class="comment-inner">
+                    <a href="#">
+                        <div class="comment-user-icon">
+                            ${comment.author.profileicon}
+                        </div>
+                    </a>
+                    <div>
+                        <div class="comment-user-info">
+                            <a href="#">
+                                <span class="user-name">${comment.author.username}</span>
+                            </a>
+                            <span class="comment-created-at">${formattedCommentDate}</span>
+                        </div>
+                        <div class="user-comment">${comment.content}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    return `
+        <div class="comment-list">
+            ${commentList}
+        </div>
+    `;
+}
 
 // 이어 붙이기
 function createDetaile(data) {
@@ -184,20 +268,23 @@ function createDetaile(data) {
     `;
     section2.innerHTML += detail2;
 
+    const commentcount = document.getElementById("commentCount");
+    const detail4 = `
+        ${createCommentCount(data)}
+    `
+    commentcount.innerHTML += detail4;
+
     const section3 = document.getElementById("detailSection3");
     const detail3 = `
-        ${createDetailSection2(data)}
+        ${createDetailSection3(data)}
     `;
     section3.innerHTML += detail3;
 }
 
 
 
-
-
 // API에서 데이터 가져오기
-async function fetchDataFromAPI() {
-    // 현재 페이지 URL에서 data.pk 값 가져오기
+async function fetchDetailFromAPI() {
     const urlParams = new URLSearchParams(window.location.search);
     const dataId = urlParams.get('id'); // 'id'는 쿼리 매개변수의 이름이어야 합니다.
     const accessToken = localStorage.getItem('access_token');
@@ -216,12 +303,148 @@ async function fetchDataFromAPI() {
             throw new Error('Failed to fetch data');
         }
 
-        const postData = await response.json();
+        const data = await response.json();
+        createDetaile(data);
 
-        createDetaile(postData);
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
-fetchDataFromAPI();
+fetchDetailFromAPI();
+
+
+// 유저 정보 고치기
+// 댓글 목록 렌더링 함수(댓글 작성 시 댓글들이 새로고침 되도록)
+function renderComments(comments) {
+    const commentList = document.querySelector('.comment-list');
+    commentList.innerHTML = ''; // 이전 댓글 삭제
+
+    // 최신댓글 위로 가게
+    const reversedComments = comments.reverse();
+
+    reversedComments.forEach(comment => {
+        const formattedCommentDate = formatDate(comment.created_at);
+        const commentElement = document.createElement('div');
+        commentElement.className = 'comment';
+        commentElement.innerHTML = `
+            <div class="comment-inner">
+                <a href="#">
+                    <div class="comment-user-icon">
+                        ${comment.author.profileicon}
+                    </div>
+                </a>
+                <div>
+                    <div class="comment-user-info">
+                        <a href="#">
+                            <span class="user-name">${comment.author.username}</span>
+                        </a>
+                        <span class="comment-created-at">${formattedCommentDate}</span>
+                    </div>
+                    <div class="user-comment">${comment.content}</div>
+                </div>
+            </div>
+        `;
+        commentList.appendChild(commentElement);
+    });
+}
+
+// 데이터 가져오기
+async function fetchData(apiEndpoint, options) {
+    try {
+        const response = await fetch(apiEndpoint, options);
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// 댓글 가져오기(초기 페이지)
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const studyId = urlParams.get('id');
+    const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = `http://localhost:8000/api/study/${studyId}/comments/`;
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        },
+    };
+
+    fetchData(apiEndpoint, options)
+        .then(comments => renderComments(comments));
+});
+
+
+
+// 댓글 업데이트 (댓글 작성 후)
+async function updateComments() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataId = urlParams.get('id');
+    const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = `http://localhost:8000/api/study/${dataId}/comments/`;
+
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch comments');
+        }
+
+        const comments = await response.json();
+
+        renderComments(comments);
+        const updatedCommentCount = createCommentCount(comments);
+        const commentCount = document.getElementById('commentCount');
+        commentCount.innerHTML = updatedCommentCount;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
+// 댓글 작성 버튼 클릭
+document.addEventListener('DOMContentLoaded', function () {
+    const commentForm = document.getElementById('commentForm');
+    commentForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataId = urlParams.get('id');
+
+        const commentText = commentArea.value;
+        const accessToken = localStorage.getItem('access_token');
+        const apiEndpoint = `http://localhost:8000/api/study/${dataId}/comments/`;
+        const options = {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ content: commentText }).toString(),
+        };
+
+        try {
+            const response = await fetch(apiEndpoint, options);
+            if (!response.ok) {
+                throw new Error('Failed to submit comment');
+            }
+
+            commentArea.value = '';
+            updateComments(); // 댓글 업데이트
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+});

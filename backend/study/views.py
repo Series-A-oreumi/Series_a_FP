@@ -177,6 +177,14 @@ class StudyJoin(APIView):
 class CommentCreate(APIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
     
+    def get(self, request, study_id):
+        try:
+            study_comments = Comment.objects.filter(study_id=study_id)
+            serializer = CommentSerializer(study_comments, many=True)
+            return Response(serializer.data)
+        except Study.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    
     # 댓글 작성
     def post(self, request, study_id):
          # 게시물 가져오기

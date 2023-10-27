@@ -131,7 +131,7 @@ a {
 }
 
 .study-category {
-    color: #444;
+    color: #868e96;
 }
 
 .study-category-text {
@@ -360,12 +360,13 @@ button {
     gap: 20px;
     font-family: 'Pretendard', sans-serif;
     margin-bottom: 300px;
+    flex-wrap: wrap
 }
 
 .contents_box {
     padding: 20px 25px 0;
-    width: 300px;
-    height: 330px;
+    width: 258px;
+    height: 336px;
     background: #fff;
     border: 2px solid #d1d1d1;
     border-radius: 30px;
@@ -375,7 +376,7 @@ button {
 
 .card {
     display: grid;
-    grid-template-rows: 1fr 3.5fr 1fr
+    grid-template-rows: 1fr 3.5fr 1fr;
 }
 
 .card_top {
@@ -497,20 +498,16 @@ ul {
 
 .study_border {
     border-top: 2px solid #f2f2f2;
-    padding: 5px 0;
+    padding: 2px 0;
 }
 
 .user_container {
     display: flex;
-    align-items: center
+    align-items: center;
 }
 
-.profile_img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-right: 10px;
+.user_name {
+    padding-top: 5px;
 }
 
 .profile_img img {
@@ -532,6 +529,7 @@ ul {
     font-size: 13px;
     margin-bottom: 3px;
     overflow: hidden;
+    padding-left: 3px;
 }
 
 .card_bottom_right {

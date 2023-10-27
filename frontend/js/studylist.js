@@ -1,3 +1,58 @@
+// 필터링
+// 스터디, 프로젝트
+document.addEventListener("DOMContentLoaded", function () {
+    const studyCategories = document.querySelectorAll('.study-category');
+
+    studyCategories[0].classList.add('active');
+
+    studyCategories.forEach(category => {
+        category.addEventListener('click', () => {
+            studyCategories.forEach(tag => {
+                tag.classList.remove('active');
+            });
+            category.classList.add('active');
+        });
+    });
+});
+
+//이거 왜 적용 안됨?
+document.addEventListener("DOMContentLoaded", function () {
+    const studyCategory = document.getElementById("studyCategory");
+    const projectCategory = document.getElementById("projectCategory");
+    const allCategory = document.getElementById("allCategory");
+    const contentBox = document.querySelector(".contents_box");
+
+    studyCategory.addEventListener("click", function () {
+        filterContent("study");
+    });
+
+    projectCategory.addEventListener("click", function () {
+        filterContent("project");
+    });
+
+    allCategory.addEventListener("click", function () {
+        filterContent("all");
+    });
+
+    function filterContent(filterType) {
+        contentBox.forEach((post) => {
+            const tagStudy = post.querySelector(".tag_study");
+            const tagProject = post.querySelector(".tag_project");
+
+            if (filterType === "study" && tagStudy) {
+                post.style.display = "block";
+            } else if (filterType === "project" && tagProject) {
+                post.style.display = "block";
+            } else if (filterType === "all") {
+                post.style.display = "block";
+            } else {
+                post.style.display = "none";
+            }
+        });
+    }
+});
+
+
 //배너
 document.addEventListener("DOMContentLoaded", function () {
     let currentBanner = 1;
@@ -14,9 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         moveBanners();
     }
-
     moveBanners();
-
     setInterval(nextBanner, 5000);
 
     function moveBanners() {
@@ -26,37 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
-// 필터링-스터디, 프로젝트
-// db연결 후 테스트 해야 함!
-const studyCategories = document.querySelectorAll('.study-category');
-const cards = document.querySelectorAll('.card');
-
-studyCategories[0].classList.add('active');
-
-studyCategories.forEach(category => {
-    category.addEventListener('click', () => {
-        studyCategories.forEach(tag => {
-            tag.classList.remove('active');
-        });
-
-        category.classList.add('active');
-
-        const selectedTag = category.querySelector('.study-category-text').textContent;
-
-        cards.forEach(card => {
-            card.style.display = 'none';
-        });
-
-        cards.forEach(card => {
-            const cardTag = card.querySelector('.tag_list .top_tag .study-category-text').textContent;
-            if (selectedTag === '전체' || selectedTag === cardTag) {
-                card.style.display = 'block';
-            }
-        });
-    });
-});
-
 
 
 // 메뉴 토글
@@ -267,14 +289,11 @@ function createCardTop(data) {
 
 // 중간
 // post url 연결 필요
-
 function createPostContent(data) {
     const endAt = data.end_at;
     const formattedEndDate = formatDate(endAt);
     const studyDetailURL = `../html/studyDetail.html?id=${data.pk}`;
-    // const studyDetailURL = `http://localhost:8000/api/study/${data.pk}/`;
-    
-    console.log(data)
+
     let stackTags = '';
     if (data.stacks && data.stacks.length > 0) {
         stackTags = `
@@ -294,7 +313,7 @@ function createPostContent(data) {
 
     return `
         <a href="${studyDetailURL}">
-            <div class="post_content">
+            <div class="post_content" id="postContent">
                 <div class="post_content_main">
                     <div class="deadline">마감일 | ${formattedEndDate}</div>
                     <div class="post_title">${data.title}</div>
@@ -313,20 +332,20 @@ function createPostContent(data) {
 // 날짜 형식 변경 함수
 function formatDate(dateString) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    const formattedDate = new Date(dateString).toLocaleDateString('Kr', options);
     return formattedDate.replace(/\//g, '.');
 }
 
 
 // 하단
 // 유저 프로필 사진 변경해야 함
-// 댓글 모델 확인 필요
+
 // 유저 url 경로 확인하기
 // 이미지 경로 바꾸기!!!!!!!!!!!!
 function createCardBottom(data) {
 
     const totalComments = data.comments_count;
-    const userProfileURL = `/user/${data.id}/`;
+    const userProfileURL = `../html/profile.html?id=${data.id}`;
 
 
     return `
@@ -335,7 +354,7 @@ function createCardBottom(data) {
                 <div class "user_container">
                     <div class="user_name">
                         <div class="user-name-text">${data.author.username}</div>
-                        <div class="email-text">👥 ${data.author.email}</div>
+                        <div class="email-text">${data.author.email}</div>
                     </div>
                 </div>
             </a>
@@ -361,7 +380,7 @@ function createPost(data) {
     const innerContainer = document.querySelector(".inner");
 
     const postHTML = `
-        <div class="contents_box">
+        <div class="contents_box" id="contentBox">
             <div class="card">
                 ${createCardTop(data)}
                 ${createPostContent(data)}
@@ -371,6 +390,39 @@ function createPost(data) {
     `;
     innerContainer.innerHTML += postHTML;
 }
+
+
+// function toggleLike(pk) {
+//     const likeButton = document.getElementById(`likeButton_${pk}`);
+
+//     fetch(`/api/like/${pk}`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': `Bearer ${accessToken}`,
+//         },
+//     })
+//         .then(response => {
+//             if (response.ok) {
+//                 return response.json();
+//             }
+//             throw new Error('Failed to toggle like.');
+//         })
+//         .then(data => {
+//             if (data.liked) {
+//                 likeButton.classList.add('liked'); // 좋아요 표시를 변경
+//             } else {
+//                 likeButton.classList.remove('liked'); // 좋아요 표시를 변경
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
+
+
+
+
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
@@ -403,3 +455,40 @@ async function fetchDataFromAPI() {
 
 fetchDataFromAPI();
 
+
+
+
+
+// const accessToken = localStorage.getItem('access_token');
+// // console.log(accessToken)
+// document.querySelectorAll("post_content").addEventListener("click", function (e) {
+//     e.preventDefault(); // 기본 링크 동작 방지
+//     console.log(accessToken)
+//     // API에서 정보를 가져오는 코드
+//     fetch("http://localhost:8000/api/study", {
+//         method: 'GET',
+//         headers: {
+//             'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
+//             'Content-Type': 'application/json'
+//         },
+//     })
+//         .then(response => {
+//             if (!response.ok) {
+//                 console.log(response)
+//                 throw new Error("Network response was not ok");
+//             }
+//             console.log(response)
+//             return response.json();
+//         })
+//         .then(posts => {
+//             // API에서 가져온 데이터(posts)를 사용하여 원하는 작업을 수행
+//             // const infoData = { title: "Sample Info", content: "This is the info content." };
+//             // 정보를 JSON 형식으로 인코딩
+//             const infoJSON = JSON.stringify(posts);
+//             // chat.html로 이동하면서 정보를 전달
+//             window.location.href = "studydetail.html?{data.id}=" + encodeURIComponent(infoJSON);
+//         })
+//         .catch(error => {
+//             console.error("Error fetching data:", error);
+//         });
+// });

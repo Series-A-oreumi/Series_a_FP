@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => {
                     if (response.ok) {
                         response.json().then(data => {
-                            alert('로그인 성공');
 
                             // JWT 토큰을 로컬 스토리지에 저장
                             localStorage.setItem('access_token', data.access);
