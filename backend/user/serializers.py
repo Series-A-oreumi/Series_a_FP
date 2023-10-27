@@ -9,7 +9,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        exclude = ['password', 'created_at']
 
 # login
 class LoginSerializer(serializers.ModelSerializer):
