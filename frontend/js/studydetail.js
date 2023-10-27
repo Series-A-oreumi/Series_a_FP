@@ -172,19 +172,19 @@ function createDetailSection3(data) {
 
 // 이어 붙이기
 function createDetaile(data) {
-    const section1 = document.getElementById(".detailSection1");
+    const section1 = document.getElementById("detailSection1");
     const detail1 = `
         ${createDetailSection1(data)}
     `;
     section1.innerHTML += detail1;
 
-    const section2 = document.getElementById(".detailSection2");
+    const section2 = document.getElementById("detailSection2");
     const detail2 = `
         ${createDetailSection2(data)}
     `;
     section2.innerHTML += detail2;
 
-    const section3 = document.getElementById(".detailSection3");
+    const section3 = document.getElementById("detailSection3");
     const detail3 = `
         ${createDetailSection2(data)}
     `;
@@ -197,14 +197,17 @@ function createDetaile(data) {
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
-    // const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = "http://localhost:8000/api/study/${data.id}/";
+    // 현재 페이지 URL에서 data.pk 값 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataId = urlParams.get('id'); // 'id'는 쿼리 매개변수의 이름이어야 합니다.
+    const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
 
     try {
         const response = await fetch(apiEndpoint, {
             method: 'GET',
             headers: {
-                // 'Authorization': `Bearer ${accessToken}`,
+                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             }
         });

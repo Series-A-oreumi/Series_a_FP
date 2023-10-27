@@ -271,8 +271,10 @@ function createCardTop(data) {
 function createPostContent(data) {
     const endAt = data.end_at;
     const formattedEndDate = formatDate(endAt);
-    const studyDetailURL = `http://localhost:8000/api/study/${data.id}/`;
-
+    const studyDetailURL = `../html/studyDetail.html?id=${data.pk}`;
+    // const studyDetailURL = `http://localhost:8000/api/study/${data.pk}/`;
+    
+    console.log(data)
     let stackTags = '';
     if (data.stacks && data.stacks.length > 0) {
         stackTags = `
