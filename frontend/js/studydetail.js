@@ -11,14 +11,14 @@ function formatDate(dateString) {
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
-    const userProfileURL = `../html/profile.html?id=${data.id}`;
+    const userProfileURL = `../html/profile.html?id=${data.author}`;
 
     return `
         <div class="title">${data.title}</div>
         <div class="user-section">
             <a href="${userProfileURL}">
                 <div class="user-icon">
-                    ${data.usericon}
+                    ${data.author.profile_img}
                 </div>
                 <div class="user-section-inner">
                     <div class="user-title">${data.author.username}</div>
@@ -50,7 +50,12 @@ function createDetailSection2(data) {
         `;
     }
 
-    const heartImageSrc = data.likes
+
+
+    // 로그인 유저 정보 불러와야 함
+    // const loggedInUser = `경로 어떻게 하지..`;
+    // const isUserLiked = data.likes_users.includes(loggedInUser);
+    const heartImageSrc = data.likes_users
         ? "../imgs/study/pinkheart.png"
         : "../imgs/study/grayheart.png";
 
@@ -160,9 +165,9 @@ function createCommentCount(data) {
     `;
 }
 
-
 // 댓글 목록
 // 유저 url 경로 바꾸기
+// 댓글 작성할 프로필 사진 바꾸기
 function createDetailSection3(data) {
     // const commentUserProfileURL = `../html/profile.html?id=${data.comments_list.author}`;
 
@@ -173,10 +178,11 @@ function createDetailSection3(data) {
             const formattedCommentDate = formatDate(writeAt);
 
             return `
+                
                 <div class="comment-inner">
                     <a href="#">
                         <div class="comment-user-icon">
-                            ${comment.author.profileicon}
+                            ${comment.author.profile_img}
                         </div>
                     </a>
                     <div>
@@ -194,6 +200,24 @@ function createDetailSection3(data) {
     }
 
     return `
+        <div>
+            <form method="post" class="comment-form" id="commentForm">
+                <div class="comment-form-inner">
+                    <div class="comment-input">
+                        현재 로그인 사용자 테스트중
+                        <div>${data.username}</div>
+                        <div class="comment-user-icon">
+                            <img src="${data.user}">
+                        </div>
+                        <textarea id="commentArea" name="commentArea" placeholder="댓글을 입력하세요."></textarea>
+                    </div>
+                </div>
+                <div class="comment-form-btn">
+                    <button type="submit">댓글 등록</button>
+                </div>
+            </form>
+        </div>
+        </div>
         <div class="comment-list">
             ${commentList}
         </div>
@@ -229,7 +253,7 @@ function createDetaile(data) {
 
 
 
-// API에서 데이터 가져오기
+// 스터디 디테일 데이터 가져오기
 async function fetchDetailFromAPI() {
     const urlParams = new URLSearchParams(window.location.search);
     const dataId = urlParams.get('id');
@@ -260,7 +284,7 @@ async function fetchDetailFromAPI() {
 fetchDetailFromAPI();
 
 
-
+// 댓글 가져오기
 // 댓글 목록 렌더링 함수
 function renderComments(comments) {
     const commentList = document.querySelector('.comment-list');
@@ -278,7 +302,7 @@ function renderComments(comments) {
                 <div class="comment-inner">
                     <a href="#">
                         <div class="comment-user-icon">
-                            ${comment.author.profileicon}
+                            ${comment.author.profile_img}
                         </div>
                     </a>
                     <div>
@@ -311,15 +335,13 @@ async function fetchData(apiEndpoint, options) {
     }
 }
 
-// 페이지 로드 시 댓글 가져오기
+// 페이지 로드 시, 댓글 작성 시 업데이트
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const studyId = urlParams.get('id');
     getComments(studyId);
 });
 
-
-// 댓글 (초기)
 async function getComments(studyId) {
     const accessToken = localStorage.getItem('access_token');
     const apiEndpoint = `http://localhost:8000/api/study/${studyId}/comments/`;
