@@ -11,4 +11,6 @@ urlpatterns = [
     path('<int:study_id>/comments/', views.CommentCreate.as_view()), # 댓글 작성
     path('comments/<int:comment_id>/', views.CommentUpdateDelete.as_view()), # 댓글 수정 & 삭제
 
+    # search
+    path('search/', views.StudySearch.as_view()), # 스터디 검색
 ]

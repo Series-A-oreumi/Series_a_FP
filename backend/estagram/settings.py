@@ -57,6 +57,9 @@ INSTALLED_APPS = [
 
     # s3 storage
     'storages',
+
+    # swagger
+    'drf_yasg',
 ]
 
 # 초기 인증 제거 -> 추후에 필요하면 살리면 될듯

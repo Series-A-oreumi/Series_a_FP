@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -141,6 +142,31 @@ class StudyDetail(APIView):
 
         study.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# study search 
+class StudySearch(APIView):
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
+
+    def get(self, request):
+        search_query = request.GET.get('search', '') # 쿼리스트링 url에서 검색어 가져오기
+        print(search_query)
+        if search_query:
+            # 유저 검색
+            results = Study.objects.filter(
+                                          Q(author__username__icontains=search_query)|
+                                          Q(author__nickname__icontains=search_query)|
+                                          Q(title__icontains=search_query)|
+                                          Q(content__icontains=search_query)
+                                        )
+            serializer = StudySerializer(results, many=True)
+
+            return Response(serializer.data)
+        
+        messages = {
+                'Not Found' : '검색 결과가 없습니다'
+                }
+        return Response(messages)
+    
 
 
 # study join 페이지? -> 필요한지 회의 필요

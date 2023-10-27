@@ -7,8 +7,14 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
+    # user register & login
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
+
+    # userprofile
+    path('profile/', ProfileUpdateDelete.as_view()), # update & delete
+    path('profile/<int:user_id>/', ProfileDetail.as_view()), # detail
+
 
     # jwt-token
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
