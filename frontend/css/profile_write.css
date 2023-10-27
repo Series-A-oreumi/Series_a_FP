@@ -1,0 +1,128 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 512px;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit{
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile_img{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    
+}
+
+.profile_img>img{
+    width: 10rem;
+    border-radius: 50%;
+}
+
+.profile_img>a{
+    text-decoration: none;
+    color: blue;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.profile_img>a:hover{
+    text-decoration: underline;
+}
+
+
+
+.inputs{
+    width:80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin: 3rem; */
+    gap: 1rem;
+}
+
+.profile_input{
+    border-bottom: 2px solid lightgrey;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile_input:hover>input{
+    opacity: .5;
+}
+
+
+.profile_input>input{
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    height: 3rem;
+    padding-left: 1rem;
+    font-size:1.5rem;
+}
+
+
+.profile_input>input:focus{
+    outline: none;
+    opacity:1;
+}
+
+label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile_input>label>img{
+    width: 2rem;
+}
+
+
+
+[type=submit]{
+    background-image: url("../media/profile_write/check.png");
+    width: 2rem;
+    height: 2rem;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    opacity: .6;
+    margin-top: 1rem;
+}
+
+[type=submit]:hover{
+    opacity: 1;
+}
