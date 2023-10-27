@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from user.serializers import UserProfileSerializer
 
 from user.permissions import IsTokenValid
 from .serializers import CommentCreateSerializer, CommentSerializer, StudyCreateSerializer, StudyDetailSerializer, StudySerializer
@@ -26,10 +27,19 @@ class StudyList(APIView):
         except Study.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)    
 
+        # 현재 요청한 유저 (로그인 되어있는 유저)
+        user = get_user_from_token(request)
+        user_serializer = UserProfileSerializer(user)
+
         # PostSerializer를 사용하여 직렬화
-        serializer = StudySerializer(studies, many=True)  
+        study_serializer = StudySerializer(studies, many=True)  
         
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        data = {
+            'request_user' : user_serializer.data,
+            'studylist' : study_serializer.data
+        }
+        
+        return Response(data, status=status.HTTP_200_OK)
 
 
 # studycreate (API 테스트 정상작동) -> 프론트와 논의 필요!
@@ -82,14 +92,21 @@ class StudyDetail(APIView):
         
         # 요청한 유저 가져오기
         user = get_user_from_token(request)
+        user_serializer = UserProfileSerializer(user)
 
         # 조회수 증가
         if user != study.author: # 해당 게시글을 작성한 유저와 다르다면
             study.views += 1 # 조회수 1 증가
             study.save()
        
-        serializer = StudyDetailSerializer(study)
-        return Response(serializer.data)
+        post_serializer = StudyDetailSerializer(study)
+
+        data = {
+            'request_user' : user_serializer.data,
+            'study' : post_serializer.data
+        }
+        
+        return Response(data, status=status.HTTP_200_OK)
     
     # 해당 스토리 게시글 수정
     def put(self, request, study_id):
