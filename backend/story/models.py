@@ -7,13 +7,14 @@ class Post(models.Model):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='post_author') # 작성자
     title = models.CharField(max_length=200, null=True, blank=True) # 제목
     content = models.CharField(max_length=200, null=True, blank=True) # 내용
-
+    
     views = models.IntegerField(default=0) # 조회수
     created_at = models.DateTimeField(auto_now_add=True) # 생성날짜
     updated_at = models.DateTimeField(auto_now=True) # 수정날짜
     likes = models.ManyToManyField(UserProfile, related_name='post_likes', blank=True) # 좋아요
     hashtags = models.ManyToManyField('story.Hashtag', blank=True, related_name='post_hashtags')
-
+    is_public = models.BooleanField(default=True) # 스토리 공개/비공개 여부
+    
     def __str__(self):
         return self.title
     
