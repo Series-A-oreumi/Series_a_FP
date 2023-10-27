@@ -9,7 +9,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfile
-        fields = ['id', 'username', 'email', 'nickname', 'bootcamp']
+        fields = '__all__'
 
 # login
 class LoginSerializer(serializers.ModelSerializer):
