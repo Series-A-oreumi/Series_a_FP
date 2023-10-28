@@ -1,5 +1,8 @@
 from django.db import models
-from user.models import UserProfile    
+from alarm.models import Alarm
+from user.models import UserProfile   
+from django.dispatch import receiver 
+from django.db.models.signals import post_save
 
 # 기술 스택 model
 class Stack(models.Model):
@@ -20,6 +23,11 @@ class Stack(models.Model):
     
 class Study(models.Model):
 
+    # 로그인 한 유저가 해당 스터디 작성자와 다른 사람이면 신청하기 버튼을 보여주기
+    # 신청하기 버튼을 클릭 시 해당 게시물 작성자에게 알람으로 ~유저로부터 ~스터디 신청하기가 왔다 (수락/비수락) 버튼 만들기
+    # 수락 버튼 클릭 시 해당 스터디 참가인원 + 1 해주고 해당 유저를 스터디 참여자로 추가하기
+    # 비수락시 해당 스터디 참가인원 변동x, 해당 유저 스터디 참여자로 x
+    
     PROJECT_STUDY_CHOICES = [
         ('project', '프로젝트'), 
         ('study', '스터디'),
@@ -113,3 +121,19 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.study.title
+    
+# Comment 모델에 데이터가 저장될 때 실행되도록 설정 (Comment 알람기능)
+@receiver(post_save, sender=Comment) 
+def comment_action(sender, instance, created, **kwargs):
+    if created:  # 새로운 댓글이 생성된 경우
+        comment = instance # Comment 모델의 인스턴스
+        study = comment.study  # 현재 댓글이 달린 스토리
+        sender_user = comment.author # 댓글은 단 유저
+        receiver_user = study.author # 해당 게시물 작성자
+
+        content = f'{sender_user.nickname}님이 회원님의 {study.title}에 댓글을 남겼습니다.'
+        
+        alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
+
+        alarm.study = study  # 스토리와 연결
+        alarm.save()
