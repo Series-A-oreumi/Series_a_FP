@@ -3,6 +3,10 @@ a {
     color: black;
 }
 
+body {
+    margin-bottom: 100px;
+}
+
 .top-section {
     width: 1200px;
     display: flex;
@@ -157,7 +161,7 @@ a {
 
 }
 
-.javaScript {
+.javascript {
     background-color: #f7df1e;
 }
 

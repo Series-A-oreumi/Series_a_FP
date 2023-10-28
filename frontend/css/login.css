@@ -1,5 +1,11 @@
+#grid {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "login-container icon";
+}
+
 .register-container {
-    margin-top: 40px;
+    margin-top: 100px;
 }
 
 .square-box {
@@ -17,8 +23,69 @@
     line-height: 35px;
 }
 
-.login-img {
-    max-width: 60%;
+/* .login-img img {} */
+
+.icon {
+    max-width: 40%;
+    font-size: 5em;
+    animation: motion 0.4s linear 0s infinite alternate;
+    position: relative;
+}
+
+@keyframes motion {
+    0% {
+        margin-top: 0px;
+    }
+
+    100% {
+        margin-top: 10px;
+    }
+}
+
+.login-img1 {
+    min-width: 100%;
+    position: absolute;
+    z-index: 50;
+}
+
+.login-img2 {
+    padding-left: 200px;
+    top: 96px;
+    min-width: 70%;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.5s forwards;
+    z-index: 100;
+    position: absolute;
+}
+
+.login-img3 {
+    padding-left: 388px;
+    top: 37px;
+    max-width: 65%;
+    z-index: 300;
+    opacity: 0;
+    animation: fadeIn 1s ease 3s forwards;
+    position: absolute;
+}
+
+.login-img4 {
+    padding-left: 520px;
+    max-width: 80%;
+    z-index: 200;
+    max-width: 70%;
+    opacity: 0;
+    animation: fadeIn 1s ease 4.5s forwards;
+    position: relative;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .login-container {
@@ -90,6 +157,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
 button:hover {
@@ -98,8 +166,13 @@ button:hover {
     transition: border-radius 0.2s;
 }
 
+.register-logo {
+    display: flex;
+    justify-content: center
+}
+
 .register-logo img {
-    width: 40%;
+    width: 50%;
     padding: 20px;
     align-items: center;
 }
@@ -107,6 +180,7 @@ button:hover {
 .margin-t {
     margin-top: 25px;
 }
+
 
 .login-reco a {
     text-decoration: none;
