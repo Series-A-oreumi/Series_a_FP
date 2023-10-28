@@ -423,6 +423,7 @@ button {
 
 .heart_btn {
     display: flex;
+    cursor: pointer;
 }
 
 /* 좋아요 수정 필요 */

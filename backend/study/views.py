@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.views import APIView
@@ -36,11 +37,11 @@ class StudyList(APIView):
         
         data = {
             'request_user' : user_serializer.data,
-            'studylist' : study_serializer.data
+            'studylist' : study_serializer.data,
         }
         
         return Response(data, status=status.HTTP_200_OK)
-
+    
 
 # studycreate (API 테스트 정상작동) -> 프론트와 논의 필요!
 class StudyCreate(APIView):
@@ -271,3 +272,28 @@ class CommentUpdateDelete(APIView):
             'success' : '댓글이 정상적으로 삭제되었습니다.'
         }
         return Response(messages, status=status.HTTP_204_NO_CONTENT)
+    
+
+# like
+class ToggleLike(APIView):
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
+
+    def post(self, request, study_id):
+        try:
+            study = Study.objects.get(pk=study_id)
+        except Study.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        user = get_user_from_token(request)
+        if user in study.likes.all():
+            # 이미 좋아요를 누른 경우, 좋아요 취소
+            study.likes.remove(user)
+            liked = False
+        else:
+            # 좋아요를 누르지 않은 경우, 좋아요 추가
+            study.likes.add(user)
+            liked = True
+        study.save()
+
+        serializer = StudySerializer(study)
+        return Response({'liked': liked }, status=status.HTTP_200_OK)

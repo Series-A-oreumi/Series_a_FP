@@ -32,6 +32,24 @@ function createDetailSection1(data) {
 }
 
 //포스트
+
+// const heartImageSrc = data.likes
+//     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
+//     : "Series_a_FP/frontend/imgs/study/grayheart.png";
+
+
+function likesTrue(study, data) {
+    const loggedInUser = study.username;
+    const isUserLiked = data.likes_users && data.likes_users.includes(loggedInUser);
+    const heartImageSrc = isUserLiked
+        ? "../imgs/study/pinkheart.png" // 좋아요
+        : "../imgs/study/grayheart.png"; // 좋아요x
+
+    return `
+        <img src="${heartImageSrc}">
+    `
+}
+
 function createDetailSection2(data) {
     let stackTags = '';
     if (data.stacks && data.stacks.length > 0) {
@@ -54,15 +72,11 @@ function createDetailSection2(data) {
 
     // 로그인 유저 정보 불러와야 함
     // const loggedInUser = `경로 어떻게 하지..`;
-    // const isUserLiked = data.likes_users.includes(loggedInUser);
-    const heartImageSrc = data.likes_users
-        ? "../imgs/study/pinkheart.png"
-        : "../imgs/study/grayheart.png";
 
-    // const heartImageSrc = data.likes
-    //     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
-    //     : "Series_a_FP/frontend/imgs/study/grayheart.png";
-    const likeCount = data.likes_users.length
+
+    const likeCount = data.likes_users.length;
+
+
 
 
     const startAt = data.start_at
@@ -149,7 +163,10 @@ function createDetailSection2(data) {
                 <div>${data.views}</div>
             </div>
             <div class="likes">
-                <img src="${heartImageSrc}">
+                <div id="likeTF">
+                    
+                </div>
+                
                 <div>${likeCount}</div>
             </div>
         </div>
@@ -251,6 +268,14 @@ function createDetaile(data) {
     section3.innerHTML += detail3;
 }
 
+function userReq(study, data) {
+    const likeSection = document.getElementById("likeTF");
+    const detail5 = `
+        ${likesTrue(study, data)}
+    `;
+    likeSection.innerHTML += detail5;
+}
+
 
 
 // 스터디 디테일 데이터 가져오기
@@ -273,8 +298,11 @@ async function fetchDetailFromAPI() {
             throw new Error('Failed to fetch data');
         }
 
-        const data = await response.json();
-        createDetaile(data);
+        const responseData = await response.json();
+        const { request_user, study } = responseData;
+
+        createDetaile(study);
+        userReq(request_user, study);
 
     } catch (error) {
         console.error('Error:', error);

@@ -15,42 +15,44 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-//이거 왜 적용 안됨?
+// 테스트
 document.addEventListener("DOMContentLoaded", function () {
     const studyCategory = document.getElementById("studyCategory");
     const projectCategory = document.getElementById("projectCategory");
     const allCategory = document.getElementById("allCategory");
-    const contentBox = document.querySelector(".contents_box");
+    const contentBoxes = document.querySelectorAll(".contents_box");
 
-    studyCategory.addEventListener("click", function () {
-        filterContent("study");
+    projectCategory.addEventListener("click", function () { // 프로젝트를 눌렀을 때
+        contentBoxes.forEach(contentBox => { //아래 항목들 - 나누기
+            const tagStudy = contentBox.querySelector(".tag_study");
+            if (tagStudy) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        });
     });
 
-    projectCategory.addEventListener("click", function () {
-        filterContent("project");
+    studyCategory.addEventListener("click", function () {
+        contentBoxes.forEach(contentBox => {
+            const tagProject = contentBox.querySelector(".tag_project");
+            if (tagProject) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        });
     });
 
     allCategory.addEventListener("click", function () {
-        filterContent("all");
-    });
-
-    function filterContent(filterType) {
-        contentBox.forEach((post) => {
-            const tagStudy = post.querySelector(".tag_study");
-            const tagProject = post.querySelector(".tag_project");
-
-            if (filterType === "study" && tagStudy) {
-                post.style.display = "block";
-            } else if (filterType === "project" && tagProject) {
-                post.style.display = "block";
-            } else if (filterType === "all") {
-                post.style.display = "block";
-            } else {
-                post.style.display = "none";
-            }
+        contentBoxes.forEach(contentBox => {
+            contentBox.style.display = "block";
         });
-    }
+    });
 });
+
+
+
 
 
 //배너
@@ -214,32 +216,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
-
 // api
-// const heartBtn = document.getElementById("heartBtn");
-// const heartImage = document.getElementById("heartImage");
-
-// let isHearted = false;
-// if (isHearted) {
-//     heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 이미 하트를 누른 게시글인 경우
-// }
-
-// 하트 버튼
-// heartBtn.addEventListener("click", () => {
-
-//     isHearted = !isHearted;
-
-//     if (isHearted) {
-//         heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 하트를 누른 경우
-//     } else {
-//         heartImage.src = "Series_a_FP\frontend\imgs\study\grayheart.png"; // 하트를 취소한 경우
-//     }
-// });
-
-
 // 상단
-function createCardTop(data) {
+function createCardTop(request_user, data) {
     let tagStudy = '';
     let tagProject = '';
     let deadlineTag = '';
@@ -265,7 +244,9 @@ function createCardTop(data) {
     }
 
 
-    const heartImageSrc = data.likes
+    const loggedInUser = request_user.username;
+    const isUserLiked = data.likes_users && data.likes_users.includes(loggedInUser);
+    const heartImageSrc = isUserLiked
         ? "../imgs/study/pinkheart.png"
         : "../imgs/study/grayheart.png";
 
@@ -288,7 +269,6 @@ function createCardTop(data) {
 }
 
 // 중간
-// post url 연결 필요
 function createPostContent(data) {
     const endAt = data.end_at;
     const formattedEndDate = formatDate(endAt);
@@ -338,10 +318,7 @@ function formatDate(dateString) {
 
 
 // 하단
-// 유저 프로필 사진 변경해야 함
-
 // 유저 url 경로 확인하기
-// 이미지 경로 바꾸기!!!!!!!!!!!!
 function createCardBottom(data) {
 
     const totalComments = data.comments_count;
@@ -376,13 +353,12 @@ function createCardBottom(data) {
 }
 
 // 'post' 생성
-function createPost(data) {
+function createPost(request_user, data) {
     const innerContainer = document.querySelector(".inner");
-
     const postHTML = `
         <div class="contents_box" id="contentBox">
             <div class="card">
-                ${createCardTop(data)}
+                ${createCardTop(request_user, data)}
                 ${createPostContent(data)}
                 ${createCardBottom(data)}
             </div>
@@ -390,37 +366,6 @@ function createPost(data) {
     `;
     innerContainer.innerHTML += postHTML;
 }
-
-
-// function toggleLike(pk) {
-//     const likeButton = document.getElementById(`likeButton_${pk}`);
-
-//     fetch(`/api/like/${pk}`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': `Bearer ${accessToken}`,
-//         },
-//     })
-//         .then(response => {
-//             if (response.ok) {
-//                 return response.json();
-//             }
-//             throw new Error('Failed to toggle like.');
-//         })
-//         .then(data => {
-//             if (data.liked) {
-//                 likeButton.classList.add('liked'); // 좋아요 표시를 변경
-//             } else {
-//                 likeButton.classList.remove('liked'); // 좋아요 표시를 변경
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }
-
-
 
 
 
@@ -442,10 +387,13 @@ async function fetchDataFromAPI() {
             throw new Error('Failed to fetch data');
         }
 
-        const postDataArray = await response.json();
+        const responseData = await response.json();
+        const { request_user, studylist } = responseData;
+
+        const postDataArray = studylist;
 
         postDataArray.forEach(data => {
-            createPost(data);
+            createPost(request_user, data);
         });
 
     } catch (error) {
@@ -456,39 +404,27 @@ async function fetchDataFromAPI() {
 fetchDataFromAPI();
 
 
+// 좋아요 보내기
+async function toggleLike(studyId) {
+    try {
+        const accessToken = localStorage.getItem('access_token');
+        const apiEndpoint = `http://localhost:8000/api/study/liked/${studyId}/`;
+        const options = {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        };
 
+        const response = await fetch(apiEndpoint, options);
 
+        if (!response.ok) {
+            throw new Error('Failed to toggle like');
+        }
 
-// const accessToken = localStorage.getItem('access_token');
-// // console.log(accessToken)
-// document.querySelectorAll("post_content").addEventListener("click", function (e) {
-//     e.preventDefault(); // 기본 링크 동작 방지
-//     console.log(accessToken)
-//     // API에서 정보를 가져오는 코드
-//     fetch("http://localhost:8000/api/study", {
-//         method: 'GET',
-//         headers: {
-//             'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
-//             'Content-Type': 'application/json'
-//         },
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 console.log(response)
-//                 throw new Error("Network response was not ok");
-//             }
-//             console.log(response)
-//             return response.json();
-//         })
-//         .then(posts => {
-//             // API에서 가져온 데이터(posts)를 사용하여 원하는 작업을 수행
-//             // const infoData = { title: "Sample Info", content: "This is the info content." };
-//             // 정보를 JSON 형식으로 인코딩
-//             const infoJSON = JSON.stringify(posts);
-//             // chat.html로 이동하면서 정보를 전달
-//             window.location.href = "studydetail.html?{data.id}=" + encodeURIComponent(infoJSON);
-//         })
-//         .catch(error => {
-//             console.error("Error fetching data:", error);
-//         });
-// });
+        return response.json();
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
