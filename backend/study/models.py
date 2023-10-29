@@ -137,3 +137,28 @@ def comment_action(sender, instance, created, **kwargs):
 
         alarm.study = study  # 스토리와 연결
         alarm.save()
+
+class Like(models.Model):
+    # 좋아요 모델
+    study = models.ForeignKey(Study,on_delete=models.CASCADE, related_name='likes_study')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='likes_user')
+    liked = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user} likes {self.study}"
+
+# Like 모델에 데이터가 생성될 때 실행되도록 설정 (Like 알람기능)
+@receiver(post_save, sender=Like) 
+def like_action(sender, instance, created, **kwargs):
+    if created:  # 좋아요가 생성된 경우
+        like = instance # Like 모델의 인스턴스
+        study = like.study # 현재 좋아요가 달린 스터디
+        sender_user = like.user # 댓글은 단 유저
+        receiver_user = study.author # 해당 게시물 작성자
+
+        content = f'{sender_user.nickname}님이 회원님의 {study.title}에 좋아요를 눌렀습니다.'
+        
+        alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
+
+        alarm.study = study  # 스터디와 연결
+        alarm.save()

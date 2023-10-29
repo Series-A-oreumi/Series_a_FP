@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Study, Comment, Stack
+from .models import Like, Study, Comment, Stack
 from user.serializers import UserProfileSerializer
 
 class StackSerializer(serializers.ModelSerializer):
@@ -101,3 +101,10 @@ class StudyCreateSerializer(serializers.ModelSerializer):
         # 변환된 스택의 기본 키 값을 'stacks' 필드에 설정
         data['stacks'] = stack_pks
         return super().to_internal_value(data)
+    
+    # like serializer
+
+    class LikeSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Like
+            fields = '__all__'
