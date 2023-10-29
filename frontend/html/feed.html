@@ -53,7 +53,7 @@
                     <!-- 로그인 여부에 따라 변경요망 -->
                     <div class="sprite_user_icon_outline"><a href="#"></a>
                       <div class="dropdown-content">
-                        <a href="profile.html">프로필 보기</a>
+                        <a href="profile_write.html">프로필 변경</a>
                         <a href="#" id="logout-button">로그아웃</a>
                       </div>
                     </div>
@@ -87,37 +87,23 @@
               </a>
             </div>
             <div class="sidebar-list">
-              <a href="#">
+              <a href="#" onclick="toggleSubSidebar()">
                   <img src="../imgs/common/search.svg"  />
                   <span class="sidebar-text">검색</span>
               </a>
             </div>
           
             <div class="sidebar-list">
-              <a href="#">
-                  <img src="../imgs/common/explore.svg"  />
-                  <span class="sidebar-text">탐색</span>
+              <a href="studylist.html">
+                  <img src="../imgs/common/study.svg" />
+                  <span class="sidebar-text">스터디 / 프로젝트</span>
               </a>
             </div>
           
             <div class="sidebar-list">
-              <a href="#">
+              <a href="story_write.html">
                   <img src="../imgs/common/create.svg" />
                   <span class="sidebar-text">글 작성</span>
-              </a>
-            </div>
-          
-            <div class="sidebar-list">
-              <a href="#">
-                  <img src="../imgs/common/study.svg" />
-                  <span class="sidebar-text">스터디</span>
-              </a>
-            </div>
-          
-            <div class="sidebar-list">
-              <a href="#">
-                  <img src="../imgs/common/project.svg"  />
-                  <span class="sidebar-text">프로젝트</span>
               </a>
             </div>
           
@@ -137,6 +123,12 @@
           </div>
         </div>
     <!-- side바 종료 -->
+    <!-- sub-sidebar -->
+    <div id="sub-sidebar" style="display: none;">
+      <h1>검색</h1>
+      <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+      <!-- 검색 결과를 표시할 곳 추가 -->
+  </div>
     <!-- main 시작-->
     <section id="main_container">
 
@@ -180,7 +172,6 @@
     <script src="../js/feed.js" type="module"></script>
     <script src="../js/sidebar.js"></script>
     <script src="../js/login.js"></script>
-    <script src="../js/feedDetail.js" type="module"></script>
 
 </body>
 </html>

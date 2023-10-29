@@ -1,6 +1,7 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
 import { formatTimeAgo } from "./format.js" 
 import { checkAccessTokenValidity } from "./auth.js"
+import { clearFeedDetail, feedDetail } from "./feedDetail.js";
 
 // 페이지 로딩이 완료되면 실행됩니다.
 document.addEventListener("DOMContentLoaded", async function () {
@@ -121,12 +122,18 @@ document.addEventListener("DOMContentLoaded", async function () {
                     modal.style.top = window.scrollY + 'px'; 
                     modal.style.display = "flex";
                     document.body.style.overflowY = "hidden";
+
+                    //모달 처리 코드 작성
+                    feedDetail(post.pk);
+                    // contentsBox.appendChild(image);
+
             
                     // 모달 닫기 코드
                     const buttonCloseModal = document.getElementById("close_modal");
                     buttonCloseModal.addEventListener("click", e => {
                         modal.style.display = "none";
                         document.body.style.overflowY = "visible";
+                        clearFeedDetail();
                     });
             
                     // 빈 화면 클릭하여 모달 닫기
@@ -135,6 +142,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         if (e.target === modalOverlay) {
                             modal.style.display = "none";
                             document.body.style.overflowY = "visible";
+                            clearFeedDetail();
                         }
                     });
                 }
@@ -156,14 +164,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                     const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
                         method: "POST", // 좋아요 토글을 위한 POST 요청
                         headers: {
+                            'Authorization': `Bearer ${accessToken}`,
                             "Content-Type": "application/json",
                         },
                     });
                     
                     if (response.ok) {
                         // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
-                        const data = await response.json();
-                        if (data.liked) {
+                        // const data = await response.json();
+                        if (response.status === 201) {
                             likeButton.classList.add("on");
                         } else {
                             likeButton.classList.remove("on");
@@ -187,6 +196,44 @@ document.addEventListener("DOMContentLoaded", async function () {
             // 댓글 아이콘
             const commentDiv = document.createElement("div");
             commentDiv.className = "sprite_bubble_icon";
+
+            //댓글 아이콘 클릭시 모달창 열림
+            commentDiv.addEventListener("click", function () {
+                // 이미 모달이 열려있는지 확인
+                console.log("CommentDiv 클릭됨!");
+                const isModalOpen = document.getElementById("modal_add_feed").style.display === "flex";
+            
+                if (!isModalOpen) {
+                    // 모달을 열도록 설정
+                    const modal = document.getElementById("modal_add_feed");
+                    modal.style.top = window.scrollY + 'px'; 
+                    modal.style.display = "flex";
+                    document.body.style.overflowY = "hidden";
+
+                    //모달 처리 코드 작성
+                    feedDetail(post.pk);
+                    // contentsBox.appendChild(image);
+
+            
+                    // 모달 닫기 코드
+                    const buttonCloseModal = document.getElementById("close_modal");
+                    buttonCloseModal.addEventListener("click", e => {
+                        modal.style.display = "none";
+                        document.body.style.overflowY = "visible";
+                        clearFeedDetail();
+                    });
+            
+                    // 빈 화면 클릭하여 모달 닫기
+                    const modalOverlay = document.querySelector(".modal_overlay");
+                    modalOverlay.addEventListener("click", e => {
+                        if (e.target === modalOverlay) {
+                            modal.style.display = "none";
+                            document.body.style.overflowY = "visible";
+                            clearFeedDetail();
+                        }
+                    });
+                }
+            });
 
             // a 엘리먼트를 생성하고 href 속성을 설정.
             const aElement = document.createElement("a");
@@ -226,11 +273,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                 modal.style.display = "flex";
                 document.body.style.overflowY = "hidden";
 
+                //모달 처리 코드 작성
+                feedDetail(post.pk);
+
                 // 모달 닫기 코드
                 const buttonCloseModal = document.getElementById("close_modal");
                 buttonCloseModal.addEventListener("click", e => {
                     modal.style.display = "none";
                     document.body.style.overflowY = "visible";
+                    clearFeedDetail();
                 });
 
                 // 빈 화면 클릭하여 모달 닫기
@@ -239,6 +290,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     if (e.target === modalOverlay) {
                         modal.style.display = "none";
                         document.body.style.overflowY = "visible";
+                        clearFeedDetail();
                     }
                 });
             });
@@ -296,5 +348,3 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     
 });
-
-

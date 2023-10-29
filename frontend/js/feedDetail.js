@@ -3,7 +3,7 @@ import { formatTimeAgo } from "./format.js"
 import { checkAccessTokenValidity } from "./auth.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
-document.addEventListener("DOMContentLoaded", async function () {
+export async function feedDetail(postId){
     
     checkAccessTokenValidity() // 토큰 만료시간 확인
 
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         // 백엔드 API에서 포스트 데이터를 가져옵니다.
         const response = await // Fetch 요청 보내기
         // 임시로 story/1 게시물로 선정 -> 추후 변경해야됨!
-        fetch("http://localhost:8000/api/story/1/", {
+        fetch(`http://localhost:8000/api/story/${postId}/`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }); 
         // 현재는 post_id를 임의로 1로 두었지만 추후 ${post.pk}로 수정해야함!
         const post = await response.json();
-        console.log(post)
+        console.log(`feedDetail ${post.content}`);
 
         // 포스트 데이터를 동적으로 화면에 추가합니다.
         const contentsBox = document.querySelector(".contents_detail_box");
@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const image = document.createElement("img");
         // 사진도 일단 예시로만 
         image.src = "../media/post/2020/05/08/tiger/iOtAhiyj.jpg"
+        // image.src = "/frontend/media/post/2020/05/08/tiger/김치찌개.png"
         image.alt = "피드이미지";
 
         imgdiv.appendChild(image)
@@ -130,17 +131,19 @@ document.addEventListener("DOMContentLoaded", async function () {
             
             // 서버에 좋아요 토글 요청을 보냅니다.
             try {
-                const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
+                const response = await fetch(`http://localhost:8000/api/story/${postId}/`, {
                     method: "POST", // 좋아요 토글을 위한 POST 요청
                     headers: {
+                        'Authorization': `Bearer ${accessToken}`, 
                         "Content-Type": "application/json",
                     },
                 });
                 
                 if (response.ok) {
                     // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
-                    const data = await response.json();
-                    if (data.liked) {
+                    // const data = await response.json();
+                    console.log(hello)
+                    if (response.status === 201) {
                         likeButton.classList.add("on");
                     } else {
                         likeButton.classList.remove("on");
@@ -170,41 +173,22 @@ document.addEventListener("DOMContentLoaded", async function () {
         // // div 엘리먼트를 a 엘리먼트의 자식으로 추가합니다.
         // commentDiv.appendChild(divElement);
 
-        // heartBtn.appendChild(likeButton);
+        
         // leftIcons.appendChild(heartBtn);
         // leftIcons.appendChild(commentDiv);
 
-        // bottomIcons.appendChild(leftIcons);
-        const bottomIcons = document.createElement('div');
-        bottomIcons.className = 'content_detail_bottom_icons'; // 클래스명 설정
-
-        const likeImg = document.createElement('img');
-        likeImg.src = '../imgs/postdetail/like2.svg'; // 이미지 경로를 실제 이미지 경로로 바꿔주세요.
-        likeImg.alt = '좋아요';
-        likeImg.className = 'like_img'; // 클래스명 설정
-
-        const likeCheckbox = document.createElement('input');
-        likeCheckbox.type = 'checkbox';
-        likeCheckbox.id = 'like-checkbox';
-        likeCheckbox.className = 'like_checkbox'; // 클래스명 설정
-
-        // 라벨을 사용하여 이미지와 숨겨진 체크박스를 연결
-        const likeLabel = document.createElement('label');
-        likeLabel.htmlFor = 'like-checkbox';
-        likeLabel.appendChild(likeImg);
-        likeCheckbox.style.display = 'none';
-
-        const likeContainer = document.createElement('div');
-        likeContainer.className = 'like_container'; // 클래스명 설정
-        likeContainer.appendChild(likeCheckbox);
-        likeContainer.appendChild(likeLabel);
+        const heartBtn = document.createElement('div');
+        heartBtn.className = 'heart_btn'; // 클래스명 설정
         
         // "좋아요" 텍스트 추가
         const likeText = document.createElement('span');
         likeText.textContent = '좋아요';
-        likeContainer.appendChild(likeText);
         
-        // 좋아요 이미지와 텍스트를 같은 div에 추가
+        const likeContainer = document.createElement('div');
+        likeContainer.className = 'like_container'; // 클래스명 설정
+        likeContainer.appendChild(likeButton);
+        likeContainer.appendChild(heartBtn);
+        likeContainer.appendChild(likeText);
         
 
         
@@ -230,7 +214,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         iconsContainer.appendChild(likeContainer);
         iconsContainer.appendChild(commentContainer);
-        bottomIcons.appendChild(iconsContainer);
 
 
 
@@ -239,7 +222,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // 좋아요 이미지
         const heartImg = document.createElement('img');
-        heartImg.src = '../imgs/postdetail/like.svg'; // 좋아요 이미지 경로
+        heartImg.src = '../imgs/postdetail/like2.svg'; // 좋아요 이미지 경로
         heartImg.alt = '좋아요';
         heartImg.className = 'heart_img'; // 클래스명 설정
 
@@ -262,7 +245,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         // 포스트 내용 추가
         const content = document.createElement("div");
         content.className = "content_detail";
+        console.log(post.content);
         content.textContent = post.content; // 포스트 내용을 여기에 추가
+        // content.textContent = `zz ${postId}`; // 포스트 내용을 여기에 추가
 
 
         // 부모 엘리먼트를 선택하거나 생성합니다.
@@ -301,7 +286,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         detailBox.appendChild(header);
         detailBox.appendChild(content);
         detailBox.appendChild(scrollSection);
-        detailBox.appendChild(bottomIcons);
+        detailBox.appendChild(iconsContainer);
         detailBox.appendChild(likeCountContainer);
         detailBox.appendChild(commentAdd);
         
@@ -310,7 +295,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         article.appendChild(detailBox);
         article.appendChild(imgSection);
         article.appendChild(likeCountContainer);
-        article.appendChild(bottomIcons);
+        article.appendChild(iconsContainer);
         article.appendChild(commentAdd);
         // article을 postContainer에 추가
         contentsBox.appendChild(article);
@@ -319,4 +304,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("Error fetching data:", error);
     }
     
-});
+};
+
+export function clearFeedDetail(){
+    document.querySelector(".contents_detail_box").replaceChildren();
+}
