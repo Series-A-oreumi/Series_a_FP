@@ -185,7 +185,7 @@ function createCommentCount(data) {
 // 댓글 목록
 // 유저 url 경로 바꾸기
 // 댓글 작성할 프로필 사진 바꾸기
-function createDetailSection3(data) {
+function createDetailSection3(user, data) {
     // const commentUserProfileURL = `../html/profile.html?id=${data.comments_list.author}`;
 
     let commentList = '';
@@ -221,10 +221,8 @@ function createDetailSection3(data) {
             <form method="post" class="comment-form" id="commentForm">
                 <div class="comment-form-inner">
                     <div class="comment-input">
-                        현재 로그인 사용자 테스트중
-                        <div>${data.username}</div>
                         <div class="comment-user-icon">
-                            <img src="${data.user}">
+                            <img src="${user.profile_img}">
                         </div>
                         <textarea id="commentArea" name="commentArea" placeholder="댓글을 입력하세요."></textarea>
                     </div>
@@ -242,7 +240,7 @@ function createDetailSection3(data) {
 }
 
 // 이어 붙이기
-function createDetaile(data) {
+function createDetaile(user, data) {
     const section1 = document.getElementById("detailSection1");
     const detail1 = `
         ${createDetailSection1(data)}
@@ -263,7 +261,7 @@ function createDetaile(data) {
 
     const section3 = document.getElementById("detailSection3");
     const detail3 = `
-        ${createDetailSection3(data)}
+        ${createDetailSection3(user, data)}
     `;
     section3.innerHTML += detail3;
 }
@@ -301,7 +299,7 @@ async function fetchDetailFromAPI() {
         const responseData = await response.json();
         const { request_user, study } = responseData;
 
-        createDetaile(study);
+        createDetaile(request_user, study);
         userReq(request_user, study);
 
     } catch (error) {
@@ -314,7 +312,7 @@ fetchDetailFromAPI();
 
 // 댓글 가져오기
 // 댓글 목록 렌더링 함수
-function renderComments(comments) {
+function renderComments(request_user, comments) {
     const commentList = document.querySelector('.comment-list');
 
     if (commentList) {
@@ -325,6 +323,12 @@ function renderComments(comments) {
         reversedComments.forEach(comment => {
             const formattedCommentDate = formatDate(comment.created_at);
             const commentElement = document.createElement('div');
+            let updateBtn = '';
+
+            if (request_user.username == `${comment.author.username}`) {
+                updateBtn = `<div>ㅋㅋ<img src="../imgs/study/commentupdate.png"></div>`
+            }
+
             commentElement.className = 'comment';
             commentElement.innerHTML = `
                 <div class="comment-inner">
@@ -341,6 +345,7 @@ function renderComments(comments) {
                             <span class="comment-created-at">${formattedCommentDate}</span>
                         </div>
                         <div class="user-comment">${comment.content}</div>
+                        ${updateBtn}
                     </div>
                 </div>
             `;
@@ -381,8 +386,10 @@ async function getComments(studyId) {
         },
     };
 
-    const comments = await fetchData(apiEndpoint, options);
-    renderComments(comments);
+    const comments = await response.json();
+    const { request_user, study } = comments;
+    renderComments(request_user, study);
+
 }
 
 
@@ -400,8 +407,9 @@ async function updateComments() {
         },
     };
 
-    const comments = await fetchData(apiEndpoint, options);
-    renderComments(comments);
+    const comments = await response.json();
+    const { request_user, study } = comments;
+    renderComments(request_user, study);
 
     // 댓글 수 업데이트
     const commentCount = document.querySelector('.comment-count');

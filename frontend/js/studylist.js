@@ -1,60 +1,3 @@
-// 필터링
-// 스터디, 프로젝트
-document.addEventListener("DOMContentLoaded", function () {
-    const studyCategories = document.querySelectorAll('.study-category');
-
-    studyCategories[0].classList.add('active');
-
-    studyCategories.forEach(category => {
-        category.addEventListener('click', () => {
-            studyCategories.forEach(tag => {
-                tag.classList.remove('active');
-            });
-            category.classList.add('active');
-        });
-    });
-});
-
-// 테스트
-document.addEventListener("DOMContentLoaded", function () {
-    const studyCategory = document.getElementById("studyCategory");
-    const projectCategory = document.getElementById("projectCategory");
-    const allCategory = document.getElementById("allCategory");
-    const contentBoxes = document.querySelectorAll(".contents_box");
-
-    projectCategory.addEventListener("click", function () { // 프로젝트를 눌렀을 때
-        contentBoxes.forEach(contentBox => { //아래 항목들 - 나누기
-            const tagStudy = contentBox.querySelector(".tag_study");
-            if (tagStudy) {
-                contentBox.style.display = "block";
-            } else {
-                contentBox.style.display = "none";
-            }
-        });
-    });
-
-    studyCategory.addEventListener("click", function () {
-        contentBoxes.forEach(contentBox => {
-            const tagProject = contentBox.querySelector(".tag_project");
-            if (tagProject) {
-                contentBox.style.display = "block";
-            } else {
-                contentBox.style.display = "none";
-            }
-        });
-    });
-
-    allCategory.addEventListener("click", function () {
-        contentBoxes.forEach(contentBox => {
-            contentBox.style.display = "block";
-        });
-    });
-});
-
-
-
-
-
 //배너
 document.addEventListener("DOMContentLoaded", function () {
     let currentBanner = 1;
@@ -122,7 +65,7 @@ document.addEventListener('click', () => {
     });
 });
 
-// 정렬
+// 정렬 토글
 document.addEventListener("DOMContentLoaded", function () {
     const sortToggle = document.getElementById("sortToggle");
     const sortText = document.getElementById("sortText");
@@ -141,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// 포지션
+// 포지션 토글
 document.addEventListener("DOMContentLoaded", function () {
     const positionToggle = document.getElementById("positionToggle");
     const positionText = document.getElementById("positionText");
@@ -160,14 +103,71 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// 기술스택
+// 기술스택 토글
+// 여러개 선택 가능한 버전
+// document.addEventListener("DOMContentLoaded", function () {
+//     const stackToggleBtn = document.getElementById('stackToggle');
+//     const stackToggleContainer = document.getElementById('stackToggleContainer');
+//     const stackOptionButtons = stackToggleContainer.querySelectorAll(".sub-select-btn");
+//     const stackText = stackToggleBtn.querySelector('.sub-select-text');
+
+//     const selectedStacks = [];
+
+//     stackToggleBtn.addEventListener('click', (event) => {
+//         event.stopPropagation();
+//         if (stackToggleContainer.classList.contains('active')) {
+//             stackToggleContainer.classList.remove('active');
+//         } else {
+//             stackToggleContainer.classList.add('active');
+//         }
+//     });
+
+//     document.addEventListener('click', (event) => {
+//         if (!stackToggleBtn.contains(event.target) && !stackToggleContainer.contains(event.target)) {
+//             stackToggleContainer.classList.remove('active');
+//         }
+//     });
+
+//     stackOptionButtons.forEach((option) => {
+//         option.addEventListener("click", function (e) {
+//             e.stopPropagation();
+//             const stackName = option.textContent;
+//             if (option.classList.contains("select-stack")) {
+//                 const index = selectedStacks.indexOf(stackName);
+//                 if (index !== -1) {
+//                     selectedStacks.splice(index, 1);
+//                 }
+//                 option.classList.remove("select-stack");
+//                 option.style.borderColor = '';
+//             } else {
+//                 selectedStacks.push(stackName);
+//                 option.classList.add("select-stack");
+//                 option.style.borderColor = 'rgb(0, 185, 174)';
+//             }
+
+//             stackText.textContent = selectedStacks.join(', ');
+
+//             if (selectedStacks.length === 0) {
+//                 stackText.textContent = "기술 스택";
+//                 stackToggleBtn.style.color = '';
+//                 stackToggleBtn.style.borderColor = '';
+//             } else {
+//                 stackToggleBtn.style.color = 'rgb(0, 185, 174)';
+//                 stackToggleBtn.style.borderColor = 'rgb(0, 185, 174)';
+//             }
+//         });
+//     });
+// });
+
+
+// 하나만 선택 가능 버전
 document.addEventListener("DOMContentLoaded", function () {
     const stackToggleBtn = document.getElementById('stackToggle');
     const stackToggleContainer = document.getElementById('stackToggleContainer');
     const stackOptionButtons = stackToggleContainer.querySelectorAll(".sub-select-btn");
     const stackText = stackToggleBtn.querySelector('.sub-select-text');
 
-    const selectedStacks = [];
+    let selectedStack = null;
 
     stackToggleBtn.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -188,45 +188,50 @@ document.addEventListener("DOMContentLoaded", function () {
         option.addEventListener("click", function (e) {
             e.stopPropagation();
             const stackName = option.textContent;
-            if (option.classList.contains("select-stack")) {
-                const index = selectedStacks.indexOf(stackName);
-                if (index !== -1) {
-                    selectedStacks.splice(index, 1);
-                }
-                option.classList.remove("select-stack");
-                option.style.borderColor = '';
+
+            if (stackName === selectedStack) {
+                selectedStack = null;
             } else {
-                selectedStacks.push(stackName);
-                option.classList.add("select-stack");
-                option.style.borderColor = 'rgb(0, 185, 174)';
+                selectedStack = stackName;
             }
 
-            stackText.textContent = selectedStacks.join(', ');
+            stackOptionButtons.forEach((btn) => {
+                if (btn.textContent === selectedStack) {
+                    btn.classList.add("select-stack");
+                    btn.style.borderColor = 'rgb(0, 185, 174)';
+                } else {
+                    btn.classList.remove("select-stack");
+                    btn.style.borderColor = '';
+                }
+            });
 
-            if (selectedStacks.length === 0) {
-                stackText.textContent = "기술 스택";
-                stackToggleBtn.style.color = '';
-                stackToggleBtn.style.borderColor = '';
-            } else {
+            stackText.textContent = selectedStack ? selectedStack : "기술 스택";
+
+            if (selectedStack) {
                 stackToggleBtn.style.color = 'rgb(0, 185, 174)';
                 stackToggleBtn.style.borderColor = 'rgb(0, 185, 174)';
+            } else {
+                stackToggleBtn.style.color = '';
+                stackToggleBtn.style.borderColor = '';
             }
         });
     });
 });
 
 
+
+
+
 // api
 // 상단
 function createCardTop(request_user, data) {
     let tagStudy = '';
-    let tagProject = '';
     let deadlineTag = '';
 
     if (data.project_study === 'study') {
         tagStudy = `<div class="tag_study">🌠스터디</div>`;
     } else {
-        tagProject = `<div class="tag_project">🧪프로젝트</div>`;
+        tagStudy = `<div class="tag_project">🧪프로젝트</div>`;
     }
 
     const currentTime = new Date();
@@ -255,7 +260,6 @@ function createCardTop(request_user, data) {
             <div class="tag_list">
                 <div class="top_tag">
                     ${tagStudy}
-                    ${tagProject}
                 </div>
                 ${deadlineTag}
             </div>
@@ -300,7 +304,7 @@ function createPostContent(data) {
                 </div>
                 <div class="post_content_tag">
                     <div class="position_tag">
-                        <li class="position_tag_item">${data.field}</li>
+                        <li class="position_tag_item ${data.field}">${data.field}</li>
                     </div>
                     ${stackTags}
                 </div>
@@ -339,7 +343,7 @@ function createCardBottom(data) {
                 <div class="views_container">
                     <div class="views_icon">
                         <img src="../imgs/study/viewsicon.png">
-                        
+
                     </div>
                     <div class="views">${data.views}</div>
                 </div>
@@ -367,7 +371,10 @@ function createPost(request_user, data) {
     innerContainer.innerHTML += postHTML;
 }
 
-
+function createLikes(request_user, data) {
+    const heartBtn = document.querySelector(".heart_btn");
+    heartBtn.addEventListener("click", () => toggleLike(data.pk));
+}
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
@@ -392,6 +399,8 @@ async function fetchDataFromAPI() {
 
         const postDataArray = studylist;
 
+
+
         postDataArray.forEach(data => {
             createPost(request_user, data);
         });
@@ -404,7 +413,13 @@ async function fetchDataFromAPI() {
 fetchDataFromAPI();
 
 
-// 좋아요 보내기
+function sendLikes(data) {
+
+}
+
+
+
+//좋아요 보내기
 async function toggleLike(studyId) {
     try {
         const accessToken = localStorage.getItem('access_token');
@@ -423,8 +438,231 @@ async function toggleLike(studyId) {
             throw new Error('Failed to toggle like');
         }
 
-        return response.json();
+        const responseData = await response.json();
+        console.log('Like toggled successfully', responseData);
     } catch (error) {
         console.error('Error:', error);
     }
 }
+
+
+
+
+// 필터
+// 필터 - 스터디, 프로젝트
+document.addEventListener("DOMContentLoaded", function () {
+    const studyCategories = document.querySelectorAll('.study-category');
+
+    studyCategories[0].classList.add('active');
+
+    studyCategories.forEach(category => {
+        category.addEventListener('click', () => {
+            studyCategories.forEach(tag => {
+                tag.classList.remove('active');
+            });
+            category.classList.add('active');
+        });
+    });
+});
+
+function filterStudy(filterType) {
+    const contentBoxes = document.querySelectorAll(".contents_box");
+
+    contentBoxes.forEach(contentBox => {
+        const tagStudy = contentBox.querySelector(".tag_study");
+        const tagProject = contentBox.querySelector(".tag_project");
+
+        if (filterType === "all") {
+            contentBox.classList.remove("filtered");
+        } else if (filterType === "study") {
+            if (tagStudy) {
+                contentBox.classList.remove("filtered");
+            } else {
+                contentBox.classList.add("filtered");
+            }
+        } else if (filterType === "project") {
+            if (tagProject) {
+                contentBox.classList.remove("filtered");
+            } else {
+                contentBox.classList.add("filtered");
+            }
+        }
+    });
+}
+const studyCategory = document.getElementById("studyCategory");
+const projectCategory = document.getElementById("projectCategory");
+const allCategory = document.getElementById("allCategory");
+
+studyCategory.addEventListener("click", () => filterStudy("study"));
+projectCategory.addEventListener("click", () => filterStudy("project"));
+allCategory.addEventListener("click", () => filterStudy("all"));
+
+
+// 필터 - 정렬
+function filterSort(sortType) {
+    const contentBoxes = Array.from(document.querySelectorAll(".contents_box"));
+
+    contentBoxes.forEach(contentBox => {
+        if (sortType === "latest") {
+            contentBox.style.order = 'initial';
+        } else if (sortType === "popularity") {
+            const views = parseInt(contentBox.querySelector(".views").textContent);
+            contentBox.style.order = -views;
+        } else if (sortType === "deadline") {
+            const deadlineText = contentBox.querySelector(".deadline").textContent;
+            const datePattern = /\d+/g;
+            const matchResult = deadlineText.match(datePattern);
+            const extractedNumber = matchResult.join('');
+            contentBox.style.order = extractedNumber;
+        }
+    });
+
+    const sortedContentBoxes = contentBoxes.sort((a, b) => {
+        return a.style.order - b.style.order;
+    });
+
+    const contentsContainer = document.querySelector(".contents-container");
+    sortedContentBoxes.forEach(contentBox => {
+        contentsContainer.appendChild(contentBox);
+    });
+}
+
+const Latest = document.getElementById("latest");
+const Popularity = document.getElementById("popularity");
+const Deadline = document.getElementById("deadLine");
+
+Latest.addEventListener("click", () => filterSort("latest"));
+Popularity.addEventListener("click", () => filterSort("popularity"));
+Deadline.addEventListener("click", () => filterSort("deadline"));
+
+
+// 필터 - 포지션
+function filterPosition(filterType) {
+    const contentBoxes = document.querySelectorAll(".contents_box");
+
+    contentBoxes.forEach(contentBox => {
+        const Pfrontend = contentBox.querySelector(".frontend");
+        const Pbackend = contentBox.querySelector(".backend");
+        const Pdevops = contentBox.querySelector(".devops");
+        const Pdesigner = contentBox.querySelector(".design");
+
+        if (filterType === "all") {
+            contentBox.style.display = "block"; // 전체 표시
+        } else if (filterType === "frontend") {
+            if (Pfrontend) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        } else if (filterType === "backend") {
+            if (Pbackend) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        } else if (filterType === "devops") {
+            if (Pdevops) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        } else if (filterType === "designer") {
+            if (Pdesigner) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        }
+    });
+}
+
+const allPosition = document.getElementById("all");
+const frontend = document.getElementById("frontend");
+const backend = document.getElementById("backend");
+const devops = document.getElementById("devops");
+const designer = document.getElementById("designer");
+
+designer.addEventListener("click", () => filterPosition("designer"));
+devops.addEventListener("click", () => filterPosition("devops"));
+backend.addEventListener("click", () => filterPosition("backend"));
+frontend.addEventListener("click", () => filterPosition("frontend"));
+allPosition.addEventListener("click", () => filterPosition("all"));
+
+
+// 필터 - 기술 스택 - 하나만 선택 가능
+const selectedStacks = [];
+
+function filterStack(filterType) {
+    const contentBoxes = document.querySelectorAll(".contents_box");
+
+    const isStackSelected = selectedStacks.includes(filterType);
+
+    contentBoxes.forEach(contentBox => {
+        const stackElements = contentBox.querySelectorAll(`.${filterType}`);
+
+        if (isStackSelected) {
+            contentBox.style.display = "block";
+        } else if (stackElements.length > 0) {
+            contentBox.style.display = "block";
+        } else {
+            contentBox.style.display = "none";
+        }
+    });
+
+    // 스택 선택 토글
+    if (isStackSelected) {
+        // 이미 선택된 스택을 다시 클릭하면 선택 취소
+        const stackIndex = selectedStacks.indexOf(filterType);
+        if (stackIndex !== -1) {
+            selectedStacks.splice(stackIndex, 1);
+        }
+    } else {
+        // 이미 다른 스택이 선택되어 있으면 기존 스택 선택 취소
+        if (selectedStacks.length > 0) {
+            const prevStack = selectedStacks.pop();
+            const prevStackElements = document.querySelectorAll(`.${prevStack}`);
+            prevStackElements.forEach(element => {
+                element.classList.remove("select-stack");
+            });
+        }
+        selectedStacks.push(filterType);
+    }
+}
+const python = document.getElementById("Python");
+const java = document.getElementById("Java");
+const javascript = document.getElementById("Javascript");
+const spring = document.getElementById("Spring");
+const react = document.getElementById("React");
+const django = document.getElementById("Django");
+
+python.addEventListener("click", () => filterStack("python"));
+java.addEventListener("click", () => filterStack("java"));
+javascript.addEventListener("click", () => filterStack("javascript"));
+spring.addEventListener("click", () => filterStack("spring"));
+react.addEventListener("click", () => filterStack("react"));
+django.addEventListener("click", () => filterStack("django"));
+
+
+
+// 필터 - 검색
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        const searchText = searchInput.value.toLowerCase();
+        const contentBoxes = document.querySelectorAll(".contents_box");
+
+        contentBoxes.forEach(contentBox => {
+            const title = contentBox.querySelector(".post_title").textContent.toLowerCase();
+            const content = contentBox.querySelector(".post_content_main").textContent.toLowerCase();
+            const name = contentBox.querySelector(".user-name-text").textContent.toLowerCase();
+
+            if (title.includes(searchText) || content.includes(searchText) || name.includes(searchText)) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        });
+    }
+});
+

@@ -199,7 +199,16 @@ class CommentCreate(APIView):
         try:
             study_comments = Comment.objects.filter(study_id=study_id)
             serializer = CommentSerializer(study_comments, many=True)
-            return Response(serializer.data)
+
+            user = get_user_from_token(request)
+            user_serializer = UserProfileSerializer(user)
+
+            data = {
+            'request_user' : user_serializer.data,
+            'comment' : serializer.data
+        }
+
+            return Response(data, status=status.HTTP_200_OK)
         except Study.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
     
@@ -276,7 +285,7 @@ class CommentUpdateDelete(APIView):
 
 # like
 class ToggleLike(APIView):
-    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
+    permission_classes = [IsTokenValid]
 
     def post(self, request, study_id):
         try:
@@ -285,15 +294,11 @@ class ToggleLike(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user = get_user_from_token(request)
+
         if user in study.likes.all():
-            # 이미 좋아요를 누른 경우, 좋아요 취소
             study.likes.remove(user)
-            liked = False
         else:
-            # 좋아요를 누르지 않은 경우, 좋아요 추가
             study.likes.add(user)
-            liked = True
         study.save()
 
-        serializer = StudySerializer(study)
-        return Response({'liked': liked }, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
