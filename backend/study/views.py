@@ -198,15 +198,17 @@ class CommentCreate(APIView):
     def get(self, request, study_id):
         try:
             study_comments = Comment.objects.filter(study_id=study_id)
-            serializer = CommentSerializer(study_comments, many=True)
+            comment_serializer = CommentSerializer(study_comments, many=True)
 
             user = get_user_from_token(request)
             user_serializer = UserProfileSerializer(user)
 
+            
+
             data = {
-            'request_user' : user_serializer.data,
-            'comment' : serializer.data
-        }
+                'request_user' : user_serializer.data,
+                'comment' : comment_serializer.data
+            }
 
             return Response(data, status=status.HTTP_200_OK)
         except Study.DoesNotExist:

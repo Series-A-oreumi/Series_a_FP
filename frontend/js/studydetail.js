@@ -6,7 +6,7 @@ function formatDate(dateString) {
 }
 
 
-// 제목 ,유저
+// 제목 ,유저 ~
 // 유저 아이콘 데이터이름 확인 필요
 function createDetailSection1(data) {
     const createAt = data.created_at
@@ -31,13 +31,13 @@ function createDetailSection1(data) {
     `;
 }
 
-//포스트
+
 
 // const heartImageSrc = data.likes
 //     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
 //     : "Series_a_FP/frontend/imgs/study/grayheart.png";
 
-
+// 좋아요 구분
 function likesTrue(study, data) {
     const loggedInUser = study.username;
     const isUserLiked = data.likes_users && data.likes_users.includes(loggedInUser);
@@ -50,6 +50,7 @@ function likesTrue(study, data) {
     `
 }
 
+// 본문~
 function createDetailSection2(data) {
     let stackTags = '';
     if (data.stacks && data.stacks.length > 0) {
@@ -182,7 +183,7 @@ function createCommentCount(data) {
     `;
 }
 
-// 댓글 목록
+// 댓글 목록 ~
 // 유저 url 경로 바꾸기
 // 댓글 작성할 프로필 사진 바꾸기
 function createDetailSection3(user, data) {
@@ -241,31 +242,36 @@ function createDetailSection3(user, data) {
 
 // 이어 붙이기
 function createDetaile(user, data) {
+    // 1 제목, 유저
     const section1 = document.getElementById("detailSection1");
     const detail1 = `
         ${createDetailSection1(data)}
     `;
     section1.innerHTML += detail1;
 
+    // 2 본문
     const section2 = document.getElementById("detailSection2");
     const detail2 = `
         ${createDetailSection2(data)}
     `;
     section2.innerHTML += detail2;
 
-    const commentcount = document.getElementById("commentCount");
-    const detail4 = `
-        ${createCommentCount(data)}
-    `
-    commentcount.innerHTML += detail4;
-
+    //3 댓글
     const section3 = document.getElementById("detailSection3");
     const detail3 = `
         ${createDetailSection3(user, data)}
     `;
     section3.innerHTML += detail3;
+
+    // 4 댓글 수
+    const commentcount = document.getElementById("commentCount");
+    const detail4 = `
+        ${createCommentCount(data)}
+    `
+    commentcount.innerHTML += detail4;
 }
 
+// 좋아요
 function userReq(study, data) {
     const likeSection = document.getElementById("likeTF");
     const detail5 = `
@@ -312,25 +318,23 @@ fetchDetailFromAPI();
 
 // 댓글 가져오기
 // 댓글 목록 렌더링 함수
-function renderComments(request_user, comments) {
+function renderComments(user, comments) {
     const commentList = document.querySelector('.comment-list');
 
-    if (commentList) {
-        commentList.innerHTML = '';
+    commentList.innerHTML = '';
 
+    const reversedComments = comments.reverse();
+    reversedComments.forEach(comment => {
+        const formattedCommentDate = formatDate(comment.created_at);
+        const commentElement = document.createElement('div');
+        let updateBtn = '';
 
-        const reversedComments = comments.reverse();
-        reversedComments.forEach(comment => {
-            const formattedCommentDate = formatDate(comment.created_at);
-            const commentElement = document.createElement('div');
-            let updateBtn = '';
+        if (user.username == `${comment.author.username}`) {
+            updateBtn = `<div>ㅋㅋ<img src="../imgs/study/commentupdate.png"></div>`
+        }
 
-            if (request_user.username == `${comment.author.username}`) {
-                updateBtn = `<div>ㅋㅋ<img src="../imgs/study/commentupdate.png"></div>`
-            }
-
-            commentElement.className = 'comment';
-            commentElement.innerHTML = `
+        commentElement.className = 'comment';
+        commentElement.innerHTML = `
                 <div class="comment-inner">
                     <a href="#">
                         <div class="comment-user-icon">
@@ -349,9 +353,9 @@ function renderComments(request_user, comments) {
                     </div>
                 </div>
             `;
-            commentList.appendChild(commentElement);
-        });
-    }
+        commentList.appendChild(commentElement);
+    });
+
 }
 
 
@@ -372,10 +376,6 @@ async function fetchData(apiEndpoint, options) {
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const studyId = urlParams.get('id');
-    getComments(studyId);
-});
-
-async function getComments(studyId) {
     const accessToken = localStorage.getItem('access_token');
     const apiEndpoint = `http://localhost:8000/api/study/${studyId}/comments/`;
     const options = {
@@ -386,11 +386,9 @@ async function getComments(studyId) {
         },
     };
 
-    const comments = await response.json();
-    const { request_user, study } = comments;
-    renderComments(request_user, study);
-
-}
+    fetchData(apiEndpoint, options)
+        .then(user, comments => renderComments(user, comments));
+});
 
 
 // 댓글 업데이트 (댓글 작성 후)
@@ -407,16 +405,33 @@ async function updateComments() {
         },
     };
 
-    const comments = await response.json();
-    const { request_user, study } = comments;
-    renderComments(request_user, study);
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        });
 
-    // 댓글 수 업데이트
-    const commentCount = document.querySelector('.comment-count');
-    if (commentCount) {
-        commentCount.textContent = `댓글 ${comments.length}`;
+        if (!response.ok) {
+            throw new Error('Failed to fetch comments');
+        }
+
+        const comments = await response.json();
+
+        const { request_user, comment } = comments;
+
+        renderComments(request_user, comment);
+
+        const updatedCommentCount = createCommentCount(comments);
+        const commentCount = document.getElementById('commentCount');
+        commentCount.innerHTML = updatedCommentCount;
+    } catch (error) {
+        console.error('Error:', error);
     }
 }
+
 
 // 댓글 작성 버튼 클릭
 document.addEventListener('DOMContentLoaded', function () {
@@ -434,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
             },
             body: new URLSearchParams({ content: commentText }).toString(),
         };
