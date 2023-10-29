@@ -41,6 +41,8 @@ class StudyList(APIView):
         }
         
         return Response(data, status=status.HTTP_200_OK)
+
+    # def post(self, request):
     
 
 # studycreate (API 테스트 정상작동) -> 프론트와 논의 필요!
@@ -202,8 +204,6 @@ class CommentCreate(APIView):
 
             user = get_user_from_token(request)
             user_serializer = UserProfileSerializer(user)
-
-            
 
             data = {
                 'request_user' : user_serializer.data,

@@ -17,9 +17,6 @@ function createDetailSection1(data) {
         <div class="title">${data.title}</div>
         <div class="user-section">
             <a href="${userProfileURL}">
-                <div class="user-icon">
-                    ${data.author.profile_img}
-                </div>
                 <div class="user-section-inner">
                     <div class="user-title">${data.author.username}</div>
                     <div class="email-text">👥 ${data.author.email}</div>
@@ -200,7 +197,7 @@ function createDetailSection3(user, data) {
                 <div class="comment-inner">
                     <a href="#">
                         <div class="comment-user-icon">
-                            ${comment.author.profile_img}
+                            <img src = "${comment.author.profile_img}">
                         </div>
                     </a>
                     <div>
@@ -329,16 +326,19 @@ function renderComments(user, comments) {
         const commentElement = document.createElement('div');
         let updateBtn = '';
 
+        const commentUserProfileURL = `../html/profile.html?id=${comment.author}`;
+
         if (user.username == `${comment.author.username}`) {
             updateBtn = `<div>ㅋㅋ<img src="../imgs/study/commentupdate.png"></div>`
         }
 
+
         commentElement.className = 'comment';
         commentElement.innerHTML = `
                 <div class="comment-inner">
-                    <a href="#">
+                    <a href="${commentUserProfileURL}">
                         <div class="comment-user-icon">
-                            ${comment.author.profile_img}
+                            <img src="${comment.author.profile_img}">
                         </div>
                     </a>
                     <div>
@@ -387,7 +387,13 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     fetchData(apiEndpoint, options)
-        .then(user, comments => renderComments(user, comments));
+        .then(data => {
+            const { user, comments } = data;
+            renderComments(user, comments);
+        })
+        .catch(error => {
+            console.error('오류:', error);
+        });
 });
 
 
