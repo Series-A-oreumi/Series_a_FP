@@ -236,7 +236,7 @@ class ToggleLike(APIView):
                 like.delete()
                 post.likes.remove(user)
                 messages = {
-                    'success' : f'{post.author} 게시물 좋아요를 취소했습니다.' 
+                    'cancel' : f'{post.author} 게시물 좋아요를 취소했습니다.' 
                 }
                 return Response(messages, status=status.HTTP_204_NO_CONTENT)
             # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
