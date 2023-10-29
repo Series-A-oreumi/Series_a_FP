@@ -678,3 +678,20 @@ body{
 
 
 
+
+.notify_count {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(247, 87, 38);
+    border-radius: 50%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    top: -6px;
+    right: 11px;
+    padding: 1px;
+    font-size: 12px;
+}
