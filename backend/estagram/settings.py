@@ -66,20 +66,9 @@ INSTALLED_APPS = [
     # swagger
     'drf_yasg',
 
-    #channels
-    'channels',
 ]
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
-}
 
-# ASGI application 설정
-ASGI_APPLICATION = 'estagram.asgi.application'
+
 
 # 초기 인증 제거 -> 추후에 필요하면 살리면 될듯
 # REST_FRAMEWORK = {
