@@ -45,13 +45,13 @@
             <section class="select-section-category">
                 <div class="select-section-main">
                     <div class="study-category">
-                        <span class="study-category-text" id="allCategory">전체</span>
+                        <span class="study-category-text" id="allCategory" data-filter="all">전체</span>
                     </div>
-                    <div class="study-category" id="studyCategory">
-                        <span class="study-category-text">스터디</span>
+                    <div class="study-category">
+                        <span class="study-category-text" id="studyCategory" data-filter="study">스터디</span>
                     </div>
-                    <div class="study-category" id="projectCategory">
-                        <span class="study-category-text">프로젝트</span>
+                    <div class="study-category">
+                        <span class="study-category-text" id="projectCategory" data-filter="project">프로젝트</span>
                     </div>
                 </div>
                 <a href="#">
@@ -76,7 +76,7 @@
                                 <div class="sub-select-btn-container sub-select-drop drop-1" id="sortContainer">
                                     <div id="latest">최신순</div>
                                     <div id="popularity">인기순</div>
-                                    <div id="deadline">마감순</div>
+                                    <div id="deadLine">마감순</div>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                             </button>
                             <div id="stackToggleContainer">
                                 <div class="sub-select-btn-container sub-select-choice" id="stackContainer">
-                                    <div class="sub-select-btn">
+                                    <div id="Javascript" class="sub-select-btn">
                                         <div class="stack-icon javascript">
                                             <span class="javaScript">
                                                 <img src="../imgs/study/javascript_icon.png">
@@ -166,7 +166,7 @@
                                     <div id="all">전체</div>
                                     <div id="frontend">프론트엔드</div>
                                     <div id="backend">백엔드</div>
-                                    <div id="devobs">데브옵스</div>
+                                    <div id="devops">데브옵스</div>
                                     <div id="designer">디자이너</div>
                                 </div>
                             </div>

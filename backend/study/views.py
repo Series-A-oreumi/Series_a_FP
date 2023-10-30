@@ -37,13 +37,44 @@ class StudyList(APIView):
         
         data = {
             'request_user' : user_serializer.data,
-            'studylist' : study_serializer.data
+            'studylist' : study_serializer.data,
         }
         
         return Response(data, status=status.HTTP_200_OK)
-
+    
 
 # studycreate (API 테스트 정상작동) -> 프론트와 논의 필요!
+class StudyCreate(APIView):
+
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
+    
+    def post(self, request):
+        
+        # 요청한 유저 가져오기
+        user = get_user_from_token(request)
+
+         # "author" 필드를 직접 설정
+        request.data["author"] = user.id
+
+        serializer = StudyCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            study = serializer.save()
+            study.participants.set([user]) # participants 집어넣기
+
+            # stacks 집어넣기
+            stack_data = request.data.get('stacks')
+            for stack_pk in stack_data:
+                stack = Stack.objects.get(pk=stack_pk)
+                study.stacks.add(stack)
+        
+            data = {
+                "message" : "스터디 및 프로젝트 등록이 완료되었습니다.",
+            }
+            return Response(data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+# study detail & edit & delete (API 테스트 정상작동) -> 수정부분은 프론트와 논의필요!
 class StudyCreate(APIView):
 
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
@@ -265,6 +296,44 @@ class CommentUpdateDelete(APIView):
             'success' : '댓글이 정상적으로 삭제되었습니다.'
         }
         return Response(messages, status=status.HTTP_204_NO_CONTENT)
+    
+
+# like
+class ToggleLike(APIView):
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
+
+    def post(self, request, study_id):
+        study = get_object_or_404(Study, pk=study_id)
+
+        user = get_user_from_token(request)
+        
+        try:
+            like = Like.objects.get(user=user, study=study)
+            # 이미 좋아요를 누른 경우, 좋아요를 취소합니다.
+            if like.liked:
+                like.delete()
+                study.likes.remove(user)
+                messages = {
+                    'cancel' : f'{study.author} 게시물 좋아요를 취소했습니다.' 
+                }
+                return Response(messages, status=status.HTTP_204_NO_CONTENT)
+            # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
+            else:
+                like.liked = True
+                like.save()
+                study.likes.add(user)
+                messages = {
+                    'success' : f'{study.author} 게시물 좋아요를 눌렀습니다.' 
+                }
+                return Response(messages, status=status.HTTP_201_CREATED)
+            
+        except Like.DoesNotExist:
+            # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
+            like = Like(user=user, study=study, liked=True)
+            like.save()
+            study.likes.add(user)
+            serializer = LikeSerializer(like)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
 # like

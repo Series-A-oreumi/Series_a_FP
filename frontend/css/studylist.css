@@ -139,13 +139,21 @@ a {
 }
 
 .write-btn {
-    border: solid 1px black;
-    background-color: black;
+    border: solid 1px #333;
+    background: black;
+    border: #333;
+    border-radius: 5px;
     color: white;
     padding: 10px 20px;
     font-weight: 700;
     font-size: 17px;
     cursor: pointer;
+}
+
+.write-btn:hover {
+    border: solid 1px #333;
+    background: #333;
+    border: #333;
 }
 
 /* select-sub */
@@ -423,6 +431,7 @@ button {
 
 .heart_btn {
     display: flex;
+    cursor: pointer;
 }
 
 /* 좋아요 수정 필요 */
@@ -549,4 +558,9 @@ ul {
 .comment_icon img {
     width: 80%;
     height: 80%;
+}
+
+/* 필터 */
+.filtered {
+    display: none !important;
 }

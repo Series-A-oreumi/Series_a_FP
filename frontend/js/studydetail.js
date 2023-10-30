@@ -1,3 +1,10 @@
+// 로그인한 유저 아이디
+import { UserInfo } from "./jwtUserId.js"
+
+const accessToken = localStorage.getItem('access_token');
+UserInfo(accessToken)
+
+
 // 날짜 형식 변경 함수
 function formatDate(dateString) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -6,20 +13,17 @@ function formatDate(dateString) {
 }
 
 
-// 제목 ,유저
+// 제목 ,유저 ~
 // 유저 아이콘 데이터이름 확인 필요
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
-    const userProfileURL = `../html/profile.html?id=${data.id}`;
+    const userProfileURL = `../html/profile.html?id=${data.author}`;
 
     return `
         <div class="title">${data.title}</div>
         <div class="user-section">
             <a href="${userProfileURL}">
-                <div class="user-icon">
-                    ${data.usericon}
-                </div>
                 <div class="user-section-inner">
                     <div class="user-title">${data.author.username}</div>
                     <div class="email-text">👥 ${data.author.email}</div>
@@ -31,8 +35,15 @@ function createDetailSection1(data) {
     `;
 }
 
-//포스트
-function createDetailSection2(data) {
+
+
+// const heartImageSrc = data.likes
+//     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
+//     : "Series_a_FP/frontend/imgs/study/grayheart.png";
+
+
+// 본문~
+function createDetailSection2(user, data) {
     let stackTags = '';
     if (data.stacks && data.stacks.length > 0) {
         stackTags = `
@@ -50,14 +61,15 @@ function createDetailSection2(data) {
         `;
     }
 
-    const heartImageSrc = data.likes
-        ? "../imgs/study/pinkheart.png"
-        : "../imgs/study/grayheart.png";
 
-    // const heartImageSrc = data.likes
-    //     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
-    //     : "Series_a_FP/frontend/imgs/study/grayheart.png";
-
+    const likeCount = data.likes_users.length;
+    const loggedInUser = user.username;
+    let likesTrue = ''
+    if (data.likes_users && data.likes_users.includes(loggedInUser)) {
+        likesTrue = `<img src="../imgs/study/pinkheart.png">`
+    } else {
+        likesTrue = `<img src="../imgs/study/grayheart.png">`
+    }
 
     const startAt = data.start_at
     const formattedStartDate = formatDate(startAt);
@@ -143,99 +155,46 @@ function createDetailSection2(data) {
                 <div>${data.views}</div>
             </div>
             <div class="likes">
-                <img src="${heartImageSrc}">
-                <div>${data.likes}</div>
+                <div id="likeTF">
+                <button id="likeButton">${likesTrue}</button>
+                </div>
+                <div>${likeCount}</div>
             </div>
         </div>
     </div>
     `;
 }
 
-// 댓글 수
-function createCommentCount(data) {
 
-    return `
-        <div class="comment-count">댓글 ${data.comments_count}</div>
-    `;
+
+// 댓글 목록 ~
+// 랜덤 아이콘
+function randomValue(...values) {
+    const randomIndex = Math.floor(Math.random() * values.length);
+    return values[randomIndex];
 }
 
-//댓글 목록 ver1
-// 유저 정보 불러오기 - 유저 프로필 연결 시 테스트 해야함
-// async function fetchUserProfile(userID) {
-//     const profileEndpoint = `http://localhost:8000/api/users/${userID}/profile`;
 
-//     try {
-//         const response = await fetch(profileEndpoint);
-//         if (!response.ok) {
-//             throw new Error('Failed to fetch user profile');
-//         }
-//         const userData = await response.json();
-//         return userData;
-//     } catch (error) {
-//         console.error('Error:', error);
-//     }
-// }
-
-// async function createDetailSection3(data) {
-//     let commentList = '';
-//     if (data.comments_list && data.comments_list.length > 0) {
-//         commentList = await Promise.all(data.comments_list.map(async (comment) => {
-//             const writeAt = comment.created_at;
-//             const formattedCommentDate = formatDate(writeAt);
-
-//             // 사용자 프로필 정보 가져오기
-//             const userProfile = await fetchUserProfile(comment.author);
-
-//             return `
-//                 <div class="comment-inner">
-//                     <a href="#">
-//                         <div class="comment-user-icon">
-//                             ${userProfile.username}의 아이콘
-//                         </div>
-//                     </a>
-//                     <div>
-//                         <div class="comment-user-info">
-//                             <a href="#">
-//                                 <span class="user-name">${userProfile.username}</span>
-//                             </a>
-//                             <span class="comment-created-at">${formattedCommentDate}</span>
-//                         </div>
-//                         <div class="user-comment">${comment.content}</div>
-//                     </div>
-//                 </div>
-//             `;
-//         }));
-//     }
-
-//     return `
-//         <div class="comment-list">
-//             ${commentList.join('')}
-//         </div>
-//     `;
-// }
-
-
-// 댓글 목록 ver2
-// 유저 url 경로 바꾸기
 function createDetailSection3(data) {
-    // const commentUserProfileURL = `../html/profile.html?id=${data.comments_list.author}`;
-
     let commentList = '';
     if (data.comments_list && data.comments_list.length > 0) {
         commentList = data.comments_list.reverse().map(comment => {
+            const commentProfileURL = `../html/profile.html?id=${data.author.id}`;
             const writeAt = comment.created_at;
             const formattedCommentDate = formatDate(writeAt);
+            const randomIcon = randomValue('🎅', '👼', '🤴', '👸', '🧑', '👧', '👶', '👨‍🦱', '👱‍♀️', '🧔');
 
             return `
+                
                 <div class="comment-inner">
-                    <a href="#">
+                    <a href="${commentProfileURL}">
                         <div class="comment-user-icon">
-                            ${comment.author.profileicon}
+                            ${randomIcon}
                         </div>
                     </a>
                     <div>
                         <div class="comment-user-info">
-                            <a href="#">
+                            <a href="${commentProfileURL}">
                                 <span class="user-name">${comment.author.username}</span>
                             </a>
                             <span class="comment-created-at">${formattedCommentDate}</span>
@@ -246,47 +205,60 @@ function createDetailSection3(data) {
             `;
         }).join('');
     }
-
     return `
+        
         <div class="comment-list">
             ${commentList}
         </div>
     `;
 }
 
-// 이어 붙이기
-function createDetaile(data) {
-    const section1 = document.getElementById("detailSection1");
-    const detail1 = `
-        ${createDetailSection1(data)}
-    `;
-    section1.innerHTML += detail1;
 
-    const section2 = document.getElementById("detailSection2");
-    const detail2 = `
-        ${createDetailSection2(data)}
-    `;
-    section2.innerHTML += detail2;
+// 댓글 수
+function createCommentCount(data) {
 
-    const commentcount = document.getElementById("commentCount");
-    const detail4 = `
-        ${createCommentCount(data)}
-    `
-    commentcount.innerHTML += detail4;
-
-    const section3 = document.getElementById("detailSection3");
-    const detail3 = `
-        ${createDetailSection3(data)}
+    return `
+        <div class="comment-count">댓글 ${data.comments_count}</div>
     `;
-    section3.innerHTML += detail3;
 }
 
 
+// 이어 붙이기
+function createDetaile(request_user, study_detail) {
+    // 1 제목, 유저
+    const section1 = document.getElementById("detailSection1");
+    const detail1 = `
+        ${createDetailSection1(study_detail)}
+    `;
+    section1.innerHTML += detail1;
 
-// API에서 데이터 가져오기
+    // 2 본문
+    const section2 = document.getElementById("detailSection2");
+    const detail2 = `
+        ${createDetailSection2(request_user, study_detail)}
+    `;
+    section2.innerHTML += detail2;
+
+    //3 댓글
+    const section3 = document.getElementById("detailSection3");
+    const detail3 = `
+        ${createDetailSection3(study_detail)}
+    `;
+    section3.innerHTML += detail3;
+
+    // 댓글 수
+    const commentcount = document.getElementById("commentCount");
+    const detail4 = `
+        ${createCommentCount(study_detail)}
+    `
+    commentcount.innerHTML = detail4;
+}
+
+
+// 스터디 디테일 데이터 가져오기
 async function fetchDetailFromAPI() {
     const urlParams = new URLSearchParams(window.location.search);
-    const dataId = urlParams.get('id'); // 'id'는 쿼리 매개변수의 이름이어야 합니다.
+    const dataId = urlParams.get('id');
     const accessToken = localStorage.getItem('access_token');
     const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
 
@@ -303,8 +275,11 @@ async function fetchDetailFromAPI() {
             throw new Error('Failed to fetch data');
         }
 
-        const data = await response.json();
-        createDetaile(data);
+        const responseData = await response.json();
+        const { request_user, study } = responseData;
+
+        createDetaile(request_user, study);
+
 
     } catch (error) {
         console.error('Error:', error);
@@ -314,8 +289,40 @@ async function fetchDetailFromAPI() {
 fetchDetailFromAPI();
 
 
-// 유저 정보 고치기
-// 댓글 목록 렌더링 함수(댓글 작성 시 댓글들이 새로고침 되도록)
+// 좋아요
+const likeButton = document.getElementById('likeButton');
+likeButton.addEventListener("click", async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataId = urlParams.get('id');
+
+    try {
+        const response = await fetch(`http://localhost:8000/api/study/liked/${dataId}/`, {
+            method: "POST", // 좋아요 토글을 위한 POST 요청
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
+            // const data = await response.json();
+            // if (response.status === 201) {
+            //     likeButton.classList.add("on");
+            // } else {
+            //     likeButton.classList.remove("on");
+            // }
+        } else {
+            console.error("Error toggling like:", response.status);
+        }
+    } catch (error) {
+        console.error("Error toggling like:", error);
+    }
+});
+
+
+
+// 댓글
 function renderComments(comments) {
     const commentList = document.querySelector('.comment-list');
     commentList.innerHTML = ''; // 이전 댓글 삭제
@@ -324,19 +331,21 @@ function renderComments(comments) {
     const reversedComments = comments.reverse();
 
     reversedComments.forEach(comment => {
+        const commentProfileURL = `../html/profile.html?id=${comment.author.id}`;
         const formattedCommentDate = formatDate(comment.created_at);
+        const randomIcon = randomValue('🎅', '👼', '🤴', '👸', '🧑', '👧', '👶', '👨‍🦱', '👱‍♀️', '🧔');
         const commentElement = document.createElement('div');
         commentElement.className = 'comment';
         commentElement.innerHTML = `
             <div class="comment-inner">
-                <a href="#">
+                <a href="${commentProfileURL}">
                     <div class="comment-user-icon">
-                        ${comment.author.profileicon}
+                        ${randomIcon}
                     </div>
                 </a>
                 <div>
-                    <div class="comment-user-info">
-                        <a href="#">
+                    <div class "comment-user-info">
+                        <a href="${commentProfileURL}">
                             <span class="user-name">${comment.author.username}</span>
                         </a>
                         <span class="comment-created-at">${formattedCommentDate}</span>
@@ -347,39 +356,47 @@ function renderComments(comments) {
         `;
         commentList.appendChild(commentElement);
     });
+    const commentCount = document.getElementById('commentCount');
+    const updatedCommentCount = createCommentCount({ comments_count: comments.length });
+    commentCount.innerHTML = updatedCommentCount;
 }
 
-// 데이터 가져오기
-async function fetchData(apiEndpoint, options) {
-    try {
-        const response = await fetch(apiEndpoint, options);
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
 
-// 댓글 가져오기(초기 페이지)
+
+// 댓글 작성 버튼 클릭 이벤트 핸들러
 document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const studyId = urlParams.get('id');
-    const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = `http://localhost:8000/api/study/${studyId}/comments/`;
-    const options = {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-        },
-    };
+    const commentForm = document.getElementById('commentForm');
+    commentForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-    fetchData(apiEndpoint, options)
-        .then(comments => renderComments(comments));
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataId = urlParams.get('id');
+
+        const commentText = commentArea.value;
+        const accessToken = localStorage.getItem('access_token');
+        const apiEndpoint = `http://localhost:8000/api/study/${dataId}/comments/`;
+        const options = {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: new URLSearchParams({ content: commentText }).toString(),
+        };
+
+        try {
+            const response = await fetch(apiEndpoint, options);
+            if (!response.ok) {
+                throw new Error('Failed to submit comment');
+            }
+
+            commentArea.value = '';
+            updateComments(); // 댓글 업데이트
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
 });
-
 
 
 // 댓글 업데이트 (댓글 작성 후)
@@ -405,46 +422,48 @@ async function updateComments() {
         const comments = await response.json();
 
         renderComments(comments);
-        const updatedCommentCount = createCommentCount(comments);
-        const commentCount = document.getElementById('commentCount');
-        commentCount.innerHTML = updatedCommentCount;
+
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
 
-// 댓글 작성 버튼 클릭
-document.addEventListener('DOMContentLoaded', function () {
-    const commentForm = document.getElementById('commentForm');
-    commentForm.addEventListener('submit', async function (e) {
-        e.preventDefault();
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const dataId = urlParams.get('id');
 
-        const commentText = commentArea.value;
-        const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = `http://localhost:8000/api/study/${dataId}/comments/`;
-        const options = {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({ content: commentText }).toString(),
-        };
 
-        try {
-            const response = await fetch(apiEndpoint, options);
-            if (!response.ok) {
-                throw new Error('Failed to submit comment');
-            }
 
-            commentArea.value = '';
-            updateComments(); // 댓글 업데이트
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    });
-});
+// const likeButton = document.getElementById('likeButton');
+// likeButton.addEventListener('click', async function (e) {
+//     e.preventDefault();
+
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const dataId = urlParams.get('id');
+//     const accessToken = localStorage.getItem('access_token');
+//     const apiEndpoint = `http://localhost:8000/api/study/liked/${dataId}/`;
+//     const data = {
+//         study_id: dataId,
+//         user_toke: accessToken
+//     }
+
+//     const options = {
+//         method: 'POST',
+//         headers: {
+//             'Authorization': `Bearer ${accessToken}`,
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data),
+//     };
+
+//     try {
+//         const response = await fetch(apiEndpoint, options);
+//         if (!response.ok) {
+//             throw new Error('Failed to submit comment');
+//         }
+
+//         commentArea.value = '';
+//         updateComments(); // 댓글 업데이트
+//     } catch (error) {
+//         console.error('Error:', error);
+//     }
+// });

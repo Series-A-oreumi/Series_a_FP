@@ -1,58 +1,3 @@
-// 필터링
-// 스터디, 프로젝트
-document.addEventListener("DOMContentLoaded", function () {
-    const studyCategories = document.querySelectorAll('.study-category');
-
-    studyCategories[0].classList.add('active');
-
-    studyCategories.forEach(category => {
-        category.addEventListener('click', () => {
-            studyCategories.forEach(tag => {
-                tag.classList.remove('active');
-            });
-            category.classList.add('active');
-        });
-    });
-});
-
-//이거 왜 적용 안됨?
-document.addEventListener("DOMContentLoaded", function () {
-    const studyCategory = document.getElementById("studyCategory");
-    const projectCategory = document.getElementById("projectCategory");
-    const allCategory = document.getElementById("allCategory");
-    const contentBox = document.querySelector(".contents_box");
-
-    studyCategory.addEventListener("click", function () {
-        filterContent("study");
-    });
-
-    projectCategory.addEventListener("click", function () {
-        filterContent("project");
-    });
-
-    allCategory.addEventListener("click", function () {
-        filterContent("all");
-    });
-
-    function filterContent(filterType) {
-        contentBox.forEach((post) => {
-            const tagStudy = post.querySelector(".tag_study");
-            const tagProject = post.querySelector(".tag_project");
-
-            if (filterType === "study" && tagStudy) {
-                post.style.display = "block";
-            } else if (filterType === "project" && tagProject) {
-                post.style.display = "block";
-            } else if (filterType === "all") {
-                post.style.display = "block";
-            } else {
-                post.style.display = "none";
-            }
-        });
-    }
-});
-
-
 //배너
 document.addEventListener("DOMContentLoaded", function () {
     let currentBanner = 1;
@@ -120,7 +65,7 @@ document.addEventListener('click', () => {
     });
 });
 
-// 정렬
+// 정렬 토글
 document.addEventListener("DOMContentLoaded", function () {
     const sortToggle = document.getElementById("sortToggle");
     const sortText = document.getElementById("sortText");
@@ -139,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// 포지션
+// 포지션 토글
 document.addEventListener("DOMContentLoaded", function () {
     const positionToggle = document.getElementById("positionToggle");
     const positionText = document.getElementById("positionText");
@@ -158,14 +103,71 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// 기술스택
+// 기술스택 토글
+// 여러개 선택 가능한 버전
+// document.addEventListener("DOMContentLoaded", function () {
+//     const stackToggleBtn = document.getElementById('stackToggle');
+//     const stackToggleContainer = document.getElementById('stackToggleContainer');
+//     const stackOptionButtons = stackToggleContainer.querySelectorAll(".sub-select-btn");
+//     const stackText = stackToggleBtn.querySelector('.sub-select-text');
+
+//     const selectedStacks = [];
+
+//     stackToggleBtn.addEventListener('click', (event) => {
+//         event.stopPropagation();
+//         if (stackToggleContainer.classList.contains('active')) {
+//             stackToggleContainer.classList.remove('active');
+//         } else {
+//             stackToggleContainer.classList.add('active');
+//         }
+//     });
+
+//     document.addEventListener('click', (event) => {
+//         if (!stackToggleBtn.contains(event.target) && !stackToggleContainer.contains(event.target)) {
+//             stackToggleContainer.classList.remove('active');
+//         }
+//     });
+
+//     stackOptionButtons.forEach((option) => {
+//         option.addEventListener("click", function (e) {
+//             e.stopPropagation();
+//             const stackName = option.textContent;
+//             if (option.classList.contains("select-stack")) {
+//                 const index = selectedStacks.indexOf(stackName);
+//                 if (index !== -1) {
+//                     selectedStacks.splice(index, 1);
+//                 }
+//                 option.classList.remove("select-stack");
+//                 option.style.borderColor = '';
+//             } else {
+//                 selectedStacks.push(stackName);
+//                 option.classList.add("select-stack");
+//                 option.style.borderColor = 'rgb(0, 185, 174)';
+//             }
+
+//             stackText.textContent = selectedStacks.join(', ');
+
+//             if (selectedStacks.length === 0) {
+//                 stackText.textContent = "기술 스택";
+//                 stackToggleBtn.style.color = '';
+//                 stackToggleBtn.style.borderColor = '';
+//             } else {
+//                 stackToggleBtn.style.color = 'rgb(0, 185, 174)';
+//                 stackToggleBtn.style.borderColor = 'rgb(0, 185, 174)';
+//             }
+//         });
+//     });
+// });
+
+
+// 하나만 선택 가능 버전
 document.addEventListener("DOMContentLoaded", function () {
     const stackToggleBtn = document.getElementById('stackToggle');
     const stackToggleContainer = document.getElementById('stackToggleContainer');
     const stackOptionButtons = stackToggleContainer.querySelectorAll(".sub-select-btn");
     const stackText = stackToggleBtn.querySelector('.sub-select-text');
 
-    const selectedStacks = [];
+    let selectedStack = null;
 
     stackToggleBtn.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -186,28 +188,31 @@ document.addEventListener("DOMContentLoaded", function () {
         option.addEventListener("click", function (e) {
             e.stopPropagation();
             const stackName = option.textContent;
-            if (option.classList.contains("select-stack")) {
-                const index = selectedStacks.indexOf(stackName);
-                if (index !== -1) {
-                    selectedStacks.splice(index, 1);
-                }
-                option.classList.remove("select-stack");
-                option.style.borderColor = '';
+
+            if (stackName === selectedStack) {
+                selectedStack = null;
             } else {
-                selectedStacks.push(stackName);
-                option.classList.add("select-stack");
-                option.style.borderColor = 'rgb(0, 185, 174)';
+                selectedStack = stackName;
             }
 
-            stackText.textContent = selectedStacks.join(', ');
+            stackOptionButtons.forEach((btn) => {
+                if (btn.textContent === selectedStack) {
+                    btn.classList.add("select-stack");
+                    btn.style.borderColor = 'rgb(0, 185, 174)';
+                } else {
+                    btn.classList.remove("select-stack");
+                    btn.style.borderColor = '';
+                }
+            });
 
-            if (selectedStacks.length === 0) {
-                stackText.textContent = "기술 스택";
-                stackToggleBtn.style.color = '';
-                stackToggleBtn.style.borderColor = '';
-            } else {
+            stackText.textContent = selectedStack ? selectedStack : "기술 스택";
+
+            if (selectedStack) {
                 stackToggleBtn.style.color = 'rgb(0, 185, 174)';
                 stackToggleBtn.style.borderColor = 'rgb(0, 185, 174)';
+            } else {
+                stackToggleBtn.style.color = '';
+                stackToggleBtn.style.borderColor = '';
             }
         });
     });
@@ -216,38 +221,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
 // api
-// const heartBtn = document.getElementById("heartBtn");
-// const heartImage = document.getElementById("heartImage");
-
-// let isHearted = false;
-// if (isHearted) {
-//     heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 이미 하트를 누른 게시글인 경우
-// }
-
-// 하트 버튼
-// heartBtn.addEventListener("click", () => {
-
-//     isHearted = !isHearted;
-
-//     if (isHearted) {
-//         heartImage.src = "Series_a_FP\frontend\imgs\study\pinkheart.png"; // 하트를 누른 경우
-//     } else {
-//         heartImage.src = "Series_a_FP\frontend\imgs\study\grayheart.png"; // 하트를 취소한 경우
-//     }
-// });
-
-
 // 상단
-function createCardTop(data) {
+function createCardTop(request_user, data) {
     let tagStudy = '';
-    let tagProject = '';
     let deadlineTag = '';
 
     if (data.project_study === 'study') {
         tagStudy = `<div class="tag_study">🌠스터디</div>`;
     } else {
-        tagProject = `<div class="tag_project">🧪프로젝트</div>`;
+        tagStudy = `<div class="tag_project">🧪프로젝트</div>`;
     }
 
     const currentTime = new Date();
@@ -265,7 +249,9 @@ function createCardTop(data) {
     }
 
 
-    const heartImageSrc = data.likes
+    const loggedInUser = request_user.username;
+    const isUserLiked = data.likes_users && data.likes_users.includes(loggedInUser);
+    const heartImageSrc = isUserLiked
         ? "../imgs/study/pinkheart.png"
         : "../imgs/study/grayheart.png";
 
@@ -274,7 +260,6 @@ function createCardTop(data) {
             <div class="tag_list">
                 <div class="top_tag">
                     ${tagStudy}
-                    ${tagProject}
                 </div>
                 ${deadlineTag}
             </div>
@@ -288,7 +273,6 @@ function createCardTop(data) {
 }
 
 // 중간
-// post url 연결 필요
 function createPostContent(data) {
     const endAt = data.end_at;
     const formattedEndDate = formatDate(endAt);
@@ -320,7 +304,7 @@ function createPostContent(data) {
                 </div>
                 <div class="post_content_tag">
                     <div class="position_tag">
-                        <li class="position_tag_item">${data.field}</li>
+                        <li class="position_tag_item ${data.field}">${data.field}</li>
                     </div>
                     ${stackTags}
                 </div>
@@ -338,10 +322,7 @@ function formatDate(dateString) {
 
 
 // 하단
-// 유저 프로필 사진 변경해야 함
-
 // 유저 url 경로 확인하기
-// 이미지 경로 바꾸기!!!!!!!!!!!!
 function createCardBottom(data) {
 
     const totalComments = data.comments_count;
@@ -362,7 +343,7 @@ function createCardBottom(data) {
                 <div class="views_container">
                     <div class="views_icon">
                         <img src="../imgs/study/viewsicon.png">
-                        
+
                     </div>
                     <div class="views">${data.views}</div>
                 </div>
@@ -376,13 +357,12 @@ function createCardBottom(data) {
 }
 
 // 'post' 생성
-function createPost(data) {
+function createPost(request_user, data) {
     const innerContainer = document.querySelector(".inner");
-
     const postHTML = `
         <div class="contents_box" id="contentBox">
             <div class="card">
-                ${createCardTop(data)}
+                ${createCardTop(request_user, data)}
                 ${createPostContent(data)}
                 ${createCardBottom(data)}
             </div>
@@ -391,38 +371,10 @@ function createPost(data) {
     innerContainer.innerHTML += postHTML;
 }
 
-
-// function toggleLike(pk) {
-//     const likeButton = document.getElementById(`likeButton_${pk}`);
-
-//     fetch(`/api/like/${pk}`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': `Bearer ${accessToken}`,
-//         },
-//     })
-//         .then(response => {
-//             if (response.ok) {
-//                 return response.json();
-//             }
-//             throw new Error('Failed to toggle like.');
-//         })
-//         .then(data => {
-//             if (data.liked) {
-//                 likeButton.classList.add('liked'); // 좋아요 표시를 변경
-//             } else {
-//                 likeButton.classList.remove('liked'); // 좋아요 표시를 변경
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }
-
-
-
-
+function createLikes(request_user, data) {
+    const heartBtn = document.querySelector(".heart_btn");
+    heartBtn.addEventListener("click", () => toggleLike(data.pk));
+}
 
 // API에서 데이터 가져오기
 async function fetchDataFromAPI() {
@@ -442,10 +394,15 @@ async function fetchDataFromAPI() {
             throw new Error('Failed to fetch data');
         }
 
-        const postDataArray = await response.json();
+        const responseData = await response.json();
+        const { request_user, studylist } = responseData;
+
+        const postDataArray = studylist;
+
+
 
         postDataArray.forEach(data => {
-            createPost(data);
+            createPost(request_user, data);
         });
 
     } catch (error) {
@@ -456,39 +413,256 @@ async function fetchDataFromAPI() {
 fetchDataFromAPI();
 
 
+function sendLikes(data) {
+
+}
 
 
 
-// const accessToken = localStorage.getItem('access_token');
-// // console.log(accessToken)
-// document.querySelectorAll("post_content").addEventListener("click", function (e) {
-//     e.preventDefault(); // 기본 링크 동작 방지
-//     console.log(accessToken)
-//     // API에서 정보를 가져오는 코드
-//     fetch("http://localhost:8000/api/study", {
-//         method: 'GET',
-//         headers: {
-//             'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
-//             'Content-Type': 'application/json'
-//         },
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 console.log(response)
-//                 throw new Error("Network response was not ok");
-//             }
-//             console.log(response)
-//             return response.json();
-//         })
-//         .then(posts => {
-//             // API에서 가져온 데이터(posts)를 사용하여 원하는 작업을 수행
-//             // const infoData = { title: "Sample Info", content: "This is the info content." };
-//             // 정보를 JSON 형식으로 인코딩
-//             const infoJSON = JSON.stringify(posts);
-//             // chat.html로 이동하면서 정보를 전달
-//             window.location.href = "studydetail.html?{data.id}=" + encodeURIComponent(infoJSON);
-//         })
-//         .catch(error => {
-//             console.error("Error fetching data:", error);
-//         });
-// });
+//좋아요 보내기
+async function toggleLike(studyId) {
+    try {
+        const accessToken = localStorage.getItem('access_token');
+        const apiEndpoint = `http://localhost:8000/api/study/liked/${studyId}/`;
+        const options = {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const response = await fetch(apiEndpoint, options);
+
+        if (!response.ok) {
+            throw new Error('Failed to toggle like');
+        }
+
+        const responseData = await response.json();
+        console.log('Like toggled successfully', responseData);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
+
+
+// 필터
+// 필터 - 스터디, 프로젝트
+document.addEventListener("DOMContentLoaded", function () {
+    const studyCategories = document.querySelectorAll('.study-category');
+
+    studyCategories[0].classList.add('active');
+
+    studyCategories.forEach(category => {
+        category.addEventListener('click', () => {
+            studyCategories.forEach(tag => {
+                tag.classList.remove('active');
+            });
+            category.classList.add('active');
+        });
+    });
+});
+
+function filterStudy(filterType) {
+    const contentBoxes = document.querySelectorAll(".contents_box");
+
+    contentBoxes.forEach(contentBox => {
+        const tagStudy = contentBox.querySelector(".tag_study");
+        const tagProject = contentBox.querySelector(".tag_project");
+
+        if (filterType === "all") {
+            contentBox.classList.remove("filtered");
+        } else if (filterType === "study") {
+            if (tagStudy) {
+                contentBox.classList.remove("filtered");
+            } else {
+                contentBox.classList.add("filtered");
+            }
+        } else if (filterType === "project") {
+            if (tagProject) {
+                contentBox.classList.remove("filtered");
+            } else {
+                contentBox.classList.add("filtered");
+            }
+        }
+    });
+}
+const studyCategory = document.getElementById("studyCategory");
+const projectCategory = document.getElementById("projectCategory");
+const allCategory = document.getElementById("allCategory");
+
+studyCategory.addEventListener("click", () => filterStudy("study"));
+projectCategory.addEventListener("click", () => filterStudy("project"));
+allCategory.addEventListener("click", () => filterStudy("all"));
+
+
+// 필터 - 정렬
+function filterSort(sortType) {
+    const contentBoxes = Array.from(document.querySelectorAll(".contents_box"));
+
+    contentBoxes.forEach(contentBox => {
+        if (sortType === "latest") {
+            contentBox.style.order = 'initial';
+        } else if (sortType === "popularity") {
+            const views = parseInt(contentBox.querySelector(".views").textContent);
+            contentBox.style.order = -views;
+        } else if (sortType === "deadline") {
+            const deadlineText = contentBox.querySelector(".deadline").textContent;
+            const datePattern = /\d+/g;
+            const matchResult = deadlineText.match(datePattern);
+            const extractedNumber = matchResult.join('');
+            contentBox.style.order = extractedNumber;
+        }
+    });
+
+    const sortedContentBoxes = contentBoxes.sort((a, b) => {
+        return a.style.order - b.style.order;
+    });
+
+    const contentsContainer = document.querySelector(".contents-container");
+    sortedContentBoxes.forEach(contentBox => {
+        contentsContainer.appendChild(contentBox);
+    });
+}
+
+const Latest = document.getElementById("latest");
+const Popularity = document.getElementById("popularity");
+const Deadline = document.getElementById("deadLine");
+
+Latest.addEventListener("click", () => filterSort("latest"));
+Popularity.addEventListener("click", () => filterSort("popularity"));
+Deadline.addEventListener("click", () => filterSort("deadline"));
+
+
+// 필터 - 포지션
+function filterPosition(filterType) {
+    const contentBoxes = document.querySelectorAll(".contents_box");
+
+    contentBoxes.forEach(contentBox => {
+        const Pfrontend = contentBox.querySelector(".frontend");
+        const Pbackend = contentBox.querySelector(".backend");
+        const Pdevops = contentBox.querySelector(".devops");
+        const Pdesigner = contentBox.querySelector(".design");
+
+        if (filterType === "all") {
+            contentBox.style.display = "block"; // 전체 표시
+        } else if (filterType === "frontend") {
+            if (Pfrontend) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        } else if (filterType === "backend") {
+            if (Pbackend) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        } else if (filterType === "devops") {
+            if (Pdevops) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        } else if (filterType === "designer") {
+            if (Pdesigner) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        }
+    });
+}
+
+const allPosition = document.getElementById("all");
+const frontend = document.getElementById("frontend");
+const backend = document.getElementById("backend");
+const devops = document.getElementById("devops");
+const designer = document.getElementById("designer");
+
+designer.addEventListener("click", () => filterPosition("designer"));
+devops.addEventListener("click", () => filterPosition("devops"));
+backend.addEventListener("click", () => filterPosition("backend"));
+frontend.addEventListener("click", () => filterPosition("frontend"));
+allPosition.addEventListener("click", () => filterPosition("all"));
+
+
+// 필터 - 기술 스택 - 하나만 선택 가능
+const selectedStacks = [];
+
+function filterStack(filterType) {
+    const contentBoxes = document.querySelectorAll(".contents_box");
+
+    const isStackSelected = selectedStacks.includes(filterType);
+
+    contentBoxes.forEach(contentBox => {
+        const stackElements = contentBox.querySelectorAll(`.${filterType}`);
+
+        if (isStackSelected) {
+            contentBox.style.display = "block";
+        } else if (stackElements.length > 0) {
+            contentBox.style.display = "block";
+        } else {
+            contentBox.style.display = "none";
+        }
+    });
+
+    // 스택 선택 토글
+    if (isStackSelected) {
+        // 이미 선택된 스택을 다시 클릭하면 선택 취소
+        const stackIndex = selectedStacks.indexOf(filterType);
+        if (stackIndex !== -1) {
+            selectedStacks.splice(stackIndex, 1);
+        }
+    } else {
+        // 이미 다른 스택이 선택되어 있으면 기존 스택 선택 취소
+        if (selectedStacks.length > 0) {
+            const prevStack = selectedStacks.pop();
+            const prevStackElements = document.querySelectorAll(`.${prevStack}`);
+            prevStackElements.forEach(element => {
+                element.classList.remove("select-stack");
+            });
+        }
+        selectedStacks.push(filterType);
+    }
+}
+const python = document.getElementById("Python");
+const java = document.getElementById("Java");
+const javascript = document.getElementById("Javascript");
+const spring = document.getElementById("Spring");
+const react = document.getElementById("React");
+const django = document.getElementById("Django");
+
+python.addEventListener("click", () => filterStack("python"));
+java.addEventListener("click", () => filterStack("java"));
+javascript.addEventListener("click", () => filterStack("javascript"));
+spring.addEventListener("click", () => filterStack("spring"));
+react.addEventListener("click", () => filterStack("react"));
+django.addEventListener("click", () => filterStack("django"));
+
+
+
+// 필터 - 검색
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        const searchText = searchInput.value.toLowerCase();
+        const contentBoxes = document.querySelectorAll(".contents_box");
+
+        contentBoxes.forEach(contentBox => {
+            const title = contentBox.querySelector(".post_title").textContent.toLowerCase();
+            const content = contentBox.querySelector(".post_content_main").textContent.toLowerCase();
+            const name = contentBox.querySelector(".user-name-text").textContent.toLowerCase();
+
+            if (title.includes(searchText) || content.includes(searchText) || name.includes(searchText)) {
+                contentBox.style.display = "block";
+            } else {
+                contentBox.style.display = "none";
+            }
+        });
+    }
+});
+
