@@ -156,7 +156,7 @@ function createDetailSection2(user, data) {
             </div>
             <div class="likes">
                 <div id="likeTF">
-                <button id="likeButton">${likesTrue}</button>
+                ${likesTrue}
                 </div>
                 <div>${likeCount}</div>
             </div>
@@ -290,35 +290,35 @@ fetchDetailFromAPI();
 
 
 // 좋아요
-const likeButton = document.getElementById('likeButton');
-likeButton.addEventListener("click", async function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const dataId = urlParams.get('id');
+// const likeButton = document.getElementById('likeButton');
+// likeButton.addEventListener("click", async function () {
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const dataId = urlParams.get('id');
 
-    try {
-        const response = await fetch(`http://localhost:8000/api/study/liked/${dataId}/`, {
-            method: "POST", // 좋아요 토글을 위한 POST 요청
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                "Content-Type": "application/json",
-            },
-        });
+//     try {
+//         const response = await fetch(`http://localhost:8000/api/study/liked/${dataId}/`, {
+//             method: "POST", // 좋아요 토글을 위한 POST 요청
+//             headers: {
+//                 'Authorization': `Bearer ${accessToken}`,
+//                 "Content-Type": "application/json",
+//             },
+//         });
 
-        if (response.ok) {
-            // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
-            // const data = await response.json();
-            // if (response.status === 201) {
-            //     likeButton.classList.add("on");
-            // } else {
-            //     likeButton.classList.remove("on");
-            // }
-        } else {
-            console.error("Error toggling like:", response.status);
-        }
-    } catch (error) {
-        console.error("Error toggling like:", error);
-    }
-});
+//         if (response.ok) {
+//             // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
+//             // const data = await response.json();
+//             // if (response.status === 201) {
+//             //     likeButton.classList.add("on");
+//             // } else {
+//             //     likeButton.classList.remove("on");
+//             // }
+//         } else {
+//             console.error("Error toggling like:", response.status);
+//         }
+//     } catch (error) {
+//         console.error("Error toggling like:", error);
+//     }
+// });
 
 
 
@@ -335,7 +335,9 @@ function renderComments(comments) {
         const formattedCommentDate = formatDate(comment.created_at);
         const randomIcon = randomValue('🎅', '👼', '🤴', '👸', '🧑', '👧', '👶', '👨‍🦱', '👱‍♀️', '🧔');
         const commentElement = document.createElement('div');
+
         commentElement.className = 'comment';
+
         commentElement.innerHTML = `
             <div class="comment-inner">
                 <a href="${commentProfileURL}">
@@ -379,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded', // json으로 하면 안됨!
             },
             body: new URLSearchParams({ content: commentText }).toString(),
         };
