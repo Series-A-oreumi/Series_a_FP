@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         // 백엔드 API에서 포스트 데이터를 가져옵니다.
         const response = await // Fetch 요청 보내기
         // 임시로 story/1 게시물로 선정 -> 추후 변경해야됨!
-        fetch("http://http://ec2-54-180-8-126.ap-northeast-2.compute.amazonaws.com/api/story/1/", {
+        fetch("http://localhost:8000/api/story/1/", {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             
             // 서버에 좋아요 토글 요청을 보냅니다.
             try {
-                const response = await fetch(`http://http://ec2-54-180-8-126.ap-northeast-2.compute.amazonaws.com/api/story/liked/${postId}/`, {
+                const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
                     method: "POST", // 좋아요 토글을 위한 POST 요청
                     headers: {
                         "Content-Type": "application/json",
