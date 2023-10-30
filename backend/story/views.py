@@ -231,6 +231,7 @@ class ToggleLike(APIView):
             if like.liked:
                 like.delete()
                 post.likes.remove(user)
+                print(post.likes)
                 messages = {
                     'cancel' : f'{post.author} 게시물 좋아요를 취소했습니다.' 
                 }
@@ -240,6 +241,7 @@ class ToggleLike(APIView):
                 like.liked = True
                 like.save()
                 post.likes.add(user)
+                print(post.likes_count())
                 messages = {
                     'success' : f'{post.author} 게시물 좋아요를 눌렀습니다.' 
                 }
@@ -249,6 +251,7 @@ class ToggleLike(APIView):
             # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
             like = Like(user=user, post=post, liked=True)
             like.save()
+            post.likes.add(user)
             serializer = LikeSerializer(like)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

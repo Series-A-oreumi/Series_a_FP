@@ -124,14 +124,21 @@ class StudyDetail(APIView):
         
         # 요청한 유저 가져오기
         user = get_user_from_token(request)
+        user_serializer = UserProfileSerializer(user)
 
         # 조회수 증가
         if user != study.author: # 해당 게시글을 작성한 유저와 다르다면
             study.views += 1 # 조회수 1 증가
             study.save()
        
-        serializer = StudyDetailSerializer(study)
-        return Response(serializer.data)
+        post_serializer = StudyDetailSerializer(study)
+
+        data = {
+            'request_user' : user_serializer.data,
+            'study' : post_serializer.data
+        }
+        
+        return Response(data, status=status.HTTP_200_OK)
     
     # 해당 스토리 게시글 수정
     def put(self, request, study_id):
