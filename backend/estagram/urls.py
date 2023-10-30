@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/story/', include('story.urls')), # story url
     path('api/study/', include('study.urls')), # study url
     path('api/alarm/', include('alarm.urls')), # alarm url
+    path('chat/', include("chat.urls", namespace='chat')), # chat url
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), # swagger url
 ]
 
