@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 bootcamp: bootcamp
             };
 
-            fetch('http://localhost:8000/api/register/', {
+            fetch('http://http://ec2-54-180-8-126.ap-northeast-2.compute.amazonaws.com/api/register/', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
