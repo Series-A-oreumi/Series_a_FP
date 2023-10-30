@@ -1,0 +1,11 @@
+/* 초기에는 화면에서 감추기 */
+.notification-modal {
+    display: none;
+    /* 모달 스타일 설정 (위치, 크기, 배경색 등) */
+    /* ... */
+}
+
+/* 알림 아이콘 클릭 시 모달 보이기 */
+.notification-modal.active {
+    display: block;
+}
