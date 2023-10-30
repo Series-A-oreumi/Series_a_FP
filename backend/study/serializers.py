@@ -104,7 +104,7 @@ class StudyCreateSerializer(serializers.ModelSerializer):
     
     # like serializer
 
-    class LikeSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Like
-            fields = '__all__'
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = '__all__'

@@ -1,5 +1,5 @@
 
-        const notify = JSON.parse(localStorage.getItem('myNotify'))
+        const notify = JSON.parse(localStorage.getItem('myNotify2'))
         const $notify_count = document.querySelector('.notify_count')
         if(notify && notify.length > 0) {
             $notify_count.style.display = 'flex'
@@ -15,8 +15,8 @@
         notisocket = new WebSocket(`ws://127.0.0.1:8000/alarm/${accessToken}`)
         notisocket.onmessage = (e) => {
             const receiveData = JSON.parse(e.data)
-            localStorage.setItem('myNotify', JSON.stringify(receiveData.message));
-            const newNotify = JSON.parse(localStorage.getItem('myNotify'))
+            localStorage.setItem('myNotify2', JSON.stringify(receiveData.message));
+            const newNotify = JSON.parse(localStorage.getItem('myNotify2'))
             const $notify_count = document.querySelector('.notify_count')
 
             if(newNotify.length > 0) {
