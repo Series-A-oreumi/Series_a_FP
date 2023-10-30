@@ -54,12 +54,16 @@ INSTALLED_APPS = [
     'chat',
     'story',
     'study',
+    'alrarm',
 
     # s3 storage
     'storages',
 
     # swagger
     'drf_yasg',
+
+    #websocket
+    'channels',
 ]
 
 # 초기 인증 제거 -> 추후에 필요하면 살리면 될듯
@@ -68,6 +72,12 @@ INSTALLED_APPS = [
 #         'rest_framework_simplejwt.authentication.JWTAuthentication',
 #     )
 # }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # <- 가능한 높게 위치시켜야 
