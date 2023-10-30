@@ -1,4 +1,6 @@
 from django.db import models
+from django.dispatch import receiver
+from alarm.models import Alarm
 from user.models import UserProfile
 from django.db.models.signals import post_save
 
@@ -56,8 +58,23 @@ class Comment(models.Model):
         if self.likes.count():
             return self.likes.count()
         return 0
-		
-		
+
+# Comment 모델에 데이터가 저장될 때 실행되도록 설정 (Comment 알람기능)
+@receiver(post_save, sender=Comment) 
+def comment_action(sender, instance, created, **kwargs):
+    if created:  # 새로운 댓글이 생성된 경우
+        comment = instance # Comment 모델의 인스턴스
+        post = comment.post  # 현재 댓글이 달린 스토리
+        sender_user = comment.author # 댓글은 단 유저
+        receiver_user = post.author # 해당 게시물 작성자
+
+        content = f'{sender_user.nickname}님이 회원님의 {post.title}에 댓글을 남겼습니다.'
+        
+        alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
+
+        alarm.story = post  # 스토리와 연결
+        alarm.save()
+            
 class Like(models.Model):
     # 좋아요 모델
     post = models.ForeignKey(Post,on_delete=models.CASCADE, related_name='like_post')
@@ -66,6 +83,22 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user} likes {self.post}"
+
+# Like 모델에 데이터가 생성될 때 실행되도록 설정 (Like 알람기능)
+@receiver(post_save, sender=Like) 
+def like_action(sender, instance, created, **kwargs):
+    if created:  # 좋아요가 생성된 경우
+        like = instance # Like 모델의 인스턴스
+        post = like.post # 현재 좋아요가 달린 스토리
+        sender_user = like.user # 댓글은 단 유저
+        receiver_user = post.author # 해당 게시물 작성자
+
+        content = f'{sender_user.nickname}님이 회원님의 {post.title}에 좋아요를 눌렀습니다.'
+        
+        alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
+
+        alarm.story = post  # 스토리와 연결
+        alarm.save()
 
 class Hashtag(models.Model):
     # 해시태그 모델

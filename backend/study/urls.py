@@ -13,4 +13,7 @@ urlpatterns = [
 
     # search
     path('search/', views.StudySearch.as_view()), # 스터디 검색
+
+    # like
+    path('liked/<int:study_id>/', views.ToggleLike.as_view()), # 좋아요 기능
 ]
