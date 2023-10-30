@@ -156,7 +156,7 @@ function createDetailSection2(user, data) {
             </div>
             <div class="likes">
                 <div id="likeTF">
-                    ${likesTrue}
+                <button id="likeButton">${likesTrue}</button>
                 </div>
                 <div>${likeCount}</div>
             </div>
@@ -168,7 +168,7 @@ function createDetailSection2(user, data) {
 
 
 // 댓글 목록 ~
-
+// 랜덤 아이콘
 function randomValue(...values) {
     const randomIndex = Math.floor(Math.random() * values.length);
     return values[randomIndex];
@@ -205,7 +205,6 @@ function createDetailSection3(data) {
             `;
         }).join('');
     }
-
     return `
         
         <div class="comment-list">
@@ -213,6 +212,7 @@ function createDetailSection3(data) {
         </div>
     `;
 }
+
 
 // 댓글 수
 function createCommentCount(data) {
@@ -289,6 +289,38 @@ async function fetchDetailFromAPI() {
 fetchDetailFromAPI();
 
 
+// 좋아요
+const likeButton = document.getElementById('likeButton');
+likeButton.addEventListener("click", async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataId = urlParams.get('id');
+
+    try {
+        const response = await fetch(`http://localhost:8000/api/study/liked/${dataId}/`, {
+            method: "POST", // 좋아요 토글을 위한 POST 요청
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
+            // const data = await response.json();
+            // if (response.status === 201) {
+            //     likeButton.classList.add("on");
+            // } else {
+            //     likeButton.classList.remove("on");
+            // }
+        } else {
+            console.error("Error toggling like:", response.status);
+        }
+    } catch (error) {
+        console.error("Error toggling like:", error);
+    }
+});
+
+
 
 // 댓글
 function renderComments(comments) {
@@ -347,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
             },
             body: new URLSearchParams({ content: commentText }).toString(),
         };
@@ -395,3 +427,43 @@ async function updateComments() {
         console.error('Error:', error);
     }
 }
+
+
+
+
+
+
+// const likeButton = document.getElementById('likeButton');
+// likeButton.addEventListener('click', async function (e) {
+//     e.preventDefault();
+
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const dataId = urlParams.get('id');
+//     const accessToken = localStorage.getItem('access_token');
+//     const apiEndpoint = `http://localhost:8000/api/study/liked/${dataId}/`;
+//     const data = {
+//         study_id: dataId,
+//         user_toke: accessToken
+//     }
+
+//     const options = {
+//         method: 'POST',
+//         headers: {
+//             'Authorization': `Bearer ${accessToken}`,
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data),
+//     };
+
+//     try {
+//         const response = await fetch(apiEndpoint, options);
+//         if (!response.ok) {
+//             throw new Error('Failed to submit comment');
+//         }
+
+//         commentArea.value = '';
+//         updateComments(); // 댓글 업데이트
+//     } catch (error) {
+//         console.error('Error:', error);
+//     }
+// });
