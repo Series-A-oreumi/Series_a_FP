@@ -28,18 +28,21 @@ class StoryList(APIView):
         except Post.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-        # 현재 로그인 한 유저 직렬화
-        user_serializer = UserProfileSerializer(user)
+        # # 현재 로그인 한 유저 직렬화
+        # user_serializer = UserProfileSerializer(user)
+
+        # # PostSerializer를 사용하여 직렬화
+        # story_serializer = PostSerializer(posts, many=True)  
+        
+        # data = {
+        #     'request_user' : user_serializer.data,
+        #     'storylist' : story_serializer.data
+        # }
 
         # PostSerializer를 사용하여 직렬화
-        story_serializer = PostSerializer(posts, many=True)  
+        serializer = PostSerializer(posts, many=True)  
         
-        data = {
-            'request_user' : user_serializer.data,
-            'storylist' : story_serializer.data
-        }
-
-        return Response(data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # story post
 class StoryPost(CreateAPIView):
@@ -174,16 +177,9 @@ class StoryDetail(APIView):
             post.views += 1 # 조회수 1 증가
             post.save()
 
-        # 현재 로그인 한 유저 직렬화
-        user_serializer = UserProfileSerializer(user)
-        
-        story_serializer = PostDetailSerializer(post)
-
-        data = {
-            'request_user' : user_serializer.data,
-            'story' : story_serializer.data
-        }
-        return Response(data, status=status.HTTP_200_OK)
+       
+        serializer = PostDetailSerializer(post)
+        return Response(serializer.data)
 
     # 해당 스토리 게시글 수정
     def put(self, request, post_id):
