@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             userContainer.className = "user_container";
             // 프로필 이미지 추가
             const profileLink = document.createElement('a'); // 삭제하기 꼭 (테스트 추가한 부분)
-            profileLink.href = "../html/profile.html"; // 삭제하기 꼭 (테스트 추가한 부분)
+            profileLink.href = `../html/profile.html?id${post.author.id}`; // 삭제하기 꼭 (테스트 추가한 부분)
 
             const profileImg = document.createElement("div");
             profileImg.className = "profile_img";
