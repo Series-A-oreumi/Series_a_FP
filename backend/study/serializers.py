@@ -44,11 +44,20 @@ class StudyDetailSerializer(serializers.ModelSerializer):
     participant_users = serializers.SerializerMethodField(read_only=True) # 스터디 및 프로젝트 참여자 목록 (리스트)
     comments_count = serializers.SerializerMethodField(read_only=True) # 해당 스터디에 달린 댓글수
     comments_list = serializers.SerializerMethodField(read_only=True) # 해당 스터디에 달린 댓글 리스트
-
+    likes_count = serializers.SerializerMethodField(read_only=True)
+    
     class Meta:
         model = Study
-        exclude = ('participants',)
+        fields = ('pk', 'author', 'title', 'content', 'end_at', 'views', 'comments_count', 'project_study', 
+                  'likes_count', 'likes', 'likes_users', 'online_offline', 'field', 'stacks', 'public_private')
 
+    
+    def get_likes_count(self, study):
+        '''좋아요 수 카운트 '''
+        if study.likes.count():
+            return study.likes.count()
+        return 0
+    
     def get_likes_users(self, study):
         # study 현재 직렬화되는 Study 인스턴스
 
