@@ -12,7 +12,7 @@
 <body>
 
 
-    <form action="" method="post" class="study-form">
+    <form method="post" class="study-form" id="studyForm">
         <div class="upside">
             <div class="side-title">
                 <p class = "num-cir">1</p>
@@ -22,40 +22,41 @@
                 <div class="left">
 
                     <div class="input-container">
-                        <label for="">모집구분</label>
-                        <select name="" id="" class="input-content">
-                            <option value="">스터디</option>
-                            <option value="">프로젝트</option>
+                        <label for="project_study">모집구분</label>
+                        <select name="project_study" id="project_study" class="input-content">
+                            <option value="study">스터디</option>
+                            <option value="project">프로젝트</option>
                         </select>
                     </div>
                     
                     <div class="input-container">
-                        <label for="">진행방식</label>
-                        <select name="" id="" class="input-content">
-                            <option value="">온라인</option>
-                            <option value="">오프라인</option>
+                        <label for="online_offline">진행방식</label>
+                        <select name="online_offline" id="online_offline" class="input-content">
+                            <option value="ON">온라인</option>
+                            <option value="OFF">오프라인</option>
+                            <option value="ONOFF">온/오프라인</option>
                         </select>
                     </div>
 
                     <div class="input-container">
-                        <label for="">기술 스택</label>
-                        <select name="" id="" class="input-content">
-                            <option value="">javascript</option>
-                            <option value="">java</option>
-                            <option value="">python</option>
-                            <option value="">spring</option>
-                            <option value="">react</option>
-                            <option value="">django</option>
+                        <label for="stacks">기술 스택</label>
+                        <select name="stacks" id="stacks" class="input-content">
+                            <option value="python">Python</option>
+                            <option value="java">Javascript</option>
+                            <option value="javascript">Java</option>
+                            <option value="spring">Spring</option>
+                            <option value="django">React</option>
+                            <option value="react">Django</option>
                         </select>
                     </div>
                     
                     <div class="input-container">
-                        <label for="">모집 포지션</label>
-                        <select name="" id="" class="input-content">
-                            <option value="">프론트엔드</option>
-                            <option value="">백엔드</option>
-                            <option value="">데브옵스</option>
-                            <option value="">디자이너</option>
+                        <label for="field">모집 포지션</label>
+                        <select name="field" id="field" class="input-content">
+                            <option value="frontend">프론트엔드</option>
+                            <option value="backend">백엔드</option>
+                            <option value="design">데브옵스</option>
+                            <option value="devops">디자이너</option>
                         </select>
                     </div>
 
@@ -65,39 +66,45 @@
                 <div class="right">
 
                     <div class="input-container">
-                        <label for="">모집인원</label>
-                        <select name="" id="" class="input-content">
-                            <option value="">인원 미정</option>
-                            <option value="">1인</option>
-                            <option value="">2인</option>
-                            <option value="">3인</option>
-                            <option value="">4인</option>
-                            <option value="">5인 이상</option>
+                        <label for="participant_count">모집인원</label>
+                        <select name="participant_count" id="participant_count" class="input-content">
+                            <option value="undefined">인원 미정</option>
+                            <option value="1">1명</option>
+                            <option value="2">2명</option>
+                            <option value="3">3명</option>
+                            <option value="4">4명</option>
+                            <option value="5">5명</option>
+                            <option value="6">6명</option>
+                            <option value="7">7명</option>
+                            <option value="8">8명</option>
+                            <option value="9">9명</option>
+                            <option value="10">10명이상</option>
                         </select>
                     </div>
                     
                     <div class="input-container">
-                        <label for="">진행기간</label>
-                        <select name="" id="" class="input-content">
-                            <option value="">기간 미정</option>
-                            <option value="">1주</option>
-                            <option value="">2주</option>
-                            <option value="">3주</option>
-                            <option value="">1개월</option>
+                        <label for="period">진행기간</label>
+                        <select name="period" id="period" class="input-content">
+                            <option value="0">기간 미정</option>
+                            <option value="1">1개월</option>
+                            <option value="2">2개월</option>
+                            <option value="3">3개월</option>
+                            <option value="4">4개월</option>
+                            <option value="5">5개월</option>
+                            <option value="6">6개월 이상</option>
                         </select>
                     </div>
 
                     <div class="input-container">
-                        <label for="">모집 마감일</label>
-                        <input type="text" placeholder="2023-11-03">
+                        <label for="end_at">모집 마감일</label>
+                        <input type="date" id="end_at" name="end_at" placeholder="2023-11-03">
                     </div>
                     
                     <div class="input-container">
-                        <label for="">공개 설정</label>
-                        <select name="" id="" class="input-content">
-                            <option value="">전체 공개</option>
-                            <option value="">기수 공개</option>
-                            <option value="">비공개</option>
+                        <label for="public_private">공개 설정</label>
+                        <select name="public_private" id="public_private" class="input-content">
+                            <option value="public">전체 공개</option>
+                            <option value="private">비공개</option>
                         </select>
                     </div>
 
@@ -113,9 +120,10 @@
                 <p class="num-cir">2</p>
                 <p class="title-main">프로젝트에 대해 소개해 주세요.</p>
             </div>
+            
             <div class="downside-form">
-                <input type="text">
-                <textarea name="" id=""></textarea>
+                <input type="text" name="title" placeholder="제목을 입력하세요">
+                <textarea name="content" placeholder="내용을 입력하세요"></textarea>
             </div>
             <div class="btnside">
                 <button class="cancel">취소</button>
@@ -128,4 +136,6 @@
     
             
 </body>
+
+<script src="../js/studywrite.js"></script>
 </html>
