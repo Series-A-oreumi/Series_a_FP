@@ -106,17 +106,6 @@ a {
 
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    top: 100%;
-    right: 0;
-}
-
 .sprite_user_icon_outline:hover .dropdown-content {
     display: block;
 }
@@ -754,25 +743,4 @@ body {
     }
 
 
-}
-
-
-
-
-/* 알람 카운트 */
-.notify_count {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: rgb(247, 87, 38);
-    border-radius: 50%;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    top: 4px;
-    right: 66px;
-    padding: 1px;
-    font-size: 12px;
 }

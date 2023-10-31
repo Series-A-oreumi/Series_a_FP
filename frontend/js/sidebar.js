@@ -7,7 +7,7 @@ function toggleSidebar() {
     sidebar.classList.toggle("sidebarHidden");
 
     if (sidebar.classList.contains("sidebarHidden")) {
-        sidebar.style.transform = "translateX(-250px)"; // 왼쪽으로 이동
+        sidebar.style.transform = "translateX(-280px)"; // 왼쪽으로 이동
         overlay.style.display = "none";
     } else {
         sidebar.style.transform = "translateX(0)"; // 다시 나타나게
@@ -20,7 +20,7 @@ function toggleSubSidebar() {
     const sidebar = document.getElementById("sidebar");
     const subSidebar = document.getElementById("sub-sidebar");
 
-    sidebar.style.transform = "translateX(-250px)";
+    sidebar.style.transform = "translateX(-280px)";
     subSidebar.style.display = "block";
 }
 
@@ -29,8 +29,9 @@ function closeSidebar() {
     const sidebar = document.getElementById("sidebar");
     const subSidebar = document.getElementById("sub-sidebar");
     const overlay = document.getElementById("overlay");
-    
-    sidebar.style.transform = "translateX(-250px)";
+    const overlay2 = document.getElementById("overlay2");
+
+    sidebar.style.transform = "translateX(-280px)";
     subSidebar.style.display = "none"; // 초기에도 왼쪽으로 이동
     overlay.style.display = "none";
 }
