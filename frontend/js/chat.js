@@ -1,16 +1,16 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // chat 클래스를 가진 모든 요소를 선택합니다.
-    const chatElements = document.querySelectorAll('.chat');
+// document.addEventListener('DOMContentLoaded', function () {
+//     // chat 클래스를 가진 모든 요소를 선택합니다.
+//     const chatElements = document.querySelectorAll('.chat');
 
-    // 각 chat 요소에 클릭 이벤트 리스너를 추가합니다.
-    chatElements.forEach(function (chatElement) {
-        chatElement.addEventListener('click', function () {
-            // dm 아이디를 가진 태그의 스타일을 block으로 변경합니다.
-            const dmElement = document.getElementById('dm');
-            dmElement.style.display = 'block';
-        });
-    });
-});
+//     // 각 chat 요소에 클릭 이벤트 리스너를 추가합니다.
+//     chatElements.forEach(function (chatElement) {
+//         chatElement.addEventListener('click', function () {
+//             // dm 아이디를 가진 태그의 스타일을 block으로 변경합니다.
+//             const dmElement = document.getElementById('dm');
+//             dmElement.style.display = 'block';
+//         });
+//     });
+// });
 
 
 
@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const accessToken = localStorage.getItem('access_token');
     const urlParams = new URLSearchParams(window.location.search);
     const riceve_user_nickname = urlParams.get("data");
+    console.log(riceve_user_nickname)
 
     async function fetchData() {
         try {
@@ -42,79 +43,193 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const username = await response_json.user.nickname;
                 var myNickElement = document.getElementById("my_nick");
                 myNickElement.innerHTML = username;
-                if (riceve_user_nickname) {
-                    const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ guest: riceve_user_nickname }),
-                    }).then(response => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
-                        }
-                        return response.json();
-                    })
-                        ;
-                    // const chat_lists = await response_json.user.nickname;
-                    for (const chatroom of chat_list){                        
-                        const chat_partner = chatroom.chat_partner;
-                        const chat_room_id = chatroom.chatroom                        
-                        const section = document.querySelector(".list");
-                        const tagElement = document.createElement("div");
-                        tagElement.className = "chat_nick";
-                        tagElement.textContent = chat_partner;
-                        tagElement.addEventListener('click', async function () {                            
-                            const chat_info = document.querySelector('#chat_info');
-                            chat_info.innerHTML = chat_partner;
-                            
-                            // 채팅 내용을 불러온다
-                            const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ guest: chat_partner , chat_room_id : chat_room_id }),
-                            }).then(response => {
-                                if (!response.ok) {
-                                    throw new Error("Network response was not ok");
-                                }
-                                return response.json();
-                            })
-                            if(!chat_desc.messages){
-                                // for (const chatroom of chat_desc)
-                                console.log(chat_desc.messages)
+                
+                const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ guest: riceve_user_nickname }),
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                    ;
+                // const chat_lists = await response_json.user.nickname;
+                for (const chatroom of chat_list){                        
+                    const chat_partner = chatroom.chat_partner;
+                    const chat_room_id = chatroom.chatroom                        
+                    const section = document.querySelector(".list");
+                    const tagElement = document.createElement("div");
+                    const profile_img = document.createElement("img");
+                    profile_img.className = "profile_img";                        
+                    const profile_id = document.createElement("div");
+                    profile_id.className = "profile_id";
+                    if (chatroom.profile_id){
+                        profile_img.src = chatroom.profile_id
+                    }
+                    else{                            
+                        profile_img.src = "../media/profile/행복오르미.jpg";                        
+                    }
+                    const profile_img_2 = document.createElement("img");
+                    profile_img_2.className = "profile_img";                        
+                    const profile_id_2 = document.createElement("div");
+                    profile_id_2.className = "profile_id";
+                    if (chatroom.profile_id){
+                        profile_img_2.src = chatroom.profile_id
+                    }
+                    else{                            
+                        profile_img_2.src = "../media/profile/행복오르미.jpg";                        
+                    }                        
+                    profile_id.textContent = chat_partner;                        
+                    profile_id_2.textContent = chat_partner; 
+                    tagElement.className = "chat_nick";
+                    tagElement.appendChild(profile_img);
+                    tagElement.appendChild(profile_id);
+
+                    
+                    tagElement.addEventListener('click', async function () {                            
+                        const chat_info = document.querySelector('#chat_info');
+                        chat_info.innerHTML = "";                            
+                        chat_info.appendChild(profile_img_2);
+                        chat_info.appendChild(profile_id_2);
+                        chat_info.style.borderBottom = '1px solid rgb(219, 219, 219)';
+                        
+                        // 채팅 내용을 불러온다
+                        const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ guest: chat_partner , chat_room_id : chat_room_id }),
+                        }).then(response => {
+                            if (!response.ok) {
+                                throw new Error("Network response was not ok");
                             }
-                            console.log(chat_desc.messages)
+                            return response.json();
+                        })
+                        if(!chat_desc.messages){                                
+                            console.log("데이터가 없습니다.")
+                        }
+                        //채팅 내용창 초기화
+                        const chat_descs = document.getElementById("chat_desc")
+                        chat_descs.innerHTML = '<br>';
+                        console.log(chat_desc)
+                        // 채팅 내용을 반복문으로 태그 추가
+                        for (const message of chat_desc.messages){
+                            const chats_sender = document.createElement("div");
+                            const chats_receiver = document.createElement("div");                            
+                            chats_sender.className = "chats_sender";
+                            chats_receiver.className = "chats_receiver";
 
+                            const receiver_send = document.createElement("p");
+                            const sender_send = document.createElement("p");
+                            receiver_send.className = "receiver"
+                            sender_send.className = "sender";
 
-                            const socket = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/`);
                             
-                            const inputElement = document.getElementById("chat_input");
-                            inputElement.addEventListener("keydown", function (event) {
-                                if (event.key === "Enter") {
-                                    // 엔터 키가 눌렸을 때 실행할 동작을 여기에 추가합니다.
-                                    // 이 곳에 원하는 동작을 작성하세요.
-                                    // 예를 들어, 어떤 함수를 호출하거나 서버에 데이터를 보낼 수 있습니다.
+                            const receiver_rece = document.createElement("p");
+                            const sender_rece = document.createElement("p");
+                            receiver_rece.className = "receiver"
+                            sender_rece.className = "sender";
+
+                            chats_sender.appendChild(receiver_send)
+                            chats_sender.appendChild(sender_send)
+                            chats_receiver.appendChild(receiver_rece)
+                            chats_receiver.appendChild(sender_rece)                            
+                            if(message.sender == username){                                                                        
+                                sender_send.innerHTML = message.content                                                                    
+                                chat_descs.appendChild(chats_sender);
+                            }
+                            else{
+                                receiver_rece.innerHTML = message.content                                    
+                                chat_descs.appendChild(chats_receiver);
+                            }
+                            
+                        }
+                        // chat_desc 엘리먼트의 스크롤을 맨 아래로 이동
+                        
+                        chat_descs.scrollTop = chat_descs.scrollHeight;
+
+
+
+                        const socket = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/`);
+                        socket.onmessage = (e) => {
+                            const senders = JSON.parse(e.data).sender;                            
+                            const content = JSON.parse(e.data).message;                            
+                            
+                            const chats_sender = document.createElement("div");
+                            const chats_receiver = document.createElement("div");                            
+                            chats_sender.className = "chats_sender";
+                            chats_receiver.className = "chats_receiver";
+
+                            const receiver_send = document.createElement("p");
+                            const sender_send = document.createElement("p");
+                            receiver_send.className = "receiver"
+                            sender_send.className = "sender";
+
+                            
+                            const receiver_rece = document.createElement("p");
+                            const sender_rece = document.createElement("p");
+                            receiver_rece.className = "receiver"
+                            sender_rece.className = "sender";
+
+                            chats_sender.appendChild(receiver_send)
+                            chats_sender.appendChild(sender_send)
+                            chats_receiver.appendChild(receiver_rece)
+                            chats_receiver.appendChild(sender_rece) 
+                            
+                            console.log(senders)
+                            if(senders == username){                                                                                                        
+                                sender_send.innerHTML = content                                                                    
+                                chat_descs.appendChild(chats_sender);
+                            }
+                            else{
+                                receiver_rece.innerHTML = content 
+                                chat_descs.appendChild(chats_receiver);
+                            }                            
+                            chat_descs.scrollTop = chat_descs.scrollHeight;
+                            // chatContainer.innerHTML += `<p>${message}</p>`;
+                        };
+                        
+                        const inputElement = document.getElementById("chat_input");
+                        inputElement.addEventListener("keydown", function (event) {
+                            if (event.key === 'Enter' && event.shiftKey) {
+                                event.preventDefault();
+                                inputElement.value += '\n';
+                                // 쉬프트 + Enter를 눌렀을 때 줄바꿈 추가                                
+                            } else if (event.key === 'Enter' && !event.shiftKey) {
+                                // Enter 키를 눌렀고, 쉬프트 키가 눌리지 않았을 때만 메시지 전송
+                                event.preventDefault(); // 기본 엔터 키 동작을 막음
+                                if (inputElement.value != ''){
                                     const message = inputElement.value;
+                                    console.log(message)
+                                    const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
+                                    console.log(messages)
                                     socket.send(JSON.stringify({
-                                        message: message,
-                                        chat_room_id : chat_room_id,
-                                        sender : username,
-                                        receiver : chat_partner
+                                        message: messages,
+                                        chat_room_id: chat_room_id,
+                                        sender: username,
+                                        receiver: chat_partner
                                     }));
                                     inputElement.value = '';
                                 }
-                            });
-
-                            
+                                
+                            }
                             
                         });
-                        section.appendChild(tagElement);
-                    }
+
+                        
+                        
+                    });
+                    section.appendChild(tagElement);
                 }
+                
+                
 
             } else {
                 // 정보가 없을 경우 대체 내용을 표시
