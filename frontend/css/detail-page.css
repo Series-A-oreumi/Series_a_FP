@@ -108,8 +108,9 @@
     flex: 1;
 }
 
-.trans_inner {
-    
+.trans_inner img {
+    width:590px;
+    height:500px;
 }
 
 
@@ -185,14 +186,17 @@
     transition: transform 0.3s ease; /* 부드러운 트랜지션 효과 */
 }
 
-.sprite_heart_icon_outline.on {
-    background: url('../imgs/background01.png') no-repeat -26px -261px;
+.contents_detail_box .sprite_heart_icon_outline.on {
+    background: url('../imgs/like2.png') no-repeat;
+    
 }
-.sprite_heart_icon_outline {
+.contents_detail_box .sprite_heart_icon_outline {
     display: inline-block;
-    background: url('../imgs/background01.png') no-repeat -52px -261px;
-    width: 24px;
-    height: 22px;
+    background: url('../imgs/like.png') no-repeat;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+    padding-right: 5px;
 }
 
 .icons_container {
