@@ -9,13 +9,13 @@
 <body>
     <div class="contents">
         
-        <form method="post">
+        <form id="write-form" method="POST" enctype="multipart/form-data">
 
             <div class="write-main">
-                <input type="text" name="story-title" placeholder="제목을 입력해주세요.">
+                <input type="text" name="title" placeholder="제목을 입력해주세요.">
                 <!-- 에디터 -->
                 <div class="write-editor">
-                    <textarea name="story-content" id="story-content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+                    <textarea name="content" id="content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
                 </div>
             </div>
             
@@ -29,11 +29,11 @@
                             <span>전체공개</span>
                         </label>
                         
-                         <label>
+                         <!-- <label>
                             <input type="radio" name="open" value="friend" />
                             <span>기수 공개</span>
                          </label>
-                        
+                         -->
                         <label>
                             <input type="radio" name="open" value="only" />
                             <span>나만 보기</span>
@@ -45,7 +45,7 @@
 
                 <div class="images">
                     <p class="image-title">이미지</p>
-                    <input type="file" name="story-image" multiple>
+                    <input type="file" name="images" multiple>
                 </div>
                 
                 <div class="buttons">
@@ -59,4 +59,7 @@
     </div>
     
 </body>
+
+<script src="../js/storywrite.js"></script>
+
 </html>
