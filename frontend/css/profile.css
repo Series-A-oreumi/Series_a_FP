@@ -49,6 +49,7 @@ main{
     height: 8rem;
     border-radius: 50%;
     margin-right: 2rem;
+    border: 1px solid #d9d9d9;
 }
 
 .up-detail-profile{
