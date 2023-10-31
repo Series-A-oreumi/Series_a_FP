@@ -4,13 +4,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/studydetail.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/global.css">
+
     <title>Study/Project Detail</title>
 </head>
 
 <body>
+    <!-- nav바 시작-->
+    <header class="desktop">
+        <div class="nav-container">
+            <div class="nav-hamburger">
+                <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" /></a>
+            <div class="nav-buttons">
+                <a href=""><img src="../imgs/common/chat.png" alt="채팅" class="icon" /></a>
+                <a href=""><img src="../imgs/common/alarm.png" alt="알림" class="icon" /></a>
+
+                <!-- 로그인 여부에 따라 변경요망 -->
+                <div class="sprite_user_icon_outline"><a href="#"></a>
+                    <div class="dropdown-content">
+                        <a href="profile.html">프로필 보기</a>
+                        <a href="#" id="logout-button">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--nav바 종료-->
+
+
+    <!-- side바 시작 -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-container">
+            <div class="sidebar-hamburger">
+                <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" /></a>
+        </div>
+        <div id="side1">
+            <div class="sidebar-list">
+                <a href="feed.html">
+                    <img src="../imgs/common/home.svg" />
+                    <span class="sidebar-text">홈</span>
+                </a>
+            </div>
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/search.svg" />
+                    <span class="sidebar-text">검색</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/explore.svg" />
+                    <span class="sidebar-text">탐색</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/create.svg" />
+                    <span class="sidebar-text">글 작성</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/study.svg" />
+                    <span class="sidebar-text">스터디</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/project.svg" />
+                    <span class="sidebar-text">프로젝트</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="profile.html">
+                    <img src="../imgs/common/profile.svg" class="sidebar-profile" />
+                    <span class="sidebar-text">프로필</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/settings.svg" />
+                    <span class="sidebar-text">설정</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- side바 종료 -->
+
+
+
+
+
+
     <div class="content-box">
         <div class="top-section">
             <a href="studylist.html">
@@ -43,9 +145,7 @@
                         <form method="post" class="comment-form" id="commentForm">
                             <div class="comment-form-inner">
                                 <div class="comment-input">
-                                    <div class="comment-user-icon">
-                                        <img src="../imgs/study/Ellipse 15.png">
-                                    </div>
+                                    <div class="comment-user-icon">✍</div>
                                     <textarea id="commentArea" name="commentArea" placeholder="댓글을 입력하세요."></textarea>
                                 </div>
                             </div>
@@ -63,6 +163,8 @@
 
 
             <script type="module" src="../js/studydetail.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+            <script src="../js/sidebar.js"></script>
 </body>
 
 </html>
