@@ -326,7 +326,7 @@ function formatDate(dateString) {
 function createCardBottom(data) {
 
     const totalComments = data.comments_count;
-    const userProfileURL = `../html/profile.html?id=${data.id}`;
+    const userProfileURL = `../html/profile.html?id=${data.author.id}`; // (author.id)로 수정
 
 
     return `
