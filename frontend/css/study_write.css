@@ -1,0 +1,143 @@
+html{
+    margin: 0;
+    padding: 0;
+    width:100%;
+    height: 100%;
+
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.study-form{
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 4rem 0 4rem;
+    width: 60%;
+    height: 100%;
+}
+
+
+.side-title{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 2px solid #d9d9d9;
+    padding-bottom: 1rem;
+}
+
+.num-cir{
+    display: flex;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    background-color: rgb(77, 178, 251);
+    color: white;
+    font-size: large;
+    border-radius: 50%;
+}
+
+.title-main{
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+
+.upside-form{
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0 2rem 0;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.input-container label{
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+select{
+    height:50px;
+    border: #d9d9d9 1px solid;
+    font-size:1rem;
+    font-weight: 500;
+    padding-left: .5rem;
+
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: url('../media/study_write/arrow.png') no-repeat 97% 50%/20px auto;
+    padding-right: 25px;
+}
+
+input[type='text']{
+    height:48.222px;
+    padding:0 .5rem;
+    border: #d9d9d9 1px solid;
+    font-size: 1rem;
+}
+
+.left,.right{
+    width: 47%;
+}
+
+
+
+.downside-form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.downside-form input{
+    height: 1.5rem;
+    border: #d9d9d9 1px solid;
+    margin: 0 0 .5rem 0;
+    padding: .5rem;
+}
+
+textarea{
+    resize:none;
+    height: 30rem;
+    font-size: 1.2rem;
+    padding: .5rem;
+    border: #d9d9d9 1px solid;
+}
+
+.btnside{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: .5rem;
+    margin: .5rem;
+    margin-bottom: 5rem;
+}
+
+button{
+    border: none;
+    width: 5rem;
+    height: 2rem;
+    border-radius: .5rem;
+    background: #d9d9d9;
+}
+
+button[type='submit']{
+    background: black;
+    color: white;
+}
