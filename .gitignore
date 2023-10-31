@@ -302,3 +302,6 @@ GitHub.sublime-settings
 
 # backend media
 backend/media
+
+# redis
+dump.rdb
