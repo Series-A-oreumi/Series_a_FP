@@ -211,7 +211,7 @@ function createCardTop(request_user, data) {
                 ${deadlineTag}
             </div>
             <div class="heart_btn">
-                <div class="sprite_heart_icon_outline">
+                <div class="heart_icon">
                     <img src="${heartImageSrc}">
                 </div>
             </div>
@@ -324,47 +324,42 @@ function createLikes(request_user, data) {
 }
 
 // API에서 데이터 가져오기
-async function fetchDataFromAPI() {
-    const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = "http://localhost:8000/api/study/";
+document.addEventListener('DOMContentLoaded', () => {
+    async function fetchDataFromAPI() {
+        const accessToken = localStorage.getItem('access_token');
+        const apiEndpoint = "http://localhost:8000/api/study/";
 
-    try {
-        const response = await fetch(apiEndpoint, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
+        try {
+            const response = await fetch(apiEndpoint, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
             }
-        });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
+            const responseData = await response.json();
+            const { request_user, studylist } = responseData;
+
+            const postDataArray = studylist;
+
+
+
+            postDataArray.forEach(data => {
+                createPost(request_user, data);
+            });
+
+        } catch (error) {
+            console.error('Error:', error);
         }
-
-        const responseData = await response.json();
-        const { request_user, studylist } = responseData;
-
-        const postDataArray = studylist;
-
-
-
-        postDataArray.forEach(data => {
-            createPost(request_user, data);
-        });
-
-    } catch (error) {
-        console.error('Error:', error);
     }
-}
 
-fetchDataFromAPI();
-
-
-function sendLikes(data) {
-
-}
-
-
+    fetchDataFromAPI();
+});
 
 //좋아요 보내기
 // 좋아요 버튼 클릭 이벤트 핸들러
@@ -404,6 +399,7 @@ document.addEventListener('click', async function (event) {
         }
     }
 });
+
 
 
 

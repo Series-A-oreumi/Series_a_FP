@@ -435,15 +435,10 @@ button {
 }
 
 /* 좋아요 수정 필요 */
-.sprite_heart_icon_outline img {
+.heart_icon img {
     width: 30px;
 }
 
-
-.sprite_heart_icon_outline.on {
-    background: url('../imgs/background01.png') no-repeat -26px -261px;
-    animation: heart_bounce 1s linear;
-}
 
 .deadline {
     display: flex;
