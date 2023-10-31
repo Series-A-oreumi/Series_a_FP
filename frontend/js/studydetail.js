@@ -362,38 +362,37 @@ function renderComments(comments) {
 
 
 // 스터디 디테일 데이터 가져오기
-document.addEventListener('DOMContentLoaded', () => {
-    async function fetchDetailFromAPI() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const dataId = urlParams.get('id');
-        const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
+async function fetchDetailFromAPI() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataId = urlParams.get('id');
+    const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
 
-        try {
-            const response = await fetch(apiEndpoint, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
             }
+        });
 
-            const responseData = await response.json();
-            const { request_user, study } = responseData;
-
-            createDetaile(request_user, study);
-
-        } catch (error) {
-            console.error('Error:', error);
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
         }
-    }
 
-    fetchDetailFromAPI();
-});
+        const responseData = await response.json();
+        const { request_user, study } = responseData;
+
+        createDetaile(request_user, study);
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+fetchDetailFromAPI();
+
 
 // 글 삭제
 document.addEventListener('click', async function (event) {

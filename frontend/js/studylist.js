@@ -404,7 +404,6 @@ document.addEventListener('click', async function (event) {
 
 
 
-
 // 필터
 // 필터 - 스터디, 프로젝트
 document.addEventListener("DOMContentLoaded", function () {

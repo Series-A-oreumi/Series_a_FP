@@ -3,6 +3,12 @@ a {
     color: black;
 }
 
+body {
+    height: 100vh;
+    overflow: hidden;
+    padding-bottom: 100px;
+}
+
 /* banner */
 .banner-link {
     width: 100%;
@@ -367,7 +373,6 @@ button {
     margin: auto;
     gap: 20px;
     font-family: 'Pretendard', sans-serif;
-    margin-bottom: 300px;
     flex-wrap: wrap
 }
 
