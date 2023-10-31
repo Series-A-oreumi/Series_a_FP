@@ -10,15 +10,16 @@
     <div class="container">
         
 
-        <form method="post" class="profile_form">
-            
+        <form method="POST" class="profile_form" id="profileForm" enctype="multipart/form-data">
+
             <div class="submit">
                 <button type="submit">
             </div>
-
+            
             <div class="profile_img">
-                <img src="../media/profile_write/행복오르미.jpg" alt="프로필 이미지">
-                <a href="#">사진 변경</a>
+                <img src="../media/profile_write/행복오르미.jpg" alt="프로필 이미지" id="profileImage">
+                <input type="file" id="fileInput" name="profile_img" accept="image/*" style="display: none;" multiple>
+                <label for="fileInput">사진 변경</label>
             </div>
 
             <div class="inputs">
@@ -35,8 +36,8 @@
                 </div>
     
                 <div class="introduction profile_input">
-                    <label for="introduction"><img src="../media/profile_write/presentation.png" alt="소개란"></label>
-                    <input type="text" name="introduction" value="introduction">
+                    <label for="info"><img src="../media/profile_write/presentation.png" alt="소개란"></label>
+                    <input type="text" name="info" value="introduction">
                 </div>
 
             </div>
@@ -46,4 +47,5 @@
     
     
 </body>
+    <script src="../js/profilewrite.js"></script>
 </html>

@@ -48,16 +48,20 @@ form{
     border-radius: 50%;
 }
 
-.profile_img>a{
+.profile_img>label{
     text-decoration: none;
     color: blue;
     font-weight: 700;
     font-size: 20px;
 }
 
-.profile_img>a:hover{
-    text-decoration: underline;
+label[for="fileInput"]:hover {
+    cursor: pointer;
 }
+
+/* .profile_img>a:hover{
+    text-decoration: underline;
+} */
 
 
 

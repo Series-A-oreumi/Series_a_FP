@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     password = models.CharField(max_length=255)
     nickname = models.CharField(max_length=255)
     bootcamp = models.CharField(max_length=255)
-    profile_img = models.ImageField(upload_to='profile_images/', blank=True, null=True)
+    profile_img = models.FileField(blank=True, null=True)
     info = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -127,17 +127,22 @@ class ProfileUpdateDelete(APIView):
         user = get_user_from_token(request) # 토큰 decode 통해 로그인 한 유저 담아주기
         user_profile = get_object_or_404(UserProfile, id = user.id)
 
-        serializer = UserProfileSerializer(user_profile, data=request.data, partial=True)
+        serializer = ProfileUpdateSerializer(user_profile, data=request.data, partial=True)
         if serializer.is_valid():
-
-            # profile img 가 데이터에 포함되어있다면
-            if 'profile_img' in request.FILES:
-                image = request.FILES['profile_img']
-                img_uploader = S3ImgUploader(image)  # S3ImgUploader 인스턴스 생성
-                uploaded_url = img_uploader.upload()  # 이미지 업로드 및 URL 가져오기
-                user_profile.profile_img = uploaded_url # 프로필 이미지 URL 업데이트
             serializer.save()
 
+            # 이미지 가져오기
+            profile_img = request.FILES.get('profile_img')
+            print(profile_img)
+
+            # profile img 가 데이터에 포함되어있다면
+            if profile_img:
+                img_uploader = S3ImgUploader(profile_img)  # S3ImgUploader 인스턴스 생성
+                uploaded_url = img_uploader.upload()  # 이미지 업로드 및 URL 가져오기
+                user_profile.profile_img = uploaded_url # 프로필 이미지 URL 업데이트
+                user_profile.save()
+
+                print(user_profile.profile_img)
             messages = {
                 'success' : '프로필이 성공적으로 수정되었습니다.'
             }

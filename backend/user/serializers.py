@@ -4,12 +4,20 @@ from django.contrib.auth import authenticate
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-# profile
+# userprofile
 class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfile
         exclude = ['password', 'created_at']
+
+# userprofile update
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'nickname', 'info']
+
 
 # login
 class LoginSerializer(serializers.ModelSerializer):

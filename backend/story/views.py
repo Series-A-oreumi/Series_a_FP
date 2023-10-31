@@ -59,11 +59,12 @@ class StoryPost(CreateAPIView):
         # post 생성 (직접할당)
         post = Post.objects.create(author=user, title=request.data['title'], content=request.data['content'])
 
-        # 이미지 저장
-        for image in images:
-            img_upload = S3ImgUploader(image) # S3ImgUploader class 담기
-            img = img_upload.upload() # upload 메소드 실행
-            PostImage.objects.create(post=post, images=img)
+        if images:
+            # 이미지 저장
+            for image in images:
+                img_upload = S3ImgUploader(image) # S3ImgUploader class 담기
+                img = img_upload.upload() # upload 메소드 실행
+                PostImage.objects.create(post=post, images=img)
 
         message = {
             "success" : "게시물이 성공적으로 생성되었습니다."
