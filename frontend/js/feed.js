@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const image = document.createElement("img");
             // 사진도 일단 예시로만 
             image.src = "/frontend/media/post/2020/05/08/tiger/김치찌개.png"
+            // image.src = post.images[0].images
             image.alt = "피드이미지";
             
 

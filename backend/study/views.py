@@ -56,7 +56,6 @@ class StudyCreate(APIView):
          # "author" 필드를 직접 설정
         request.data["author"] = user.id
         
-        print(request.data)
         serializer = StudyCreateSerializer(data=request.data)
         if serializer.is_valid():
             study = serializer.save()

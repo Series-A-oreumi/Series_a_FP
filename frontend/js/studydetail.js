@@ -223,7 +223,7 @@ function createDetailSection3(data) {
                 <div class="comment-inner" data-comment-id="${comment.id}">
                     <a href="${commentProfileURL}">
                         <div class="comment-user-icon">
-                            ${randomIcon}
+                            <img src="${comment.author.profile_img}">
                         </div>
                     </a>
                     <div class="comment-content">
@@ -304,7 +304,7 @@ function renderComments(comments) {
 
     // 최신댓글 위로 가게
     const reversedComments = comments.reverse();
-
+    
     reversedComments.forEach(comment => {
         const commentProfileURL = `../html/profile.html?id=${comment.author.id}`;
         const formattedCommentDate = formatDate(comment.created_at);
@@ -314,6 +314,7 @@ function renderComments(comments) {
         const UserId = UserInfo(accessToken).userId
         let UpdRemo = '';
         const CommentWriter = comment.author.id
+
 
         if (UserId === CommentWriter) {
             UpdRemo = `
@@ -335,7 +336,7 @@ function renderComments(comments) {
             <div class="comment-inner">
                 <a href="${commentProfileURL}">
                     <div class="comment-user-icon">
-                        ${randomIcon}
+                        <img src="${comment.author.profile_img}">
                     </div>
                 </a>
                 <div class="comment-content">
