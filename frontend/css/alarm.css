@@ -46,7 +46,6 @@ main {
     font-weight: bold;
     font-size: 16px;
     line-height: 18px;
-    margin-bottom: 5px;
     width: 550px;
 }
 
@@ -69,3 +68,12 @@ main {
 .hidden {
     display: none;
 }
+
+/* 기존 CSS 코드 유지 */
+
+/* .notify에 호버 효과 추가 */
+.notify:hover {
+    background-color: rgb(247, 87, 38);; /* 호버 시 배경색을 주황색으로 변경 */
+}
+
+/* 기존 CSS 코드 유지 */

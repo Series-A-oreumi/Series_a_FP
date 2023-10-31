@@ -1,11 +1,19 @@
 const create_notify = (data) => {
-    const notify = document.createElement('div')
+    const notify = document.createElement('a')
+    // // 게시물 상세 페이지로 이동하는 링크 생성
+    // const postLink = document.createElement('a');
+    if (data.check_alarm.story) {
+        notify.href = `../html/feedDetail.html?id=${data.check_alarm.story}`;
+    } else {
+        notify.href = `../html/studyDetail.html?id=${data.check_alarm.study}`;
+    }
     const sender_img_div = document.createElement('div')
     const sender_img = document.createElement('img')
     const sender_info = document.createElement('div')
     const sender_info_p = document.createElement('p')
     const accept_div = document.createElement('div')
     const accept_btn = document.createElement('button')
+
 
     notify.className = 'notify'
     sender_img_div.className = 'sender_img'
@@ -31,6 +39,9 @@ const create_notify = (data) => {
     accept_div.append(accept_btn)
 
     notify.append(sender_img_div,sender_info,accept_div)
+
+    // // 알림 박스에 링크를 추가
+    // notify.appendChild(postLink);
 
     return notify
 }
