@@ -1,15 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>챗</title>
-    <link rel="stylesheet" type="text/css" href="../css/chat.css"/>
+
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/chat.css" />
 </head>
+
 <body>
-    <nav>
-        <img src="../imgs/login.svg">
-    </nav>
+    <!-- nav바 시작-->    
+    <header class="desktop">
+        <div class="nav-container">
+            <div class="nav-hamburger">
+                <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" /></a>
+            <div class="nav-buttons">
+                <a href=""><img src="../imgs/common/chat.png" alt="채팅" class="icon" /></a>
+                <div class="notify_count">
+                    0
+                </div>
+                <a href="../html/alarm.html"><img src="../imgs/common/alarm.png" alt="알림" class="icon" /></a>
+                <!-- 로그인 여부에 따라 변경요망 -->
+                <div class="sprite_user_icon_outline"><a href="#"></a>
+                    <div class="dropdown-content">
+                        <a href="profile_write.html">프로필 변경</a>
+                        <a href="#" id="logout-button">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--nav바 종료-->
+    <!-- side바 시작 -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-container">
+            <div class="sidebar-hamburger">
+                <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" /></a>
+        </div>
+        <div id="side1">
+            <div class="sidebar-list">
+                <a href="feed.html">
+                    <img src="../imgs/common/home.svg" />
+                    <span class="sidebar-text">홈</span>
+                </a>
+            </div>
+            <div class="sidebar-list">
+                <a href="#" onclick="toggleSubSidebar()">
+                    <img src="../imgs/common/search.svg" />
+                    <span class="sidebar-text">검색</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="studylist.html">
+                    <img src="../imgs/common/study.svg" />
+                    <span class="sidebar-text">스터디 / 프로젝트</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="story_write.html">
+                    <img src="../imgs/common/create.svg" />
+                    <span class="sidebar-text">글 작성</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="profile.html">
+                    <img src="../imgs/common/profile.svg" class="sidebar-profile" />
+                    <span class="sidebar-text">프로필</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/settings.svg" />
+                    <span class="sidebar-text">설정</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- side바 종료 -->
+    <!-- sub-sidebar -->
+    <div id="sub-sidebar" style="display: none;">
+        <h1>검색</h1>
+        <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+        <!-- 검색 결과를 표시할 곳 추가 -->
+    </div>
+    <!-- main 시작-->
+    <div id="overlay" onclick="closeSidebar()">
+    </div>
+
+
     <div id="chat_body">
         <section class="list">
             <div class="chat_my_nick">
@@ -26,22 +120,26 @@
                     <div id="alarm">요청</div>
                 </div>
             </div>
-            <div class="chat_nick">2</div>
-            <div class="chat_nick">3</div>
-            <div class="chat_nick">4</div>
-            <div class="chat_nick">5</div>
+            <!-- <div class="lists">
+
+            </div> -->
         </section>
         <section class="chat">
             <div id="chat_info">
                 상대방 정보
             </div>
-            <div id="chat_desc">
-                채닝 내용
+            <div id="chat_desc_">
+                <div id="chat_desc">
+                    채닝 내용
+                </div>
             </div>
-            <input type="text" id="chat_input" placeholder="메시지 입력..">
-        
-        </section>        
-    </div>     
+            
+            <textarea id="chat_input" rows="4" cols="50" placeholder="메시지입력.."></textarea>
+
+        </section>
+    </div>
 </body>
-    <script type="text/javascript" src="../js/chat.js"></script>     
+<script type="text/javascript" src="../js/chat.js"></script>
+<script src="../js/sidebar.js"></script>
+
 </html>

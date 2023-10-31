@@ -27,8 +27,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        print(text_data)
+        text_data_json = json.loads(text_data)        
         message = text_data_json['message']
         chat_room_id = text_data_json['chat_room_id']
         chatroom = await self.get_chatroom(chat_room_id)  # chat_room_id를 ChatRoom 인스턴스로 변환
@@ -36,10 +35,36 @@ class ChatConsumer(AsyncWebsocketConsumer):
         receiver = text_data_json['receiver']
         await self.save_message(chatroom, sender, receiver, message)
         
-        # 메시지를 다른 사용자에게 브로드캐스트합니다
-        await self.send(text_data=json.dumps({
-            'message': message
+
+        # room group에 메시지 전달
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'chat_message',
+                'message': message,
+                'sender' : sender,
+                'receiver' : receiver
+            }
+        )
+        
+        # # 메시지를 다른 사용자에게 브로드캐스트합니다
+        # await self.send(text_data=json.dumps({
+        #     'message': message,
+        #     'sender' : sender,
+        #     'receiver' : receiver
+        # }))
+    async def chat_message(self, event):
+        message = event['message']
+        sender = event['sender']
+        # sent_at = event['sent_at']
+
+        await self.send(text_data=json.dumps({   
+            'type' : 'chat_message',         
+            'message': message,
+            'sender': sender,                
         }))
+    
+
 
     @database_sync_to_async
     def save_message(self, chatroom_id, sender_id, receiver_id, message):

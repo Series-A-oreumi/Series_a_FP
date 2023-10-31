@@ -10,7 +10,7 @@
 }
 
 nav{
-    height: 100px;
+    height: 77px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,7 +24,8 @@ section{
 }
 
 #chat_body{
-    display: flex;
+    display: flex;   
+    flex: 1; 
 }
 /* 왼쪽 영역 스타일 */
 .list {
@@ -35,7 +36,9 @@ section{
 
 /* 오른쪽 영역 스타일 */
 .chat {
-    flex: 8;    
+    width: 100%;
+    height: 100%;
+    flex: 8;        
 }
 .chat_my_nick{
     height: 119px;
@@ -65,24 +68,52 @@ section{
 
 
 .chat_nick{
-    height: 56px;       
+    height: 56px;    
+    display: flex; 
+    width: 100%;  
+}
+.chat_nick:hover{
+    background-color: rgb(219, 219, 219);
+    cursor: pointer;
 }
 
 #chat_info {
-    height: 74px; /* chat_desc의 높이를 74px로 설정합니다. */
+    height: 56px; /* chat_desc의 높이를 74px로 설정합니다. */       
+    display: flex; 
+    width: 100%;  
+    padding-top: 9px;
+    padding-bottom: 9px;
+    /* padding-left: 30px; */
     /* 다른 스타일 속성 설정 가능 */
 }
 
-#chat_desc {
-    flex: 1; /* chat_input이 남은 공간을 모두 채우도록 설정합니다. */
+#chat_desc_ {
+    width: 100%;
+    flex: 1; /* chat_input이 남은 공간을 모두 채우도록 설정합니다. */    
+    
     /* 다른 스타일 속성 설정 가능 */
+}
+#chat_desc{
+    max-height: 76vh;
+    overflow: auto;    
 }
 
 #chat_input {
-    height: 78px;
+    margin-top: 10px;    
+    margin-bottom: 10px;
+    height: 58px;
+    width: 95%;
+    border: 1px solid rgb(219, 219, 219);  
+    border-radius: 20px; /* 형태에 맞게 조절 */  
+    text-align: left;
+    white-space: pre-line; /* 여러 줄을 처리하기 위한 줄 바꿈 속성 */
+    line-height: 1.5em; /* 행간 조절 */
+    min-height: 58px;
+    
 }
 
 html, body{
+    font-family: Khmer;
     height: 100%;
     margin: 0; /* 기본 마진을 제거합니다. */
     padding: 0; /* 기본 패딩을 제거합니다. */
@@ -95,5 +126,59 @@ body {
 
 #chat_body{
     flex: 1;
+    display: flex;    
+}
+
+#my_nick{
+    font-family: Khmer;
+    font-weight: 700;
+    font-size: 20px;
+    
+}
+
+.profile_img{
+    width: 56px;
+    height: 56px;
+    border: 0.5px solid rgb(219, 219, 219);
+    border-radius: 50%;
+    margin-left: 10px;
+}
+.profile_id{
+    font-family: Khmer;
+    font-weight: 600;
+    flex: 1;
     display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding-left: 10px;
+}
+
+.chats_sender .sender{
+    background-color: rgb(55, 151, 240);
+    color: white;
+    border: 0.5px solid rgb(219, 219, 219);
+    border-radius: 20px; /* 형태에 맞게 조절 */ 
+    padding-bottom: 7px; 
+    padding-top: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+
+
+.chats_sender, .chats_receiver{
+    display: flex;
+    justify-content: space-between; /* 하위 태그를 양끝으로 떨어뜨립니다 */
+    width: 96.5%; /* container 너비를 100%로 설정하여 가로로 꽉 차게 합니다 */
+    margin: 20px;
+}
+
+.chats_receiver .receiver{
+    background-color: #EBEDF0;
+    border: 0.5px solid rgb(219, 219, 219);
+    border-radius: 20px; /* 형태에 맞게 조절 */ 
+    padding-bottom: 7px; 
+    padding-top: 7px;
+    padding-left: 12px;
+    padding-right: 12px;    
 }
