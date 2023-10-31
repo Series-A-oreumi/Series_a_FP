@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from story.serializers import LikeSerializer
+from study.serializers import LikeSerializer
 from user.serializers import UserProfileSerializer
 
 from user.permissions import IsTokenValid
@@ -55,7 +55,8 @@ class StudyCreate(APIView):
 
          # "author" 필드를 직접 설정
         request.data["author"] = user.id
-
+        
+        print(request.data)
         serializer = StudyCreateSerializer(data=request.data)
         if serializer.is_valid():
             study = serializer.save()
@@ -376,5 +377,6 @@ class ToggleLike(APIView):
             # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
             like = Like(user=user, study=study, liked=True)
             like.save()
+            study.likes.add(user)
             serializer = LikeSerializer(like)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
