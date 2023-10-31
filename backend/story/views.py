@@ -28,18 +28,21 @@ class StoryList(APIView):
         except Post.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-        # 현재 로그인 한 유저 직렬화
-        user_serializer = UserProfileSerializer(user)
+        # # 현재 로그인 한 유저 직렬화
+        # user_serializer = UserProfileSerializer(user)
+
+        # # PostSerializer를 사용하여 직렬화
+        # story_serializer = PostSerializer(posts, many=True)  
+        
+        # data = {
+        #     'request_user' : user_serializer.data,
+        #     'storylist' : story_serializer.data
+        # }
 
         # PostSerializer를 사용하여 직렬화
-        story_serializer = PostSerializer(posts, many=True)  
+        serializer = PostSerializer(posts, many=True)  
         
-        data = {
-            'request_user' : user_serializer.data,
-            'storylist' : story_serializer.data
-        }
-
-        return Response(data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # story post
 class StoryPost(CreateAPIView):
@@ -174,16 +177,9 @@ class StoryDetail(APIView):
             post.views += 1 # 조회수 1 증가
             post.save()
 
-        # 현재 로그인 한 유저 직렬화
-        user_serializer = UserProfileSerializer(user)
-        
-        story_serializer = PostDetailSerializer(post)
-
-        data = {
-            'request_user' : user_serializer.data,
-            'story' : story_serializer.data
-        }
-        return Response(data, status=status.HTTP_200_OK)
+       
+        serializer = PostDetailSerializer(post)
+        return Response(serializer.data)
 
     # 해당 스토리 게시글 수정
     def put(self, request, post_id):
@@ -235,8 +231,9 @@ class ToggleLike(APIView):
             if like.liked:
                 like.delete()
                 post.likes.remove(user)
+                print(post.likes)
                 messages = {
-                    'success' : f'{post.author} 게시물 좋아요를 취소했습니다.' 
+                    'cancel' : f'{post.author} 게시물 좋아요를 취소했습니다.' 
                 }
                 return Response(messages, status=status.HTTP_204_NO_CONTENT)
             # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
@@ -244,6 +241,7 @@ class ToggleLike(APIView):
                 like.liked = True
                 like.save()
                 post.likes.add(user)
+                print(post.likes_count())
                 messages = {
                     'success' : f'{post.author} 게시물 좋아요를 눌렀습니다.' 
                 }
@@ -253,6 +251,7 @@ class ToggleLike(APIView):
             # 좋아요를 누르지 않았던 경우, 좋아요를 추가합니다.
             like = Like(user=user, post=post, liked=True)
             like.save()
+            post.likes.add(user)
             serializer = LikeSerializer(like)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

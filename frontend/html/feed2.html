@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <title>Estagram</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/detail-page.css">
+  <link rel="shortcut icon" href="../imgs/instagram.png">
+
+
+  <style>
+    .detail_link {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+</head>
+
+<body>
+    <!-- nav바 시작-->
+    <header class="desktop">
+        <div class="nav-container">
+          <div class="nav-hamburger">
+            <button href="#" id='hamburger' onclick="toggleSidebar()"><img
+                src="../imgs/common/hamburger.png"
+                alt="햄버거"
+                class="hamburger"
+            /></button>
+          </div>
+            <a href="feed.html" class="logo-link">
+                <img
+                src="../imgs/common/Estagram.png"
+                alt="헤더 로고"
+                class="title-logo"/></a>
+            <div class="nav-buttons">
+                <a href=""
+                ><img src="../imgs/common/chat.png" alt="채팅" class="icon"
+                /></a>
+                <a href=""
+                ><img src="../imgs/common/alarm.png" alt="알림" class="icon"
+                /></a>
+
+                    <!-- 로그인 여부에 따라 변경요망 -->
+                    <div class="sprite_user_icon_outline"><a href="#"></a>
+                      <div class="dropdown-content">
+                        <a href="profile.html">프로필 보기</a>
+                        <a href="#" id="logout-button">로그아웃</a>
+                      </div>
+                    </div>
+            </div>
+        </div>
+    </header>
+    <!--nav바 종료-->
+
+
+  <!-- side바 시작 -->
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-container">
+      <div class="sidebar-hamburger">
+        <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png" alt="햄버거"
+            class="hamburger" /></button>
+      </div>
+      <a href="feed.html" class="logo-link">
+        <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" /></a>
+    </div>
+    <div id="side1">
+      <div class="sidebar-list">
+        <a href="feed.html">
+          <img src="../imgs/common/home.svg" />
+          <span class="sidebar-text">홈</span>
+        </a>
+      </div>
+      <div class="sidebar-list">
+        <a href="#">
+          <img src="../imgs/common/search.svg" />
+          <span class="sidebar-text">검색</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="#">
+          <img src="../imgs/common/explore.svg" />
+          <span class="sidebar-text">탐색</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="#">
+          <img src="../imgs/common/create.svg" />
+          <span class="sidebar-text">글 작성</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="#">
+          <img src="../imgs/common/study.svg" />
+          <span class="sidebar-text">스터디</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="#">
+          <img src="../imgs/common/project.svg" />
+          <span class="sidebar-text">프로젝트</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="profile.html">
+          <img src="../imgs/common/profile.svg" class="sidebar-profile" />
+          <span class="sidebar-text">프로필</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="#">
+          <img src="../imgs/common/settings.svg" />
+          <span class="sidebar-text">설정</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- side바 종료 -->
+  <!-- main 시작-->
+  <section id="main_container">
+
+    <section class="inner">
+      <div class="contents_box">
+        <!-- 데이터를 여기에 동적으로 추가할 것입니다. -->
+      </div>
+    </section>
+    <div id="overlay" onclick="closeSidebar()">
+    </div>
+  </section>
+
+  <!-- feedDetail modal 창 -->
+  <div id="modal_add_feed" class="modal_overlay">
+    <div class="modal_window">
+      <div class="modal_title">
+        <div class="modal_title_side" id="user_name_container">
+          <!-- 사용자 이름이 여기로 이동됨 -->
+        </div>
+        <div class="modal_title_center">
+          <div> 님의 게시물 </div>
+        </div>
+        <div class="modal_title_side" id="close_modal_container">
+          <span id="close_modal" class="material-icons-outlined">
+            X
+          </span>
+        </div>
+      </div>
+      <div class="contents_detail_box">
+        <!-- 데이터를 여기에 동적으로 추가할 것입니다. -->
+      </div>
+    </div>
+  </div>
+  <!-- main 종료 -->
+  </div>
+
+
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- <script src="{% static 'js/insta.js' %}"></script> -->
+    <script src="../js/feed.js" type="module"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/feedDetail.js" type="module"></script>
+
+</body>
+
+</html>

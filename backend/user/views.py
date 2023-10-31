@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from alarm.models import Alarm
 from study.serializers import StudySerializer
 from story.serializers import PostSerializer
 from story.models import Post
@@ -32,11 +33,14 @@ class LoginView(GenericAPIView):
             access = serializer.validated_data.get("access")
             
             user_info = UserProfileSerializer(user)
-
+            
+            alarm = Alarm.objects.filter(receiver=user, is_check=False).values() # 로그인 요청을 한 유저의 알람
+        
             data = {
                 'user': user_info.data,
                 'refresh': refresh,
                 'access': access,
+                'alarm' : alarm,
             }
             return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="../html/chat.html" method="post">
+        <input type="hidden" name="jwt_token" value="your_jwt_token_value">
+        <input type="hidden" name="clicked_tag_id" value="your_clicked_tag_id_value">
+        <input type="submit" value="Go to Chat">
+    </form>
+
+    <div>
+        dm하기
+    </div>
+    <a href="#" id="tag-link" data-info-id="123">Click to Get Info</a>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const accessToken = localStorage.getItem('access_token');
+            // console.log(accessToken)
+            document.getElementById("tag-link").addEventListener("click", function (e) {
+                chat_reciver_nickname = "admin2"
+                window.location.href = "chat.html?data=" + chat_reciver_nickname;
+            });
+        })
+    </script>
+</body>
+
+</html>

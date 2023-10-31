@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> estagram </title>
+    <link rel="stylesheet" href="../css/story_write.css">
+</head>
+<body>
+    <div class="contents">
+        
+        <form method="post">
+
+            <div class="write-main">
+                <input type="text" name="story-title" placeholder="제목을 입력해주세요.">
+                <!-- 에디터 -->
+                <div class="write-editor">
+                    <textarea name="story-content" id="story-content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+                </div>
+            </div>
+            
+            <div class="write-side">
+                <div class="open-setting">
+                    <p class="setting-title">공개 설정</p>
+                    <fieldset class="open-field">
+
+                        <label>
+                            <input type="radio" name="open" value="all" checked />
+                            <span>전체공개</span>
+                        </label>
+                        
+                         <label>
+                            <input type="radio" name="open" value="friend" />
+                            <span>기수 공개</span>
+                         </label>
+                        
+                        <label>
+                            <input type="radio" name="open" value="only" />
+                            <span>나만 보기</span>
+                        </label>
+                          
+                        
+                    </fieldset>
+                </div>
+
+                <div class="images">
+                    <p class="image-title">이미지</p>
+                    <input type="file" name="story-image" multiple>
+                </div>
+                
+                <div class="buttons">
+                    <button class="temp-save">임시 저장</button>
+                    <button class="save">글 작성</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    
+</body>
+</html>

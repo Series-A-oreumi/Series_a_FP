@@ -35,6 +35,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # channel 설정
+    'channels',
+    'daphne',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,13 +58,18 @@ INSTALLED_APPS = [
     'chat',
     'story',
     'study',
+    'alarm',
+    'alrarm',
 
     # s3 storage
     'storages',
 
     # swagger
     'drf_yasg',
+
 ]
+
+
 
 # 초기 인증 제거 -> 추후에 필요하면 살리면 될듯
 # REST_FRAMEWORK = {
@@ -68,6 +77,7 @@ INSTALLED_APPS = [
 #         'rest_framework_simplejwt.authentication.JWTAuthentication',
 #     )
 # }
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # <- 가능한 높게 위치시켜야 
@@ -102,6 +112,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'estagram.wsgi.application'
 
+ASGI_APPLICATION = 'estagram.asgi.application' # asgi 설정 추가
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -112,6 +123,7 @@ WSGI_APPLICATION = 'estagram.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 
 DATABASES = {
     'default': {
@@ -124,6 +136,14 @@ DATABASES = {
     }
 }
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

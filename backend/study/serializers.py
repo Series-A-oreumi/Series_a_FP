@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Like, Study, Comment, Stack
+from .models import Like, Study, Comment, Stack
 from user.serializers import UserProfileSerializer
 
 class StackSerializer(serializers.ModelSerializer):
@@ -112,8 +113,8 @@ class StudyCreateSerializer(serializers.ModelSerializer):
         data['stacks'] = stack_pks
         return super().to_internal_value(data)
     
-    
-# like serializer
+    # like serializer
+
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like

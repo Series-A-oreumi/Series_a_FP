@@ -61,7 +61,7 @@ a{
   }
 
 
-.sprite_heart_icon_outline {
+ .sprite_heart_icon_outline {
     display: inline-block;
     background: url('../imgs/background01.png') no-repeat -52px -261px;
     width: 24px;
@@ -440,14 +440,15 @@ body{
 
 
 .contents .comment_field{
-    min-height:56px;
+    min-height:20px;
     position: relative;
+    padding-bottom: 20px;
 }
 
 
 .contents .comment_field input{
     width: 100%;
-    height: 56px;
+    height: 20px;
     border: none;
     outline:none;
     background: transparent;
@@ -462,7 +463,7 @@ body{
     color:#3897f0;
     position: absolute;
     right: 20px;
-    top: 50%;
+    top: 20%;
     transform:translateY(-50%);
     cursor: pointer;
     /*pointer-events: none;*/
@@ -474,7 +475,7 @@ body{
     font-size: 100%;
     /* font-weight: 200; */
     display: inline-block;
-    padding-right: 25px;
+    padding-right: 25px; 
     margin-top: 10px;
     margin-bottom:10px;
     padding-top: 10px;
@@ -678,3 +679,20 @@ body{
 
 
 
+/* 알람 카운트 */
+.notify_count {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(247, 87, 38);
+    border-radius: 50%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    top: 4px;
+    right: 66px;
+    padding: 1px;
+    font-size: 12px;
+}

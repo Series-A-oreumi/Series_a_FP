@@ -16,5 +16,4 @@ urlpatterns = [
 
     # like
     path('liked/<int:study_id>/', views.ToggleLike.as_view()), # 좋아요 기능
-
 ]
