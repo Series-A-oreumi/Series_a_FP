@@ -134,6 +134,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                         modal.style.display = "none";
                         document.body.style.overflowY = "visible";
                         clearFeedDetail();
+                        // 리프레시
+                        window.location.reload();
                     });
             
                     // 빈 화면 클릭하여 모달 닫기
@@ -143,6 +145,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                             modal.style.display = "none";
                             document.body.style.overflowY = "visible";
                             clearFeedDetail();
+                            //리프레시
+                            window.location.reload();
                         }
                     });
                 }
@@ -157,26 +161,31 @@ document.addEventListener("DOMContentLoaded", async function () {
             likeButton.setAttribute('data-name', 'heartbeat');
             likeButton.setAttribute('data-post-id', post.pk);
             likeButton.addEventListener("click", async function () {
-            const postId = likeButton.getAttribute("data-post-id");
-                
-                // 서버에 좋아요 토글 요청을 보냅니다.
+                const postId = likeButton.getAttribute("data-post-id");
+            
                 try {
                     const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
-                        method: "POST", // 좋아요 토글을 위한 POST 요청
+                        method: "POST",
                         headers: {
                             'Authorization': `Bearer ${accessToken}`,
                             "Content-Type": "application/json",
                         },
                     });
-                    
+            
                     if (response.ok) {
+
+            
                         // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
-                        // const data = await response.json();
                         if (response.status === 201) {
                             likeButton.classList.add("on");
-                        } else {
+                        } else if (response.status === 200) {
                             likeButton.classList.remove("on");
                         }
+            
+                        // 업데이트된 좋아요 개수를 UI에 반영
+                        const likesCountResponse = await response.json();
+                        const updatedLikesCount = likesCountResponse.likes_count;
+                        likeCountSpan.textContent = `좋아요 ${updatedLikesCount}개`;
                     } else {
                         console.error("Error toggling like:", response.status);
                     }
@@ -184,6 +193,17 @@ document.addEventListener("DOMContentLoaded", async function () {
                     console.error("Error toggling like:", error);
                 }
             });
+
+            // 좋아요 개수 추가
+            const likeCountSpan = document.createElement('span')
+            // id 속성을 추가합니다.
+            likeCountSpan.id = `like-count-${post.pk}`;
+            likeCountSpan.textContent = `좋아요 ${post.likes_count}개`;
+            const likeText = document.createElement('div');
+            likeText.id = `like-Text-${post.pk}`;
+            likeText.className = `likes m_text`;
+            
+            likeText.appendChild(likeCountSpan);
             
             // 좋아요 아이콘을 만들고 설정합니다.
             const heartBtn = document.createElement('div');
@@ -211,7 +231,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                     document.body.style.overflowY = "hidden";
 
                     //모달 처리 코드 작성
-                    feedDetail(post.pk);
+                    feedDetail(post.pk, function(){
+                        console.log('hello');
+                    });
                     // contentsBox.appendChild(image);
 
             
@@ -221,6 +243,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                         modal.style.display = "none";
                         document.body.style.overflowY = "visible";
                         clearFeedDetail();
+                        // 리프레시
+                        window.location.reload();
                     });
             
                     // 빈 화면 클릭하여 모달 닫기
@@ -230,6 +254,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                             modal.style.display = "none";
                             document.body.style.overflowY = "visible";
                             clearFeedDetail();
+                            // 리프레시
+                            window.location.reload();
                         }
                     });
                 }
@@ -247,15 +273,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             leftIcons.appendChild(aElement);
             bottomIcons.appendChild(leftIcons);
 
-            // 좋아요 개수 추가
-            const likeCountSpan = document.createElement('span')
-            // id 속성을 추가합니다.
-            likeCountSpan.id = `like-count-${post.pk}`;
-            likeCountSpan.textContent = `좋아요 ${post.likes_count}개`;
-            const likeText = document.createElement('div');
-            likeText.className = `likes m_text`;
-            
-            likeText.appendChild(likeCountSpan);
+
 
         
             // 댓글 개수 표시
@@ -282,6 +300,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                     modal.style.display = "none";
                     document.body.style.overflowY = "visible";
                     clearFeedDetail();
+                    // 리프레시
+                    window.location.reload();
                 });
 
                 // 빈 화면 클릭하여 모달 닫기
@@ -291,6 +311,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                         modal.style.display = "none";
                         document.body.style.overflowY = "visible";
                         clearFeedDetail();
+                        // 리프레시
+                        window.location.reload();
                     }
                 });
             });
