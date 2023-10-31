@@ -1,6 +1,5 @@
 a {
     text-decoration: none;
-    color: black;
 }
 
 body {
@@ -45,19 +44,57 @@ body {
     padding-bottom: 40px;
 }
 
-.user-section {
+.border {
+    border-bottom: 3px solid #f2f2f2;
+    display: flex;
     width: 1200px;
     margin: auto;
+    justify-content: space-between
+}
+
+.user-section {
+
     display: flex;
     align-items: center;
     gap: 20px;
-    border-bottom: 3px solid #f2f2f2;
     padding-bottom: 40px;
 }
 
 .user-section a {
     display: flex;
     align-items: center;
+}
+
+.btnSection {
+    display: flex;
+    gap: 10px;
+}
+
+.studyEdit,
+.studyDelete,
+.goChat {
+    display: flex;
+    border: solid 1px #cacaca;
+    background-color: #ffffff;
+    border-radius: 6px;
+    align-items: center;
+    text-align: center;
+    height: 30px;
+    padding: 3px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    color: black;
+}
+
+.studyEdit:hover,
+.studyDelete:hover,
+.goChat:hover {
+    border: solid 1px #228CEE;
+    background-color: #228CEE;
+    color: white;
+
 }
 
 .user-icon img {
@@ -216,6 +253,7 @@ ul {
 
 .comment-user-icon {
     margin-right: 20px;
+    margin-top: 10px;
 }
 
 .comment-user-icon img {
@@ -258,6 +296,11 @@ ul {
     align-items: center;
 }
 
+.comment-form-btn button:hover {
+    background: black;
+    border: #333;
+}
+
 #comment-list {
     margin-bottom: 100px;
 }
@@ -272,6 +315,7 @@ ul {
 .user-name {
     font-weight: 600;
     margin-right: 5px;
+    color: black;
 }
 
 .comment-created-at {
@@ -280,4 +324,59 @@ ul {
 
 .comment-user-info {
     margin-bottom: 7px;
+}
+
+.comment-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between
+}
+
+.comment-options {
+    display: flex;
+    gap: 5px;
+}
+
+.update-remove {
+    padding: 5px;
+    cursor: pointer;
+
+}
+
+.update-remove img:hover {
+    opacity: 100%;
+    width: 16px;
+}
+
+.comment-edit-text {
+    padding: 1rem 1rem 1.5rem;
+    outline: none;
+    border: 2px solid #999;
+    border-radius: 16px;
+    width: 300%;
+    min-height: auto;
+    margin-bottom: 10px;
+    resize: none;
+    font-size: 16px;
+}
+
+.comment-edit-form button {
+    margin-left: 6px;
+}
+
+.comment-save-button,
+.comment-cancel-button {
+    border: 1px solid #999;
+    background-color: white;
+    color: #606060;
+    width: 55px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 14px;
+}
+
+.comment-save-button:hover,
+.comment-cancel-button:hover {
+    background-color: #606060;
+    color: white;
 }

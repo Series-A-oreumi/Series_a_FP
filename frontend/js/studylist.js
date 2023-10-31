@@ -54,6 +54,7 @@ toggleBtns.forEach((btn, index) => {
 // 다른 토글 버튼 클릭 시 기술스택 컨테이너 닫기
 toggleBtns.forEach((btn, index) => {
     btn.addEventListener('click', () => {
+
         stackToggleContainer.classList.remove('active');
     });
 });
@@ -103,61 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// 기술스택 토글
-// 여러개 선택 가능한 버전
-// document.addEventListener("DOMContentLoaded", function () {
-//     const stackToggleBtn = document.getElementById('stackToggle');
-//     const stackToggleContainer = document.getElementById('stackToggleContainer');
-//     const stackOptionButtons = stackToggleContainer.querySelectorAll(".sub-select-btn");
-//     const stackText = stackToggleBtn.querySelector('.sub-select-text');
-
-//     const selectedStacks = [];
-
-//     stackToggleBtn.addEventListener('click', (event) => {
-//         event.stopPropagation();
-//         if (stackToggleContainer.classList.contains('active')) {
-//             stackToggleContainer.classList.remove('active');
-//         } else {
-//             stackToggleContainer.classList.add('active');
-//         }
-//     });
-
-//     document.addEventListener('click', (event) => {
-//         if (!stackToggleBtn.contains(event.target) && !stackToggleContainer.contains(event.target)) {
-//             stackToggleContainer.classList.remove('active');
-//         }
-//     });
-
-//     stackOptionButtons.forEach((option) => {
-//         option.addEventListener("click", function (e) {
-//             e.stopPropagation();
-//             const stackName = option.textContent;
-//             if (option.classList.contains("select-stack")) {
-//                 const index = selectedStacks.indexOf(stackName);
-//                 if (index !== -1) {
-//                     selectedStacks.splice(index, 1);
-//                 }
-//                 option.classList.remove("select-stack");
-//                 option.style.borderColor = '';
-//             } else {
-//                 selectedStacks.push(stackName);
-//                 option.classList.add("select-stack");
-//                 option.style.borderColor = 'rgb(0, 185, 174)';
-//             }
-
-//             stackText.textContent = selectedStacks.join(', ');
-
-//             if (selectedStacks.length === 0) {
-//                 stackText.textContent = "기술 스택";
-//                 stackToggleBtn.style.color = '';
-//                 stackToggleBtn.style.borderColor = '';
-//             } else {
-//                 stackToggleBtn.style.color = 'rgb(0, 185, 174)';
-//                 stackToggleBtn.style.borderColor = 'rgb(0, 185, 174)';
-//             }
-//         });
-//     });
-// });
 
 
 // 하나만 선택 가능 버전
@@ -248,7 +194,7 @@ function createCardTop(request_user, data) {
         deadlineTag = `<div class="deadlineTag">마감 ${daysLeft}일전</div>`;
     }
 
-
+    console.log(data)
     const loggedInUser = request_user.username;
     const isUserLiked = data.likes_users && data.likes_users.includes(loggedInUser);
     const heartImageSrc = isUserLiked
@@ -256,7 +202,8 @@ function createCardTop(request_user, data) {
         : "../imgs/study/grayheart.png";
 
     return `
-        <div class="card_top">
+        <div class="card_top" data-study-id="${data.pk}">
+        
             <div class="tag_list">
                 <div class="top_tag">
                     ${tagStudy}
@@ -420,10 +367,18 @@ function sendLikes(data) {
 
 
 //좋아요 보내기
-async function toggleLike(studyId) {
-    try {
+// 좋아요 버튼 클릭 이벤트 핸들러
+document.addEventListener('click', async function (event) {
+    const LikesButton = event.target.closest('.heart_btn');
+
+    if (LikesButton) {
+        const likeButton = LikesButton.querySelector('img');
+        const currentImageSrc = likeButton.src;
+        const studyElement = LikesButton.closest('.card_top');
+        const studyId = studyElement.dataset.studyId;
         const accessToken = localStorage.getItem('access_token');
         const apiEndpoint = `http://localhost:8000/api/study/liked/${studyId}/`;
+
         const options = {
             method: 'POST',
             headers: {
@@ -432,18 +387,24 @@ async function toggleLike(studyId) {
             },
         };
 
-        const response = await fetch(apiEndpoint, options);
-
-        if (!response.ok) {
-            throw new Error('Failed to toggle like');
+        try {
+            const response = await fetch(apiEndpoint, options);
+            if (response.ok) {
+                if (currentImageSrc.includes('pinkheart.png')) {
+                    likeButton.src = '../imgs/study/grayheart.png';
+                } else {
+                    likeButton.src = '../imgs/study/pinkheart.png';
+                }
+            } else {
+                // 좋아요 요청 실패 처리
+                console.error('Failed to update comment:', response.status);
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
-
-        const responseData = await response.json();
-        console.log('Like toggled successfully', responseData);
-    } catch (error) {
-        console.error('Error:', error);
     }
-}
+});
+
 
 
 

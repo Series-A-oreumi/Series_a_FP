@@ -14,26 +14,40 @@ function formatDate(dateString) {
 
 
 // 제목 ,유저 ~
-// 유저 아이콘 데이터이름 확인 필요
+// 채팅하기, 수정하기 경로 변경
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
     const userProfileURL = `../html/profile.html?id=${data.author}`;
 
+    let inviteBtn = '';
+    const accessToken = localStorage.getItem('access_token');
+    const UserId = UserInfo(accessToken).userId
+    const studyId = data.author.id
+    if (UserId === studyId) {
+        inviteBtn = `<a href="#"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
+    } else {
+        inviteBtn = `<div class="goChat"><a href="#">채팅하기</a></div>`
+    }
+
     return `
         <div class="title">${data.title}</div>
-        <div class="user-section">
-            <a href="${userProfileURL}">
-                <div class="user-section-inner">
-                    <div class="user-title">${data.author.username}</div>
-                    <div class="email-text">👥 ${data.author.email}</div>
-                </div>
-            </a>
-            <div class="created_at">|</div>
-            <div class="created_at">${formattedEndDate}</div>
+        <div class="border">
+            <div class="user-section">
+                <a href="${userProfileURL}">
+                    <div class="user-section-inner">
+                        <div class="user-title">${data.author.username}</div>
+                        <div class="email-text">👥 ${data.author.email}</div>
+                    </div>
+                </a>
+                <div class="created_at">|</div>
+                <div class="created_at">${formattedEndDate}</div>
+            </div>
+            <div class="btnSection">${inviteBtn}</div>
         </div>
     `;
 }
+
 
 
 
@@ -61,14 +75,16 @@ function createDetailSection2(user, data) {
         `;
     }
 
-
-    const likeCount = data.likes_users.length;
-    const loggedInUser = user.username;
+    // 좋아요 수 왜 안뜸?, Treu-False 오류
+    const likeCount = data.likes_count;
+    console.log(data)
     let likesTrue = ''
+    const loggedInUser = user.username;
     if (data.likes_users && data.likes_users.includes(loggedInUser)) {
-        likesTrue = `<img src="../imgs/study/pinkheart.png">`
-    } else {
-        likesTrue = `<img src="../imgs/study/grayheart.png">`
+        likesTrue = `../imgs/study/pinkheart.png`
+    }
+    else {
+        likesTrue = `../imgs/study/grayheart.png`
     }
 
     const startAt = data.start_at
@@ -156,9 +172,9 @@ function createDetailSection2(user, data) {
             </div>
             <div class="likes">
                 <div id="likeTF">
-                ${likesTrue}
+                <img src="${likesTrue}">
                 </div>
-                <div>${likeCount}</div>
+                <div id="likeCount">${likeCount}</div>
             </div>
         </div>
     </div>
@@ -183,23 +199,49 @@ function createDetailSection3(data) {
             const writeAt = comment.created_at;
             const formattedCommentDate = formatDate(writeAt);
             const randomIcon = randomValue('🎅', '👼', '🤴', '👸', '🧑', '👧', '👶', '👨‍🦱', '👱‍♀️', '🧔');
+            const accessToken = localStorage.getItem('access_token');
+            const UserId = UserInfo(accessToken).userId
+            let UpdRemo = '';
+            const CommentWriter = comment.author.id
+
+            if (UserId === CommentWriter) {
+                UpdRemo = `
+                <div class="update-remove">
+                    <div class="comment-options">
+                        <div class="comment-toggle-button">
+                            🔧<div class="editbtn"></div>
+                        </div>
+                        <div class="comment-toggle-button">
+                            ❌<div class="removebtn"></div>
+                        </div>
+                    </div>
+                </div>`;
+            }
 
             return `
                 
-                <div class="comment-inner">
+                <div class="comment-inner" data-comment-id="${comment.id}">
                     <a href="${commentProfileURL}">
                         <div class="comment-user-icon">
                             ${randomIcon}
                         </div>
                     </a>
-                    <div>
-                        <div class="comment-user-info">
-                            <a href="${commentProfileURL}">
-                                <span class="user-name">${comment.author.username}</span>
-                            </a>
-                            <span class="comment-created-at">${formattedCommentDate}</span>
+                    <div class="comment-content">
+                        <div>
+                            <div class="comment-user-info">
+                                <a href="${commentProfileURL}">
+                                    <span class="user-name">${comment.author.username}</span>
+                                </a>
+                                <span class="comment-created-at">${formattedCommentDate}</span>
+                            </div>
+                            <div class="user-comment">${comment.content}</div>
+                            <div class="comment-edit-form" style="display: none;">
+                                <textarea class="comment-edit-text"></textarea>
+                                <button class="comment-save-button">저장</button>
+                                <button class="comment-cancel-button">취소</button>
+                            </div>
                         </div>
-                        <div class="user-comment">${comment.content}</div>
+                        ${UpdRemo}
                     </div>
                 </div>
             `;
@@ -255,74 +297,7 @@ function createDetaile(request_user, study_detail) {
 }
 
 
-// 스터디 디테일 데이터 가져오기
-async function fetchDetailFromAPI() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const dataId = urlParams.get('id');
-    const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
-
-    try {
-        const response = await fetch(apiEndpoint, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
-        }
-
-        const responseData = await response.json();
-        const { request_user, study } = responseData;
-
-        createDetaile(request_user, study);
-
-
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-fetchDetailFromAPI();
-
-
-// 좋아요
-// const likeButton = document.getElementById('likeButton');
-// likeButton.addEventListener("click", async function () {
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const dataId = urlParams.get('id');
-
-//     try {
-//         const response = await fetch(`http://localhost:8000/api/study/liked/${dataId}/`, {
-//             method: "POST", // 좋아요 토글을 위한 POST 요청
-//             headers: {
-//                 'Authorization': `Bearer ${accessToken}`,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         if (response.ok) {
-//             // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
-//             // const data = await response.json();
-//             // if (response.status === 201) {
-//             //     likeButton.classList.add("on");
-//             // } else {
-//             //     likeButton.classList.remove("on");
-//             // }
-//         } else {
-//             console.error("Error toggling like:", response.status);
-//         }
-//     } catch (error) {
-//         console.error("Error toggling like:", error);
-//     }
-// });
-
-
-
-// 댓글
+// 댓글 랜더링용
 function renderComments(comments) {
     const commentList = document.querySelector('.comment-list');
     commentList.innerHTML = ''; // 이전 댓글 삭제
@@ -335,6 +310,24 @@ function renderComments(comments) {
         const formattedCommentDate = formatDate(comment.created_at);
         const randomIcon = randomValue('🎅', '👼', '🤴', '👸', '🧑', '👧', '👶', '👨‍🦱', '👱‍♀️', '🧔');
         const commentElement = document.createElement('div');
+        const accessToken = localStorage.getItem('access_token');
+        const UserId = UserInfo(accessToken).userId
+        let UpdRemo = '';
+        const CommentWriter = comment.author.id
+
+        if (UserId === CommentWriter) {
+            UpdRemo = `
+            <div class="update-remove">
+                    <div class="comment-options">
+                        <div class="comment-toggle-button">
+                            🔧<div class="editbtn"></div>
+                        </div>
+                        <div class="comment-toggle-button">
+                            ❌<div class="removebtn"></div>
+                        </div>
+                    </div>
+                </div>`;
+        }
 
         commentElement.className = 'comment';
 
@@ -345,14 +338,17 @@ function renderComments(comments) {
                         ${randomIcon}
                     </div>
                 </a>
-                <div>
-                    <div class "comment-user-info">
-                        <a href="${commentProfileURL}">
-                            <span class="user-name">${comment.author.username}</span>
-                        </a>
-                        <span class="comment-created-at">${formattedCommentDate}</span>
+                <div class="comment-content">
+                    <div>
+                        <div class="comment-user-info">
+                            <a href="${commentProfileURL}">
+                                <span class="user-name">${comment.author.username}</span>
+                            </a>
+                            <span class="comment-created-at">${formattedCommentDate}</span>
+                        </div>
+                        <div class="user-comment">${comment.content}</div>
                     </div>
-                    <div class="user-comment">${comment.content}</div>
+                    ${UpdRemo}
                 </div>
             </div>
         `;
@@ -362,6 +358,76 @@ function renderComments(comments) {
     const updatedCommentCount = createCommentCount({ comments_count: comments.length });
     commentCount.innerHTML = updatedCommentCount;
 }
+
+
+
+// 스터디 디테일 데이터 가져오기
+document.addEventListener('DOMContentLoaded', () => {
+    async function fetchDetailFromAPI() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataId = urlParams.get('id');
+        const accessToken = localStorage.getItem('access_token');
+        const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
+
+        try {
+            const response = await fetch(apiEndpoint, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+
+            const responseData = await response.json();
+            const { request_user, study } = responseData;
+
+            createDetaile(request_user, study);
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    fetchDetailFromAPI();
+});
+
+// 글 삭제
+document.addEventListener('click', async function (event) {
+    const targetElement = event.target;
+
+    // 삭제하기 버튼을 클릭했을 때만 이벤트 처리
+    if (targetElement.classList.contains('studyDelete')) {
+        const confirmation = window.confirm('글을 삭제하시겠습니까?');
+
+        if (confirmation) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataId = urlParams.get('id');
+            const accessToken = localStorage.getItem('access_token');
+            const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
+            const options = {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+            };
+            try {
+                const response = await fetch(apiEndpoint, options);
+                if (response.ok) {
+                    window.location.href = '../html/studylist.html';
+                } else {
+                    console.error('Failed to delete comment:', response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+});
 
 
 
@@ -431,41 +497,150 @@ async function updateComments() {
 }
 
 
+// 댓글 수정, 삭제
+document.addEventListener('click', async function (event) {
+    const commentToggleButton = event.target.closest('.comment-toggle-button');
+
+    if (commentToggleButton) {
+        // 클릭된 버튼의 텍스트 확인
+        const buttonText = commentToggleButton.textContent.trim();
+
+        // 댓글 요소 선택
+        const commentElement = event.target.closest('.comment-inner');
+        if (commentElement) {
+            // 클릭된 댓글 요소에서 댓글 내용과 수정 폼을 선택
+            const commentContent = commentElement.querySelector('.user-comment');
+            const commentEditForm = commentElement.querySelector('.comment-edit-form');
+            const commentEditText = commentEditForm.querySelector('.comment-edit-text');
+            const commentSaveButton = commentEditForm.querySelector('.comment-save-button');
+            const commentCancelButton = commentEditForm.querySelector('.comment-cancel-button');
+
+            //수정하기
+            if (buttonText === '🔧') {
+                // 수정하기 버튼을 클릭한 경우
+                // 클릭된 댓글 내용을 수정 폼으로 복사
+                commentEditText.value = commentContent.textContent;
+
+                // 수정 폼을 보이게 하고 댓글 내용을 숨김
+                commentContent.style.display = 'none';
+                commentEditForm.style.display = 'block';
+
+                // 수정 버튼 클릭 이벤트
+                commentSaveButton.addEventListener('click', async function () {
+                    const updatedContent = commentEditText.value;
+                    const commentId = commentElement.dataset.commentId;
+                    const accessToken = localStorage.getItem('access_token');
+                    const apiEndpoint = `http://localhost:8000/api/study/comments/${commentId}/`;
+
+                    const options = {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ content: updatedContent }),
+                    };
+
+                    try {
+                        const response = await fetch(apiEndpoint, options);
+                        if (response.ok) {
+                            // 댓글 수정이 성공한 경우 화면에 업데이트된 내용 반영
+                            commentContent.textContent = updatedContent;
+                            commentContent.style.display = 'block';
+                            commentEditForm.style.display = 'none';
+                        } else {
+                            // 댓글 수정 실패 처리
+                            console.error('Failed to update comment:', response.status);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                });
+                // 수정 취소 버튼 클릭
+                commentCancelButton.addEventListener('click', function () {
+                    // 수정 폼을 숨기고 댓글 내용을 다시 보임
+                    commentContent.style.display = 'block';
+                    commentEditForm.style.display = 'none';
+                });
+                // 삭제하기
+            } else if (buttonText === '❌') {
+                const isConfirmed = window.confirm('댓글을 삭제하시겠습니까?');
+                if (isConfirmed) {
+                    const commentId = commentElement.dataset.commentId;
+                    const accessToken = localStorage.getItem('access_token');
+                    const apiEndpoint = `http://localhost:8000/api/study/comments/${commentId}/`;
+                    const options = {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    };
+                    try {
+                        const response = await fetch(apiEndpoint, options);
+                        if (response.ok) {
+                            commentElement.remove();
+                        } else {
+                            // 댓글 삭제 실패 처리
+                            console.error('Failed to delete comment:', response.status);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                }
+            }
+        }
+    }
+});
 
 
 
+// 좋아요
+document.addEventListener('click', async function (event) {
+    const LikesButton = event.target.closest('.likes');
 
-// const likeButton = document.getElementById('likeButton');
-// likeButton.addEventListener('click', async function (e) {
-//     e.preventDefault();
+    if (LikesButton) {
+        const likeButton = LikesButton.querySelector('#likeTF img');
+        const currentImageSrc = likeButton.src;
+        const likeCountElement = document.getElementById('likeCount');
+        likeCountElement.textContent = likeCount;
 
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const dataId = urlParams.get('id');
-//     const accessToken = localStorage.getItem('access_token');
-//     const apiEndpoint = `http://localhost:8000/api/study/liked/${dataId}/`;
-//     const data = {
-//         study_id: dataId,
-//         user_toke: accessToken
-//     }
+        const urlParams = new URLSearchParams(window.location.search);
+        const studyId = urlParams.get('id');
+        const accessToken = localStorage.getItem('access_token');
+        const apiEndpoint = `http://localhost:8000/api/study/liked/${studyId}/`;
 
-//     const options = {
-//         method: 'POST',
-//         headers: {
-//             'Authorization': `Bearer ${accessToken}`,
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(data),
-//     };
+        const options = {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        };
 
-//     try {
-//         const response = await fetch(apiEndpoint, options);
-//         if (!response.ok) {
-//             throw new Error('Failed to submit comment');
-//         }
+        try {
+            const response = await fetch(apiEndpoint, options);
+            if (response.ok) {
 
-//         commentArea.value = '';
-//         updateComments(); // 댓글 업데이트
-//     } catch (error) {
-//         console.error('Error:', error);
-//     }
-// });
+                if (currentImageSrc.includes('pinkheart.png')) {
+                    likeButton.src = '../imgs/study/grayheart.png';
+                    likeCount -= 1;
+                } else {
+                    likeButton.src = '../imgs/study/pinkheart.png';
+                    likeCount += 1;
+                }
+
+
+
+            } else {
+                // 좋아요 요청 실패 처리
+                console.error('Failed to update comment:', response.status);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+});
+
+
+
