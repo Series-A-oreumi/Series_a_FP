@@ -45,7 +45,12 @@
 
                 <div class="images">
                     <p class="image-title">이미지</p>
-                    <input type="file" name="images" multiple>
+                    <div class="image-upload-container">
+                        <input type="file" name="images" id="fileInput" accept="image/*" style="display: none;" multiple>
+                        <label for="fileInput"><img id="upload" src="../imgs/common/imgupload.png" alt="이미지를 놓으세요"></label>
+                        <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
+                    </div>
+                    
                 </div>
                 
                 <div class="buttons">
@@ -61,5 +66,5 @@
 </body>
 
 <script src="../js/storywrite.js"></script>
-
+<script src="../js/auth.js"></script>
 </html>
