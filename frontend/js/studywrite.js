@@ -8,32 +8,33 @@ studyForm.addEventListener('submit', async (event) => {
     // FormData 객체를 사용하여 폼 데이터를 수집합니다.
     const formData = new FormData(studyForm);
 
-    // 폼 데이터를 JSON 형식으로 변환합니다.
-    // const formDataObject = {};
-    // formData.forEach((value, key) => {
-    //     formDataObject[key] = value;
-    // });
-    
     // 로컬 스토리지에서 access_token 가져오기
     const accessToken = localStorage.getItem('access_token');
 
-    // 서버로 데이터를 전송합니다.
+    //  선택한 기술 스택이 여러개 일 경우 선택한 값을 가져옵니다.
+     const selectedStack = Array.from(document.querySelectorAll('#stacks option:checked')).map(option => option.value);
+
     try {
-        const response = await 
-            fetch('http://localhost:8000/api/study/create/', {
+        const response = await fetch('http://localhost:8000/api/study/create/', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${accessToken}` // access_token을 헤더에 추가
+                'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
+                'Content-Type': 'application/json', // JSON 데이터를 전송할 것임
             },
-            body: JSON.stringify(formDataObject), // JSON 형식으로 데이터를 전송합니다.
-            });
+            body: JSON.stringify({
+                ...Object.fromEntries(formData),
+                stacks: selectedStack, 
+            }),
+        });
 
         if (response.ok) {
             // 성공적으로 데이터를 보냈을 때 처리
-            console.log('데이터를 성공적으로 전송했습니다.');
+            alert('데이터를 성공적으로 전송했습니다.');
+            window.location.href = '../html/studylist.html';
+            
         } else {
             // 데이터 전송 실패 시 처리
-            console.error('데이터 전송에 실패했습니다.');
+            alert('모든 항목들을 입력해주세요.');
         }
     } catch (error) {
         console.error('오류:', error);
