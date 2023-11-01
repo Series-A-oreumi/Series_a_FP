@@ -73,42 +73,35 @@ class ProfileDetail(APIView):
             if user.id == user_id:
                 user_info = UserProfile.objects.get(id=user_id) # 유저 정보
                 stories = Post.objects.filter(author=user).order_by('-created_at') # 유저가 썼던 스토리 글들 (공개, 나만보기, 기수공개 상관없이 전부)
-                studies = Study.objects.filter(author=user, project_study='study').order_by('-created_at') # 자신이 게시했던 스터디 글 목록
-                projects = Study.objects.filter(author=user, project_study='project').order_by('-created_at')# 자신이 게시했던 프로젝트 글 목록
-                total_count = stories.count() + studies.count() + projects.count() # 지금까지 썼던 게시글 총 개수
+                studies = Study.objects.filter(author=user).order_by('-created_at') # 자신이 게시했던 스터디. 프로젝트 글 목록
+                total_count = stories.count() + studies.count() # 지금까지 썼던 게시글 총 개수
                 
                 user_profile = UserProfileSerializer(user_info) # 유저 정보 직렬화
                 user_stories = PostSerializer(stories, many=True) # 유저가 썼던 스토리 직렬화
-                print(user_stories.data)
-                user_studies = StudySerializer(studies, many=True) # 유저가 썼던 스터디 직렬화
-                user_projects = StudySerializer(projects, many=True) # 유저가 썼던 프로젝트 직렬화
+                user_studies = StudySerializer(studies, many=True) # 유저가 썼던 스터디, 프로젝트 직렬화
 
                 data = {
                     "user_info" : user_profile.data,
                     "total_count" : total_count,
                     "user_stories" : user_stories.data,
                     "user_studies" : user_studies.data,
-                    "user_projects" : user_projects.data,
                 }
                 
             else:
                 user_info = UserProfile.objects.get(id=user_id) # 해당 프로필 유저 정보
                 stories = Post.objects.filter(author=user).order_by('-created_at') #  공개되어있는 게시물만 보여지도록 (아직 스토리 공개/비공개/기수보기 설정 안함 추후 수정 예정!)
-                studies = Study.objects.filter(author=user, project_study='study', public_private='public').order_by('-created_at') # 공개되어있는 스터디 게시물 보여지도록
-                projects = Study.objects.filter(author=user, project_study='project', public_private='public').order_by('-created_at') # # 공개되어있는 프로젝트 게시물 보여지도록
-                total_count = stories.count() + studies.count() + projects.count() # 지금까지 썼던 게시글 총 개수
+                studies = Study.objects.filter(author=user, public_private='public').order_by('-created_at') # 공개되어있는 스터디, 프로젝트 게시물 보여지도록
+                total_count = stories.count() + studies.count()  # 지금까지 썼던 게시글 총 개수
 
                 user_profile = UserProfileSerializer(user_info) # 유저 정보 직렬화
                 user_stories = PostSerializer(stories, many=True) # 유저가 썼던 스토리 직렬화
                 user_studies = StudySerializer(studies, many=True) # 유저가 썼던 스터디 직렬화
-                user_projects = StudySerializer(projects, many=True) # 유저가 썼던 프로젝트 직렬화
                 
                 data = {
                     "user_info" : user_profile.data,
                     "total_count" : total_count,
                     "user_stories" : user_stories.data,
                     "user_studies" : user_studies.data,
-                    "user_projects" : user_projects.data,
                 }
 
             return Response(data, status=status.HTTP_200_OK)
@@ -158,5 +151,3 @@ class ProfileUpdateDelete(APIView):
             'success' : '회원을 탈퇴하였습니다.'
             }
         return Response(messages, status=status.HTTP_200_OK)
-
-
