@@ -48,7 +48,7 @@ class Study(models.Model):
     ]
 
     PARTICIPANTS_CHOICES = [
-        ('undefined','인원 미정'),
+        ('0','인원 미정'),
         ('1', '1명'),
         ('2', '2명'),
         ('3', '3명'),
@@ -83,7 +83,7 @@ class Study(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # 모집 공고 올린 날짜
     end_at = models.DateTimeField() # 모집 마감 날짜
 
-    # start_at = models.DateTimeField() # 프로젝트 or 스터디 시작 기간
+    start_at = models.DateTimeField() # 프로젝트 or 스터디 시작 기간
     
     participants = models.ManyToManyField(UserProfile, blank=True, related_name='study_participants') # 참여자
     views = models.IntegerField(default=0) # 조회수
