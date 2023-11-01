@@ -46,7 +46,7 @@ class PostSerializer(serializers.ModelSerializer):
     def get_likes_users(self, post):
         # post는 현재 직렬화되는 Post 인스턴스
         likes_users = post.likes.all()
-        return [user.username for user in likes_users] # 좋아요를 누른 유저들의 정보를 시리얼라이즈하여 반환.
+        return [user.id for user in likes_users] # 좋아요를 누른 유저들의 정보를 시리얼라이즈하여 반환.
     
     def get_images(self, post):
         images = post.images.all()
