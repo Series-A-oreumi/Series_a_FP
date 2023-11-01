@@ -24,8 +24,9 @@ function createDetailSection1(data) {
     const accessToken = localStorage.getItem('access_token');
     const UserId = UserInfo(accessToken).userId
     const studyId = data.author.id
+    const study_id = data.id
     if (UserId === studyId) {
-        inviteBtn = `<a href="#"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
+        inviteBtn = `<a href="../html/study_edit.html?id=${study_id}"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
     } else {
         inviteBtn = `<div class="goChat"><a href="#">채팅하기</a></div>`
     }

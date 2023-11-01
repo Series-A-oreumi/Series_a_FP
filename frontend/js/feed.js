@@ -1,12 +1,10 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
 import { formatTimeAgo } from "./format.js" 
-import { checkAccessTokenValidity } from "./auth.js"
 import { clearFeedDetail, feedDetail } from "./feedDetail.js";
+import { UserInfo } from "./jwtUserId.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 document.addEventListener("DOMContentLoaded", async function () {
-    
-    checkAccessTokenValidity() // 토큰 만료시간 확인
 
     // 로컬 스토리지에서 access_token 가져오기
     const accessToken = localStorage.getItem('access_token');
@@ -38,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             userContainer.className = "user_container";
             // 프로필 이미지 추가
             const profileLink = document.createElement('a'); // 삭제하기 꼭 (테스트 추가한 부분)
-            profileLink.href = `../html/profile.html?id${post.author.id}`; // 삭제하기 꼭 (테스트 추가한 부분)
+            profileLink.href = `../html/profile.html?id=${post.author.id}`; // 삭제하기 꼭 (테스트 추가한 부분)
 
             const profileImg = document.createElement("div");
             profileImg.className = "profile_img";
@@ -157,8 +155,13 @@ document.addEventListener("DOMContentLoaded", async function () {
              // 좋아요 버튼을 선택하고 클릭 이벤트를 처리
             const likeButton = document.createElement('div');
             
+            // 현재 로그인 한 유저
+            const loggedInUserId = UserInfo(accessToken).userId
+            // post.likes_user가 정의되어 있을 때만 .includes() 메서드를 호출합니다.
+            const isUserLiked = Array.isArray(post.likes_user) && post.likes_user.includes(loggedInUserId) ? true : false;
+        
             // 로그인 한 유저가 해당 게시물에 대해서 좋아요를 눌렀다면 on, 좋아요를 누르지 않았다면 '' 되도록 바꿔주기 (post.likes_user) -> 해당 게시물에 대해 좋아요를 누른 유저목록
-            likeButton.className = `sprite_heart_icon_outline  ${post.likes_count > 0 ? 'on' : ''}`;
+            likeButton.className = `sprite_heart_icon_outline  ${isUserLiked ? 'on' : ''}`;
             likeButton.setAttribute('data-name', 'heartbeat');
             likeButton.setAttribute('data-post-id', post.pk);
             likeButton.addEventListener("click", async function () {
@@ -174,8 +177,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     });
             
                     if (response.ok) {
-
-            
+                        console.log(isUserLiked)
                         // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
                         if (response.status === 201) {
                             likeButton.classList.add("on");

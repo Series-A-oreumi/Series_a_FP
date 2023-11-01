@@ -1,6 +1,7 @@
+checkAccessTokenValidity()
 
 // 페이지 로드 시 Access Token을 확인하고 만료 여부를 체크하는 함수
-export function checkAccessTokenValidity() {
+function checkAccessTokenValidity() {
     const access_token = localStorage.getItem('access_token');
     if (access_token) {
         // Access Token이 있을 때만 유효성 검사 수행
