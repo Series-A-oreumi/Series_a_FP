@@ -14,20 +14,22 @@ function formatDate(dateString) {
 
 
 // 제목 ,유저 ~
-// 채팅하기, 수정하기 경로 변경
+// 채팅하기, 수정하기 경로 변경 하기
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
-    const userProfileURL = `../html/profile.html?id=${data.author.id}`;
+    const userProfileURL = `../html/profile.html?data=${data.author.id}`;
+    const chatURL = `../html/chat.html?id=${data.author.nickname}`;
 
     let inviteBtn = '';
     const accessToken = localStorage.getItem('access_token');
     const UserId = UserInfo(accessToken).userId
     const studyId = data.author.id
+    const study_id = data.id
     if (UserId === studyId) {
-        inviteBtn = `<a href="#"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
+        inviteBtn = `<a href="../html/study_edit.html?id=${study_id}"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
     } else {
-        inviteBtn = `<div class="goChat"><a href="#">채팅하기</a></div>`
+        inviteBtn = `<a href="${chatURL}"><div class="goChat">채팅하기</div></a>`
     }
 
     return `
@@ -75,17 +77,11 @@ function createDetailSection2(user, data) {
         `;
     }
 
-    // 좋아요 수 왜 안뜸?, Treu-False 오류
-    const likeCount = data.likes_count;
-    console.log(data)
-    let likesTrue = ''
-    const loggedInUser = user.username;
-    if (data.likes_users && data.likes_users.includes(loggedInUser)) {
-        likesTrue = `../imgs/study/pinkheart.png`
-    }
-    else {
-        likesTrue = `../imgs/study/grayheart.png`
-    }
+
+    let participantCount = '';
+    if (data.participant_count === 'undefined') {
+        participantCount = `<div class="sub-content">인원 미정</div>`;
+    } else { `<div class="sub-content">${data.participant_count}명</div>` }
 
     const startAt = data.start_at
     const formattedStartDate = formatDate(startAt);
@@ -116,7 +112,7 @@ function createDetailSection2(user, data) {
     }
 
     return `
-        <div class="post-detail">
+    <div class="post-detail">
         <div class="detail-info">
             <div class="detail-row">
                 <div class="detail-row-inner">
@@ -131,7 +127,7 @@ function createDetailSection2(user, data) {
             <div class="detail-row">
                 <div class="detail-row-inner">
                     <div class="sub-title">모집 정원</div>
-                    <div class="sub-content">${data.participant_count}명</div>
+                    ${participantCount}
                 </div>
                 <div class="detail-row-inner">
                     <div class="sub-title">시작 예정</div>
@@ -164,6 +160,21 @@ function createDetailSection2(user, data) {
             </div>
         </div>
     </div>
+    `;
+}
+
+function createViewAndLikes(user, data) {
+    const likeCount = data.likes_users.length;
+    let likesTrue = ''
+    const loggedInUser = user.username;
+    if (data.likes_users && data.likes_users.includes(loggedInUser)) {
+        likesTrue = `../imgs/study/pinkheart.png`
+    }
+    else {
+        likesTrue = `../imgs/study/grayheart.png`
+    }
+
+    return `
     <div class="post-likes">
         <div class="views-box">
             <div class="views">
@@ -172,23 +183,16 @@ function createDetailSection2(user, data) {
             </div>
             <div class="likes">
                 <div id="likeTF">
-                <img src="${likesTrue}">
+                    <img src="${likesTrue}">
                 </div>
                 <div id="likeCount">${likeCount}</div>
             </div>
         </div>
-    </div>
-    `;
+    </div>`
 }
-
-
 
 // 댓글 목록 ~
-// 랜덤 아이콘
-function randomValue(...values) {
-    const randomIndex = Math.floor(Math.random() * values.length);
-    return values[randomIndex];
-}
+
 
 
 function createDetailSection3(data) {
@@ -198,7 +202,6 @@ function createDetailSection3(data) {
             const commentProfileURL = `../html/profile.html?id=${data.author.id}`;
             const writeAt = comment.created_at;
             const formattedCommentDate = formatDate(writeAt);
-            const randomIcon = randomValue('🎅', '👼', '🤴', '👸', '🧑', '👧', '👶', '👨‍🦱', '👱‍♀️', '🧔');
             const accessToken = localStorage.getItem('access_token');
             const UserId = UserInfo(accessToken).userId
             let UpdRemo = '';
@@ -223,7 +226,7 @@ function createDetailSection3(data) {
                 <div class="comment-inner" data-comment-id="${comment.id}">
                     <a href="${commentProfileURL}">
                         <div class="comment-user-icon">
-                            ${randomIcon}
+                            <img src="${comment.author.profile_img}">
                         </div>
                     </a>
                     <div class="comment-content">
@@ -296,6 +299,14 @@ function createDetaile(request_user, study_detail) {
     commentcount.innerHTML = detail4;
 }
 
+function createDetaile2(request_user, study) {
+    const viewlike = document.getElementById("viewAndLikes");
+    const detail5 = `
+        ${createViewAndLikes(request_user, study)}
+    `
+    viewlike.innerHTML = detail5;
+}
+
 
 // 댓글 랜더링용
 function renderComments(comments) {
@@ -304,16 +315,16 @@ function renderComments(comments) {
 
     // 최신댓글 위로 가게
     const reversedComments = comments.reverse();
-
+    
     reversedComments.forEach(comment => {
         const commentProfileURL = `../html/profile.html?id=${comment.author.id}`;
         const formattedCommentDate = formatDate(comment.created_at);
-        const randomIcon = randomValue('🎅', '👼', '🤴', '👸', '🧑', '👧', '👶', '👨‍🦱', '👱‍♀️', '🧔');
         const commentElement = document.createElement('div');
         const accessToken = localStorage.getItem('access_token');
         const UserId = UserInfo(accessToken).userId
         let UpdRemo = '';
         const CommentWriter = comment.author.id
+
 
         if (UserId === CommentWriter) {
             UpdRemo = `
@@ -335,7 +346,7 @@ function renderComments(comments) {
             <div class="comment-inner">
                 <a href="${commentProfileURL}">
                     <div class="comment-user-icon">
-                        ${randomIcon}
+                        <img src="${comment.author.profile_img}">
                     </div>
                 </a>
                 <div class="comment-content">
@@ -385,6 +396,7 @@ async function fetchDetailFromAPI() {
         const { request_user, study } = responseData;
 
         createDetaile(request_user, study);
+        createDetaile2(request_user, study);
 
     } catch (error) {
         console.error('Error:', error);
@@ -392,6 +404,7 @@ async function fetchDetailFromAPI() {
 }
 
 fetchDetailFromAPI();
+
 
 
 // 글 삭제
@@ -602,7 +615,8 @@ document.addEventListener('click', async function (event) {
         const likeButton = LikesButton.querySelector('#likeTF img');
         const currentImageSrc = likeButton.src;
         const likeCountElement = document.getElementById('likeCount');
-        likeCountElement.textContent = likeCount;
+        const likeCount = likeCountElement.textContent;
+
 
         const urlParams = new URLSearchParams(window.location.search);
         const studyId = urlParams.get('id');
@@ -623,14 +637,12 @@ document.addEventListener('click', async function (event) {
 
                 if (currentImageSrc.includes('pinkheart.png')) {
                     likeButton.src = '../imgs/study/grayheart.png';
-                    likeCount -= 1;
+                    likeCountElement.textContent = likeCount - 1;
                 } else {
                     likeButton.src = '../imgs/study/pinkheart.png';
-                    likeCount += 1;
+                    likeCountElement.textContent = likeCount + 1;
                 }
-
-
-
+                // updateLikes();
             } else {
                 // 좋아요 요청 실패 처리
                 console.error('Failed to update comment:', response.status);
@@ -640,6 +652,3 @@ document.addEventListener('click', async function (event) {
         }
     }
 });
-
-
-

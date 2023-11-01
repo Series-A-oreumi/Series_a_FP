@@ -1,112 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> estagram </title>
     <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/common.css">
 </head>
+
 <body>
 
+    <!-- nav바 시작-->
+    <header class="desktop">
+        <div class="nav-container">
+            <div class="nav-hamburger">
+                <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            </a>
+            <div class="nav-buttons">
+                <a href=""><img src="../imgs/common/chat.png" alt="채팅" class="icon2" /></a>
+                <div class="notify_count">
+                    0
+                </div>
+                <a href="../html/alarm.html"><img src="../imgs/common/alarm.png" alt="알림" class="icon" /></a>
+                <!-- 로그인 여부에 따라 변경요망 -->
+                <div class="user_icon">
+                    <a href="#">
+                        <img src="../imgs/common/user.png" class="icon user_icon">
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="profile_write.html">프로필 변경</a>
+                        <a href="#" id="logout-button">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--nav바 종료-->
+
+
+    <!-- side바 시작 -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-container">
+            <div class="sidebar-hamburger">
+                <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            </a>
+        </div>
+        <div id="side1">
+            <div class="sidebar-list">
+                <a href="feed.html">
+                    <img src="../imgs/common/home.png" />
+                    <span class="sidebar-text">홈</span>
+                </a>
+            </div>
+            <div class="sidebar-list">
+                <a href="#" onclick="toggleSubSidebar()">
+                    <img src="../imgs/common/search.png" />
+                    <span class="sidebar-text">검색</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="studylist.html">
+                    <img src="../imgs/common/study.png" />
+                    <span class="sidebar-text">스터디 / 프로젝트</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="story_write.html">
+                    <img src="../imgs/common/create.png" />
+                    <span class="sidebar-text">글 작성</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="profile.html">
+                    <img src="../imgs/common/profile.svg" class="sidebar-profile" />
+                    <span class="sidebar-text">프로필</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/settings.png.png" />
+                    <span class="sidebar-text">설정</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="sub-sidebar" style="display: none;">
+        <h1>검색</h1>
+        <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+        <!-- 검색 결과를 표시할 곳 추가 -->
+    </div>
+    <div id="overlay" onclick="closeSidebar()">
+    </div>
+    <!-- sub-sidebar -->
+
+
+    <!-- 프로필 -->
     <main>
 
         <!-- 위쪽 -->
-        <div class="upside" id="upside">
-            
-            <div class="up-links" id="uplinks">
-            </div>
+        <div class="upside" id="profileMain">
+
         </div>
 
-        <!-- 아래쪽 -->
-        <div class="downside">
-            
-            <div class="down-article-well">
-                <div class="article-profile">
-                    <div class="article-profile-img">
-                        <img src="../media/profile/행복오르미.jpg" alt="" class="article-img">
+
+
+        <!-- 스터디/프로젝트 -->
+        <div class="content-bottum" id="sideB">
+            <div class="sectiontitle">✨인기글</div>
+            <!-- 메인 스터디 버전 -->
+
+            <div class="downside" id="studyVersion">
+                <!-- 메인1 -->
+                <!-- 메인 2 -->
+            </div>
+            <div class="border"></div>
+
+            <!-- 메인3 -->
+            <div class="inner-2th">
+                <div class="sub2" id="studyVersion2">
+                    <!-- <div class="contents_box">
+                        <div class="article-top">
+                            <div class="tag_study">스터디</div>
+                            <div class="likes">
+                                <img src="../imgs/study/pinkheart.png">
+                            </div>
+
+                        </div>
+                        <div class="article-profile">
+                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
+                            <div class="article-created-at">2023. 10. 31.</div>
+                        </div>
+                        <div class="flex-box gap8">
+                            <div class="flex-box gap8">
+                                <div class="position_tag">
+                                    <li class="position_tag_item">backend</li>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="stack_tag">
+                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
+                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="article-profile-detail">
-                        <p class="article-profile-name">
-                            oreumi
-                        </p>
-                        <p class="article-created-at">
-                            10월 18일 오전 10:22
-                        </p>
+
+
+                    <div class="contents_box">
+                        <div class="article-top">
+                            <div class="tag_study">스터디</div>
+                            <div class="likes">
+                                <img src="../imgs/study/pinkheart.png">
+                            </div>
+
+                        </div>
+                        <div class="article-profile">
+                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
+                            <div class="article-created-at">2023. 10. 31.</div>
+                        </div>
+                        <div class="flex-box gap8">
+                            <div class="flex-box gap8">
+                                <div class="position_tag">
+                                    <li class="position_tag_item">backend</li>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="stack_tag">
+                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
+                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+                    <div class="contents_box">
+                        <div class="article-top">
+                            <div class="tag_study">스터디</div>
+                            <div class="likes">
+                                <img src="../imgs/study/pinkheart.png">
+                            </div>
+
+                        </div>
+                        <div class="article-profile">
+                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
+                            <div class="article-created-at">2023. 10. 31.</div>
+                        </div>
+                        <div class="flex-box gap8">
+                            <div class="flex-box gap8">
+                                <div class="position_tag">
+                                    <li class="position_tag_item">backend</li>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="stack_tag">
+                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
+                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contents_box">
+                        <div class="article-top">
+                            <div class="tag_study">스터디</div>
+                            <div class="likes">
+                                <img src="../imgs/study/pinkheart.png">
+                            </div>
+
+                        </div>
+                        <div class="article-profile">
+                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
+                            <div class="article-created-at">2023. 10. 31.</div>
+                        </div>
+                        <div class="flex-box gap8">
+                            <div class="flex-box gap8">
+                                <div class="position_tag">
+                                    <li class="position_tag_item">backend</li>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="stack_tag">
+                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
+                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contents_box">
+                        <div class="article-top">
+                            <div class="tag_study">스터디</div>
+                            <div class="likes">
+                                <img src="../imgs/study/pinkheart.png">
+                            </div>
+
+                        </div>
+                        <div class="article-profile">
+                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
+                            <div class="article-created-at">2023. 10. 31.</div>
+                        </div>
+                        <div class="flex-box gap8">
+                            <div class="flex-box gap8">
+                                <div class="position_tag">
+                                    <li class="position_tag_item">backend</li>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="stack_tag">
+                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
+                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contents_box">
+                        <div class="article-top">
+                            <div class="tag_study">스터디</div>
+                            <div class="likes">
+                                <img src="../imgs/study/pinkheart.png">
+                            </div>
+
+                        </div>
+                        <div class="article-profile">
+                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
+                            <div class="article-created-at">2023. 10. 31.</div>
+                        </div>
+                        <div class="flex-box gap8">
+                            <div class="flex-box gap8">
+                                <div class="position_tag">
+                                    <li class="position_tag_item">backend</li>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="stack_tag">
+                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
+                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+
+
                 </div>
-                <div class="article">
-                    <div class="article-main">
-                        <p>관광객 유입이 많은 교통 요충지에는 여행자 전용공간인 '트래블라운지(Travel Lounge)' 조성!</p>
-                        <p>*단순 관광정보를 제공하는 안내소 기능을 넘어 환전·충전·보관 등 다양한 여행편의 제공 및 여행자 간 소통 지원</p>
-                        <p>※ 서울 관문 10개소: 도시고속화도로(올림픽대로, 경부고속도로, 경인고속도로, 강변북로, 과천대로, 서부간선도로, 동부간선도로, 통일로) 진입부로 주 진입부 5개소(강일, 양재, 신월, 개화, 상암)와 부 진입부 5개소(광장, 사당, 시흥, 진관, 도봉)</p>
-                        <p>또한, 서촌·익선동 등 도보 관광객이 많이 찾는 도심 내 5곳의 보도폭을 넓히고, 보·차도 단차를 없애는 등 보행...... <b>더 보기</b></p>
-                    </div>
-                    <div class="article-imgs">
-                        <img src="../media/profile/야경1.jpg" alt="">
+            </div>
+
+
+            <!-- 스토리 버전 -->
+            <!-- <div class="sub">
+                <div class="sub-article">
+                    <div class="sub-article-img">
                         <img src="../media/profile/야경2.jpg" alt="">
                     </div>
-
-                    <div class="article-img-btns">
-                        <div class="like">
-                            <button class="article-img-btn-like">🖤</button>
-                            <p>82</p>
-                        </div>
-                        <div class="other-btns">
-                            <p>15</p>
-                            <button class="article-img-btn-reply"></button>
-                            <p>141</p>
-                            <button class="article-img-btn-share"></button>
-                        </div>                        
-                    </div>
-
-                    <div class="article-btns">
-                        <div class="like-text-btn article-btn">
-                            <button class="like-btn">
-
-                            </button>
-                            <p>
-                                좋아요
-                            </p>
-                        </div>
-                        <div class="reply-text-btn article-btn">
-                            <button class="reply-btn">
-
-                            </button>
-                            <p>
-                                댓글 달기
-                            </p>
-                        </div>
-                        <div class="share-text-btn article-btn">
-                            <button class="share-btn">
-
-                            </button>
-                            <p>
-                                공유하기
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="article-reply">
-                        <div class="reply-profile-img">
-                            <img src="../media/profile/행복오르미.jpg" alt="">
-                        </div>
-                        <div class="reply-contents">
-                            <p class="reply-name">
-                                <b>oreumi</b>
-                            </p>
-                            <p class="reply-content">
-                                I’ll be there this week
-                            </p>
-                        </div>
-                    </div>
-
+                    <div class="sub-article-content">오늘 인프콘 갔다왔다. 정말 재밌었다!</div>
                 </div>
-            </div>
+                <div class="sub-article">
+                    <div class="sub-article-img">
+                    </div>
+                    <div class="sub-article-content">오늘 인프콘 갔다왔다. 정말 재밌었다!</div>
+                </div>
+            </div> -->
 
 
         </div>
+
+
+        <!-- 스토리 -->
+        <div class="content-bottum" id="sideCOut">
+
+            <div class="main-imglist" id="sideD">
+                <!-- <a href="">
+                    <div class="main-content">
+                        <div class="main-img"><img src="../imgs/user/icon3.png"></div>
+
+                        <div class="main-right">
+                            <div class="article-img-btns">
+                                <div class="views">
+                                    <img src="../imgs/study/viewsicon.png">
+                                    <p>3</p>
+                                </div>
+                                <div class="likes">
+                                    <img src="../imgs/study/pinkheart.png">
+                                    <p>4</p>
+                                </div>
+                            </div>
+                            <div class="imglisttext">감자감자왕감자 감자감자왕감자 감자감자왕감자 감자감자왕감자</div>
+                        </div>
+                    </div>
+                </a> -->
+            </div>
+
+
+            <div class="all-imglist" id="sideC">
+
+                <!-- <a href="">
+                    <div class="imglist">
+                        <div class="imghovertext">스토리 보러가기</div>
+                        <div class="imghover"></div>
+                        <img src="../imgs/user/icon1.png">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="imglist">
+                        <div class="imghovertext">스토리 보러가기</div>
+                        <div class="imghover"></div>
+                        <img src="../imgs/study/banner_icon.png">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="imglist">
+                        <div class="imghovertext">스토리 보러가기</div>
+                        <div class="imghover"></div>
+                        <img src="../imgs/study/banner_icon.png">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="imglist">
+                        <div class="imghovertext">스토리 보러가기</div>
+                        <div class="imghover"></div>
+                        <img src="../imgs/study/banner_icon.png">
+                    </div>
+                </a>-->
+                <a href="">
+                    <div class="imglist">
+                        <div class="imghovertext">스토리 보러가기</div>
+                        <div class="imghover"></div>
+                        <div class="imglisttext">오레오오즈 민트맛 먹었다. 오레오오즈 민트맛 먹었다. 맛있었다! 오레오오즈 민트맛 먹었다. 맛있었다!
+                            오레오오즈 민트맛 먹었다. 맛있었다!</div>
+                    </div>
+                </a>
+                <a href="">
+                    <div class="imglist">
+                        <div class="imghovertext">스토리 보러가기</div>
+                        <div class="imghover"></div>
+                        <img src="../imgs/user/test.jpg">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="imglist">
+                        <div class="imghovertext">스토리 보러가기</div>
+                        <div class="imghover"></div>
+                        <img src="../imgs/user/icon1.png">
+                    </div>
+                </a>
+
+
+
+
+            </div>
+        </div>
+
+
+
+
     </main>
 
 </body>
 <script src="../js/profile.js"></script>
+<script src="../js/sidebar.js"></script>
+
+<script src="../js/auth.js"></script>
 </html>

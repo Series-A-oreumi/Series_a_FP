@@ -108,5 +108,3 @@ class RegistrationSerializer(serializers.ModelSerializer):
         if password != password2:
             raise serializers.ValidationError("Passwords must match")
         return attrs
-
-   

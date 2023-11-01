@@ -70,6 +70,7 @@ body {
     gap: 10px;
 }
 
+
 .studyEdit,
 .studyDelete,
 .goChat {
@@ -86,6 +87,7 @@ body {
     font-weight: 700;
     cursor: pointer;
     color: black;
+    text-decoration: none;
 }
 
 .studyEdit:hover,
@@ -94,6 +96,7 @@ body {
     border: solid 1px #228CEE;
     background-color: #228CEE;
     color: white;
+    text-decoration: none;
 
 }
 

@@ -13,6 +13,10 @@ link {
     margin-top: 65px;
 }
 
+.content-bottum {
+    margin-bottom: 100px;
+}
+
 
 .container {
     width: 1200px;
@@ -73,6 +77,10 @@ link {
 
 .gap8 {
     gap: 8px;
+}
+
+.gap4 {
+    gap: 4px;
 }
 
 h1 {

@@ -78,37 +78,17 @@ class StoryPost(CreateAPIView):
         return Response(message, status=status.HTTP_201_CREATED)
 
 
-# story search
+# story search (user search)
 class StorySearch(APIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
 
     def get(self, request):
-        search_query = request.GET.get("search", "")  # 쿼리스트링 url에서 검색어 가져오기
-        print(search_query)
-        if search_query:
-            # 유저 검색
-            users_result = UserProfile.objects.filter(
-                Q(username__icontains=search_query) | Q(nickname__icontains=search_query)
-            )
-            user_serializer = UserProfileSerializer(users_result, many=True)
-
-            # 검색어와 관련된 해시태그를 찾음
-            hashtags = Hashtag.objects.filter(name__icontains=search_query)
-
-            # 검색된 해시태그를 가지고 있는 게시물을 찾음
-            posts_result = Post.objects.filter(hashtags__in=hashtags)
-
-            post_serializer = PostSerializer(posts_result, many=True)
-
-            # 검색 결과를 하나의 데이터 구조로 조합
-            search_results = {
-                "users": user_serializer.data,
-                "posts": post_serializer.data,
-            }
-
-            return Response(search_results)
-        messages = {"Not Found": "검색 결과가 없습니다"}
-        return Response(messages)
+       users  = UserProfile.objects.all()
+       serializer = UserProfileSerializer(users, many=True)
+       return Response(serializer.data, status=status.HTTP_200_OK)
+       users  = UserProfile.objects.all()
+       serializer = UserProfileSerializer(users, many=True)
+       return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # class StoryPost(APIView):

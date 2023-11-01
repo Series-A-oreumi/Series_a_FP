@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Like, Study, Comment, Stack
-from .models import Like, Study, Comment, Stack
 from user.serializers import UserProfileSerializer
 
 class StackSerializer(serializers.ModelSerializer):
@@ -28,7 +27,7 @@ class StudySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Study
-        fields = ['pk', 'author', 'title', 'content', 'end_at', 'views', 'comments_count', 'project_study', 
+        fields = ['pk', 'author', 'title', 'content', 'period', 'created_at','participant_count', 'end_at', 'views', 'comments_count', 'project_study', 
                   'likes_count', 'likes', 'likes_users', 'online_offline', 'field', 'stacks', 'public_private']
 
     def get_likes_users(self, post):

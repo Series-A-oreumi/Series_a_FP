@@ -7,6 +7,7 @@ header.desktop {
     background-color: #fff;
     border-bottom: 2px solid #efefef;
     padding: 10px 20px;
+    z-index: 100;
 }
 
 button {
@@ -21,10 +22,9 @@ button {
 }
 
 .title-logo {
-    width: 100px;
+    width: 160px;
     height: auto;
     margin-left: 30px;
-    margin-top: 10px;
 }
 
 
@@ -71,10 +71,42 @@ button {
     margin-right: 30px;
 }
 
+.icon2 {
+    width: 33px;
+    height: 33px;
+    margin-right: 30px;
+}
+
 .nav-buttons {
     margin-left: auto;
     display: flex;
     align-items: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 100%;
+    right: 0;
+}
+
+.sprite_user_icon_outline:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
 }
 
 /* header 끝 */
@@ -90,7 +122,6 @@ button {
 
 .sprite_user_icon_outline {
     display: inline-block;
-    background: url('../imgs/4f7ac8e0a402.png') no-repeat -272px -182px;
     width: 22px;
     height: 24px;
 }
@@ -215,14 +246,15 @@ button {
 
 /* sidebar시작 */
 .sidebarHidden {
-    transform: translateX(-250px);
+    transform: translateX(-300px);
+    transform: translateX(-280px);
 }
 
 #sidebar {
     height: 100%;
-    width: 250px;
+    width: 280px;
     position: fixed;
-    z-index: 9999;
+    z-index: 3000;
     top: 0;
     left: 0;
     background-color: #fff;
@@ -231,7 +263,7 @@ button {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    transform: translateX(-250px);
+    transform: translateX(-280px);
 }
 
 
@@ -286,6 +318,8 @@ button {
 #side1 {
     padding-top: 40px;
     padding-left: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 #side1 a {
@@ -298,6 +332,7 @@ button {
     display: block;
     transition: 0.3s;
     padding: 5px;
+
 }
 
 
@@ -320,6 +355,7 @@ button {
     margin-top: 10px;
     margin-bottom: 10px;
 
+
 }
 
 .sidebar-list img {
@@ -329,13 +365,13 @@ button {
 }
 
 .sidebar-text {
-    margin-left: 10px;
+    margin-left: 13px;
     display: inline-block;
     text-align: right;
     position: relative;
     /* absolute, fixed 등도 사용 가능 */
     bottom: 12px;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 550;
 }
 
@@ -361,26 +397,40 @@ button {
     /* 사이드바 위에 나타나도록 설정 */
 }
 
+#overlay2 {
+    display: none;
+    position: fixed;
+    top: 50;
+    width: 280px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 투명한 검은 배경 */
+    z-index: 1;
+    /* 사이드바 위에 나타나도록 설정 */
+}
+
 /* sidebar끝 */
 
 /* sub sidebar */
-#sub-sidebar {
+#sub-sidebar  {
     position: fixed;
     top: 0;
     left: 0;
-    width: 250px;
+    width: 280px;
     height: 100%;
     background-color: #fff;
     /* 배경색은 필요에 따라 수정하세요 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
     z-index: 1000;
     display: none;
     transition: width 0.3s ease;
 }
+#sub-sidebar .user-search{
+    padding: 20px 20px 20px 15px;
+}
 
 #sub-sidebar input {
-    width: 230px;
+    width: 250px;
     height: 20px;
     padding: 10px;
     margin-bottom: 10px;
@@ -396,10 +446,10 @@ button {
     font-size: 24px;
     /* 적절한 크기로 조절하세요 */
     font-weight: bold;
-    padding-bottom: 40px;
+    padding-left: 7px;
+    padding-bottom: 35px;
 }
 
-/* 추가적으로 검색 결과 스타일을 지정할 수 있습니다. 예시로 간단한 스타일을 제공합니다. */
 #sub-sidebar .search-result {
     padding: 10px;
     border-bottom: 1px solid #ccc;
@@ -409,5 +459,56 @@ button {
     border-bottom: none;
 }
 
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 100%;
+    right: 0;
+}
+
+.user_icon {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+
+}
+
+.user_icon:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* 알람 카운트 */
+.notify_count {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(247, 87, 38);
+    border-radius: 50%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    top: 10px;
+    right: 104px;
+    padding: 1px;
+    font-size: 12px;
+}
 
 /*-------------------------------------//icons*/

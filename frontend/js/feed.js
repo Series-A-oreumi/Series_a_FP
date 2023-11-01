@@ -1,12 +1,10 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
 import { formatTimeAgo } from "./format.js" 
-import { checkAccessTokenValidity } from "./auth.js"
 import { clearFeedDetail, feedDetail } from "./feedDetail.js";
+import { UserInfo } from "./jwtUserId.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 document.addEventListener("DOMContentLoaded", async function () {
-    
-    checkAccessTokenValidity() // 토큰 만료시간 확인
 
     // 로컬 스토리지에서 access_token 가져오기
     const accessToken = localStorage.getItem('access_token');
@@ -38,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             userContainer.className = "user_container";
             // 프로필 이미지 추가
             const profileLink = document.createElement('a'); // 삭제하기 꼭 (테스트 추가한 부분)
-            profileLink.href = "../html/profile.html"; // 삭제하기 꼭 (테스트 추가한 부분)
+            profileLink.href = `../html/profile.html?id=${post.author.id}`; // 삭제하기 꼭 (테스트 추가한 부분)
 
             const profileImg = document.createElement("div");
             profileImg.className = "profile_img";
@@ -105,6 +103,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const image = document.createElement("img");
             // 사진도 일단 예시로만 
             image.src = "/frontend/media/post/2020/05/08/tiger/김치찌개.png"
+            // image.src = post.images[0].images
             image.alt = "피드이미지";
             
 
@@ -156,8 +155,13 @@ document.addEventListener("DOMContentLoaded", async function () {
              // 좋아요 버튼을 선택하고 클릭 이벤트를 처리
             const likeButton = document.createElement('div');
             
+            // 현재 로그인 한 유저
+            const loggedInUserId = UserInfo(accessToken).userId
+            // post.likes_user가 정의되어 있을 때만 .includes() 메서드를 호출합니다.
+            const isUserLiked = Array.isArray(post.likes_user) && post.likes_user.includes(loggedInUserId) ? true : false;
+        
             // 로그인 한 유저가 해당 게시물에 대해서 좋아요를 눌렀다면 on, 좋아요를 누르지 않았다면 '' 되도록 바꿔주기 (post.likes_user) -> 해당 게시물에 대해 좋아요를 누른 유저목록
-            likeButton.className = `sprite_heart_icon_outline  ${post.likes_count > 0 ? 'on' : ''}`;
+            likeButton.className = `sprite_heart_icon_outline  ${isUserLiked ? 'on' : ''}`;
             likeButton.setAttribute('data-name', 'heartbeat');
             likeButton.setAttribute('data-post-id', post.pk);
             likeButton.addEventListener("click", async function () {
@@ -173,8 +177,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     });
             
                     if (response.ok) {
-
-            
+                        console.log(isUserLiked)
                         // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
                         if (response.status === 201) {
                             likeButton.classList.add("on");
@@ -323,7 +326,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             // 부모 엘리먼트를 선택하거나 생성합니다.
             const commentAdd = document.createElement("div"); // 예시로 div 엘리먼트를 생성합니다.
             commentAdd.className = "comment_field";
-            commentAdd.id = "add-comment-post8"; // 원하는 ID를 설정합니다.
+            commentAdd.id = `${post.pk}`; // 원하는 ID를 설정합니다.
 
             // "댓글 달기" 입력 필드 생성
             const inputField = document.createElement("input");
@@ -342,6 +345,62 @@ document.addEventListener("DOMContentLoaded", async function () {
             publishButton.setAttribute("name", "8");
             publishButton.setAttribute("data-name", "comment");
             publishButton.textContent = "게시";
+            publishButton.id = `${post.pk}`
+
+            const commentListContainer = document.createElement("div");
+            commentListContainer.id = "comment-list-container";
+            const commentList = document.createElement("div");
+            commentList.id = "comment-list";
+            commentListContainer.appendChild(commentList);
+            
+            // 나머지 코드는 이전과 동일하게 유지
+            
+            publishButton.addEventListener("click", async function(event){
+                const postId = event.currentTarget.id;
+                try {
+                    const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({ content: inputField.value }).toString(),
+                    });
+            
+                    const res = await response.json();
+                    console.log(res);
+            
+                    // 새로운 댓글을 list 배열에 추가
+                    list.push({
+                        content: inputField.value,
+                    });
+                    console.log(list);
+            
+                    // 댓글 리스트 업데이트
+                    drawing();
+            
+                } catch (error) {
+                    console.error('Error adding comment:', error);
+                }
+                console.log(inputField.value);
+            });
+
+            // 댓글 리스트를 업데이트하는 함수
+            function drawing(){
+                commentList.innerHTML = "";
+                for(let i = 0; i < list.length; i++){
+                    const row = createRow(list[i].content);
+                    commentList.append(row);
+                }
+            }
+
+            // 댓글을 표시할 row 생성 함수 
+            function createRow(content) {
+                const row = document.createElement('div');
+                row.textContent = `${content}`;
+                return row;
+            }
+            
             
             // 로그인 확인 여부 코드 추가해야됨!
             // publishButton.addEventListener("click", function() {
@@ -359,6 +418,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             article.appendChild(bottomIcons);
             article.appendChild(likeText);
             article.appendChild(commentContainer);
+            article.appendChild(commentListContainer);
             article.appendChild(commentAdd);
         
             // article을 postContainer에 추가
@@ -370,3 +430,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     
 });
+

@@ -80,7 +80,7 @@
 
 /* 피드 디테일 페이지 스타일 */
 .contents_detail_box {
-    height: 100vh;
+    max-height: 100vh;
     width:100%;
     margin: 0;
     overflow-y: auto;
@@ -166,7 +166,7 @@
 /* 호버 효과 스타일 */
 
 .contents_detail_box .like_container:hover,
-.contents_detail_box .comment_container:hover {
+.contents_detail_box .comment_container2:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1); /* 회색 투명 배경 */
     transition: background-color 0.3s ease; /* 배경 트랜지션 효과 */
@@ -174,15 +174,15 @@
 
 /* 좋아요 버튼 호버 효과 */
 
-.contents_detail_box .like_container:hover .like_img {
-    transform: scale(1.2); /* 크기를 1.2배로 확대 */
+.contents_detail_box .like_container:hover {
+    transform: scale(1.1); /* 크기를 1.2배로 확대 */
     transition: transform 0.3s ease; /* 부드러운 트랜지션 효과 */
 }
 
 /* 댓글 버튼 호버 효과 */
 
-.contents_detail_box .comment_container:hover .comment_img {
-    transform: scale(1.2); /* 크기를 1.2배로 확대 */
+.contents_detail_box .comment_container2:hover {
+    transform: scale(1.1); /* 크기를 1.2배로 확대 */
     transition: transform 0.3s ease; /* 부드러운 트랜지션 효과 */
 }
 
@@ -224,7 +224,7 @@
     font-size: 14px;
 }
 
-.contents_detail_box .comment_container{
+.contents_detail_box .comment_container2{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -243,7 +243,7 @@
     height: 20px;
     padding-right: 5px;
 }
-.contents_detail_box .comment_container span{
+.contents_detail_box .comment_container2 span{
     font-size: 14px;
 }
 
@@ -253,11 +253,15 @@
     padding: 10px;
     margin-top: 10px;
 }
+.interaction_container{
+    padding-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 560px;
+}
 
 .like_count_container {
-    order: 3; /* like_count_container를 detail--right_box 아래로 이동 */
-    margin-top: 30px;
-    padding-left: 20px;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -267,6 +271,13 @@
 .like_count_container span{
     text-align: center;
 }
+.contents_detail_box .comment_container{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 .heart_img {
     width: 24px;
@@ -310,18 +321,18 @@
     opacity: 1;
 }
 
-/* .contents_detail_box .comment-form {
+ .contents_detail_box .comment-form {
     width: 80%;
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
-} */
+} 
 
 .contents_detail_box .upload_btn {
     color:#3897f0;
     position: absolute;
     right: 20px;
-    top: 25%;
+    top: 28%;
     transform:translateY(-50%);
     cursor: pointer;
     /*pointer-events: none;*/

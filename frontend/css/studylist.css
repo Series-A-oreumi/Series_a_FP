@@ -5,8 +5,7 @@ a {
 
 body {
     height: 100vh;
-    overflow: hidden;
-    padding-bottom: 100px;
+    margin-bottom: 100px;
 }
 
 /* banner */
