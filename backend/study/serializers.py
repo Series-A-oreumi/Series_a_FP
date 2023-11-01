@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Like, Study, Comment, Stack
-from .models import Like, Study, Comment, Stack
 from user.serializers import UserProfileSerializer
 
 class StackSerializer(serializers.ModelSerializer):

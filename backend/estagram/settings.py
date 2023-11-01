@@ -136,11 +136,18 @@ DATABASES = {
     }
 }
 
+# Redis 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [
+                    {
+                        "host": secrets['REDIS_HOST'],
+                        "port": secrets['REDIS_PORT'] or 6379,
+                        "password": secrets['REDIS_PASSWORD'],
+                    }
+                ]
         },
     },
 }
@@ -187,8 +194,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # s3 저장소에 연결 전까지 임시로 media 파일 설정
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = secrets['AWS_S3_BUCKET']
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 SIMPLE_JWT = {

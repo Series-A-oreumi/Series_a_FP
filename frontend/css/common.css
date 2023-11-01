@@ -83,6 +83,32 @@ button {
     align-items: center;
 }
 
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 100%;
+    right: 0;
+}
+
+.sprite_user_icon_outline:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
 /* header 끝 */
 
 
@@ -220,6 +246,7 @@ button {
 
 /* sidebar시작 */
 .sidebarHidden {
+    transform: translateX(-300px);
     transform: translateX(-280px);
 }
 
@@ -385,7 +412,7 @@ button {
 /* sidebar끝 */
 
 /* sub sidebar */
-#sub-sidebar {
+#sub-sidebar  {
     position: fixed;
     top: 0;
     left: 0;
@@ -394,14 +421,16 @@ button {
     background-color: #fff;
     /* 배경색은 필요에 따라 수정하세요 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
     z-index: 1000;
     display: none;
     transition: width 0.3s ease;
 }
+#sub-sidebar .user-search{
+    padding: 20px 20px 20px 15px;
+}
 
 #sub-sidebar input {
-    width: 230px;
+    width: 250px;
     height: 20px;
     padding: 10px;
     margin-bottom: 10px;
@@ -417,10 +446,10 @@ button {
     font-size: 24px;
     /* 적절한 크기로 조절하세요 */
     font-weight: bold;
-    padding-bottom: 40px;
+    padding-left: 7px;
+    padding-bottom: 35px;
 }
 
-/* 추가적으로 검색 결과 스타일을 지정할 수 있습니다. 예시로 간단한 스타일을 제공합니다. */
 #sub-sidebar .search-result {
     padding: 10px;
     border-bottom: 1px solid #ccc;

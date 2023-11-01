@@ -43,6 +43,29 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const username = await response_json.user.nickname;
                 var myNickElement = document.getElementById("my_nick");
                 myNickElement.innerHTML = username;
+
+                const socket_alarm = new WebSocket(`ws://localhost:8000/ws/chat_alarm/${username}/`);
+
+                
+                socket_alarm.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    const count = data.count;
+                    const room_id = data.chatroom_id;                    
+                    // 수신한 메시지를 처리할 수 있습니다.
+                    var count_roomid = document.getElementById(room_id);                    
+                    if(count == 1){
+                        var alarm_count = parseInt(count_roomid.innerHTML) + parseInt(count)
+                        count_roomid.innerHTML = alarm_count
+                    }
+                    else if(count == 0){
+                        count_roomid.innerHTML = 0;
+                        console.log("읽음")
+                    }
+                };                
+
+
+
+
                 
                 const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
                     method: 'POST',
@@ -68,6 +91,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                     profile_img.className = "profile_img";                        
                     const profile_id = document.createElement("div");
                     profile_id.className = "profile_id";
+                    const alarm = document.createElement("div");
+                    alarm.className = "alarm";
+                    alarm.id = chat_room_id;
                     if (chatroom.profile_id){
                         profile_img.src = chatroom.profile_id
                     }
@@ -78,6 +104,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                     profile_img_2.className = "profile_img";                        
                     const profile_id_2 = document.createElement("div");
                     profile_id_2.className = "profile_id";
+                    const alarm_2 = document.createElement("div");
+                    alarm_2.id = chat_room_id;
                     if (chatroom.profile_id){
                         profile_img_2.src = chatroom.profile_id
                     }
@@ -86,18 +114,21 @@ document.addEventListener("DOMContentLoaded", async function () {
                     }                        
                     profile_id.textContent = chat_partner;                        
                     profile_id_2.textContent = chat_partner; 
+                    alarm.textContent = chatroom.unread_count
                     tagElement.className = "chat_nick";
                     tagElement.appendChild(profile_img);
                     tagElement.appendChild(profile_id);
+                    tagElement.appendChild(alarm);
 
                     
                     tagElement.addEventListener('click', async function () {                            
                         const chat_info = document.querySelector('#chat_info');
                         chat_info.innerHTML = "";                            
                         chat_info.appendChild(profile_img_2);
-                        chat_info.appendChild(profile_id_2);
+                        chat_info.appendChild(profile_id_2);                        
                         chat_info.style.borderBottom = '1px solid rgb(219, 219, 219)';
-                        
+                                                
+
                         // 채팅 내용을 불러온다
                         const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
                             method: 'POST',
@@ -118,7 +149,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         //채팅 내용창 초기화
                         const chat_descs = document.getElementById("chat_desc")
                         chat_descs.innerHTML = '<br>';
-                        console.log(chat_desc)
+                        // console.log(chat_desc)
                         // 채팅 내용을 반복문으로 태그 추가
                         for (const message of chat_desc.messages){
                             const chats_sender = document.createElement("div");
@@ -156,8 +187,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                         chat_descs.scrollTop = chat_descs.scrollHeight;
 
 
-
-                        const socket = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/`);
+                        const socket = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/`);                        
+                        
+                        
                         socket.onmessage = (e) => {
                             const senders = JSON.parse(e.data).sender;                            
                             const content = JSON.parse(e.data).message;                            
@@ -183,7 +215,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             chats_receiver.appendChild(receiver_rece)
                             chats_receiver.appendChild(sender_rece) 
                             
-                            console.log(senders)
+                            // console.log(senders)
                             if(senders == username){                                                                                                        
                                 sender_send.innerHTML = content                                                                    
                                 chat_descs.appendChild(chats_sender);
@@ -196,6 +228,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                             // chatContainer.innerHTML += `<p>${message}</p>`;
                         };
                         
+                        
+                        
+                        
+                        
+                        
                         const inputElement = document.getElementById("chat_input");
                         inputElement.addEventListener("keydown", function (event) {
                             if (event.key === 'Enter' && event.shiftKey) {
@@ -207,10 +244,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 event.preventDefault(); // 기본 엔터 키 동작을 막음
                                 if (inputElement.value != ''){
                                     const message = inputElement.value;
-                                    console.log(message)
+                                    // console.log(message)
                                     const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                                    console.log(messages)
+                                    // console.log(messages)
                                     socket.send(JSON.stringify({
+                                        "type" : "send",
                                         message: messages,
                                         chat_room_id: chat_room_id,
                                         sender: username,
@@ -222,6 +260,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                             }
                             
                         });
+
+                        socket.onopen = function (event) {
+                            // WebSocket 연결이 확립되면 메시지를 보낼 수 있음
+                            socket.send(JSON.stringify({
+                                "type": "page_visible",
+                                sender: username,
+                                "chatroom_id": chat_room_id
+                            }));
+                        };
 
                         
                         

@@ -25,8 +25,9 @@ function createDetailSection1(data) {
     const accessToken = localStorage.getItem('access_token');
     const UserId = UserInfo(accessToken).userId
     const studyId = data.author.id
+    const study_id = data.id
     if (UserId === studyId) {
-        inviteBtn = `<a href="#"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
+        inviteBtn = `<a href="../html/study_edit.html?id=${study_id}"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
     } else {
         inviteBtn = `<a href="${chatURL}"><div class="goChat">채팅하기</div></a>`
     }
@@ -314,7 +315,7 @@ function renderComments(comments) {
 
     // 최신댓글 위로 가게
     const reversedComments = comments.reverse();
-
+    
     reversedComments.forEach(comment => {
         const commentProfileURL = `../html/profile.html?id=${comment.author.id}`;
         const formattedCommentDate = formatDate(comment.created_at);
@@ -323,6 +324,7 @@ function renderComments(comments) {
         const UserId = UserInfo(accessToken).userId
         let UpdRemo = '';
         const CommentWriter = comment.author.id
+
 
         if (UserId === CommentWriter) {
             UpdRemo = `
@@ -651,6 +653,3 @@ document.addEventListener('click', async function (event) {
         }
     }
 });
-
-
-

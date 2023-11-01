@@ -48,7 +48,8 @@ class Study(models.Model):
     ]
 
     PARTICIPANTS_CHOICES = [
-        ('undefined','인원 미정'),
+        ('0','인원 미정'),
+        ('1', '1명'),
         ('2', '2명'),
         ('3', '3명'),
         ('4', '4명'),

@@ -34,14 +34,17 @@ class LoginView(GenericAPIView):
             
             user_info = UserProfileSerializer(user)
             
-            alarm = Alarm.objects.filter(receiver=user, is_check=False).values() # 로그인 요청을 한 유저의 알람
-        
+            check_alarm = Alarm.objects.filter(receiver=user, is_check=True).values() # 로그인 요청을 한 유저의 이전 알람 기록들
+            uncheck_alarm = Alarm.objects.filter(receiver=user, is_check=False).values() # 로그인 요청을 한 유저의 확인안한 알람 기록들
+            
             data = {
                 'user': user_info.data,
                 'refresh': refresh,
                 'access': access,
-                'alarm' : alarm,
+                'check_alarm' : check_alarm,
+                'uncheck_alarm' : uncheck_alarm
             }
+            
             return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

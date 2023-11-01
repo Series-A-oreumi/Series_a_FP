@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from study.serializers import LikeSerializer
+from study.serializers import LikeSerializer
 from user.serializers import UserProfileSerializer
 
 from user.permissions import IsTokenValid
@@ -55,7 +56,7 @@ class StudyCreate(APIView):
 
          # "author" 필드를 직접 설정
         request.data["author"] = user.id
-
+        
         serializer = StudyCreateSerializer(data=request.data)
         if serializer.is_valid():
             study = serializer.save()
@@ -72,6 +73,7 @@ class StudyCreate(APIView):
             }
             return Response(data, status=status.HTTP_201_CREATED)
         
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # study detail & edit & delete (API 테스트 정상작동) -> 수정부분은 프론트와 논의필요!
@@ -88,6 +90,7 @@ class StudyCreate(APIView):
         request.data["author"] = user.id
 
         serializer = StudyCreateSerializer(data=request.data)
+    
         if serializer.is_valid():
             study = serializer.save()
             study.participants.set([user]) # participants 집어넣기
@@ -341,4 +344,5 @@ class ToggleLike(APIView):
             like.save()
             study.likes.add(user)
             serializer = LikeSerializer(like)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
