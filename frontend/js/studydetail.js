@@ -18,8 +18,8 @@ function formatDate(dateString) {
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
-    const userProfileURL = `../html/profile.html?id=${data.author.id}`;
-    const chatURL = `../html/chat.html?id=${data.author.id}`;
+    const userProfileURL = `../html/profile.html?data=${data.author.id}`;
+    const chatURL = `../html/chat.html?id=${data.author.nickname}`;
 
     let inviteBtn = '';
     const accessToken = localStorage.getItem('access_token');

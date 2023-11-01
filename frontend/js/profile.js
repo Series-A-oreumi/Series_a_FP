@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // 프로필
         function creatProfile(data, story, study) {
+            const chatUrl = `../html/chat.html?data=${data.nickname}`
 
             return `
             <div class="up-profile">
@@ -65,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="up-profile-name">
                         <p class="up-name">${data.nickname}</p>
                         <div class="up-buttons">
-                            <a href="#" class="chatStart">
+                            <a href="${chatUrl}" class="chatStart">
                                 <img src="../imgs/user/dm.png">
                             </a>
                         </div>

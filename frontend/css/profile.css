@@ -177,6 +177,7 @@ main {
     align-items: center;
     gap: 6px;
     color: #656565;
+    justify-content: flex-end
 }
 
 .views,
