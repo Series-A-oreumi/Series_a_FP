@@ -56,24 +56,28 @@ class Create_chatroom(APIView):
                     chatrooms_context = []
 
                     # 각 chatroom에 대해 필요한 정보 가져옴
-                    for chatroom in chatrooms:                
+                    for chatroom in chatrooms:                                      
                         if chatroom.chat_host == str(host):                                        
                             chat_partner = UserProfile.objects.get(nickname=chatroom.chat_guest)
                         else:                    
-                            chat_partner = UserProfile.objects.get(nickname=chatroom.chat_host)
+                            chat_partner = UserProfile.objects.get(nickname=chatroom.chat_host)                        
+                        unread_chatrooms = Message.objects.filter(receiver=host, is_read=False,chatroom_id=chatroom.id)
+                        unread_count = unread_chatrooms.count()  
                     
                         if guest_bool.profile_img:
                             print("이미지 있음")
                             result = {
                             "chatroom": chatroom.id,  # 채팅방 정보
                             "chat_partner": chat_partner.nickname,  # 채팅 상대방의 정보    
-                            "profile_img": guest_bool.profile_img
+                            "profile_img": guest_bool.profile_img,
+                            "unread_count" : unread_count
                             }   
                         else:
                             print("이미지 없음")
                             result = {
                             "chatroom": chatroom.id,  # 채팅방 정보
                             "chat_partner": chat_partner.nickname,  # 채팅 상대방의 정보                                
+                            "unread_count" : unread_count
                             }       
                                      
                                     
@@ -96,10 +100,12 @@ class Create_chatroom(APIView):
                     else:                    
                         chat_partner = UserProfile.objects.get(nickname=chatroom.chat_host)
                 
-
+                    unread_chatrooms = Message.objects.filter(receiver=host, is_read=False,chatroom_id=chatroom.id)
+                    unread_count = unread_chatrooms.count()  
                     result = {
                         "chatroom": chatroom.id,  # 채팅방 정보
                         "chat_partner": chat_partner.nickname,  # 채팅 상대방의 정보                                        
+                        "unread_count" : unread_count
                     }                
                                 
                     chatrooms_context.append(result)                  
