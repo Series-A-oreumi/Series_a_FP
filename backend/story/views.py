@@ -86,6 +86,9 @@ class StorySearch(APIView):
        users  = UserProfile.objects.all()
        serializer = UserProfileSerializer(users, many=True)
        return Response(serializer.data, status=status.HTTP_200_OK)
+       users  = UserProfile.objects.all()
+       serializer = UserProfileSerializer(users, many=True)
+       return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # class StoryPost(APIView):
