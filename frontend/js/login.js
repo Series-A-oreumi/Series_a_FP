@@ -69,6 +69,7 @@ document.getElementById('logout-button').addEventListener('click', function () {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('myNotify');
+    localStorage.removeItem('myNotify2');
 
     // 로그아웃 후 원하는 동작 수행 (예: 로그아웃 성공 페이지로 리다이렉트)
     window.location.href = '../html/login.html'; // 로그인 페이지로 이동시키기

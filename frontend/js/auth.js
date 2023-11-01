@@ -11,6 +11,8 @@ export function checkAccessTokenValidity() {
             // Access Token이 만료된 경우, 로컬 스토리지에서 삭제하고 알림 후 로그인 페이지로 이동
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
+            localStorage.removeItem('myNotify');
+            localStorage.removeItem('myNotify2');
             alert('로그인 시간이 만료되어 로그아웃 되었습니다.');
             window.location.href = '../html/login.html'; // 로그인 페이지로 이동
         }
