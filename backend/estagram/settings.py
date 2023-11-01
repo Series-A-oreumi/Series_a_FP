@@ -136,11 +136,18 @@ DATABASES = {
     }
 }
 
+# Redis 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [
+                    {
+                        "host": secrets['REDIS_HOST'],
+                        "port": secrets['REDIS_PORT'] or 6379,
+                        "password": secrets['REDIS_PASSWORD'],
+                    }
+                ]
         },
     },
 }
