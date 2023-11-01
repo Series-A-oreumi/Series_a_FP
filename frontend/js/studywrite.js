@@ -29,7 +29,7 @@ studyForm.addEventListener('submit', async (event) => {
 
         if (response.ok) {
             // 성공적으로 데이터를 보냈을 때 처리
-            alert('데이터를 성공적으로 전송했습니다.');
+            alert('스터디 글을 성공적으로 생성했습니다.');
             window.location.href = '../html/studylist.html';
             
         } else {

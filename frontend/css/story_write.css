@@ -103,6 +103,7 @@ fieldset{
     border: 1.6px solid black;
     padding: .2rem;
     border-radius:.2rem;
+    cursor: pointer;
 }
 
 .temp-save{
@@ -181,3 +182,42 @@ label {
   *::after {
     box-sizing: border-box;
   }
+
+
+  .image-upload-container {
+    border: 1px dashed #ccc;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    max-width: 100%; /* Set the maximum width for the container */
+    max-height: 100%; /* Set the maximum height for the container */
+}
+
+/* Change the border color when hovering over the container */
+.image-upload-container:hover {
+  border-color: black;
+}
+
+#upload {
+  max-width: 50%; 
+  max-height: 50%; 
+  display: block;
+  margin: 10px auto; 
+  cursor: pointer;
+  padding: 0.2rem;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+#imagePreview{
+  max-width: 100%; 
+  max-height: 100%; 
+  display: block;
+  margin: 10px auto; 
+  cursor: pointer;
+  padding: 0.2rem;
+  text-align: center;
+  transition: background-color 0.3s;
+}
