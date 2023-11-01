@@ -613,7 +613,7 @@ document.addEventListener('click', async function (event) {
         const likeButton = LikesButton.querySelector('#likeTF img');
         const currentImageSrc = likeButton.src;
         const likeCountElement = document.getElementById('likeCount');
-        const likeCount = likeCountElement.textContent;
+        const likeCount = parseInt(likeCountElement.textContent, 10);
 
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -640,6 +640,7 @@ document.addEventListener('click', async function (event) {
                     likeButton.src = '../imgs/study/pinkheart.png';
                     likeCountElement.textContent = likeCount + 1;
                 }
+
                 // updateLikes();
             } else {
                 // 좋아요 요청 실패 처리
