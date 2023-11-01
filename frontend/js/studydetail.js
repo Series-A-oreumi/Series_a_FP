@@ -79,9 +79,11 @@ function createDetailSection2(user, data) {
 
 
     let participantCount = '';
-    if (data.participant_count === 'undefined') {
+    if (data.participant_count === '0') {
         participantCount = `<div class="sub-content">인원 미정</div>`;
-    } else { `<div class="sub-content">${data.participant_count}명</div>` }
+    } else if (data.participant_count === '10') {
+        participantCount = `<div class="sub-content">${data.participant_count}명 이상</div>`
+    } else { participantCount = `<div class="sub-content">${data.participant_count}명</div>` }
 
     const startAt = data.start_at
     const formattedStartDate = formatDate(startAt);
@@ -226,7 +228,7 @@ function createDetailSection3(data) {
                 <div class="comment-inner" data-comment-id="${comment.id}">
                     <a href="${commentProfileURL}">
                         <div class="comment-user-icon">
-                            <img src="${comment.author.profile_img}">
+                            <img src="${comment.author.profile_img}.url">
                         </div>
                     </a>
                     <div class="comment-content">
@@ -315,7 +317,7 @@ function renderComments(comments) {
 
     // 최신댓글 위로 가게
     const reversedComments = comments.reverse();
-    
+
     reversedComments.forEach(comment => {
         const commentProfileURL = `../html/profile.html?id=${comment.author.id}`;
         const formattedCommentDate = formatDate(comment.created_at);
@@ -346,7 +348,7 @@ function renderComments(comments) {
             <div class="comment-inner">
                 <a href="${commentProfileURL}">
                     <div class="comment-user-icon">
-                        <img src="${comment.author.profile_img}">
+                        <img src="${comment.author.profile_img}.url">
                     </div>
                 </a>
                 <div class="comment-content">

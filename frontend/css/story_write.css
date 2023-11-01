@@ -1,119 +1,132 @@
-*{
-    margin: 0;
-    padding: 0;
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 
-html, body{
-    width: 100%;
-    height: 100%;
+.contents {
+  width: 1200px;
+  justify-content: center;
+  margin: auto;
 }
 
-.contents{
-    /* width: 70rem; */
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.content-form {
+  display: flex;
+  margin: 50px 0;
+  justify-content: space-around;
 }
 
-form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 80%;
-    height: 80%;
+.write-main {
+  width: 700px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 50px;
 }
 
-.write-main{
-    width:70%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 2rem;
+.write-main input {
+  background-color: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  opacity: 70%;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 20px;
 }
 
-.write-main>input[type="text"]{
-    width: 100%;
-    height: 2rem;
-    border: 1px #ccc solid;
-    border-radius: .2rem;
-    padding: 0 .4rem;
-}
+/* .write-editor {
+  width: 100%;
+} */
 
-::placeholder  {
-    color:#ccc;
-}
 
-.write-editor{
-    width: 100%;
-    height: 100%;
-}
-
-.write-editor>textarea{
-    width: 100%;
-    height: 100%;
-    border: 1px #ccc solid;
-    border-radius: .2rem;
-    padding: .4rem;
-    resize: none;
+.write-editor textarea {
+  width: 661px;
+  background-color: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  opacity: 70%;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 20px;
+  height: 300px;
+  resize: none;
 }
 
 
 /* write-side */
 
-.write-side{
-    width: 30%;
-    height: 100%;
-    gap: 1rem;
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 0;
+.write-side {
+  width: 30%;
+  height: 100%;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
 }
 
-.open-setting{
-    background-color: #eee;
-    padding: 1rem 2rem;
-    border-radius: .3rem;
+.image-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #444;
 }
 
-fieldset{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+.open-setting {
+  /* background-color: #fafafa; */
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  opacity: 70%;
+  border-radius: 10px;
+  padding: 18px;
+  margin: 20px 0;
+  width: 100%;
 }
 
-.setting-title{
-    font-weight: 700;
-    font-size: 15px;
+fieldset {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.setting-title {
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.open-field {
+  gap: 5px;
 }
 
 
-.buttons{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  gap: 20px;
 }
 
-.buttons>button{
-    width:48%;
-    border: 1.6px solid black;
-    padding: .2rem;
-    border-radius:.2rem;
-    cursor: pointer;
+.buttons button {
+  display: flex;
+  background-color: #228CEE;
+  border-radius: 7px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 130px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
 }
 
-.temp-save{
-    color: #000;
-    background-color: #fff;
+.temp-save {
+  color: #000;
+  background-color: #fff;
 }
 
-.save{
-    color: #fff;
-    background-color: black;
+.save {
+  color: #fff;
+  background-color: black;
 }
 
 
@@ -121,78 +134,80 @@ fieldset{
 /* 라디오 애니메이션 */
 
 label {
-    font-size: 13px;
-    line-height: 2rem;
-    padding: 0.2em 0.4em;
-  }
-  
-  [type="radio"], span {
-    vertical-align: middle;
-  }
-  
-  [type="radio"] {
-    appearance: none;
-    border: max(2px, 0.1em) solid gray;
-    border-radius: 50%;
-    width: 1.25em;
-    height: 1.25em;
-    transition: border 0.5s ease-in-out;
-  }
-  
-  [type="radio"]:checked {
-    border: 0.4em solid rgb(100, 100, 255);
-  }
-  
-  [type="radio"]:focus-visible {
-    outline-offset: max(3px, 0.3em);
-    outline: max(3px, 0.3em) dotted rgb(100, 100, 255);
-  }
-  
-  [type="radio"]:hover {
-    box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
-    cursor: pointer;
-  }
-  
-  [type="radio"]:hover + span {
-    cursor: pointer;
-  }
-  
-  [type="radio"]:disabled {
-    background-color: lightgray;
-    box-shadow: none;
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-  
-  [type="radio"]:disabled + span {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-  
-  /* Global CSS */
-  fieldset {
-    display: flex;
-    justify-content: center;
-    border: none;
-    margin: 0;
-  }
-  
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+  font-size: 13px;
+  line-height: 2rem;
+  padding: 0.2em 0.4em;
+}
+
+[type="radio"],
+span {
+  vertical-align: middle;
+}
+
+[type="radio"] {
+  appearance: none;
+  border: max(2px, 0.1em) solid gray;
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+  transition: border 0.5s ease-in-out;
+}
+
+[type="radio"]:checked {
+  border: 0.4em solid #228CEE;
+}
+
+[type="radio"]:focus-visible {
+  outline-offset: max(3px, 0.3em);
+  outline: max(3px, 0.3em) dotted #228CEE;
+}
+
+[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+  cursor: pointer;
+}
+
+[type="radio"]:hover+span {
+  cursor: pointer;
+}
+
+[type="radio"]:disabled {
+  background-color: lightgray;
+  box-shadow: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type="radio"]:disabled+span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Global CSS */
+fieldset {
+  display: flex;
+  justify-content: center;
+  border: none;
+  margin: 0;
+}
+
+.img-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
-  .image-upload-container {
-    border: 1px dashed #ccc;
-    padding: 1rem;
-    text-align: center;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    transition: border-color 0.3s;
-    max-width: 100%; /* Set the maximum width for the container */
-    max-height: 100%; /* Set the maximum height for the container */
+
+.image-upload-container {
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  width: 398px;
+  height: 256px;
+
 }
 
 /* Change the border color when hovering over the container */
@@ -201,21 +216,21 @@ label {
 }
 
 #upload {
-  max-width: 50%; 
-  max-height: 50%; 
+  max-width: 50%;
+  max-height: 50%;
   display: block;
-  margin: 10px auto; 
+  margin: 10px auto;
   cursor: pointer;
   padding: 0.2rem;
   text-align: center;
   transition: background-color 0.3s;
 }
 
-#imagePreview{
-  max-width: 100%; 
-  max-height: 100%; 
+#imagePreview {
+  max-width: 100%;
+  max-height: 100%;
   display: block;
-  margin: 10px auto; 
+  margin: 10px auto;
   cursor: pointer;
   padding: 0.2rem;
   text-align: center;
