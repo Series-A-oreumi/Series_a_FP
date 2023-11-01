@@ -154,5 +154,3 @@ class ProfileUpdateDelete(APIView):
             'success' : '회원을 탈퇴하였습니다.'
             }
         return Response(messages, status=status.HTTP_200_OK)
-
-

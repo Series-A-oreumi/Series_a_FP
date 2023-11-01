@@ -142,7 +142,7 @@ def comment_action(sender, instance, created, **kwargs):
 class Like(models.Model):
     # 좋아요 모델
     study = models.ForeignKey(Study,on_delete=models.CASCADE, related_name='likes_study')
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='likes_user')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='study_likes_user')
     liked = models.BooleanField(default=False)
 
     def __str__(self):

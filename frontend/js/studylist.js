@@ -324,45 +324,44 @@ function createLikes(request_user, data) {
 }
 
 // API에서 데이터 가져오기
-document.addEventListener('DOMContentLoaded', () => {
-    async function fetchDataFromAPI() {
-        const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = "http://localhost:8000/api/study/";
 
-        try {
-            const response = await fetch(apiEndpoint, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+async function fetchDataFromAPI() {
+    const accessToken = localStorage.getItem('access_token');
+    const apiEndpoint = "http://localhost:8000/api/study/";
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
             }
+        });
 
-            const responseData = await response.json();
-            const { request_user, studylist } = responseData;
-
-            const postDataArray = studylist;
-
-
-
-            postDataArray.forEach(data => {
-                createPost(request_user, data);
-            });
-
-        } catch (error) {
-            console.error('Error:', error);
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
         }
-    }
 
-    fetchDataFromAPI();
-});
+        const responseData = await response.json();
+        const { request_user, studylist } = responseData;
+
+        const postDataArray = studylist;
+
+
+
+        postDataArray.forEach(data => {
+            createPost(request_user, data);
+        });
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+fetchDataFromAPI();
+
 
 //좋아요 보내기
-// 좋아요 버튼 클릭 이벤트 핸들러
 document.addEventListener('click', async function (event) {
     const LikesButton = event.target.closest('.heart_btn');
 
