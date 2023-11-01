@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             // 부모 엘리먼트를 선택하거나 생성합니다.
             const commentAdd = document.createElement("div"); // 예시로 div 엘리먼트를 생성합니다.
             commentAdd.className = "comment_field";
-            commentAdd.id = "add-comment-post8"; // 원하는 ID를 설정합니다.
+            commentAdd.id = `${post.pk}`; // 원하는 ID를 설정합니다.
 
             // "댓글 달기" 입력 필드 생성
             const inputField = document.createElement("input");
@@ -343,6 +343,62 @@ document.addEventListener("DOMContentLoaded", async function () {
             publishButton.setAttribute("name", "8");
             publishButton.setAttribute("data-name", "comment");
             publishButton.textContent = "게시";
+            publishButton.id = `${post.pk}`
+
+            const commentListContainer = document.createElement("div");
+            commentListContainer.id = "comment-list-container";
+            const commentList = document.createElement("div");
+            commentList.id = "comment-list";
+            commentListContainer.appendChild(commentList);
+            
+            // 나머지 코드는 이전과 동일하게 유지
+            
+            publishButton.addEventListener("click", async function(event){
+                const postId = event.currentTarget.id;
+                try {
+                    const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({ content: inputField.value }).toString(),
+                    });
+            
+                    const res = await response.json();
+                    console.log(res);
+            
+                    // 새로운 댓글을 list 배열에 추가
+                    list.push({
+                        content: inputField.value,
+                    });
+                    console.log(list);
+            
+                    // 댓글 리스트 업데이트
+                    drawing();
+            
+                } catch (error) {
+                    console.error('Error adding comment:', error);
+                }
+                console.log(inputField.value);
+            });
+
+            // 댓글 리스트를 업데이트하는 함수
+            function drawing(){
+                commentList.innerHTML = "";
+                for(let i = 0; i < list.length; i++){
+                    const row = createRow(list[i].content);
+                    commentList.append(row);
+                }
+            }
+
+            // 댓글을 표시할 row 생성 함수 
+            function createRow(content) {
+                const row = document.createElement('div');
+                row.textContent = `${content}`;
+                return row;
+            }
+            
             
             // 로그인 확인 여부 코드 추가해야됨!
             // publishButton.addEventListener("click", function() {
@@ -360,6 +416,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             article.appendChild(bottomIcons);
             article.appendChild(likeText);
             article.appendChild(commentContainer);
+            article.appendChild(commentListContainer);
             article.appendChild(commentAdd);
         
             // article을 postContainer에 추가
@@ -371,3 +428,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     
 });
+

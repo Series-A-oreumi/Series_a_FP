@@ -206,22 +206,24 @@ export async function feedDetail(postId){
         commentImg.className = 'comment_img'; // 클래스명 설정
         
         // 댓글 이미지와 텍스트를 같은 div에 추가
-        const commentContainer = document.createElement('div');
-        commentContainer.className = 'comment_container'; // 클래스명 설정
-        commentContainer.appendChild(commentImg);
+        const commentContainer2 = document.createElement('div');
+        commentContainer2.className = 'comment_container2'; // 클래스명 설정
+        commentContainer2.appendChild(commentImg);
 
         // "댓글 달기" 텍스트 추가
         const commentText = document.createElement('span');
         commentText.textContent = '댓글 달기';
-        commentContainer.appendChild(commentText);
+        commentContainer2.appendChild(commentText);
 
         const iconsContainer = document.createElement('div');
         iconsContainer.className = 'icons_container'; // 클래스명 설정
 
         iconsContainer.appendChild(likeContainer);
-        iconsContainer.appendChild(commentContainer);
+        iconsContainer.appendChild(commentContainer2);
 
 
+        const interactionContainer = document.createElement('div');
+        interactionContainer.className = 'interaction_container';
 
         const likeCountContainer = document.createElement('div');
         likeCountContainer.className = 'like_count_container';
@@ -242,11 +244,19 @@ export async function feedDetail(postId){
         likeCountContainer.appendChild(heartImg);
         likeCountContainer.appendChild(likeCountSpan);
 
-        // const countLikes = document.createElement('div');
-        // countLikes.className = `count_likes`;
+        //댓글 개수 추가
+        const commentContainer = document.createElement('div')
+        commentContainer.className = "comment_container";
+        const comment = document.createElement('div')
+        comment.className = "comment";
         
-        // countLikes.appendChild(likeCountSpan);
+        // 댓글 개수를 표시합니다.
+        comment.textContent = `댓글 ${post.comments_count}개`;
+        comment.id = `comment-all-${post.pk}`;
+        commentContainer.appendChild(comment);
 
+        interactionContainer.appendChild(likeCountContainer);
+        interactionContainer.appendChild(commentContainer);
 
         // 포스트 내용 추가
         const content = document.createElement("div");
@@ -255,11 +265,10 @@ export async function feedDetail(postId){
         content.textContent = post.content; // 포스트 내용을 여기에 추가
         // content.textContent = `zz ${postId}`; // 포스트 내용을 여기에 추가
 
-
-        // 부모 엘리먼트를 선택하거나 생성합니다.
-        const commentAdd = document.createElement("div"); // 예시로 div 엘리먼트를 생성합니다.
+        
+        const commentAdd = document.createElement("div");
         commentAdd.className = "comment_field";
-        commentAdd.id = "add-comment-post8"; // 원하는 ID를 설정합니다.
+        commentAdd.id = "add-comment-post8"; 
 
         // "댓글 달기" 입력 필드 생성
         const inputField = document.createElement("input");
@@ -293,14 +302,15 @@ export async function feedDetail(postId){
         detailBox.appendChild(content);
         detailBox.appendChild(scrollSection);
         detailBox.appendChild(iconsContainer);
-        detailBox.appendChild(likeCountContainer);
+        detailBox.appendChild(interactionContainer);
         detailBox.appendChild(commentAdd);
         
         
         // 나머지 요소들을 article에 추가
         article.appendChild(detailBox);
         article.appendChild(imgSection);
-        article.appendChild(likeCountContainer);
+        article.appendChild(interactionContainer);
+        // article.appendChild(commentContainer);
         article.appendChild(iconsContainer);
         article.appendChild(commentAdd);
         // article을 postContainer에 추가
