@@ -19,18 +19,7 @@ socket.onmessage = function (event) {
     notificationCountElement.innerText = notificationCount;
 };
 
-let isModalOpen = false;
 
-notificationTrigger.addEventListener('click', function (event) {
-    event.preventDefault();
-    if (isModalOpen) {
-        notificationModal.style.display = 'none';
-    } else {
-        notificationModal.style.display = 'block';
-    }
-
-    isModalOpen = !isModalOpen;
-});
 
 document.addEventListener('click', function (event) {
     if (event.target !== notificationModal && !notificationTrigger.contains(event.target)) {
