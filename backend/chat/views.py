@@ -15,7 +15,38 @@ from user.models import UserProfile
 from django.db.models import Q
 from datetime import datetime
 from .serializers import MessageSerializer
+import openai
 
+openai.api_key = "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"
+
+class Chat_AI(APIView):    
+    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsTokenValid]
+    
+    # authentication_classes = (JWTAuthentication,)
+    def post(self, request):        
+        # prompt = request.POST.get("title")        
+        try:  
+            prompt = request.data.get('title')
+                               
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt},
+                ],
+            )
+            # 반환된 응답에서 텍스트 추출해 변수에 저장
+            
+            message = response["choices"][0]["message"]["content"]
+            print(message)
+                     
+            message = {
+                "message": message
+            }                        
+            return Response(message, status=status.HTTP_200_OK)  # 이 부분 수정
+        except Exception as e:
+            return Response( str(e) , status=status.HTTP_404_NOT_FOUND) 
 class ChatList(APIView):    
     # permission_classes = [IsAuthenticated]
     permission_classes = [IsTokenValid]
@@ -36,11 +67,13 @@ class ChatList(APIView):
 class Create_chatroom(APIView): 
 
     permission_classes = [IsTokenValid]
+    print("접속")
 
     def post(self, request):
         try:            
+            print(json.dumps(request, indent=4))
             login_nickname = get_user_from_token(request) 
-            print(login_nickname)
+            print(login_nickname.nickname)
             if request.data.get('guest'):                
                 guest = request.data.get('guest')
                 guest_bool = UserProfile.objects.get(nickname = guest)                   
