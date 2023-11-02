@@ -227,6 +227,10 @@ export async function feedDetail(postId) {
         iconsContainer.appendChild(likeContainer);
         iconsContainer.appendChild(commentContainer2);
 
+        commentContainer2.addEventListener('click', function() {
+            inputField.focus();
+        });
+
 
         const interactionContainer = document.createElement('div');
         interactionContainer.className = 'interaction_container';
@@ -258,7 +262,7 @@ export async function feedDetail(postId) {
 
         // 댓글 개수를 표시합니다.
         comment.textContent = `댓글 ${post.comments_count}개`;
-        comment.id = `comment-all-${post.pk}`;
+        comment.id = `comment-all2-${post.pk}`;
         commentContainer.appendChild(comment);
 
         interactionContainer.appendChild(likeCountContainer);
@@ -296,15 +300,10 @@ export async function feedDetail(postId) {
         publishButton.id = `${post.pk}`
         
 
-        const commentListContainer = document.createElement("div");
-        commentListContainer.id = "comment-list-container";
-        const commentList = document.createElement("div");
-        commentList.id = "comment-list";
+
             // comment-display 엘리먼트를 생성
         const commentDisplay = document.createElement("div");
         commentDisplay.className = "comment-display";
-        commentListContainer.appendChild(commentList);
-        commentListContainer.appendChild(commentDisplay);
         displayComments(commentDisplay, post.comments);
         
             
@@ -320,16 +319,16 @@ export async function feedDetail(postId) {
                     body: new URLSearchParams({ content: inputField.value }).toString(),
                 });
                 // console.log(response);
-                const res = await response.json();
-                console.log(res);
-        
-
-
-                // 서버에서 댓글 목록을 받아와 화면에 표시
-                const comments = await fetchComments(postId);
-                displayComments(comments);
-                console.log(comments);
-
+                addcomment(commentDisplay,inputField.value,post.author.username,postId);
+                console.log(postId);
+                inputField.value='';
+            // 댓글이 추가될 때 스크롤을 아래로 이동
+            
+            const scrollElements = document.getElementsByClassName('contents_detail');
+            if (scrollElements.length > 0) {
+                const scroll = scrollElements[0];
+                scroll.scrollTop = scroll.scrollHeight;
+            }
         
             } catch (error) {
                 console.error('Error adding comment:', error);
@@ -338,7 +337,7 @@ export async function feedDetail(postId) {
         
         // 서버에서 댓글 목록을 받아오는 함수
         async function fetchComments(postId) {
-            const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`);
+            const response = await fetch(`http://localhost:8000/api/story/${postId}/commentlist/`);
             const data = await response.json();
             return data;
         }
@@ -365,6 +364,33 @@ export async function feedDetail(postId) {
                 console.log(commentItem);
             });
         }
+
+        function addcomment(element,comment, username,postId){
+            const commentcount1=document.getElementById(`comment-all2-${postId}`);
+            let commentinner=commentcount1.innerHTML;
+            const regex = /[^0-9]/g;
+            const result = commentinner.replace(regex, "");
+            const number = parseInt(result);
+            console.log(number)
+            commentcount1.innerHTML = `댓글 ${number+1}개`;
+            console.log(commentcount1)
+
+
+            const commentItem = document.createElement('div');
+            commentItem.className = "comment-item";
+            const commentItem1 = document.createElement('div');
+            commentItem1.className="comment-content";
+            commentItem1.textContent = comment;
+            const commentItem2 = document.createElement('div');
+            commentItem2.className="comment-username";
+            commentItem2.textContent = username;
+            commentItem.appendChild(commentItem2);
+            commentItem.appendChild(commentItem1);
+            element.appendChild(commentItem);
+
+
+        }
+
         // 로그인 확인 여부 코드 추가해야됨!
         // publishButton.addEventListener("click", function() {
         // alert("댓글을 작성하려면 로그인이 필요합니다");
@@ -379,7 +405,7 @@ export async function feedDetail(postId) {
         detailBox.appendChild(scrollSection);
         detailBox.appendChild(iconsContainer);
         detailBox.appendChild(interactionContainer);
-        detailBox.appendChild(commentListContainer);
+        detailBox.appendChild(commentDisplay);
         // detailBox.appendChild(commentAdd);
         
         
@@ -389,11 +415,13 @@ export async function feedDetail(postId) {
         article.appendChild(interactionContainer);
         // article.appendChild(commentContainer);
         article.appendChild(iconsContainer);
-        article.appendChild(commentListContainer);
+        article.appendChild(commentDisplay);
         // article.appendChild(commentAdd);
         // article을 postContainer에 추가
+        console.log(article);
         contentsBox.appendChild(article);
         contentsBox.appendChild(commentAdd);
+        console.log(contentsBox);
         
     } catch (error) {
         console.error("Error fetching data:", error);

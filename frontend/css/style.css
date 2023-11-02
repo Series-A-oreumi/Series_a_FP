@@ -544,7 +544,9 @@ body {
     /*pointer-events: none;*/
     opacity: 0.6;
 }
-
+ selected {
+    background-color: white !important;
+}
 
 .content {
     font-size: 100%;
@@ -559,7 +561,9 @@ body {
 
 /* 댓글 목록 */
 .contents .comment-display{
-    height:20px
+    height:20px;
+    padding-top:3px;
+    padding-bottom: 7px;
 }
 
 .contents .comment-item{
@@ -567,7 +571,6 @@ body {
     align-items: center;
 }
 .contents .comment-content {
-    margin-right: 10px;  /* 원하는 간격으로 조절 */
     font-size: 14px;
     white-space: nowrap; 
   }
@@ -575,6 +578,7 @@ body {
  .contents .comment-username {
     font-weight: bold;  /* 유저네임을 강조하고자 할 때 */
     font-size: 13px;
+    margin-right: 10px;
   }
 
 
