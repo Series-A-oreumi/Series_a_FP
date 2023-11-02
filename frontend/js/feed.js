@@ -157,9 +157,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             
             // 현재 로그인 한 유저
             const loggedInUserId = UserInfo(accessToken).userId
-            // post.likes_user가 정의되어 있을 때만 .includes() 메서드를 호출합니다.
-            const isUserLiked = Array.isArray(post.likes_user) && post.likes_user.includes(loggedInUserId) ? true : false;
-        
+
+            const isUserLiked = Array.isArray(post.likes_users) && post.likes_users.includes(loggedInUserId) ? true : false;
+            
             // 로그인 한 유저가 해당 게시물에 대해서 좋아요를 눌렀다면 on, 좋아요를 누르지 않았다면 '' 되도록 바꿔주기 (post.likes_user) -> 해당 게시물에 대해 좋아요를 누른 유저목록
             likeButton.className = `sprite_heart_icon_outline  ${isUserLiked ? 'on' : ''}`;
             likeButton.setAttribute('data-name', 'heartbeat');
