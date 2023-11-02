@@ -588,12 +588,12 @@ button {
     display: none;
     position: absolute;
     z-index: 9999;
-    left: -380px;
+    left: -415px;
     top: 40px;
     margin-top: 8px;
     margin-left: 12px;
     margin-right: 12px;
-    width: 420px;
+    width: 450px;
     max-height: 442px;
 
     background-color: #f3f5fe;
@@ -606,24 +606,38 @@ button {
     transition-timing-function: ease;
 }
 
+.close {
+    position: absolute;
+    top: 5px;
+    right: 14px;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #868e96;
+}
+
+.close:hover {
+    color: #3498db;
+}
+
 #notification-modal::-webkit-scrollbar {
     width: 10px;
 }
 
 #notification-modal::-webkit-scrollbar-thumb {
-    background-color: #888;
+    background-color: #ccc;
     border-radius: 10px;
 }
 
 #notification-modal::-webkit-scrollbar-track {
-    background-color: #ccc;
+
     border-radius: 10px;
 }
 
 
 
 .notify_seciton {
-    padding: 20px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
