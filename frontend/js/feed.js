@@ -1,7 +1,7 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
-import { formatTimeAgo } from "Series_a_FP/frontend/js/format.js"
-import { clearFeedDetail, feedDetail } from "Series_a_FP/frontend/js/feedDetail.js";
-import { UserInfo } from "Series_a_FP/frontend/js/jwtUserId.js"
+import { formatTimeAgo } from "./js/format.js"
+import { clearFeedDetail, feedDetail } from "./js/feedDetail.js";
+import { UserInfo } from "./js/jwtUserId.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 document.addEventListener("DOMContentLoaded", async function () {
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             userContainer.className = "user_container";
             // 프로필 이미지 추가
             const profileLink = document.createElement('a'); // 삭제하기 꼭 (테스트 추가한 부분)
-            profileLink.href = `Series_a_FP/frontend/html/profile.html?id=${post.author.id}`; // 삭제하기 꼭 (테스트 추가한 부분)
+            profileLink.href = `../html/profile.html?id=${post.author.id}`; // 삭제하기 꼭 (테스트 추가한 부분)
 
             const profileImg = document.createElement("div");
             profileImg.className = "profile_img";
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (post.author.profile_img) {
                 img.src = post.author.profile_img
             } else {
-                img.src = "Series_a_FP/frontend/imgs/common/profile.png";
+                img.src = "../imgs/common/profile.png";
             }
             img.alt = "프로필 이미지";
             profileImg.appendChild(img);
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (post.images) {
                 image.src = post.images[0].images
             } else {
-                image.src = "Series_a_FP/frontend/imgs/img_section/nophoto.png"
+                image.src = "../imgs/img_section/nophoto.png"
             }
             // image.src = post.images[0].images.url;
             image.alt = "피드이미지";

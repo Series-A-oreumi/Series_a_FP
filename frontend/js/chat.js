@@ -1,11 +1,6 @@
-
-
-
-
 document.addEventListener("DOMContentLoaded", async function () {
     const accessToken = localStorage.getItem('access_token');
     const urlParams = new URLSearchParams(window.location.search);
-    const riceve_user_nickname = urlParams.get("data");
     const riceve_user_nickname = urlParams.get("data");
     let externalVariable = 0;
     let chat_pa = "";
@@ -13,7 +8,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     let arrary = [];
     const inputElement = document.getElementById("chat_input");
     const bot = document.getElementById("bot")
-    bot.addEventListener("click", function (e) {
     bot.addEventListener("click", function (e) {
         for (var key in sockets) {
             sockets[key].close()
@@ -25,18 +19,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         const ai_id = document.createElement("div");
         ai_id.className = "profile_id";
         ai_id.textContent = "AI 챗봇";
-        ai_id.textContent = "AI 챗봇";
         const chat_info = document.querySelector('#chat_info');
         chat_info.innerHTML = "";
-        chat_info.innerHTML = "";
         chat_info.appendChild(ai_img);
-        chat_info.appendChild(ai_id);
         chat_info.appendChild(ai_id);
         chat_info.style.borderBottom = '1px solid rgb(219, 219, 219)';
         const chat_descs = document.getElementById("chat_desc")
         chat_descs.innerHTML = '<br>';
-
-        const chats_receiver_ai = document.createElement("div");
 
         const chats_receiver_ai = document.createElement("div");
         chats_receiver_ai.className = "chats_receiver";
@@ -47,11 +36,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         sender_rece_ai.className = "sender";
         chats_receiver_ai.appendChild(receiver_rece_ai)
         chats_receiver_ai.appendChild(sender_rece_ai)
-        chats_receiver_ai.appendChild(sender_rece_ai)
         receiver_rece_ai.innerHTML = "안녕하세요 무엇을 도와 드릴까요"
         chat_descs.appendChild(chats_receiver_ai);
-
-
 
 
 
@@ -60,11 +46,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
 
 
-
     async function fetchData() {
         try {
             //현재 토큰값으로 API 요청하여 로그인한 유저 정보를 불러옴
-            const response_json = await fetch(`http://localhost:8000/chat/api?riceve_user_nickname=${riceve_user_nickname}`, {
+            const response_json = await fetch(`https://estagram.site/chat/api?riceve_user_nickname=${riceve_user_nickname}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -82,20 +67,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (response_json) {
                 //로그인한 유저의 닉네임
                 const username = await response_json.user.nickname;
-                const userimg = await response_json.user.profile_img;
                 var myNickElement = document.getElementById("my_nick");
-                var myProfileimg = document.getElementById("my_profileimg")
-                console.log(userimg)
-
-                if (userimg === null) {
-                    const defaultImage = document.createElement('img');
-                    defaultImage.src = '../imgs/user/testimg.png';
-
-                    myProfileimg.innerHTML = '';
-                    myProfileimg.appendChild(defaultImage);
-                }
-
-
                 var myProfileimg = document.getElementById("my_profileimg")
                 const defaultImage = document.createElement('img');
 
@@ -103,14 +75,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                     defaultImage.src = response_json.user.profile_img;
 
                 } else {
-                    defaultImage.src = 'Series_a_FP/frontend/imgs/user/test.png';
+                    defaultImage.src = '../imgs/user/test.png';
                     myProfileimg.appendChild(defaultImage);
                 }
 
                 myNickElement.innerHTML = username;
                 myProfileimg.appendChild(defaultImage);
 
-                const socket_alarm = new WebSocket(`ws://localhost:8000/ws/chat_alarm/${username}/`);
+                const socket_alarm = new WebSocket(`ws://https://estagram.site/ws/chat_alarm/${username}/`);
 
 
                 socket_alarm.onmessage = function (event) {
@@ -129,12 +101,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                     }
                 };
                 inputElement.addEventListener("keydown", function (event) {
-                };
-                inputElement.addEventListener("keydown", function (event) {
                     // event.preventDefault();
                     console.log("요곤가?" + externalVariable)
                     if (event.key === 'Enter' && event.shiftKey) {
-
 
                         inputElement.value += '\n';
                         // 쉬프트 + Enter를 눌렀을 때 줄바꿈 추가                                
@@ -143,26 +112,19 @@ document.addEventListener("DOMContentLoaded", async function () {
                         event.preventDefault(); // 기본 엔터 키 동작을 막음
                         if (inputElement.value != '') {
                             if (externalVariable == 0) {
-                        if (inputElement.value != '') {
-                            if (externalVariable == 0) {
                                 const chat_descs = document.getElementById("chat_desc")
                                 const message = inputElement.value;
-                                const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
                                 const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
                                 const chats_sender_ai = document.createElement("div");
                                 const chats_receiver_ai = document.createElement("div");
-                                const chats_receiver_ai = document.createElement("div");
                                 chats_sender_ai.className = "chats_sender";
-                                chats_receiver_ai.className = "chats_receiver";
-
                                 chats_receiver_ai.className = "chats_receiver";
 
                                 const receiver_send_ai = document.createElement("p");
                                 const sender_send_ai = document.createElement("p");
                                 receiver_send_ai.className = "receiver"
                                 sender_send_ai.className = "sender";
-
 
 
                                 const receiver_rece_ai = document.createElement("p");
@@ -174,12 +136,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 chats_receiver_ai.appendChild(receiver_rece_ai)
                                 chats_receiver_ai.appendChild(sender_rece_ai)
                                 sender_send_ai.innerHTML = messages
-                                chats_receiver_ai.appendChild(sender_rece_ai)
-                                sender_send_ai.innerHTML = messages
                                 chat_descs.appendChild(chats_sender_ai);
                                 let loading_msg = `
                                 <div class="message-box from-you">
-                                    <img id="loading_img" src="Series_a_FP/frontend/imgs/loading.gif" width="24" height="24">
+                                    <img id="loading_img" src="../imgs/loading.gif" width="24" height="24">
                                 </div>    
                                 `
                                 receiver_rece_ai.innerHTML = loading_msg
@@ -201,7 +161,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         receiver_rece_ai.innerHTML = data.message
                                         chat_descs.appendChild(chats_receiver_ai);
 
-
                                     })
                                     .catch(error => {
                                         console.error('Error:', error);
@@ -210,9 +169,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 inputElement.value = '';
 
 
-
                             }
-                            else {
                             else {
                                 const message = inputElement.value;
                                 // console.log(message)
@@ -221,7 +178,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 console.log(externalVariable)
                                 console.log(sockets[externalVariable])
                                 sockets[externalVariable].send(JSON.stringify({
-                                    "type": "send",
                                     "type": "send",
                                     message: messages,
                                     chat_room_id: externalVariable,
@@ -232,9 +188,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             }
                         }
 
-
                     }
-
 
                 });
 
@@ -258,13 +212,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                 })
                     ;
                 // console.log(chat_list)
+                // console.log(chat_list)
                 // const chat_lists = await response_json.user.nickname;
                 for (const chatroom of chat_list) {
                     const chat_partner = chatroom.chat_partner;
                     const chat_room_id = chatroom.chatroom
                     const section = document.querySelector(".list");
                     const tagElement = document.createElement("div");
-                    tagElement.dataset.chatRoomId = chat_room_id;
                     tagElement.dataset.chatRoomId = chat_room_id;
                     const profile_img = document.createElement("img");
                     profile_img.className = "profile_img";
@@ -284,12 +238,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-
-
-                    if (chatroom.profile_img) {
-                        console.log(chatroom.profile_img)
-                        // console.log(`https://estagram.s3.ap-northeast-2.amazonaws.com/${chatroom.profile_img}`)
-                        profile_img.src = chatroom.profile_img
                     if (chatroom.profile_img) {
                         console.log(chatroom.profile_img)
                         // console.log(`https://estagram.s3.ap-northeast-2.amazonaws.com/${chatroom.profile_img}`)
@@ -298,7 +246,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         // profile_img.src = chatroom.profile_id.url
                     }
                     else {
-                        profile_img.src = "Series_a_FP/frontend/media/profile/행복오르미.jpg";
+                        profile_img.src = "../media/profile/행복오르미.jpg";
                     }
                     const profile_img_2 = document.createElement("img");
                     profile_img_2.className = "profile_img";
@@ -310,7 +258,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         profile_img_2.src = chatroom.profile_id
                     }
                     else {
-                        profile_img_2.src = "Series_a_FP/frontend/media/profile/행복오르미.jpg";
+                        profile_img_2.src = "../media/profile/행복오르미.jpg";
                         // profile_img_2.src = 'chatroom.profile_id' + '.url'
                         // profile_img_2.src = chatroom.profile_id.url
 
@@ -330,15 +278,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-
-
-
                     console.log("D")
-
 
                     const firstEntry = Object.keys(sockets);
 
-                    tagElement.addEventListener('click', async function () {
                     tagElement.addEventListener('click', async function () {
                         // const chat_room_id = chatroom.chatroom;   
                         // const chatrooms = tagElement.getAttribute('data-chat-room-id');  
@@ -348,27 +291,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                         var lastIndex = arrary.length - 1;
                         externalVariable = chat_room_id
                         if (Object.keys(sockets).length) {
-                        if (Object.keys(sockets).length) {
                             // console.log("차있음")
                             console.log(arrary)
                             console.log(sockets)
-                            console.log(sockets)
                             console.log(arrary[lastIndex])
                             console.log(sockets[arrary[lastIndex]])
-
-
 
 
                             for (var key in sockets) {
                                 sockets[key].close()
                             }
 
-
                         }
                         else {
-                        else {
                             console.log("비어있음")
-
 
                         }
                         // const chat_room_id = this.dataset.chatRoomId;            
@@ -452,16 +388,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                             const senders = JSON.parse(e.data).sender;
                             const content = JSON.parse(e.data).message;
 
-
-
-                        sockets[chat_room_id] = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/?${encodedUserData}`);
-
-
-
-                        sockets[chat_room_id].onmessage = (e) => {
-                            const senders = JSON.parse(e.data).sender;
-                            const content = JSON.parse(e.data).message;
-
                             const chats_sender = document.createElement("div");
                             const chats_receiver = document.createElement("div");
                             chats_sender.className = "chats_sender";
@@ -507,14 +433,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-
-
-
                         // inputElement.addEventListener("keydown", function (event) {                            
                         //     // event.preventDefault();
                         //     console.log("요곤가?" + chat_room_id)
                         //     if (event.key === 'Enter' && event.shiftKey) {
-
 
                         //         inputElement.value += '\n';
                         //         // 쉬프트 + Enter를 눌렀을 때 줄바꿈 추가                                
@@ -539,9 +461,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                         //     }
 
-
                         // });                             
-
 
                     });
                     // function setupInputHandler(inputElement, chat_room_i, username, chat_partner) {
@@ -570,9 +490,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     //                 inputElement.value = '';
                     //             }
 
-
                     //         }
-
 
                     //     });
                     // }

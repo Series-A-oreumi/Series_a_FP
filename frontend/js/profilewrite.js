@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             .then(data => {
                 // 성공적으로 서버에 데이터를 보낸 경우
                 alert('프로필이 성공적으로 업데이트되었습니다.');
-                window.location.href = `Series_a_FP/frontend/html/profile.html?id=${userId}`; // 원하는 리다이렉션 URL로 변경하세요.
+                window.location.href = `../html/profile.html?id=${userId}`; // 원하는 리다이렉션 URL로 변경하세요.
             })
             .catch(error => {
                 // 서버 오류 또는 요청 오류 발생

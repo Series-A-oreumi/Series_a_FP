@@ -208,13 +208,13 @@
 }
 
 .contents_detail_box .sprite_heart_icon_outline.on {
-    background: url('Series_a_FP/frontend/imgs/like2.png') no-repeat;
+    background: url('../imgs/like2.png') no-repeat;
 
 }
 
 .contents_detail_box .sprite_heart_icon_outline {
     display: inline-block;
-    background: url('Series_a_FP/frontend/imgs/like.png') no-repeat;
+    background: url('../imgs/like.png') no-repeat;
     background-size: contain;
     width: 20px;
     height: 20px;

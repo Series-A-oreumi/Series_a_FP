@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // 프로필
         function creatProfile(data, story, study) {
-            const chatUrl = `Series_a_FP/frontend/html/chat.html?data=${data.nickname}`
+            const chatUrl = `../html/chat.html?data=${data.nickname}`
 
             return `
             <div class="up-profile">
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         <p class="up-name">${data.nickname}</p>
                         <div class="up-buttons">
                             <a href="${chatUrl}" class="chatStart">
-                                <img src="Series_a_FP/frontend/imgs/user/dm.png">
+                                <img src="../imgs/user/dm.png">
                             </a>
                         </div>
                     </div>
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // 아래쪽 - 스토리 버전
         function createStory(data) {
-            const storyUrl = `Series_a_FP/frontend/html/story.html?id=${data.pk}`
+            const storyUrl = `../html/story.html?id=${data.pk}`
             let feedList = '';
             const ImageTF = data.images
             if (ImageTF.length > 0) {
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.log(data)
             const createAt = data.created_at
             const formattedCreateDate = formatDate(createAt)
-            const studyUrl = `Series_a_FP/frontend/html/studyDetail.html?id=${data.pk}`
+            const studyUrl = `../html/studyDetail.html?id=${data.pk}`
 
             let stackTags = '';
             if (data.stacks && data.stacks.length > 0) {
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             ${data.stacks.map(stack => `
                                 <li class="stack-icon">
                                     <span class="stack-icon ${stack.name}">
-                                        <img src="Series_a_FP/frontend/imgs/study/${stack.name}_icon.png">
+                                        <img src="../imgs/study/${stack.name}_icon.png">
                                     </span>
                                 </li>
                             `).join('')}
@@ -216,11 +216,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="tag_study">${data.project_study}</div>
                     <div class="article-img-btns">
                         <div class="views">
-                            <img src="Series_a_FP/frontend/imgs/study/viewsicon.png">
+                            <img src="../imgs/study/viewsicon.png">
                             <p>${data.views}</p>
                         </div>
                         <div class="likes">
-                            <img src="Series_a_FP/frontend/imgs/study/pinkheart.png">
+                            <img src="../imgs/study/pinkheart.png">
                             <p>${likeCount}</p>
                         </div>
                     </div>
@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             ${data1.stacks.map(stack => `
                                 <li class="stack-icon">
                                     <span class="stack-icon ${stack.name}">
-                                        <img src="Series_a_FP/frontend/imgs/study/${stack.name}_icon.png">
+                                        <img src="../imgs/study/${stack.name}_icon.png">
                                     </span>
                                 </li>
                             `).join('')}
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             ${data2.stacks.map(stack => `
                                 <li class="stack-icon">
                                     <span class="stack-icon ${stack.name}">
-                                        <img src="Series_a_FP/frontend/imgs/study/${stack.name}_icon.png">
+                                        <img src="../imgs/study/${stack.name}_icon.png">
                                     </span>
                                 </li>
                             `).join('')}
@@ -330,8 +330,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 Period2 = `<div class="sub-content">${data2.period}개월</div>`;
             }
 
-            const studyUrl1 = `Series_a_FP/frontend/html/studyDetail.html?id=${data1.pk}`
-            const studyUrl2 = `Series_a_FP/frontend/html/studyDetail.html?id=${data2.pk}`
+            const studyUrl1 = `../html/studyDetail.html?id=${data1.pk}`
+            const studyUrl2 = `../html/studyDetail.html?id=${data2.pk}`
 
             return `
             
@@ -341,7 +341,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         <div class="article-top">
                             <div class="tag_study">${data1.project_study}</div>
                             <div class="likes">
-                                <img src="Series_a_FP/frontend/imgs/study/pinkheart.png">
+                                <img src="../imgs/study/pinkheart.png">
                                 <p>${data1.likes_users.length}</p>
                             </div>
 
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         <div class="article-top">
                             <div class="tag_study">${data2.project_study}</div>
                             <div class="likes">
-                                <img src="Series_a_FP/frontend/imgs/study/pinkheart.png">
+                                <img src="../imgs/study/pinkheart.png">
                                 <p>${data2.likes_users.length}</p>
                             </div>
                         </div>
@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             ${data.stacks.map(stack => `
                                 <li class="stack-icon">
                                     <span class="stack-icon ${stack.name}">
-                                        <img src="Series_a_FP/frontend/imgs/study/${stack.name}_icon.png">
+                                        <img src="../imgs/study/${stack.name}_icon.png">
                                     </span>
                                 </li>
                             `).join('')}
@@ -418,7 +418,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 `;
             }
 
-            const studyUrl = `Series_a_FP/frontend/html/studyDetail.html?id=${data.pk}`
+            const studyUrl = `../html/studyDetail.html?id=${data.pk}`
 
             return `
             <a href="${studyUrl}">

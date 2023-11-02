@@ -1,5 +1,5 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
-import { formatTimeAgo } from "Series_a_FP/frontend/js/format.js"
+import { formatTimeAgo } from "./js/format.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 export async function feedDetail(postId) {
@@ -39,7 +39,7 @@ export async function feedDetail(postId) {
         if (post.images) {
             image.src = post.images[0].images
         } else {
-            image.src = "Series_a_FP/frontend/imgs/img_section/nophoto.png";
+            image.src = "../imgs/img_section/nophoto.png";
         }
         // image.src = "/frontend/media/post/2020/05/08/tiger/김치찌개.png"
         // image.src = post.데이터 이름 넣기.images.url;
@@ -67,7 +67,7 @@ export async function feedDetail(postId) {
         if (post.author.profile_img) {
             img.src = post.author.profile_img
         } else {
-            img.src = "Series_a_FP/frontend/imgs/common/profile.png";
+            img.src = "../imgs/common/profile.png";
         }
         img.alt = "프로필 이미지";
         profileImg.appendChild(img);
@@ -207,7 +207,7 @@ export async function feedDetail(postId) {
 
         // 댓글 이미지
         const commentImg = document.createElement('img');
-        commentImg.src = 'Series_a_FP/frontend/imgs/postdetail/comment.svg'; // 이미지 경로를 실제 이미지 경로로 바꿔주세요.
+        commentImg.src = '../imgs/postdetail/comment.svg'; // 이미지 경로를 실제 이미지 경로로 바꿔주세요.
         commentImg.alt = '댓글';
         commentImg.className = 'comment_img'; // 클래스명 설정
 
@@ -240,7 +240,7 @@ export async function feedDetail(postId) {
 
         // 좋아요 이미지
         const heartImg = document.createElement('img');
-        heartImg.src = 'Series_a_FP/frontend/imgs/postdetail/like.svg'; // 좋아요 이미지 경로
+        heartImg.src = '../imgs/postdetail/like.svg'; // 좋아요 이미지 경로
         heartImg.alt = '좋아요';
         heartImg.className = 'heart_img'; // 클래스명 설정
 

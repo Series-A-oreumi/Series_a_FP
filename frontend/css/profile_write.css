@@ -116,7 +116,7 @@ label {
 
 
 [type=submit] {
-    background-image: url("Series_a_FP/frontend/media/profile_write/check.png");
+    background-image: url("../media/profile_write/check.png");
     width: 2rem;
     height: 2rem;
     background-size: cover;

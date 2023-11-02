@@ -15,7 +15,7 @@ function checkAccessTokenValidity() {
             localStorage.removeItem('myNotify');
             localStorage.removeItem('myNotify2');
             alert('로그인 시간이 만료되어 로그아웃 되었습니다.');
-            window.location.href = 'Series_a_FP/frontend/html/login.html'; // 로그인 페이지로 이동
+            window.location.href = '../html/login.html'; // 로그인 페이지로 이동
         }
     }
 }

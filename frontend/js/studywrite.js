@@ -30,7 +30,7 @@ studyForm.addEventListener('submit', async (event) => {
         if (response.ok) {
             // 성공적으로 데이터를 보냈을 때 처리
             alert('스터디 글을 성공적으로 생성했습니다.');
-            window.location.href = 'Series_a_FP/frontend/html/studylist.html';
+            window.location.href = '../html/studylist.html';
 
         } else {
             // 데이터 전송 실패 시 처리

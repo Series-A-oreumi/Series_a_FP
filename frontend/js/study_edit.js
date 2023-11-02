@@ -86,7 +86,7 @@ studyForm.addEventListener('submit', async (event) => {
 
         if (response.ok) {
             alert('스터디 데이터를 성공적으로 업데이트했습니다.');
-            window.location.href = 'Series_a_FP/frontend/html/studylist.html';
+            window.location.href = '../html/studylist.html';
         } else {
             alert('모든 항목들을 입력해주세요.');
         }

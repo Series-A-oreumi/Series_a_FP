@@ -198,8 +198,8 @@ function createCardTop(request_user, data) {
     const loggedInUser = request_user.username;
     const isUserLiked = data.likes_users && data.likes_users.includes(loggedInUser);
     const heartImageSrc = isUserLiked
-        ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
-        : "Series_a_FP/frontend/imgs/study/grayheart.png";
+        ? "../imgs/study/pinkheart.png"
+        : "../imgs/study/grayheart.png";
 
     return `
         <div class="card_top" data-study-id="${data.pk}">
@@ -223,7 +223,7 @@ function createCardTop(request_user, data) {
 function createPostContent(data) {
     const endAt = data.end_at;
     const formattedEndDate = formatDate(endAt);
-    const studyDetailURL = `Series_a_FP/frontend/html/studyDetail.html?id=${data.pk}`;
+    const studyDetailURL = `../html/studyDetail.html?id=${data.pk}`;
 
     let stackTags = '';
     if (data.stacks && data.stacks.length > 0) {
@@ -233,7 +233,7 @@ function createPostContent(data) {
                     ${data.stacks.map(stack => `
                         <li class="stack-icon">
                             <span class="stack-icon ${stack.name}">
-                                <img src="Series_a_FP/frontend/imgs/study/${stack.name}_icon.png">
+                                <img src="../imgs/study/${stack.name}_icon.png">
                             </span>
                         </li>
                     `).join('')}
@@ -273,7 +273,7 @@ function formatDate(dateString) {
 function createCardBottom(data) {
 
     const totalComments = data.comments_count;
-    const userProfileURL = `Series_a_FP/frontend/html/profile.html?id=${data.author.id}`; // (author.id)로 수정
+    const userProfileURL = `../html/profile.html?id=${data.author.id}`; // (author.id)로 수정
 
 
     return `
@@ -289,13 +289,13 @@ function createCardBottom(data) {
             <div class="card_bottom_right">
                 <div class="views_container">
                     <div class="views_icon">
-                        <img src="Series_a_FP/frontend/imgs/study/viewsicon.png">
+                        <img src="../imgs/study/viewsicon.png">
 
                     </div>
                     <div class="views">${data.views}</div>
                 </div>
                 <div class="conmment_container">
-                    <div class="comment_icon"><img src="Series_a_FP/frontend/imgs/study/commenticon.png"></div>
+                    <div class="comment_icon"><img src="../imgs/study/commenticon.png"></div>
                     <div class="comment">${totalComments}</div>
                 </div>
             </div>
@@ -385,9 +385,9 @@ document.addEventListener('click', async function (event) {
             const response = await fetch(apiEndpoint, options);
             if (response.ok) {
                 if (currentImageSrc.includes('pinkheart.png')) {
-                    likeButton.src = 'Series_a_FP/frontend/imgs/study/grayheart.png';
+                    likeButton.src = '../imgs/study/grayheart.png';
                 } else {
-                    likeButton.src = 'Series_a_FP/frontend/imgs/study/pinkheart.png';
+                    likeButton.src = '../imgs/study/pinkheart.png';
                 }
             } else {
                 // 좋아요 요청 실패 처리

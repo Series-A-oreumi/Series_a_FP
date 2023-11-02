@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.ok) {
                     // 성공적으로 서버에 데이터를 보낸 경우
                     alert('게시글이 성공적으로 등록되었습니다.');
-                    window.location.href = 'Series_a_FP/frontend/html/feed.html'; // 원하는 리다이렉션 URL로 변경하세요.
+                    window.location.href = '../html/feed.html'; // 원하는 리다이렉션 URL로 변경하세요.
                     // 필요한 리다이렉션 또는 다른 작업을 수행하세요.
                 } else {
                     // 서버 오류 또는 요청 오류 발생

@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> estagram </title>
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/profile.css">
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/global.css">
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/common.css">
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/reset.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/reset.css">
 </head>
 
 <body>
@@ -16,19 +16,19 @@
     <header class="desktop">
         <div class="nav-container">
             <div class="nav-hamburger">
-                <button href="#" id='hamburger' onclick="toggleSidebar()"><img
-                        src="Series_a_FP/frontend/imgs/common/hamburger.png" alt="햄버거" class="hamburger" /></button>
+                <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
             </div>
-            <a href="Series_a_FP/frontend/html/feed.html" class="logo-link">
-                <img src="Series_a_FP/frontend/imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
             </a>
             <div class="nav-buttons">
-                <a href=""><img src="Series_a_FP/frontend/imgs/common/chat.png" alt="채팅" class="icon2" /></a>
+                <a href=""><img src="../imgs/common/chat.png" alt="채팅" class="icon2" /></a>
                 <div class="notify_count">
                     0
                 </div>
                 <div id="notification-trigger">
-                    <img src="Series_a_FP/frontend/imgs/common/alarm.png" alt="알림" class="icon" />
+                    <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
                     <!-- 알림 모달 -->
                     <div id="notification-modal">
                         <section class="notify_seciton">
@@ -54,7 +54,7 @@
                 <!-- 로그인 여부에 따라 변경요망 -->
                 <div class="user_icon">
                     <a href="#">
-                        <img src="Series_a_FP/frontend/imgs/common/user.png" class="icon user_icon">
+                        <img src="../imgs/common/user.png" class="icon user_icon">
                     </a>
                     <div class="dropdown-content">
                         <a href="#" id="profile-change-link">프로필 변경</a>
@@ -71,51 +71,51 @@
     <div id="sidebar" class="sidebar">
         <div class="sidebar-container">
             <div class="sidebar-hamburger">
-                <button href="#" id='hamburger2' onclick="toggleSidebar()"><img
-                        src="Series_a_FP/frontend/imgs/common/hamburger.png" alt="햄버거" class="hamburger" /></button>
+                <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
             </div>
-            <a href="Series_a_FP/frontend/html/feed.html" class="logo-link">
-                <img src="Series_a_FP/frontend/imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
             </a>
         </div>
         <div id="side1">
             <div class="sidebar-list">
-                <a href="Series_a_FP/frontend/html/feed.html">
-                    <img src="Series_a_FP/frontend/imgs/common/home.png" />
+                <a href="feed.html">
+                    <img src="../imgs/common/home.png" />
                     <span class="sidebar-text">홈</span>
                 </a>
             </div>
             <div class="sidebar-list">
                 <a href="#" onclick="toggleSubSidebar()">
-                    <img src="Series_a_FP/frontend/imgs/common/search.png" />
+                    <img src="../imgs/common/search.png" />
                     <span class="sidebar-text">검색</span>
                 </a>
             </div>
 
             <div class="sidebar-list">
-                <a href="Series_a_FP/frontend/html/studylist.html">
-                    <img src="Series_a_FP/frontend/imgs/common/study.png" />
+                <a href="studylist.html">
+                    <img src="../imgs/common/study.png" />
                     <span class="sidebar-text">스터디 / 프로젝트</span>
                 </a>
             </div>
 
             <div class="sidebar-list">
-                <a href="Series_a_FP/frontend/html/story_write.html">
-                    <img src="Series_a_FP/frontend/imgs/common/create.png" />
+                <a href="story_write.html">
+                    <img src="../imgs/common/create.png" />
                     <span class="sidebar-text">글 작성</span>
                 </a>
             </div>
 
             <div class="sidebar-list">
-                <a href="Series_a_FP/frontend/html/profile.html" id="profile-link">
-                    <img src="Series_a_FP/frontend/imgs/common/profile.svg" class="sidebar-profile" />
+                <a href="profile.html" id="profile-link">
+                    <img src="../imgs/common/profile.svg" class="sidebar-profile" />
                     <span class="sidebar-text">프로필</span>
                 </a>
             </div>
 
             <div class="sidebar-list">
                 <a href="#">
-                    <img src="Series_a_FP/frontend/imgs/common/settings.png.png" />
+                    <img src="../imgs/common/settings.png.png" />
                     <span class="sidebar-text">설정</span>
                 </a>
             </div>
@@ -181,16 +181,16 @@
     </main>
 
 </body>
-<script src="Series_a_FP/frontend/js/profile.js"></script>
-<script src="Series_a_FP/frontend/js/sidebar.js"></script>
-<script src="Series_a_FP/frontend/js/auth.js"></script>
+<script src="../js/profile.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/auth.js"></script>
 
-<script src="Series_a_FP/frontend/js/login.js"></script>
+<script src="../js/login.js"></script>
 
-<script src="Series_a_FP/frontend/js/alarm.js"></script>
-<script src="Series_a_FP/frontend/js/alarmCount.js"></script>
-<script src="Series_a_FP/frontend/js/alrarm.js"></script>
+<script src="../js/alarm.js"></script>
+<script src="../js/alarmCount.js"></script>
+<script src="../js/alrarm.js"></script>
 
-<script src="Series_a_FP/frontend/js/profilelocation.js" type="module"></script>
+<script src="../js/profilelocation.js" type="module"></script>
 
 </html>

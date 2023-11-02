@@ -11,11 +11,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <title>Estagram</title>
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/reset.css">
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/common.css">
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/style.css">
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/detail-page.css">
-    <link rel="shortcut icon" href="Series_a_FP/frontend/imgs/instagram.png">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/detail-page.css">
+    <link rel="shortcut icon" href="../imgs/instagram.png">
 
     <style>
         .detail_link {
@@ -32,19 +32,19 @@
     <header class="desktop">
         <div class="nav-container">
             <div class="nav-hamburger">
-                <button href="#" id='hamburger' onclick="toggleSidebar()"><img
-                        src="Series_a_FP/frontend/imgs/common/hamburger.png" alt="햄버거" class="hamburger" /></button>
+                <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
             </div>
-            <a href="Series_a_FP/frontend/html/feed.html" class="logo-link">
-                <img src="Series_a_FP/frontend/imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
             </a>
             <div class="nav-buttons">
-                <a href=""><img src="Series_a_FP/frontend/imgs/common/chat.png" alt="채팅" class="icon2" /></a>
+                <a href=""><img src="../imgs/common/chat.png" alt="채팅" class="icon2" /></a>
                 <div class="notify_count">
                     0
                 </div>
                 <div id="notification-trigger">
-                    <img src="Series_a_FP/frontend/imgs/common/alarm.png" alt="알림" class="icon" />
+                    <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
                     <!-- 알림 모달 -->
                     <div id="notification-modal">
                         <section class="notify_seciton">
@@ -70,7 +70,7 @@
                 <!-- 로그인 여부에 따라 변경요망 -->
                 <div class="user_icon">
                     <a href="#">
-                        <img src="Series_a_FP/frontend/imgs/common/user.png" class="icon user_icon">
+                        <img src="../imgs/common/user.png" class="icon user_icon">
                     </a>
                     <div class="dropdown-content">
                         <a href="#" id="profile-change-link">프로필 변경</a>
@@ -97,12 +97,12 @@
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- <script src="{% static 'js/insta.js' %}"></script> -->
-    <script src="Series_a_FP/frontend/js/feedDetail.js" type="module"></script>
-    <script src="Series_a_FP/frontend/js/auth.js"></script>
-    <script src="Series_a_FP/frontend/js/login.js"></script>
-    <script src="Series_a_FP/frontend/js/alarm.js"></script>
-    <script src="Series_a_FP/frontend/js/alarmCount.js"></script>
-    <script src="Series_a_FP/frontend/js/alrarm.js"></script>
+    <script src="../js/feedDetail.js" type="module"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/alarm.js"></script>
+    <script src="../js/alarmCount.js"></script>
+    <script src="../js/alrarm.js"></script>
 </body>
 
 </html>

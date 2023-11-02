@@ -1,5 +1,5 @@
 // 로그인한 유저 아이디
-import { UserInfo } from "Series_a_FP/frontend/js/jwtUserId.js"
+import { UserInfo } from "./js/jwtUserId.js"
 
 const accessToken = localStorage.getItem('access_token');
 UserInfo(accessToken)
@@ -18,8 +18,8 @@ function formatDate(dateString) {
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
-    const userProfileURL = `Series_a_FP/frontend/html/profile.html?id=${data.author.id}`;
-    const chatURL = `Series_a_FP/frontend/html/chat.html?data=${data.author.nickname}`;
+    const userProfileURL = `../html/profile.html?id=${data.author.id}`;
+    const chatURL = `../html/chat.html?data=${data.author.nickname}`;
 
     let inviteBtn = '';
     const accessToken = localStorage.getItem('access_token');
@@ -27,7 +27,7 @@ function createDetailSection1(data) {
     const studyId = data.author.id
     const study_id = data.id
     if (UserId === studyId) {
-        inviteBtn = `<a href="Series_a_FP/frontend/html/study_edit.html?id=${study_id}"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
+        inviteBtn = `<a href="../html/study_edit.html?id=${study_id}"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
     } else {
         inviteBtn = `<a href="${chatURL}"><div class="goChat">채팅하기</div></a>`
     }
@@ -54,8 +54,8 @@ function createDetailSection1(data) {
 
 
 // const heartImageSrc = data.likes
-//     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
-//     : "Series_a_FP/frontend/imgs/study/grayheart.png";
+//     ? "../imgs/study/pinkheart.png"
+//     : "../imgs/study/grayheart.png";
 
 
 // 본문~
@@ -68,7 +68,7 @@ function createDetailSection2(user, data) {
                     ${data.stacks.map(stack => `
                         <li class="stack-icon">
                             <span class="stack-icon ${stack.name}">
-                                <img src="Series_a_FP/frontend/imgs/study/${stack.name}_icon.png">
+                                <img src="../imgs/study/${stack.name}_icon.png">
                             </span>
                         </li>
                     `).join('')}
@@ -170,17 +170,17 @@ function createViewAndLikes(user, data) {
     let likesTrue = ''
     const loggedInUser = user.username;
     if (data.likes_users && data.likes_users.includes(loggedInUser)) {
-        likesTrue = `Series_a_FP/frontend/imgs/study/pinkheart.png`
+        likesTrue = `../imgs/study/pinkheart.png`
     }
     else {
-        likesTrue = `Series_a_FP/frontend/imgs/study/grayheart.png`
+        likesTrue = `../imgs/study/grayheart.png`
     }
 
     return `
     <div class="post-likes">
         <div class="views-box">
             <div class="views">
-                <img src="Series_a_FP/frontend/imgs/study/viewsicon.png">
+                <img src="../imgs/study/viewsicon.png">
                 <div>${data.views}</div>
             </div>
             <div class="likes">
@@ -201,7 +201,7 @@ function createDetailSection3(data) {
     let commentList = '';
     if (data.comments_list && data.comments_list.length > 0) {
         commentList = data.comments_list.reverse().map(comment => {
-            const commentProfileURL = `Series_a_FP/frontend/html/profile.html?id=${data.author.id}`;
+            const commentProfileURL = `../html/profile.html?id=${data.author.id}`;
             const writeAt = comment.created_at;
             const formattedCommentDate = formatDate(writeAt);
             const accessToken = localStorage.getItem('access_token');
@@ -319,7 +319,7 @@ function renderComments(comments) {
     const reversedComments = comments.reverse();
 
     reversedComments.forEach(comment => {
-        const commentProfileURL = `Series_a_FP/frontend/html/profile.html?id=${comment.author.id}`;
+        const commentProfileURL = `../html/profile.html?id=${comment.author.id}`;
         const formattedCommentDate = formatDate(comment.created_at);
         const commentElement = document.createElement('div');
         const accessToken = localStorage.getItem('access_token');
@@ -432,7 +432,7 @@ document.addEventListener('click', async function (event) {
             try {
                 const response = await fetch(apiEndpoint, options);
                 if (response.ok) {
-                    window.location.href = 'Series_a_FP/frontend/html/studylist.html';
+                    window.location.href = '../html/studylist.html';
                 } else {
                     console.error('Failed to delete comment:', response.status);
                 }
@@ -638,10 +638,10 @@ document.addEventListener('click', async function (event) {
             if (response.ok) {
 
                 if (currentImageSrc.includes('pinkheart.png')) {
-                    likeButton.src = 'Series_a_FP/frontend/imgs/study/grayheart.png';
+                    likeButton.src = '../imgs/study/grayheart.png';
                     likeCountElement.textContent = likeCount - 1;
                 } else {
-                    likeButton.src = 'Series_a_FP/frontend/imgs/study/pinkheart.png';
+                    likeButton.src = '../imgs/study/pinkheart.png';
                     likeCountElement.textContent = likeCount + 1;
                 }
 
