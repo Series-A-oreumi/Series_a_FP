@@ -414,7 +414,7 @@ body {
 
 /* 수정하기 삭제 하기 */
 .contents_box .button-all{
-    padding-left: 315px;
+    padding-left: 300px;
     font-size: 30px;
     display: inline-block; /* 수정 */
 }
