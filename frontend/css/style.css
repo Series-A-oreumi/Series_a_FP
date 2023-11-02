@@ -496,7 +496,7 @@ body {
     margin-right: 10px;
 }
 
-.contents .commentList{
+.contents .commentList {
     display: flex;
     align-items: center;
     padding-top: 10px;

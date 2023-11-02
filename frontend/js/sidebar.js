@@ -29,7 +29,6 @@ function closeSidebar() {
     const sidebar = document.getElementById("sidebar");
     const subSidebar = document.getElementById("sub-sidebar");
     const overlay = document.getElementById("overlay");
-    const overlay2 = document.getElementById("overlay2");
 
     sidebar.style.transform = "translateX(-280px)";
     subSidebar.style.display = "none"; // 초기에도 왼쪽으로 이동
@@ -119,7 +118,7 @@ const updateSearchResults = async () => {
                 resultItem.appendChild(userInfoContainer);
 
                 // 클릭 이벤트 리스너 추가
-                resultItem.addEventListener('click', function() {
+                resultItem.addEventListener('click', function () {
                     // 클릭 시 페이지 이동
                     window.location.href = resultItem.href;
                 });
@@ -151,3 +150,6 @@ searchInput.addEventListener('keypress', function (event) {
         updateSearchResults();
     }
 });
+
+
+

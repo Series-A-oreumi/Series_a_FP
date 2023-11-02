@@ -70,7 +70,7 @@ def comment_action(sender, instance, created, **kwargs):
 
          # 로그인한 유저와 게시물 작성자가 다른 경우에만 알람 생성
         if sender_user != receiver_user:
-            content = f'{sender_user.nickname}님이 회원님의 {post.title}에 댓글을 남겼습니다.'
+            content = f'{sender_user.nickname}님이 {post.title}에 댓글을 남겼습니다.'
             
             alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content, story=post)
 
@@ -92,12 +92,10 @@ def like_action(sender, instance, created, **kwargs):
         post = like.post # 현재 좋아요가 달린 스토리
         sender_user = like.user # 댓글은 단 유저
         receiver_user = post.author # 해당 게시물 작성자
-
-        content = f'{sender_user.nickname}님이 회원님의 {post.title}에 좋아요를 눌렀습니다.'
         
          # 로그인한 유저와 게시물 작성자가 다른 경우에만 알람 생성
         if sender_user != receiver_user:
-            content = f'{sender_user.nickname}님이 회원님의 {post.title}에 댓글을 남겼습니다.'
+            content = f'{sender_user.nickname}님이 {post.title}에 좋아요를 눌렀습니다.'
             
             alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content, story=post)
 

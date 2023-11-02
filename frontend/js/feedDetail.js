@@ -1,8 +1,8 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
-import { formatTimeAgo } from "./format.js" 
+import { formatTimeAgo } from "./format.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
-export async function feedDetail(postId){
+export async function feedDetail(postId) {
 
     // 로컬 스토리지에서 access_token 가져오기
     const accessToken = localStorage.getItem('access_token');
@@ -10,14 +10,14 @@ export async function feedDetail(postId){
     try {
         // 백엔드 API에서 포스트 데이터를 가져옵니다.
         const response = await // Fetch 요청 보내기
-        // 임시로 story/1 게시물로 선정 -> 추후 변경해야됨!
-        fetch(`http://localhost:8000/api/story/${postId}/`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
-            'Content-Type': 'application/json'
-        },
-        }); 
+            // 임시로 story/1 게시물로 선정 -> 추후 변경해야됨!
+            fetch(`http://localhost:8000/api/story/${postId}/`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
+                    'Content-Type': 'application/json'
+                },
+            });
         // 현재는 post_id를 임의로 1로 두었지만 추후 ${post.pk}로 수정해야함!
         const post = await response.json();
         console.log(`feedDetail ${post.content}`);
@@ -26,24 +26,25 @@ export async function feedDetail(postId){
         const contentsBox = document.querySelector(".contents_detail_box");
         const article = document.createElement("article");
         article.className = "contents_detail cont01";
-        
+
         // 포스트 이미지 추가
         const imgSection = document.createElement('div');
         imgSection.className = "img_section";
 
         const postImg = document.createElement('div');
-        postImg.className = "trans_inner";   
+        postImg.className = "trans_inner";
         const imgdiv = document.createElement('div');
         const image = document.createElement("img");
         // 사진도 일단 예시로만 
         image.src = "../media/post/2020/05/08/tiger/iOtAhiyj.jpg"
         // image.src = "/frontend/media/post/2020/05/08/tiger/김치찌개.png"
+        // image.src = post.데이터 이름 넣기.images.url;
         image.alt = "피드이미지";
 
         imgdiv.appendChild(image)
         postImg.appendChild(imgdiv)
         imgSection.appendChild(postImg)
-        
+
         // detail right box 생성
         const detailBox = document.createElement('div');
         detailBox.className = "detail--right_box";
@@ -51,7 +52,7 @@ export async function feedDetail(postId){
         // 포스트 헤더를 추가 (프로필 이미지, 사용자 이름 등)
         const header = document.createElement("header");
         header.className = "top";
-        
+
         const userContainer = document.createElement("div");
         userContainer.className = "user_container";
         // 프로필 이미지 추가
@@ -74,11 +75,11 @@ export async function feedDetail(postId){
         const usernameSpan = document.createElement("span");
         usernameSpan.textContent = post.author.username;
         usernameSpan.style.color = "black";  // 사용자 이름의 글자색을 여기에 지정
-        
+
         // postTime 설정 및 스타일 지정
         const postTimeSpan = document.createElement("span");
         postTimeSpan.textContent = `${postTime}`;
-        postTimeSpan.style.color = "#888"; 
+        postTimeSpan.style.color = "#888";
         nickName.appendChild(usernameSpan);
         nickName.appendChild(postTimeSpan);
         // const country = document.createElement("div");
@@ -87,7 +88,7 @@ export async function feedDetail(postId){
         // userName.appendChild(country);
         userName.appendChild(nickName);
         userContainer.appendChild(userName);
-        
+
         // 토글 기능 추가 해야함!
         const More = document.createElement('div');
         More.className = "sprite_more_icon";
@@ -116,14 +117,14 @@ export async function feedDetail(postId){
         scrollSection.className = "scroll_section";
         scrollSection.id = "comment-list-ajax-post8";
 
-        
+
         // 좋아요 아이콘을 만들고 설정합니다.
         // const heartBtn = document.createElement('div');
         // heartBtn.className = 'heart_btn'; // 클래스명 설정
         // const leftIcons = document.createElement('div');
         // leftIcons.className = 'left_icons'; // 클래스명 설정
 
-        
+
         // // 댓글 아이콘
         // const commentDiv = document.createElement("div");
 
@@ -134,17 +135,17 @@ export async function feedDetail(postId){
         // // div 엘리먼트를 a 엘리먼트의 자식으로 추가합니다.
         // commentDiv.appendChild(divElement);
 
-        
+
         // leftIcons.appendChild(heartBtn);
         // leftIcons.appendChild(commentDiv);
 
         const heartBtn = document.createElement('div');
         heartBtn.className = 'heart_btn'; // 클래스명 설정
-        
+
         // "좋아요" 텍스트 추가
         const likeText = document.createElement('span');
         likeText.textContent = '좋아요';
-        
+
         const likeContainer = document.createElement('div');
 
         // 좋아요 버튼을 선택하고 클릭 이벤트를 처리
@@ -156,7 +157,7 @@ export async function feedDetail(postId){
         likeButton.setAttribute('data-post-id', post.pk);
         likeContainer.addEventListener("click", async function () {
             const postId = likeButton.getAttribute("data-post-id");
-        
+
             try {
                 const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
                     method: "POST",
@@ -165,17 +166,17 @@ export async function feedDetail(postId){
                         "Content-Type": "application/json",
                     },
                 });
-        
+
                 if (response.ok) {
 
-        
+
                     // 좋아요 상태를 서버에서 업데이트한 후에는 해당 버튼의 상태를 변경합니다.
                     if (response.status === 201) {
                         likeButton.classList.add("on");
                     } else if (response.status === 200) {
                         likeButton.classList.remove("on");
                     }
-        
+
                     // 업데이트된 좋아요 개수를 UI에 반영
                     const likesCountResponse = await response.json();
                     const updatedLikesCount = likesCountResponse.likes_count;
@@ -194,14 +195,14 @@ export async function feedDetail(postId){
         likeContainer.appendChild(likeText);
 
 
-        
-        
+
+
         // 댓글 이미지
         const commentImg = document.createElement('img');
         commentImg.src = '../imgs/postdetail/comment.svg'; // 이미지 경로를 실제 이미지 경로로 바꿔주세요.
         commentImg.alt = '댓글';
         commentImg.className = 'comment_img'; // 클래스명 설정
-        
+
         // 댓글 이미지와 텍스트를 같은 div에 추가
         const commentContainer2 = document.createElement('div');
         commentContainer2.className = 'comment_container2'; // 클래스명 설정
@@ -246,7 +247,7 @@ export async function feedDetail(postId){
         commentContainer.className = "comment_container";
         const comment = document.createElement('div')
         comment.className = "comment";
-        
+
         // 댓글 개수를 표시합니다.
         comment.textContent = `댓글 ${post.comments_count}개`;
         comment.id = `comment-all-${post.pk}`;
@@ -262,10 +263,10 @@ export async function feedDetail(postId){
         content.textContent = post.content; // 포스트 내용을 여기에 추가
         // content.textContent = `zz ${postId}`; // 포스트 내용을 여기에 추가
 
-        
+
         const commentAdd = document.createElement("div");
         commentAdd.className = "comment_field";
-        commentAdd.id = "add-comment-post8"; 
+        commentAdd.id = "add-comment-post8";
 
         // "댓글 달기" 입력 필드 생성
         const inputField = document.createElement("input");
@@ -284,7 +285,7 @@ export async function feedDetail(postId){
         publishButton.setAttribute("name", "8");
         publishButton.setAttribute("data-name", "comment");
         publishButton.textContent = "게시";
-        
+
         // 로그인 확인 여부 코드 추가해야됨!
         // publishButton.addEventListener("click", function() {
         // alert("댓글을 작성하려면 로그인이 필요합니다");
@@ -301,8 +302,8 @@ export async function feedDetail(postId){
         detailBox.appendChild(iconsContainer);
         detailBox.appendChild(interactionContainer);
         detailBox.appendChild(commentAdd);
-        
-        
+
+
         // 나머지 요소들을 article에 추가
         article.appendChild(detailBox);
         article.appendChild(imgSection);
@@ -312,13 +313,13 @@ export async function feedDetail(postId){
         article.appendChild(commentAdd);
         // article을 postContainer에 추가
         contentsBox.appendChild(article);
-        
+
     } catch (error) {
         console.error("Error fetching data:", error);
     }
-    
+
 };
 
-export function clearFeedDetail(){
+export function clearFeedDetail() {
     document.querySelector(".contents_detail_box").replaceChildren();
 }

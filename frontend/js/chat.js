@@ -46,27 +46,27 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 const socket_alarm = new WebSocket(`ws://localhost:8000/ws/chat_alarm/${username}/`);
 
-                
-                socket_alarm.onmessage = function(event) {
+
+                socket_alarm.onmessage = function (event) {
                     const data = JSON.parse(event.data);
                     const count = data.count;
-                    const room_id = data.chatroom_id;                    
+                    const room_id = data.chatroom_id;
                     // 수신한 메시지를 처리할 수 있습니다.
-                    var count_roomid = document.getElementById(room_id);                    
-                    if(count == 1){
+                    var count_roomid = document.getElementById(room_id);
+                    if (count == 1) {
                         var alarm_count = parseInt(count_roomid.innerHTML) + parseInt(count)
                         count_roomid.innerHTML = alarm_count
                     }
-                    else if(count == 0){
+                    else if (count == 0) {
                         count_roomid.innerHTML = 0;
                         console.log("읽음")
                     }
-                };                
+                };
 
 
 
 
-                
+
                 const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
                     method: 'POST',
                     headers: {
@@ -82,52 +82,58 @@ document.addEventListener("DOMContentLoaded", async function () {
                 })
                     ;
                 // const chat_lists = await response_json.user.nickname;
-                for (const chatroom of chat_list){                        
+                for (const chatroom of chat_list) {
                     const chat_partner = chatroom.chat_partner;
-                    const chat_room_id = chatroom.chatroom                        
+                    const chat_room_id = chatroom.chatroom
                     const section = document.querySelector(".list");
                     const tagElement = document.createElement("div");
                     const profile_img = document.createElement("img");
-                    profile_img.className = "profile_img";                        
+                    profile_img.className = "profile_img";
                     const profile_id = document.createElement("div");
                     profile_id.className = "profile_id";
                     const alarm = document.createElement("div");
                     alarm.className = "alarm";
                     alarm.id = chat_room_id;
-                    if (chatroom.profile_id){
+                    if (chatroom.profile_id) {
                         profile_img.src = chatroom.profile_id
+                        // profile_img.src = 'chatroom.profile_id' + '.url'
+                        // profile_img.src = chatroom.profile_id.url
                     }
-                    else{                            
-                        profile_img.src = "../media/profile/행복오르미.jpg";                        
+                    else {
+                        profile_img.src = "../media/profile/행복오르미.jpg";
                     }
                     const profile_img_2 = document.createElement("img");
-                    profile_img_2.className = "profile_img";                        
+                    profile_img_2.className = "profile_img";
                     const profile_id_2 = document.createElement("div");
                     profile_id_2.className = "profile_id";
                     const alarm_2 = document.createElement("div");
                     alarm_2.id = chat_room_id;
-                    if (chatroom.profile_id){
+                    if (chatroom.profile_id) {
                         profile_img_2.src = chatroom.profile_id
                     }
-                    else{                            
-                        profile_img_2.src = "../media/profile/행복오르미.jpg";                        
-                    }                        
-                    profile_id.textContent = chat_partner;                        
-                    profile_id_2.textContent = chat_partner; 
+                    else {
+                        profile_img_2.src = "../media/profile/행복오르미.jpg";
+                        // profile_img_2.src = 'chatroom.profile_id' + '.url'
+                        // profile_img_2.src = chatroom.profile_id.url
+
+
+                    }
+                    profile_id.textContent = chat_partner;
+                    profile_id_2.textContent = chat_partner;
                     alarm.textContent = chatroom.unread_count
                     tagElement.className = "chat_nick";
                     tagElement.appendChild(profile_img);
                     tagElement.appendChild(profile_id);
                     tagElement.appendChild(alarm);
 
-                    
-                    tagElement.addEventListener('click', async function () {                            
+
+                    tagElement.addEventListener('click', async function () {
                         const chat_info = document.querySelector('#chat_info');
-                        chat_info.innerHTML = "";                            
+                        chat_info.innerHTML = "";
                         chat_info.appendChild(profile_img_2);
-                        chat_info.appendChild(profile_id_2);                        
+                        chat_info.appendChild(profile_id_2);
                         chat_info.style.borderBottom = '1px solid rgb(219, 219, 219)';
-                                                
+
 
                         // 채팅 내용을 불러온다
                         const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
@@ -136,14 +142,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ guest: chat_partner , chat_room_id : chat_room_id }),
+                            body: JSON.stringify({ guest: chat_partner, chat_room_id: chat_room_id }),
                         }).then(response => {
                             if (!response.ok) {
                                 throw new Error("Network response was not ok");
                             }
                             return response.json();
                         })
-                        if(!chat_desc.messages){                                
+                        if (!chat_desc.messages) {
                             console.log("데이터가 없습니다.")
                         }
                         //채팅 내용창 초기화
@@ -151,9 +157,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                         chat_descs.innerHTML = '<br>';
                         // console.log(chat_desc)
                         // 채팅 내용을 반복문으로 태그 추가
-                        for (const message of chat_desc.messages){
+                        for (const message of chat_desc.messages) {
                             const chats_sender = document.createElement("div");
-                            const chats_receiver = document.createElement("div");                            
+                            const chats_receiver = document.createElement("div");
                             chats_sender.className = "chats_sender";
                             chats_receiver.className = "chats_receiver";
 
@@ -162,7 +168,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             receiver_send.className = "receiver"
                             sender_send.className = "sender";
 
-                            
+
                             const receiver_rece = document.createElement("p");
                             const sender_rece = document.createElement("p");
                             receiver_rece.className = "receiver"
@@ -171,31 +177,31 @@ document.addEventListener("DOMContentLoaded", async function () {
                             chats_sender.appendChild(receiver_send)
                             chats_sender.appendChild(sender_send)
                             chats_receiver.appendChild(receiver_rece)
-                            chats_receiver.appendChild(sender_rece)                            
-                            if(message.sender == username){                                                                        
-                                sender_send.innerHTML = message.content                                                                    
+                            chats_receiver.appendChild(sender_rece)
+                            if (message.sender == username) {
+                                sender_send.innerHTML = message.content
                                 chat_descs.appendChild(chats_sender);
                             }
-                            else{
-                                receiver_rece.innerHTML = message.content                                    
+                            else {
+                                receiver_rece.innerHTML = message.content
                                 chat_descs.appendChild(chats_receiver);
                             }
-                            
+
                         }
                         // chat_desc 엘리먼트의 스크롤을 맨 아래로 이동
-                        
+
                         chat_descs.scrollTop = chat_descs.scrollHeight;
 
 
-                        const socket = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/`);                        
-                        
-                        
+                        const socket = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/`);
+
+
                         socket.onmessage = (e) => {
-                            const senders = JSON.parse(e.data).sender;                            
-                            const content = JSON.parse(e.data).message;                            
-                            
+                            const senders = JSON.parse(e.data).sender;
+                            const content = JSON.parse(e.data).message;
+
                             const chats_sender = document.createElement("div");
-                            const chats_receiver = document.createElement("div");                            
+                            const chats_receiver = document.createElement("div");
                             chats_sender.className = "chats_sender";
                             chats_receiver.className = "chats_receiver";
 
@@ -204,7 +210,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             receiver_send.className = "receiver"
                             sender_send.className = "sender";
 
-                            
+
                             const receiver_rece = document.createElement("p");
                             const sender_rece = document.createElement("p");
                             receiver_rece.className = "receiver"
@@ -213,26 +219,26 @@ document.addEventListener("DOMContentLoaded", async function () {
                             chats_sender.appendChild(receiver_send)
                             chats_sender.appendChild(sender_send)
                             chats_receiver.appendChild(receiver_rece)
-                            chats_receiver.appendChild(sender_rece) 
-                            
+                            chats_receiver.appendChild(sender_rece)
+
                             // console.log(senders)
-                            if(senders == username){                                                                                                        
-                                sender_send.innerHTML = content                                                                    
+                            if (senders == username) {
+                                sender_send.innerHTML = content
                                 chat_descs.appendChild(chats_sender);
                             }
-                            else{
-                                receiver_rece.innerHTML = content 
+                            else {
+                                receiver_rece.innerHTML = content
                                 chat_descs.appendChild(chats_receiver);
-                            }                            
+                            }
                             chat_descs.scrollTop = chat_descs.scrollHeight;
                             // chatContainer.innerHTML += `<p>${message}</p>`;
                         };
-                        
-                        
-                        
-                        
-                        
-                        
+
+
+
+
+
+
                         const inputElement = document.getElementById("chat_input");
                         inputElement.addEventListener("keydown", function (event) {
                             if (event.key === 'Enter' && event.shiftKey) {
@@ -242,13 +248,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                             } else if (event.key === 'Enter' && !event.shiftKey) {
                                 // Enter 키를 눌렀고, 쉬프트 키가 눌리지 않았을 때만 메시지 전송
                                 event.preventDefault(); // 기본 엔터 키 동작을 막음
-                                if (inputElement.value != ''){
+                                if (inputElement.value != '') {
                                     const message = inputElement.value;
                                     // console.log(message)
                                     const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
                                     // console.log(messages)
                                     socket.send(JSON.stringify({
-                                        "type" : "send",
+                                        "type": "send",
                                         message: messages,
                                         chat_room_id: chat_room_id,
                                         sender: username,
@@ -256,9 +262,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                                     }));
                                     inputElement.value = '';
                                 }
-                                
+
                             }
-                            
+
                         });
 
                         socket.onopen = function (event) {
@@ -270,13 +276,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                             }));
                         };
 
-                        
-                        
+
+
                     });
                     section.appendChild(tagElement);
                 }
-                
-                
+
+
 
             } else {
                 // 정보가 없을 경우 대체 내용을 표시

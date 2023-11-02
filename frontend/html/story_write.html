@@ -1,36 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> estagram </title>
     <link rel="stylesheet" href="../css/story_write.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/reset.css">
 </head>
+
 <body>
+    <!-- nav바 시작-->
+    <header class="desktop">
+        <div class="nav-container">
+            <div class="nav-hamburger">
+                <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            </a>
+            <div class="nav-buttons">
+                <a href=""><img src="../imgs/common/chat.png" alt="채팅" class="icon2" /></a>
+                <div class="notify_count">
+                    0
+                </div>
+                <div id="notification-trigger">
+                    <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
+                    <!-- 알림 모달 -->
+                    <div id="notification-modal">
+                        <section class="notify_seciton">
+                            <div>
+                                <p class="notify_title">알림</p>
+                            </div>
+                            <div class="notify_list">
+                                <div class="notify_none">
+                                    <div class="sender_info">
+                                        <p class="notnew">새로운 알림이 없습니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notify2-section">
+                                <p class="notify_title2">이전알림</p>
+                            </div>
 
-    <div class="contents">
-        
-        <form id="write-form" method="POST" enctype="multipart/form-data">
-
-            <div class="write-main">
-                <input type="text" name="title" placeholder="제목을 입력해주세요.">
-                <!-- 에디터 -->
-                <div class="write-editor">
-                    <textarea name="content" id="content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+                            <div class="notify_list2"></div>
+                        </section>
+                    </div>
+                </div>
+                <!-- 로그인 여부에 따라 변경요망 -->
+                <div class="user_icon">
+                    <a href="#">
+                        <img src="../imgs/common/user.png" class="icon user_icon">
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="#" id="profile-change-link">프로필 변경</a>
+                        <a href="#" id="logout-button">로그아웃</a>
+                    </div>
                 </div>
             </div>
-            
+        </div>
+    </header>
+    <!--nav바 종료-->
+
+
+    <!-- side바 시작 -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-container">
+            <div class="sidebar-hamburger">
+                <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            </a>
+        </div>
+        <div id="side1">
+            <div class="sidebar-list">
+                <a href="feed.html">
+                    <img src="../imgs/common/home.png" />
+                    <span class="sidebar-text">홈</span>
+                </a>
+            </div>
+            <div class="sidebar-list">
+                <a href="#" onclick="toggleSubSidebar()">
+                    <img src="../imgs/common/search.png" />
+                    <span class="sidebar-text">검색</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="studylist.html">
+                    <img src="../imgs/common/study.png" />
+                    <span class="sidebar-text">스터디 / 프로젝트</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="story_write.html">
+                    <img src="../imgs/common/create.png" />
+                    <span class="sidebar-text">글 작성</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="profile.html">
+                    <img src="../imgs/common/profile.svg" class="sidebar-profile" />
+                    <span class="sidebar-text">프로필</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/settings.png.png" />
+                    <span class="sidebar-text">설정</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="sub-sidebar" style="display: none;">
+        <div class="user-search">
+            <h1>검색</h1>
+            <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+        </div>
+        <div id="searchResultsContainer" class="searchResults">
+            <!-- 검색 결과 -->
+        </div>
+    </div>
+    <div id="overlay" onclick="closeSidebar()">
+    </div>
+    <!-- sub-sidebar -->
+
+
+
+
+
+    <div class="contents">
+
+        <form class="content-form" id="write-form" method="POST" enctype="multipart/form-data">
+
             <div class="write-side">
+                <div class="images">
+                    <p class="image-title">피드 이미지</p>
+                    <div class="image-upload-container">
+                        <input type="file" name="images" id="fileInput" accept="image/*" style="display: none;"
+                            multiple>
+                        <label for="fileInput" class="img-label">
+                            <img id="upload" src="../imgs/common/imgupload.png" alt="이미지를 놓으세요">
+                        </label>
+                        <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
+                    </div>
+
+                </div>
+
                 <div class="open-setting">
                     <p class="setting-title">공개 설정</p>
                     <fieldset class="open-field">
-
                         <label>
                             <input type="radio" name="open" value="all" checked />
-                            <span>전체공개</span>
+                            <span>전체 공개</span>
                         </label>
-                        
-                         <!-- <label>
+
+                        <!-- <label>
                             <input type="radio" name="open" value="friend" />
                             <span>기수 공개</span>
                          </label>
@@ -39,33 +171,45 @@
                             <input type="radio" name="open" value="only" />
                             <span>나만 보기</span>
                         </label>
-                          
-                        
+
+
                     </fieldset>
                 </div>
 
-                <div class="images">
-                    <p class="image-title">이미지</p>
-                    <div class="image-upload-container">
-                        <input type="file" name="images" id="fileInput" accept="image/*" style="display: none;" multiple>
-                        <label for="fileInput"><img id="upload" src="../imgs/common/imgupload.png" alt="이미지를 놓으세요"></label>
-                        <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
-                    </div>
-                    
+
+
+
+            </div>
+
+
+            <div class="write-main">
+                <input type="text" name="title" placeholder="제목을 입력해주세요.">
+                <!-- 에디터 -->
+                <div class="write-editor">
+                    <textarea name="content" id="content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
                 </div>
-                
                 <div class="buttons">
                     <button class="temp-save">임시 저장</button>
                     <button class="save">글 작성</button>
                 </div>
             </div>
 
+
+
+
+
         </form>
 
     </div>
-    
+
 </body>
 
 <script src="../js/storywrite.js"></script>
 <script src="../js/auth.js"></script>
+<script src="../js/sidebar.js"></script>
+
+<script src="../js/alarm.js"></script>
+<script src="../js/alarmCount.js"></script>
+<script src="../js/alrarm.js"></script>
+
 </html>

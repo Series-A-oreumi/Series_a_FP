@@ -29,14 +29,36 @@
                 <div class="notify_count">
                     0
                 </div>
-                <a href="../html/alarm.html"><img src="../imgs/common/alarm.png" alt="알림" class="icon" /></a>
+                <div id="notification-trigger">
+                    <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
+                    <!-- 알림 모달 -->
+                    <div id="notification-modal">
+                        <section class="notify_seciton">
+                            <div>
+                                <p class="notify_title">알림</p>
+                            </div>
+                            <div class="notify_list">
+                                <div class="notify_none">
+                                    <div class="sender_info">
+                                        <p class="notnew">새로운 알림이 없습니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notify2-section">
+                                <p class="notify_title2">이전알림</p>
+                            </div>
+
+                            <div class="notify_list2"></div>
+                        </section>
+                    </div>
+                </div>
                 <!-- 로그인 여부에 따라 변경요망 -->
                 <div class="user_icon">
                     <a href="#">
                         <img src="../imgs/common/user.png" class="icon user_icon">
                     </a>
                     <div class="dropdown-content">
-                        <a href="#" id ="profile-change-link">프로필 변경</a>
+                        <a href="#" id="profile-change-link">프로필 변경</a>
                         <a href="#" id="logout-button">로그아웃</a>
                     </div>
                 </div>
@@ -101,9 +123,13 @@
         </div>
     </div>
     <div id="sub-sidebar" style="display: none;">
-        <h1>검색</h1>
-        <input type="text" id="search-input" placeholder="검색어를 입력하세요">
-        <!-- 검색 결과를 표시할 곳 추가 -->
+        <div class="user-search">
+            <h1>검색</h1>
+            <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+        </div>
+        <div id="searchResultsContainer" class="searchResults">
+            <!-- 검색 결과 -->
+        </div>
     </div>
     <div id="overlay" onclick="closeSidebar()">
     </div>
@@ -292,12 +318,17 @@
             <!-- 하단 -->
         </section>
     </section>
- 
+
 </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="module" src="../js/studylist.js"></script>
-    <script src="../js/sidebar.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/profilelocation.js" type="module"></script>
-    <script src="../js/alarmCount.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="module" src="../js/studylist.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/auth.js"></script>
+
+<script src="../js/profilelocation.js" type="module"></script>
+
+<script src="../js/alarm.js"></script>
+<script src="../js/alarmCount.js"></script>
+<script src="../js/alrarm.js"></script>
+
 </html>

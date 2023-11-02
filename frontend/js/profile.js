@@ -33,10 +33,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         storyDataArray.forEach(data => {
             sideCStory(data);
         });
-        const postDataArray3 = user_studies;
-        postDataArray3.sort((a, b) => b.likes_count - a.likes_count);
-        const storyfirst = postDataArray3[0];
-        sideDStory(storyfirst);
+
+        // const postDataArray3 = user_studies;
+        // postDataArray3.sort((a, b) => b.likes_count - a.likes_count);
+        // const storyfirst = postDataArray3[0];
+        // sideDStory(storyfirst);
 
         // 스터디/프로젝트
         const postDataArray = user_studies;
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             return `
             <div class="up-profile">
                 <div class="up-profile-img">
-                    <img src="${data.profile_img}" alt="" class="up-img">
+                    <img src="${data.profile_img}.url" alt="" class="up-img">
                 </div>
                 <div class="up-detail-profile">
                     <div class="up-profile-name">
@@ -117,7 +118,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="imglist">
                         <div class="imghovertext">스토리 보러가기</div>
                         <div class="imghover"></div>
-                        <img src="${data.images}">
+                        <img src="${data.images}.url">
                     </div>
                 </a>
             `
@@ -137,33 +138,33 @@ document.addEventListener("DOMContentLoaded", async function () {
             `
         }
 
-        function createStory2(data) {
-            const storyUrl2 = `../html/story.html?id=${data.pk}`
+        // function createStory2(data) {
+        //     const storyUrl2 = `../html/story.html?id=${data.pk}`
 
-            return `
-        <a href="${storyUrl2}">
-            <div class="main-content">
-                <div class="main-img">
-                    <img src="${data.images}">
-                </div>
+        //     return `
+        // <a href="${storyUrl2}">
+        //     <div class="main-content">
+        //         <div class="main-img">
+        //             <img src="${data.images}">
+        //         </div>
 
-                <div class="main-right">
-                    <div class="article-img-btns">
-                        <div class="views">
-                            <img src="../imgs/study/viewsicon.png">
-                            <p>${data.views}</p>
-                        </div>
-                        <div class="likes">
-                            <img src="../imgs/study/pinkheart.png">
-                            <p>${data.likes_count}</p>
-                        </div>
-                    </div>
-                    <div class="imglisttext">${data.content}</div>
-                </div>
-            </div>
-        </a>
-            `;
-        }
+        //         <div class="main-right">
+        //             <div class="article-img-btns">
+        //                 <div class="views">
+        //                     <img src="../imgs/study/viewsicon.png">
+        //                     <p>${data.views}</p>
+        //                 </div>
+        //                 <div class="likes">
+        //                     <img src="../imgs/study/pinkheart.png">
+        //                     <p>${data.likes_count}</p>
+        //                 </div>
+        //             </div>
+        //             <div class="imglisttext">${data.content}</div>
+        //         </div>
+        //     </div>
+        // </a>
+        //     `;
+        // }
 
         function sideCStory(data) {
             const innerContent3 = document.getElementById("sideC")
@@ -173,13 +174,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             innerContent3.innerHTML += instudyHTML3;
         }
 
-        function sideDStory(data) {
-            const innerContent4 = document.getElementById("sideD")
-            const instudyHTML4 = `
-                ${createStory2(data)}
-            `;
-            innerContent4.innerHTML += instudyHTML4;
-        }
+        // function sideDStory(data) {
+        //     const innerContent4 = document.getElementById("sideD")
+        //     const instudyHTML4 = `
+        //         ${createStory2(data)}
+        //     `;
+        //     innerContent4.innerHTML += instudyHTML4;
+        // }
 
 
         // 아래쪽 - 스터디 버전
@@ -231,6 +232,17 @@ document.addEventListener("DOMContentLoaded", async function () {
                 participantCount = `<div class="sub-content">인원 미정</div>`;
             } else { participantCount = `<div class="sub-content">${data.participant_count}명</div>` }
 
+            let Period = '';
+            if (data.period === "6") {
+                Period = `<div class="sub-content">6개월 이상</div>`;
+            } else if (data.period === "0") {
+                Period = `<div class="sub-content">기간 미정</div>`;
+            } else {
+                Period = `<div class="sub-content">${data.period}개월</div>`;
+            }
+
+
+
             return `
             <a href = "${studyUrl}">
             <div class="down-article-well">
@@ -264,7 +276,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             </div>
                         </div>
                         <div>${participantCount}</div>
-                        <div>기간 : ${data.period}개월</div>
+                        <div>${Period}</div>
                         ${stackTags}
                     </div>
                     <div class="article-main">
@@ -524,59 +536,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         const studyList = document.getElementById("studyList");
         studyList.addEventListener("click", () => Filter("studyList"));
-
-
-
-
-
-        // displayTabData();
-
-
-
-        // 탭 클릭 시 이벤트 핸들러 실행
-        // const uplinks = document.getElementById('uplinks');
-        // const tabButtons = uplinks.querySelectorAll('a[data-tab]');
-        // let currentTabData = ``;
-
-
-        // const defaultTab = uplinks.querySelector('a[data-tab="user_stories"]');
-        // defaultTab.classList.add('active');
-        // currentTabData = user_stories;
-
-
-
-        // tabButtons.forEach(button => {
-        //     button.addEventListener('click', function (e) {
-        //         e.preventDefault();
-        //         const targetTab = button.getAttribute('data-tab');
-
-
-        //         tabButtons.forEach((btn) => {
-        //             btn.classList.remove('active');
-        //         });
-
-        //         button.classList.add('active');
-
-        //         // 탭 버튼 클릭 시 해당 탭의 데이터를 표시
-        //         if (targetTab === 'user_stories') {
-        //             currentTabData = data.user_stories;
-        //         } else if (targetTab === 'user_studies') {
-        //             currentTabData = data.user_studies;
-        //         }
-
-        //         // 데이터를 HTML에 반영
-        //         displayTabData();
-        //     });
-        // });
-
-        // // 페이지 로드 시 기본 탭 데이터를 표시
-        // displayTabData();
-
-
-        // // 데이터를 HTML에 표시하는 함수
-        // function displayTabData() {
-
-        // }
 
 
     } catch (error) {
