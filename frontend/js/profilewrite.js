@@ -14,7 +14,7 @@
 
         // 백엔드 서버에서 데이터를 가져옵니다.
         const accessToken = localStorage.getItem('access_token');
-        const backendUrl = `http://localhost:8000/api/profile/${userId}`; // 백엔드 서버의 URL로 변경해야 합니다.
+        const backendUrl = `https://estagram.site/api/profile/${userId}`; // 백엔드 서버의 URL로 변경해야 합니다.
 
         try {
             const response = await fetch(backendUrl, {
@@ -52,7 +52,7 @@
             const formData = new FormData(profileForm);
             
             // 백엔드 서버의 엔드포인트 URL을 설정합니다.
-            const backendUrl = 'http://localhost:8000/api/profile/'; 
+            const backendUrl = 'https://estagram.site/api/profile/'; 
             // 액세스 토큰을 로컬 스토리지에서 가져옵니다.
             const accessToken = localStorage.getItem('access_token');
             

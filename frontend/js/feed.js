@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     try {
         const response = await // Fetch 요청 보내기
-            fetch("http://localhost:8000/api/story/", {
+            fetch("https://estagram.site/api/story/", {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const postId = likeButton.getAttribute("data-post-id");
 
                 try {
-                    const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
+                    const response = await fetch(`https://estagram.site/api/story/liked/${postId}/`, {
                         method: "POST",
                         headers: {
                             'Authorization': `Bearer ${accessToken}`,
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             publishButton.addEventListener("click", async function (event) {
                 const postId = event.currentTarget.id;
                 try {
-                    const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`, {
+                    const response = await fetch(`https://estagram.site/api/story/${postId}/comments/`, {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${accessToken}`,
@@ -397,7 +397,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             // 서버에서 댓글 목록을 받아오는 함수
             async function fetchComments(postId) {
                 try {
-                    const response = await fetch(`http://localhost:8000/api/story/${postId}/commentlist/`, {
+                    const response = await fetch(`https://estagram.site/api/story/${postId}/commentlist/`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${accessToken}`,

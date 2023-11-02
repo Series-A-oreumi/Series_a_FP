@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 bootcamp: bootcamp
             };
 
-            fetch('http://localhost:8000/api/register/', {
+            fetch('https://estagram.site/api/register/', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {

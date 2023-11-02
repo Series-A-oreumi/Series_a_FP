@@ -327,7 +327,7 @@ function createLikes(request_user, data) {
 
 async function fetchDataFromAPI() {
     const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = "http://localhost:8000/api/study/";
+    const apiEndpoint = "https://estagram.site/api/study/";
 
     try {
         const response = await fetch(apiEndpoint, {
@@ -371,7 +371,7 @@ document.addEventListener('click', async function (event) {
         const studyElement = LikesButton.closest('.card_top');
         const studyId = studyElement.dataset.studyId;
         const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = `http://localhost:8000/api/study/liked/${studyId}/`;
+        const apiEndpoint = `https://estagram.site/api/study/liked/${studyId}/`;
 
         const options = {
             method: 'POST',

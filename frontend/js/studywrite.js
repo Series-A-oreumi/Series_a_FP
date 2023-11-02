@@ -15,7 +15,7 @@ studyForm.addEventListener('submit', async (event) => {
      const selectedStack = Array.from(document.querySelectorAll('#stacks option:checked')).map(option => option.value);
 
     try {
-        const response = await fetch('http://localhost:8000/api/study/create/', {
+        const response = await fetch('https://estagram.site/api/study/create/', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가

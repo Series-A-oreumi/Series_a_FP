@@ -11,7 +11,7 @@ export async function feedDetail(postId) {
         // 백엔드 API에서 포스트 데이터를 가져옵니다.
         const response = await // Fetch 요청 보내기
             // 임시로 story/1 게시물로 선정 -> 추후 변경해야됨!
-            fetch(`http://localhost:8000/api/story/${postId}/`, {
+            fetch(`https://estagram.site/api/story/${postId}/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -167,7 +167,7 @@ export async function feedDetail(postId) {
             const postId = likeButton.getAttribute("data-post-id");
 
             try {
-                const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
+                const response = await fetch(`https://estagram.site/api/story/liked/${postId}/`, {
                     method: "POST",
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,
@@ -310,7 +310,7 @@ export async function feedDetail(postId) {
         publishButton.addEventListener("click", async function(event){
             const postId = event.currentTarget.id;
             try {
-                const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`, {
+                const response = await fetch(`https://estagram.site/api/story/${postId}/comments/`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,
@@ -337,7 +337,7 @@ export async function feedDetail(postId) {
         
         // 서버에서 댓글 목록을 받아오는 함수
         async function fetchComments(postId) {
-            const response = await fetch(`http://localhost:8000/api/story/${postId}/commentlist/`);
+            const response = await fetch(`https://estagram.site/api/story/${postId}/commentlist/`);
             const data = await response.json();
             return data;
         }

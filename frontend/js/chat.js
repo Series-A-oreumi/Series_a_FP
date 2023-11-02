@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     async function fetchData() {
         try {
             //현재 토큰값으로 API 요청하여 로그인한 유저 정보를 불러옴
-            const response_json = await fetch(`http://localhost:8000/chat/api?riceve_user_nickname=${riceve_user_nickname}`, {
+            const response_json = await fetch(`https://estagram.site/chat/api?riceve_user_nickname=${riceve_user_nickname}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 var myNickElement = document.getElementById("my_nick");
                 myNickElement.innerHTML = username;
 
-                const socket_alarm = new WebSocket(`ws://localhost:8000/ws/chat_alarm/${username}/`);
+                const socket_alarm = new WebSocket(`ws://estagram.site/ws/chat_alarm/${username}/`);
 
 
                 socket_alarm.onmessage = function (event) {
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 `
                                 receiver_rece_ai.innerHTML = loading_msg
                                 chat_descs.appendChild(chats_receiver_ai);
-                                fetch('http://localhost:8000/chat/ai', {
+                                fetch('https://estagram.site/chat/ai', {
                                     method: 'POST',
                                     headers: {
                                         'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-                const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
+                const chat_list = await fetch(`https://estagram.site/chat/create_chatroom`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
                         // 채팅 내용을 불러온다
-                        const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
+                        const chat_desc = await fetch(`https://estagram.site/chat/chat_desc`, {
                             method: 'POST',
                             headers: {
                                 'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         const encodedUserData = encodeURIComponent(JSON.stringify(userCustomData));
                                                 
                         
-                        sockets[chat_room_id] = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/?${encodedUserData}`);                        
+                        sockets[chat_room_id] = new WebSocket(`ws://estagram.site/ws/chat/${chat_room_id}/?${encodedUserData}`);                        
                         
                                                 
                         

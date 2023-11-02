@@ -53,7 +53,7 @@ const updateSearchResults = async () => {
         }
 
         // 서버에 GET 요청 보내기
-        const response = await fetch(`http://localhost:8000/api/story/search/?query=${searchQuery}`, {
+        const response = await fetch(`https://estagram.site/api/story/search/?query=${searchQuery}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -87,11 +87,17 @@ const updateSearchResults = async () => {
                 resultItem.href = `../html/profile.html?id=${user.id}`; // 이동할 페이지의 URL 지정
                 resultItem.className = 'result-item';
 
-
+                
 
                 // 프로필 이미지를 표시
+                // 프로필 이미지를 표시
                 const profileImage = document.createElement('img');
-                profileImage.src = "../imgs/common/profile.png"; // 유저 객체에 프로필 이미지 URL이 있다고 가정
+
+                if (user.profile_img) {
+                    profileImage.src = user.profile_img
+                } else {
+                    profileImage.src = "../imgs/common/profile.png";
+                }
                 profileImage.alt = 'Profile Image';
                 profileImage.className = 'result-profile-image';
                 resultItem.appendChild(profileImage);

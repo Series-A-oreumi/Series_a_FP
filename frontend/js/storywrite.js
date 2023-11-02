@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.set('is_public', isPublic);
 
         // 백엔드 서버의 엔드포인트 URL을 설정합니다.
-        const backendUrl = 'http://localhost:8000/api/story/create/'; 
+        const backendUrl = 'https://estagram.site/api/story/create/'; 
          // 액세스 토큰을 로컬 스토리지에서 가져옵니다.
         const accessToken = localStorage.getItem('access_token');
 

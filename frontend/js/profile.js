@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    const apiEndpoint = `http://localhost:8000/api/profile/${userId}`;
+    const apiEndpoint = `https://estagram.site/api/profile/${userId}`;
     const accessToken = localStorage.getItem('access_token');
 
     // 사용자 프로필 정보를 가져오는 함수를 정의합니다.
