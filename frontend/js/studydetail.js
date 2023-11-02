@@ -1,5 +1,5 @@
 // 로그인한 유저 아이디
-import { UserInfo } from "./js/jwtUserId.js"
+import { UserInfo } from "../js/jwtUserId.js"
 
 const accessToken = localStorage.getItem('access_token');
 UserInfo(accessToken)

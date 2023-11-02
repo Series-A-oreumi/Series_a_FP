@@ -1,5 +1,5 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
-import { formatTimeAgo } from "./js/format.js"
+import { formatTimeAgo } from "../js/format.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 export async function feedDetail(postId) {
