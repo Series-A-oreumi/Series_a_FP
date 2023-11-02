@@ -18,6 +18,7 @@ class CreateCommentSerializer(serializers.ModelSerializer):
 
 # 댓글 목록
 class CommentSerializer(serializers.ModelSerializer):
+    author = UserProfileSerializer(read_only=True) # 댓글 작성자 추가
     class Meta:
         model = Comment
         fields = '__all__'

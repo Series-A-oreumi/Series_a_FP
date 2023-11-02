@@ -8,6 +8,7 @@ urlpatterns = [
     path('<int:post_id>/', views.StoryDetail.as_view()), # 스토리 상세 게시물 (update, delete)
 
     # comment
+    path('<int:post_id>/commentlist/', views.CommentList.as_view()), # 게시물에 댓글 생성
     path('<int:post_id>/comments/', views.CommentCreate.as_view()), # 게시물에 댓글 생성
     path('comments/<int:comment_id>/', views.CommentUpdateDelete.as_view()), # 게시물에 댓글 수정 및 삭제
     
