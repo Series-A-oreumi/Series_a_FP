@@ -40,6 +40,7 @@ class Create_chatroom(APIView):
     def post(self, request):
         try:            
             login_nickname = get_user_from_token(request) 
+            print(login_nickname)
             if request.data.get('guest'):                
                 guest = request.data.get('guest')
                 guest_bool = UserProfile.objects.get(nickname = guest)                   
