@@ -25,12 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => {
                     if (response.ok) {
                         response.json().then(data => {
-                            
-                             // 기존 로그인 된 유저의 localstorage 비워주기
-                             localStorage.removeItem('access_token');
-                             localStorage.removeItem('refresh_token');
-                             localStorage.removeItem('myNotify');
-                             localStorage.removeItem('myNotify2');
+
+                            // 기존 로그인 된 유저의 localstorage 비워주기
+                            localStorage.removeItem('access_token');
+                            localStorage.removeItem('refresh_token');
+                            localStorage.removeItem('myNotify');
+                            localStorage.removeItem('myNotify2');
 
                             // JWT 토큰을 로컬 스토리지에 저장
                             localStorage.setItem('access_token', data.access);
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             localStorage.setItem('myNotify', JSON.stringify(data.check_alarm)); // 해당 유저 알람기록
                             localStorage.setItem('myNotify2', JSON.stringify(data.uncheck_alarm));
 
-                            window.location.href = '../html/feed.html'; // feed 페이지 URL로 이동
+                            window.location.href = 'Series_a_FP/frontend/html/feed.html'; // feed 페이지 URL로 이동
                         });
 
                     } else {
@@ -79,5 +79,5 @@ document.getElementById('logout-button').addEventListener('click', function () {
     localStorage.removeItem('myNotify2');
 
     // 로그아웃 후 원하는 동작 수행 (예: 로그아웃 성공 페이지로 리다이렉트)
-    window.location.href = '../html/login.html'; // 로그인 페이지로 이동시키기
+    window.location.href = 'Series_a_FP/frontend/html/login.html'; // 로그인 페이지로 이동시키기
 });

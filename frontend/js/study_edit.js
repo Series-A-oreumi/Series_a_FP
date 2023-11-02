@@ -34,10 +34,10 @@ async function fetchStudyData(studyId) {
             document.querySelector('input[name="end_at"]').value = studyData.study.end_at.substring(0, 10); // Format date
             document.querySelector('input[name="start_at"]').value = studyData.study.start_at.substring(0, 10); // Format date
 
-                // Handle the stacks field
+            // Handle the stacks field
             const selectedStack = studyData.study.stacks.map(stack => stack.name);
             const stackSelect = document.querySelector('select[name="stacks"]');
-            
+
             for (const option of stackSelect.options) {
                 if (selectedStack.includes(option.value)) {
                     option.selected = true;
@@ -52,7 +52,7 @@ async function fetchStudyData(studyId) {
     }
 }
 
-const studyId = getStudyIdFromURL(); 
+const studyId = getStudyIdFromURL();
 
 window.addEventListener('load', () => {
     fetchStudyData(studyId);
@@ -67,7 +67,7 @@ studyForm.addEventListener('submit', async (event) => {
 
     const formData = new FormData(studyForm);
     const accessToken = localStorage.getItem('access_token');
-    
+
     const selectedStack = Array.from(document.querySelectorAll('#stacks option:checked')).map(option => option.value);
 
     try {
@@ -86,7 +86,7 @@ studyForm.addEventListener('submit', async (event) => {
 
         if (response.ok) {
             alert('스터디 데이터를 성공적으로 업데이트했습니다.');
-            window.location.href = '../html/studylist.html';
+            window.location.href = 'Series_a_FP/frontend/html/studylist.html';
         } else {
             alert('모든 항목들을 입력해주세요.');
         }

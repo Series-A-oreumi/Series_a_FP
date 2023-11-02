@@ -1,7 +1,7 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
-import { formatTimeAgo } from "./format.js"
-import { clearFeedDetail, feedDetail } from "./feedDetail.js";
-import { UserInfo } from "./jwtUserId.js"
+import { formatTimeAgo } from "Series_a_FP/frontend/js/format.js"
+import { clearFeedDetail, feedDetail } from "Series_a_FP/frontend/js/feedDetail.js";
+import { UserInfo } from "Series_a_FP/frontend/js/jwtUserId.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 document.addEventListener("DOMContentLoaded", async function () {
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             userContainer.className = "user_container";
             // 프로필 이미지 추가
             const profileLink = document.createElement('a'); // 삭제하기 꼭 (테스트 추가한 부분)
-            profileLink.href = `../html/profile.html?id=${post.author.id}`; // 삭제하기 꼭 (테스트 추가한 부분)
+            profileLink.href = `Series_a_FP/frontend/html/profile.html?id=${post.author.id}`; // 삭제하기 꼭 (테스트 추가한 부분)
 
             const profileImg = document.createElement("div");
             profileImg.className = "profile_img";
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (post.author.profile_img) {
                 img.src = post.author.profile_img
             } else {
-                img.src = "../imgs/common/profile.png";
+                img.src = "Series_a_FP/frontend/imgs/common/profile.png";
             }
             img.alt = "프로필 이미지";
             profileImg.appendChild(img);
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (post.images) {
                 image.src = post.images[0].images
             } else {
-                image.src = "../imgs/img_section/nophoto.png"
+                image.src = "Series_a_FP/frontend/imgs/img_section/nophoto.png"
             }
             // image.src = post.images[0].images.url;
             image.alt = "피드이미지";
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const loggedInUserId = UserInfo(accessToken).userId
 
             const isUserLiked = Array.isArray(post.likes_users) && post.likes_users.includes(loggedInUserId) ? true : false;
-            
+
             // 로그인 한 유저가 해당 게시물에 대해서 좋아요를 눌렀다면 on, 좋아요를 누르지 않았다면 '' 되도록 바꿔주기 (post.likes_user) -> 해당 게시물에 대해 좋아요를 누른 유저목록
             likeButton.className = `sprite_heart_icon_outline  ${isUserLiked ? 'on' : ''}`;
             likeButton.setAttribute('data-name', 'heartbeat');
@@ -383,12 +383,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                     // console.log(comments);
                     // displayComments(comments);
                     commentDisplay.innerHTML = '';
-                    addcomment(commentDisplay,inputField.value,post.author.username,postId);
-                    inputField.value='';
+                    addcomment(commentDisplay, inputField.value, post.author.username, postId);
+                    inputField.value = '';
 
 
 
-            
+
                 } catch (error) {
                     console.error('Error adding comment:', error);
                 }
@@ -405,22 +405,22 @@ document.addEventListener("DOMContentLoaded", async function () {
                         },
                     });
                     const data = await response.json();
-            
+
                     const dataArray = Object.values(data);
-            
+
                     // 최신순으로 정렬
                     const sortedComments = dataArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                     console.log(sortedComments);
                     // 최신 댓글 하나만 가져오기
                     const latestComment = sortedComments.length > 0 ? sortedComments[sortedComments.length - 1] : null;
-            
+
                     return latestComment ? [latestComment] : [];
                 } catch (error) {
                     console.error('Error fetching comments:', error);
                     return [];
                 }
             }
-            
+
             // 서버 응답에서 댓글 목록을 받아와 화면에 표시하는 함수
             function displayComments(element, comments) {
                 console.log(comments);
@@ -428,44 +428,44 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 // 기존에 표시된 내용을 지우고 새로운 댓글 목록을 표시
                 // commentDisplay.innerHTML = '';
-                
-                    // 최신순으로 정렬
+
+                // 최신순으로 정렬
                 const sortedComments = comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 if (comments.length > 0) {
                     const latestComment = sortedComments[0]; // 최신 댓글 하나만 가져옴
 
-                const commentItem = document.createElement('div');
-                commentItem.className = "comment-item";
-                const commentItem1 = document.createElement('div');
-                commentItem1.className="comment-content";
-                commentItem1.textContent = latestComment.content;
-                const commentItem2 = document.createElement('div');
-                commentItem2.className="comment-username";
-                commentItem2.textContent = latestComment.author.username;
-                commentItem.appendChild(commentItem2);
-                commentItem.appendChild(commentItem1);
-                element.appendChild(commentItem);
+                    const commentItem = document.createElement('div');
+                    commentItem.className = "comment-item";
+                    const commentItem1 = document.createElement('div');
+                    commentItem1.className = "comment-content";
+                    commentItem1.textContent = latestComment.content;
+                    const commentItem2 = document.createElement('div');
+                    commentItem2.className = "comment-username";
+                    commentItem2.textContent = latestComment.author.username;
+                    commentItem.appendChild(commentItem2);
+                    commentItem.appendChild(commentItem1);
+                    element.appendChild(commentItem);
                     console.log(commentItem);
                 }
             }
 
-            function addcomment(element,comment, username,postId){
-                const commentcount=document.getElementById(`comment-all-${postId}`);
-                let commentinner=commentcount.innerHTML;
+            function addcomment(element, comment, username, postId) {
+                const commentcount = document.getElementById(`comment-all-${postId}`);
+                let commentinner = commentcount.innerHTML;
                 const regex = /[^0-9]/g;
                 const result = commentinner.replace(regex, "");
                 const number = parseInt(result);
 
-                commentcount.innerHTML = `댓글 ${number+1}개 모두보기`;
+                commentcount.innerHTML = `댓글 ${number + 1}개 모두보기`;
 
 
                 const commentItem = document.createElement('div');
                 commentItem.className = "comment-item";
                 const commentItem1 = document.createElement('div');
-                commentItem1.className="comment-content";
+                commentItem1.className = "comment-content";
                 commentItem1.textContent = comment;
                 const commentItem2 = document.createElement('div');
-                commentItem2.className="comment-username";
+                commentItem2.className = "comment-username";
                 commentItem2.textContent = username;
                 commentItem.appendChild(commentItem2);
                 commentItem.appendChild(commentItem1);

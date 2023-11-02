@@ -84,10 +84,10 @@ const updateSearchResults = async () => {
 
             matchingUsers.forEach(user => {
                 const resultItem = document.createElement('a'); // a 태그로 변경
-                resultItem.href = `../html/profile.html?id=${user.id}`; // 이동할 페이지의 URL 지정
+                resultItem.href = `Series_a_FP/frontend/html/profile.html?id=${user.id}`; // 이동할 페이지의 URL 지정
                 resultItem.className = 'result-item';
 
-                
+
 
                 // 프로필 이미지를 표시
                 // 프로필 이미지를 표시
@@ -96,7 +96,7 @@ const updateSearchResults = async () => {
                 if (user.profile_img) {
                     profileImage.src = user.profile_img
                 } else {
-                    profileImage.src = "../imgs/common/profile.png";
+                    profileImage.src = "Series_a_FP/frontend/imgs/common/profile.png";
                 }
                 profileImage.alt = 'Profile Image';
                 profileImage.className = 'result-profile-image';

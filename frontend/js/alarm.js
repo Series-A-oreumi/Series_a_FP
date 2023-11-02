@@ -3,9 +3,9 @@
 //     // // 게시물 상세 페이지로 이동하는 링크 생성
 //     // const postLink = document.createElement('a');
 //     if (data.check_alarm.story) {
-//         notify.href = `../html/feedDetail.html?id=${data.check_alarm.story}`;
+//         notify.href = `Series_a_FP/frontend/html/feedDetail.html?id=${data.check_alarm.story}`;
 //     } else {
-//         notify.href = `../html/studyDetail.html?id=${data.check_alarm.study}`;
+//         notify.href = `Series_a_FP/frontend/html/studyDetail.html?id=${data.check_alarm.study}`;
 //     }
 //     const sender_img_div = document.createElement('div')
 //     const sender_img = document.createElement('img')
@@ -18,7 +18,7 @@
 //     notify.className = 'notify'
 //     sender_img_div.className = 'sender_img'
 
-//     sender_img.src = "../imgs/common/profile.png";
+//     sender_img.src = "Series_a_FP/frontend/imgs/common/profile.png";
 //     // if (data.sender.profileImage){
 //     //     sender_img.src = 'https://myorgobucket.s3.ap-northeast-2.amazonaws.com'+ data.sender.profileImage
 //     // } else {
@@ -134,9 +134,9 @@ const create_notify = (data) => {
     // // 게시물 상세 페이지로 이동하는 링크 생성
     // const postLink = document.createElement('a');
     if (data.check_alarm.story) {
-        notify.href = `../html/feedDetail.html?id=${data.check_alarm.story}`;
+        notify.href = `Series_a_FP/frontend/html/feedDetail.html?id=${data.check_alarm.story}`;
     } else {
-        notify.href = `../html/studyDetail.html?id=${data.check_alarm.study}`;
+        notify.href = `Series_a_FP/frontend/html/studyDetail.html?id=${data.check_alarm.study}`;
     }
     const sender_img_div = document.createElement('div')
     const sender_img = document.createElement('img')
@@ -149,7 +149,7 @@ const create_notify = (data) => {
     notify.className = 'notify'
     sender_img_div.className = 'sender_img'
 
-    sender_img.src = "../imgs/common/profile.png";
+    sender_img.src = "Series_a_FP/frontend/imgs/common/profile.png";
     // if (data.sender.profileImage){
     //     sender_img.src = 'https://myorgobucket.s3.ap-northeast-2.amazonaws.com'+ data.sender.profileImage
     // } else {

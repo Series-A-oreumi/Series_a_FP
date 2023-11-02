@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = '../html/login.html'; // 로그인 페이지 URL로 이동
+                        window.location.href = 'Series_a_FP/frontend/html/login.html'; // 로그인 페이지 URL로 이동
                     } else {
                         response.json().then(data => {
                             alert('회원가입 실패: ' + JSON.stringify(data));

@@ -1,5 +1,5 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
-import { formatTimeAgo } from "./format.js"
+import { formatTimeAgo } from "Series_a_FP/frontend/js/format.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 export async function feedDetail(postId) {
@@ -39,7 +39,7 @@ export async function feedDetail(postId) {
         if (post.images) {
             image.src = post.images[0].images
         } else {
-            image.src = "../imgs/img_section/nophoto.png";
+            image.src = "Series_a_FP/frontend/imgs/img_section/nophoto.png";
         }
         // image.src = "/frontend/media/post/2020/05/08/tiger/김치찌개.png"
         // image.src = post.데이터 이름 넣기.images.url;
@@ -63,11 +63,11 @@ export async function feedDetail(postId) {
         const profileImg = document.createElement("div");
         profileImg.className = "profile_img";
         const img = document.createElement("img");
-        
+
         if (post.author.profile_img) {
             img.src = post.author.profile_img
         } else {
-            img.src = "../imgs/common/profile.png";
+            img.src = "Series_a_FP/frontend/imgs/common/profile.png";
         }
         img.alt = "프로필 이미지";
         profileImg.appendChild(img);
@@ -207,7 +207,7 @@ export async function feedDetail(postId) {
 
         // 댓글 이미지
         const commentImg = document.createElement('img');
-        commentImg.src = '../imgs/postdetail/comment.svg'; // 이미지 경로를 실제 이미지 경로로 바꿔주세요.
+        commentImg.src = 'Series_a_FP/frontend/imgs/postdetail/comment.svg'; // 이미지 경로를 실제 이미지 경로로 바꿔주세요.
         commentImg.alt = '댓글';
         commentImg.className = 'comment_img'; // 클래스명 설정
 
@@ -227,7 +227,7 @@ export async function feedDetail(postId) {
         iconsContainer.appendChild(likeContainer);
         iconsContainer.appendChild(commentContainer2);
 
-        commentContainer2.addEventListener('click', function() {
+        commentContainer2.addEventListener('click', function () {
             inputField.focus();
         });
 
@@ -240,7 +240,7 @@ export async function feedDetail(postId) {
 
         // 좋아요 이미지
         const heartImg = document.createElement('img');
-        heartImg.src = '../imgs/postdetail/like.svg'; // 좋아요 이미지 경로
+        heartImg.src = 'Series_a_FP/frontend/imgs/postdetail/like.svg'; // 좋아요 이미지 경로
         heartImg.alt = '좋아요';
         heartImg.className = 'heart_img'; // 클래스명 설정
 
@@ -278,7 +278,7 @@ export async function feedDetail(postId) {
 
         const commentAdd = document.createElement("div");
         commentAdd.className = "comment_field";
-        commentAdd.id =  `${post.pk}`; 
+        commentAdd.id = `${post.pk}`;
 
         // "댓글 달기" 입력 필드 생성
         const inputField = document.createElement("input");
@@ -298,16 +298,16 @@ export async function feedDetail(postId) {
         publishButton.setAttribute("data-name", "comment");
         publishButton.textContent = "게시";
         publishButton.id = `${post.pk}`
-        
 
 
-            // comment-display 엘리먼트를 생성
+
+        // comment-display 엘리먼트를 생성
         const commentDisplay = document.createElement("div");
         commentDisplay.className = "comment-display";
         displayComments(commentDisplay, post.comments);
-        
-            
-        publishButton.addEventListener("click", async function(event){
+
+
+        publishButton.addEventListener("click", async function (event) {
             const postId = event.currentTarget.id;
             try {
                 const response = await fetch(`https://estagram.site/api/story/${postId}/comments/`, {
@@ -319,29 +319,29 @@ export async function feedDetail(postId) {
                     body: new URLSearchParams({ content: inputField.value }).toString(),
                 });
                 // console.log(response);
-                addcomment(commentDisplay,inputField.value,post.author.username,postId);
+                addcomment(commentDisplay, inputField.value, post.author.username, postId);
                 console.log(postId);
-                inputField.value='';
-            // 댓글이 추가될 때 스크롤을 아래로 이동
-            
-            const scrollElements = document.getElementsByClassName('contents_detail');
-            if (scrollElements.length > 0) {
-                const scroll = scrollElements[0];
-                scroll.scrollTop = scroll.scrollHeight;
-            }
-        
+                inputField.value = '';
+                // 댓글이 추가될 때 스크롤을 아래로 이동
+
+                const scrollElements = document.getElementsByClassName('contents_detail');
+                if (scrollElements.length > 0) {
+                    const scroll = scrollElements[0];
+                    scroll.scrollTop = scroll.scrollHeight;
+                }
+
             } catch (error) {
                 console.error('Error adding comment:', error);
             }
         });
-        
+
         // 서버에서 댓글 목록을 받아오는 함수
         async function fetchComments(postId) {
             const response = await fetch(`https://estagram.site/api/story/${postId}/commentlist/`);
             const data = await response.json();
             return data;
         }
-        
+
         // 서버 응답에서 댓글 목록을 받아와 화면에 표시하는 함수
         function displayComments(element, comments) {
             console.log(comments);
@@ -353,10 +353,10 @@ export async function feedDetail(postId) {
                 const commentItem = document.createElement('div');
                 commentItem.className = "comment-item";
                 const commentItem1 = document.createElement('div');
-                commentItem1.className="comment-content";
+                commentItem1.className = "comment-content";
                 commentItem1.textContent = comment.content;
                 const commentItem2 = document.createElement('div');
-                commentItem2.className="comment-username";
+                commentItem2.className = "comment-username";
                 commentItem2.textContent = comment.author.username;
                 commentItem.appendChild(commentItem2);
                 commentItem.appendChild(commentItem1);
@@ -365,24 +365,24 @@ export async function feedDetail(postId) {
             });
         }
 
-        function addcomment(element,comment, username,postId){
-            const commentcount1=document.getElementById(`comment-all2-${postId}`);
-            let commentinner=commentcount1.innerHTML;
+        function addcomment(element, comment, username, postId) {
+            const commentcount1 = document.getElementById(`comment-all2-${postId}`);
+            let commentinner = commentcount1.innerHTML;
             const regex = /[^0-9]/g;
             const result = commentinner.replace(regex, "");
             const number = parseInt(result);
             console.log(number)
-            commentcount1.innerHTML = `댓글 ${number+1}개`;
+            commentcount1.innerHTML = `댓글 ${number + 1}개`;
             console.log(commentcount1)
 
 
             const commentItem = document.createElement('div');
             commentItem.className = "comment-item";
             const commentItem1 = document.createElement('div');
-            commentItem1.className="comment-content";
+            commentItem1.className = "comment-content";
             commentItem1.textContent = comment;
             const commentItem2 = document.createElement('div');
-            commentItem2.className="comment-username";
+            commentItem2.className = "comment-username";
             commentItem2.textContent = username;
             commentItem.appendChild(commentItem2);
             commentItem.appendChild(commentItem1);
@@ -407,8 +407,8 @@ export async function feedDetail(postId) {
         detailBox.appendChild(interactionContainer);
         detailBox.appendChild(commentDisplay);
         // detailBox.appendChild(commentAdd);
-        
-        
+
+
         // 나머지 요소들을 article에 추가
         article.appendChild(detailBox);
         article.appendChild(imgSection);
@@ -422,7 +422,7 @@ export async function feedDetail(postId) {
         contentsBox.appendChild(article);
         contentsBox.appendChild(commentAdd);
         console.log(contentsBox);
-        
+
     } catch (error) {
         console.error("Error fetching data:", error);
     }
