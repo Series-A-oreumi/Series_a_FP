@@ -68,12 +68,12 @@ def comment_action(sender, instance, created, **kwargs):
         sender_user = comment.author # 댓글은 단 유저
         receiver_user = post.author # 해당 게시물 작성자
 
-        content = f'{sender_user.nickname}님이 회원님의 {post.title}에 댓글을 남겼습니다.'
-        
-        alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
+         # 로그인한 유저와 게시물 작성자가 다른 경우에만 알람 생성
+        if sender_user != receiver_user:
+            content = f'{sender_user.nickname}님이 회원님의 {post.title}에 댓글을 남겼습니다.'
+            
+            alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content, story=post)
 
-        alarm.story = post  # 스토리와 연결
-        alarm.save()
             
 class Like(models.Model):
     # 좋아요 모델
@@ -95,10 +95,11 @@ def like_action(sender, instance, created, **kwargs):
 
         content = f'{sender_user.nickname}님이 회원님의 {post.title}에 좋아요를 눌렀습니다.'
         
-        alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
-
-        alarm.story = post  # 스토리와 연결
-        alarm.save()
+         # 로그인한 유저와 게시물 작성자가 다른 경우에만 알람 생성
+        if sender_user != receiver_user:
+            content = f'{sender_user.nickname}님이 회원님의 {post.title}에 댓글을 남겼습니다.'
+            
+            alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content, story=post)
 
 class Hashtag(models.Model):
     # 해시태그 모델
