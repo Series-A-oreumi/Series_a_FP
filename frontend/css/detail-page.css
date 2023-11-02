@@ -2,14 +2,16 @@
 
 @keyframes fadeIn {
     from {
-      opacity: 0;
+        opacity: 0;
     }
+
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
-#modal_add_feed .modal_overlay{
-    top:0 !important;
+}
+
+#modal_add_feed .modal_overlay {
+    top: 0 !important;
 }
 
 .modal_overlay {
@@ -54,34 +56,34 @@
     border-bottom: 2px solid #efefef;
     padding-top: 10px;
     padding-bottom: 10px;
-  }
-  
-  .modal_title_center {
+}
+
+.modal_title_center {
     flex: 1;
     text-align: center;
-  }
-  
-  .modal_title_side {
+}
+
+.modal_title_side {
     flex: 0 0 auto;
     text-align: center;
-  }
-  
-  #close_modal_container {
+}
+
+#close_modal_container {
     position: relative;
     top: -60px;
     right: -30px;
     cursor: pointer;
-  }
+}
 
-  #close_modal {
-    font-size: 30px; 
-    color: white; 
-  }
+#close_modal {
+    font-size: 30px;
+    color: white;
+}
 
 /* 피드 디테일 페이지 스타일 */
 .contents_detail_box {
     max-height: 100vh;
-    width:100%;
+    width: 100%;
     margin: 0;
 
 }
@@ -89,25 +91,30 @@
 
 
 .contents_detail {
-    flex-direction: column; /* 세로 형태로 변경 */
+    flex-direction: column;
+    /* 세로 형태로 변경 */
     padding-top: 20px;
-    width:100%;
-    max-height: 80vh; /* 높이를 내용에 맞게 자동 조정 */
+    width: 100%;
+    max-height: 80vh;
+    /* 높이를 내용에 맞게 자동 조정 */
     overflow-y: auto;
-    overflow-x: hidden; /* 가로 스크롤 허용 */
-    scrollbar-color: #ced0d4 transparent; 
-    position: relative; /* 추가 */
+    overflow-x: hidden;
+    /* 가로 스크롤 허용 */
+    scrollbar-color: #ced0d4 transparent;
+    position: relative;
+    /* 추가 */
     /* height: 88%; */
 
 }
 
 .contents_detail::-webkit-scrollbar {
-    width: 8px; /* 세로 스크롤 바 너비 조정 (Chrome, Safari, Edge) */
+    width: 8px;
+    /* 세로 스크롤 바 너비 조정 (Chrome, Safari, Edge) */
 }
 
 .contents_detail::-webkit-scrollbar-thumb {
     background-color: #ced0d4;
-    border-radius: 3px; 
+    border-radius: 3px;
 }
 
 
@@ -116,13 +123,13 @@
 }
 
 .trans_inner img {
-    width:590px;
-    height:500px;
+    width: 590px;
+    height: 500px;
 }
 
 
 .detail--right_box {
-    order: 1; 
+    order: 1;
     padding: 0px 20px 20px 20px;
 }
 
@@ -131,7 +138,8 @@
     align-items: center;
     padding-bottom: 20px;
 }
-.contents_detail_box .user_container{
+
+.contents_detail_box .user_container {
     display: flex;
     align-items: center;
 }
@@ -175,31 +183,38 @@
 .contents_detail_box .like_container:hover,
 .contents_detail_box .comment_container2:hover {
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.1); /* 회색 투명 배경 */
-    transition: background-color 0.3s ease; /* 배경 트랜지션 효과 */
+    background-color: rgba(0, 0, 0, 0.1);
+    /* 회색 투명 배경 */
+    transition: background-color 0.3s ease;
+    /* 배경 트랜지션 효과 */
 }
 
 /* 좋아요 버튼 호버 효과 */
 
 .contents_detail_box .like_container:hover {
-    transform: scale(1.1); /* 크기를 1.2배로 확대 */
-    transition: transform 0.3s ease; /* 부드러운 트랜지션 효과 */
+    transform: scale(1.1);
+    /* 크기를 1.2배로 확대 */
+    transition: transform 0.3s ease;
+    /* 부드러운 트랜지션 효과 */
 }
 
 /* 댓글 버튼 호버 효과 */
 
 .contents_detail_box .comment_container2:hover {
-    transform: scale(1.1); /* 크기를 1.2배로 확대 */
-    transition: transform 0.3s ease; /* 부드러운 트랜지션 효과 */
+    transform: scale(1.1);
+    /* 크기를 1.2배로 확대 */
+    transition: transform 0.3s ease;
+    /* 부드러운 트랜지션 효과 */
 }
 
 .contents_detail_box .sprite_heart_icon_outline.on {
-    background: url('../imgs/like2.png') no-repeat;
-    
+    background: url('Series_a_FP/frontend/imgs/like2.png') no-repeat;
+
 }
+
 .contents_detail_box .sprite_heart_icon_outline {
     display: inline-block;
-    background: url('../imgs/like.png') no-repeat;
+    background: url('Series_a_FP/frontend/imgs/like.png') no-repeat;
     background-size: contain;
     width: 20px;
     height: 20px;
@@ -210,15 +225,15 @@
     display: flex;
     align-items: center;
     margin: 10px;
-    padding:5px 20px 5px 20px;
-    border-top: 2px solid #efefef; 
+    padding: 5px 20px 5px 20px;
+    border-top: 2px solid #efefef;
     border-bottom: 2px solid #efefef;
     justify-content: center;
     width: 550px;
 
 }
 
-.like_container{
+.like_container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -227,11 +242,12 @@
     height: 30px;
     border-radius: 5px;
 }
-.like_container span{
+
+.like_container span {
     font-size: 14px;
 }
 
-.contents_detail_box .comment_container2{
+.contents_detail_box .comment_container2 {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -242,15 +258,18 @@
 }
 
 .content_detail_bottom_icons {
-    order: 4; /* content_detail_bottom_icons를 like_count_container 아래로 이동 */
+    order: 4;
+    /* content_detail_bottom_icons를 like_count_container 아래로 이동 */
     margin-top: 10px;
 }
-.contents_detail_box .comment_img{
-    width:30px;
+
+.contents_detail_box .comment_img {
+    width: 30px;
     height: 20px;
     padding-right: 5px;
 }
-.contents_detail_box .comment_container2 span{
+
+.contents_detail_box .comment_container2 span {
     font-size: 14px;
 }
 
@@ -260,7 +279,8 @@
     padding: 10px;
     margin-top: 10px;
 }
-.interaction_container{
+
+.interaction_container {
     padding-left: 20px;
     display: flex;
     justify-content: space-between;
@@ -276,10 +296,11 @@
     align-items: center;
 }
 
-.like_count_container span{
+.like_count_container span {
     text-align: center;
 }
-.contents_detail_box .comment_container{
+
+.contents_detail_box .comment_container {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -296,19 +317,25 @@
 
 /* 댓글 리스트 */
 
-.contents_detail_box .comment-display{
-    padding:10px;
+.contents_detail_box .comment-display {
+    padding: 10px;
     margin-bottom: 20px;
 }
+
 .contents_detail_box .comment-item {
     width: fit-content;
     margin-bottom: 20px;
-    background-color: #f0f0f0; /* 말풍선 배경색 */
-    border-radius: 10px; /* 말풍선 모서리 둥글게 */
-    padding: .5rem 1rem .5rem .4rem; /* 내용과 말풍선 테두리 사이의 간격 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    background-color: #f0f0f0;
+    /* 말풍선 배경색 */
+    border-radius: 10px;
+    /* 말풍선 모서리 둥글게 */
+    padding: .5rem 1rem .5rem .4rem;
+    /* 내용과 말풍선 테두리 사이의 간격 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 그림자 추가 */
     display: flex;
-    flex-direction: column; /* 세로로 나타내도록 변경 */
+    flex-direction: column;
+    /* 세로로 나타내도록 변경 */
 }
 
 .contents_detail_box .comment-username {
@@ -330,7 +357,7 @@
 
 
 
-.comment_form{
+.comment_form {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -343,47 +370,53 @@
     align-items: center;
     width: 100%;
     background-color: white;
-    border-bottom-left-radius: 10px; /* 바텀 부분만 둥글게 */
-    border-bottom-right-radius: 10px; /* 바텀 부분만 둥글게 */
+    border-bottom-left-radius: 10px;
+    /* 바텀 부분만 둥글게 */
+    border-bottom-right-radius: 10px;
+    /* 바텀 부분만 둥글게 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
     bottom: 0;
-    border-top:2px solid #efefef;
-    z-index: 1; /* 추가 */
+    border-top: 2px solid #efefef;
+    z-index: 1;
+    /* 추가 */
 }
 
-.contents_detail_box .comment_field input{
+.contents_detail_box .comment_field input {
     width: 100%;
     height: 30px;
     border: none;
     outline: none;
     background: white;
-    color: none; /* 포커스 시에도 배경 색상 유지 */
+    color: none;
+    /* 포커스 시에도 배경 색상 유지 */
 }
 
 .contents_detail_box .comment_field input:focus {
-    background: transparent; /* 포커스 시에도 배경 색상 유지 */
+    background: transparent;
+    /* 포커스 시에도 배경 색상 유지 */
 }
 
-.contents_detail_box .comment_field input:focus ~ .upload_btn{
+.contents_detail_box .comment_field input:focus~.upload_btn {
     pointer-events: initial;
     opacity: 1;
-    background: transparent; /* 포커스 시에도 배경 색상 유지 */
+    background: transparent;
+    /* 포커스 시에도 배경 색상 유지 */
 }
 
- .contents_detail_box .comment-form {
+.contents_detail_box .comment-form {
     width: 80%;
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
-} 
+}
 
 .contents_detail_box .upload_btn {
-    color:#3897f0;
+    color: #3897f0;
     position: absolute;
     right: 20px;
     top: 45%;
-    transform:translateY(-50%);
+    transform: translateY(-50%);
     cursor: pointer;
     /*pointer-events: none;*/
     opacity: 0.6;

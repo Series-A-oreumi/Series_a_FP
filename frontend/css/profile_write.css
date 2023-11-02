@@ -1,16 +1,16 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.container{
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +19,7 @@ body{
     max-width: 512px;
 }
 
-form{
+form {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -27,28 +27,28 @@ form{
     align-items: center;
 }
 
-.submit{
+.submit {
     width: 60%;
     display: flex;
     justify-content: flex-end;
 }
 
-.profile_img{
+.profile_img {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
     padding: 2rem;
-    
+
 }
 
-.profile_img>img{
+.profile_img>img {
     width: 10rem;
     border-radius: 50%;
 }
 
-.profile_img>label{
+.profile_img>label {
     text-decoration: none;
     color: blue;
     font-weight: 700;
@@ -65,8 +65,8 @@ label[for="fileInput"]:hover {
 
 
 
-.inputs{
-    width:80%;
+.inputs {
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,7 +75,7 @@ label[for="fileInput"]:hover {
     gap: 1rem;
 }
 
-.profile_input{
+.profile_input {
     border-bottom: 2px solid lightgrey;
     width: 80%;
     display: flex;
@@ -83,40 +83,40 @@ label[for="fileInput"]:hover {
     align-items: center;
 }
 
-.profile_input:hover>input{
+.profile_input:hover>input {
     opacity: .5;
 }
 
 
-.profile_input>input{
+.profile_input>input {
     width: 100%;
     border: none;
     cursor: pointer;
     height: 3rem;
     padding-left: 1rem;
-    font-size:1.5rem;
+    font-size: 1.5rem;
 }
 
 
-.profile_input>input:focus{
+.profile_input>input:focus {
     outline: none;
-    opacity:1;
+    opacity: 1;
 }
 
-label{
+label {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.profile_input>label>img{
+.profile_input>label>img {
     width: 2rem;
 }
 
 
 
-[type=submit]{
-    background-image: url("../media/profile_write/check.png");
+[type=submit] {
+    background-image: url("Series_a_FP/frontend/media/profile_write/check.png");
     width: 2rem;
     height: 2rem;
     background-size: cover;
@@ -127,6 +127,6 @@ label{
     margin-top: 1rem;
 }
 
-[type=submit]:hover{
+[type=submit]:hover {
     opacity: 1;
 }
