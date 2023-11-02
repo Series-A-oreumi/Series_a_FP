@@ -29,116 +29,133 @@
 </head>
 
 <body>
-    <!-- nav바 시작-->
-    <header class="desktop">
-        <div class="nav-container">
-          <div class="nav-hamburger">
-            <button href="#" id='hamburger' onclick="toggleSidebar()"><img
-                src="../imgs/common/hamburger.png"
-                alt="햄버거"
-                class="hamburger"
-            /></button>
-          </div>
-            <a href="feed.html" class="logo-link">
-                <img
-                src="../imgs/common/Estagram.png"
-                alt="헤더 로고"
-                class="title-logo"/></a>
-            <div class="nav-buttons">
-                <a href=""
-                ><img src="../imgs/common/chat.png" alt="채팅" class="icon"
-                /></a>
-                  <div class="notify_count">
-                      0
-                  </div>
-                <a href="../html/alarm.html"
-                ><img src="../imgs/common/alarm.png" alt="알림" class="icon"
-                /></a>
-                    <!-- 로그인 여부에 따라 변경요망 -->
-                    <div class="sprite_user_icon_outline"><a href="#"></a>
-                      <div class="dropdown-content">
-                        <a href="profile_write.html">프로필 변경</a>
-                        <a href="#" id="logout-button">로그아웃</a>
-                      </div>
-                    </div>
-            </div>
-        </div>
-    </header>
-    <!--nav바 종료-->
-
-
-    <!-- side바 시작 -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-container">
-          <div class="sidebar-hamburger">
-            <button href="#" id='hamburger2' onclick="toggleSidebar()"><img
-              src="../imgs/common/hamburger.png"
-              alt="햄버거"
-              class="hamburger"
-            /></button>
-          </div>
-          <a href="feed.html" class="logo-link">
-            <img
-            src="../imgs/common/Estagram.png"
-            alt="헤더 로고"
-            class="title-logo"/></a>
-        </div>
-          <div id="side1">
-            <div class="sidebar-list">
-              <a href="feed.html">
-                  <img src="../imgs/common/home.svg"/>
-                  <span class="sidebar-text">홈</span>
-              </a>
-            </div>
-            <div class="sidebar-list">
-              <a href="#" onclick="toggleSubSidebar()">
-                  <img src="../imgs/common/search.svg"  />
-                  <span class="sidebar-text">검색</span>
-              </a>
-            </div>
-          
-            <div class="sidebar-list">
-              <a href="studylist.html">
-                  <img src="../imgs/common/study.svg" />
-                  <span class="sidebar-text">스터디 / 프로젝트</span>
-              </a>
-            </div>
-          
-            <div class="sidebar-list">
-              <a href="story_write.html">
-                  <img src="../imgs/common/create.svg" />
-                  <span class="sidebar-text">글 작성</span>
-              </a>
-            </div>
-          
-            <div class="sidebar-list">
-              <a href="profile.html">
-                  <img src="../imgs/common/profile.svg" class="sidebar-profile"/>
-                  <span class="sidebar-text">프로필</span>
-              </a>
-            </div>
-          
-            <div class="sidebar-list">
-              <a href="#">
-                  <img src="../imgs/common/settings.svg" />
-                  <span class="sidebar-text">설정</span>
-              </a>
-            </div>
-          </div>
-        </div>
-    <!-- side바 종료 -->
-    <!-- sub-sidebar -->
-    <div id="sub-sidebar" style="display: none;">
-      <div class="user-search">
-      <h1>검색</h1>
-      <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+  <!-- nav바 시작-->
+  <header class="desktop">
+    <div class="nav-container">
+      <div class="nav-hamburger">
+        <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png" alt="햄버거"
+            class="hamburger" /></button>
       </div>
-      <div id="searchResultsContainer" class="searchResults">
-        <!-- 검색 결과 -->
+      <a href="feed.html" class="logo-link">
+        <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+      </a>
+      <div class="nav-buttons">
+        <a href=""><img src="../imgs/common/chat.png" alt="채팅" class="icon2" /></a>
+        <div class="notify_count">
+          0
+        </div>
+        <div id="notification-trigger">
+          <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
+          <!-- 알림 모달 -->
+          <div id="notification-modal">
+            <section class="notify_seciton">
+              <div>
+                <p class="notify_title">알림</p>
+              </div>
+              <div class="notify_list">
+                <div class="notify_none">
+                  <div class="sender_info">
+                    <p class="notnew">새로운 알림이 없습니다.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="notify2-section">
+                <p class="notify_title2">이전알림</p>
+              </div>
+
+              <div class="notify_list2"></div>
+            </section>
+          </div>
+        </div>
+        <!-- 로그인 여부에 따라 변경요망 -->
+        <div class="user_icon">
+          <a href="#">
+            <img src="../imgs/common/user.png" class="icon user_icon">
+          </a>
+          <div class="dropdown-content">
+            <a href="#" id="profile-change-link">프로필 변경</a>
+            <a href="#" id="logout-button">로그아웃</a>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- main 시작-->
-    <section id="main_container">
+  </header>
+  <!--nav바 종료-->
+
+
+  <!-- side바 시작 -->
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-container">
+      <div class="sidebar-hamburger">
+        <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png" alt="햄버거"
+            class="hamburger" /></button>
+      </div>
+      <a href="feed.html" class="logo-link">
+        <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+      </a>
+    </div>
+    <div id="side1">
+      <div class="sidebar-list">
+        <a href="feed.html">
+          <img src="../imgs/common/home.png" />
+          <span class="sidebar-text">홈</span>
+        </a>
+      </div>
+      <div class="sidebar-list">
+        <a href="#" onclick="toggleSubSidebar()">
+          <img src="../imgs/common/search.png" />
+          <span class="sidebar-text">검색</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="studylist.html">
+          <img src="../imgs/common/study.png" />
+          <span class="sidebar-text">스터디 / 프로젝트</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="story_write.html">
+          <img src="../imgs/common/create.png" />
+          <span class="sidebar-text">글 작성</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="profile.html" id ="profile-link">
+          <img src="../imgs/common/profile.svg" class="sidebar-profile" />
+          <span class="sidebar-text">프로필</span>
+        </a>
+      </div>
+
+      <div class="sidebar-list">
+        <a href="#">
+          <img src="../imgs/common/settings.png.png" />
+          <span class="sidebar-text">설정</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div id="sub-sidebar" style="display: none;">
+    <div class="user-search">
+      <h1>검색</h1>
+      <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+    </div>
+    <div id="searchResultsContainer" class="searchResults">
+      <!-- 검색 결과 -->
+    </div>
+  </div>
+  <div id="overlay" onclick="closeSidebar()">
+  </div>
+  <!-- sub-sidebar -->
+
+
+
+
+
+  <!-- main 시작-->
+  <section id="main_container">
 
     <section class="inner">
       <div class="contents_box">
@@ -174,15 +191,18 @@
   </div>
 
 
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- <script src="{% static 'js/insta.js' %}"></script> -->
-    <script src="../js/feed.js" type="module"></script>
-    <script src="../js/sidebar.js"></script>
-    <script src="../js/login.js"></script>
-    <script src="../js/feedDetail.js" type="module"></script>
-    <script src="../js/alarmCount.js"></script>
-    <script src="../js/auth.js"></script>
+  <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <!-- <script src="{% static 'js/insta.js' %}"></script> -->
+  <script src="../js/feed.js" type="module"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/login.js"></script>
+  <script src="../js/feedDetail.js" type="module"></script>
+  <script src="../js/alarm.js"></script>
+  <script src="../js/alarmCount.js"></script>
+  <script src="../js/alrarm.js"></script>
+  <script src="../js/auth.js" type="module"></script>
+    <script src="../js/profilelocation.js" type="module"></script>
 </body>
 
 </html>

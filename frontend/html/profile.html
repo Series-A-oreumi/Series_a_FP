@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/reset.css">
 </head>
 
 <body>
-
     <!-- nav바 시작-->
     <header class="desktop">
         <div class="nav-container">
@@ -27,14 +27,36 @@
                 <div class="notify_count">
                     0
                 </div>
-                <a href="../html/alarm.html"><img src="../imgs/common/alarm.png" alt="알림" class="icon" /></a>
+                <div id="notification-trigger">
+                    <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
+                    <!-- 알림 모달 -->
+                    <div id="notification-modal">
+                        <section class="notify_seciton">
+                            <div>
+                                <p class="notify_title">알림</p>
+                            </div>
+                            <div class="notify_list">
+                                <div class="notify_none">
+                                    <div class="sender_info">
+                                        <p class="notnew">새로운 알림이 없습니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notify2-section">
+                                <p class="notify_title2">이전알림</p>
+                            </div>
+
+                            <div class="notify_list2"></div>
+                        </section>
+                    </div>
+                </div>
                 <!-- 로그인 여부에 따라 변경요망 -->
                 <div class="user_icon">
                     <a href="#">
                         <img src="../imgs/common/user.png" class="icon user_icon">
                     </a>
                     <div class="dropdown-content">
-                        <a href="profile_write.html">프로필 변경</a>
+                        <a href="#" id="profile-change-link">프로필 변경</a>
                         <a href="#" id="logout-button">로그아웃</a>
                     </div>
                 </div>
@@ -84,7 +106,7 @@
             </div>
 
             <div class="sidebar-list">
-                <a href="profile.html">
+                <a href="profile.html" id ="profile-link">
                     <img src="../imgs/common/profile.svg" class="sidebar-profile" />
                     <span class="sidebar-text">프로필</span>
                 </a>
@@ -99,13 +121,20 @@
         </div>
     </div>
     <div id="sub-sidebar" style="display: none;">
-        <h1>검색</h1>
-        <input type="text" id="search-input" placeholder="검색어를 입력하세요">
-        <!-- 검색 결과를 표시할 곳 추가 -->
+        <div class="user-search">
+            <h1>검색</h1>
+            <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+        </div>
+        <div id="searchResultsContainer" class="searchResults">
+            <!-- 검색 결과 -->
+        </div>
     </div>
     <div id="overlay" onclick="closeSidebar()">
     </div>
     <!-- sub-sidebar -->
+
+
+
 
 
     <!-- 프로필 -->
@@ -132,188 +161,8 @@
             <!-- 메인3 -->
             <div class="inner-2th">
                 <div class="sub2" id="studyVersion2">
-                    <!-- <div class="contents_box">
-                        <div class="article-top">
-                            <div class="tag_study">스터디</div>
-                            <div class="likes">
-                                <img src="../imgs/study/pinkheart.png">
-                            </div>
-
-                        </div>
-                        <div class="article-profile">
-                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
-                            <div class="article-created-at">2023. 10. 31.</div>
-                        </div>
-                        <div class="flex-box gap8">
-                            <div class="flex-box gap8">
-                                <div class="position_tag">
-                                    <li class="position_tag_item">backend</li>
-                                </div>
-                            </div>
-                            <div>
-                                <ul class="stack_tag">
-                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
-                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="contents_box">
-                        <div class="article-top">
-                            <div class="tag_study">스터디</div>
-                            <div class="likes">
-                                <img src="../imgs/study/pinkheart.png">
-                            </div>
-
-                        </div>
-                        <div class="article-profile">
-                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
-                            <div class="article-created-at">2023. 10. 31.</div>
-                        </div>
-                        <div class="flex-box gap8">
-                            <div class="flex-box gap8">
-                                <div class="position_tag">
-                                    <li class="position_tag_item">backend</li>
-                                </div>
-                            </div>
-                            <div>
-                                <ul class="stack_tag">
-                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
-                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contents_box">
-                        <div class="article-top">
-                            <div class="tag_study">스터디</div>
-                            <div class="likes">
-                                <img src="../imgs/study/pinkheart.png">
-                            </div>
-
-                        </div>
-                        <div class="article-profile">
-                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
-                            <div class="article-created-at">2023. 10. 31.</div>
-                        </div>
-                        <div class="flex-box gap8">
-                            <div class="flex-box gap8">
-                                <div class="position_tag">
-                                    <li class="position_tag_item">backend</li>
-                                </div>
-                            </div>
-                            <div>
-                                <ul class="stack_tag">
-                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
-                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contents_box">
-                        <div class="article-top">
-                            <div class="tag_study">스터디</div>
-                            <div class="likes">
-                                <img src="../imgs/study/pinkheart.png">
-                            </div>
-
-                        </div>
-                        <div class="article-profile">
-                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
-                            <div class="article-created-at">2023. 10. 31.</div>
-                        </div>
-                        <div class="flex-box gap8">
-                            <div class="flex-box gap8">
-                                <div class="position_tag">
-                                    <li class="position_tag_item">backend</li>
-                                </div>
-                            </div>
-                            <div>
-                                <ul class="stack_tag">
-                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
-                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contents_box">
-                        <div class="article-top">
-                            <div class="tag_study">스터디</div>
-                            <div class="likes">
-                                <img src="../imgs/study/pinkheart.png">
-                            </div>
-
-                        </div>
-                        <div class="article-profile">
-                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
-                            <div class="article-created-at">2023. 10. 31.</div>
-                        </div>
-                        <div class="flex-box gap8">
-                            <div class="flex-box gap8">
-                                <div class="position_tag">
-                                    <li class="position_tag_item">backend</li>
-                                </div>
-                            </div>
-                            <div>
-                                <ul class="stack_tag">
-                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
-                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contents_box">
-                        <div class="article-top">
-                            <div class="tag_study">스터디</div>
-                            <div class="likes">
-                                <img src="../imgs/study/pinkheart.png">
-                            </div>
-
-                        </div>
-                        <div class="article-profile">
-                            <div class="sub-article-title">풀스택 같은 백엔드 구합니다</div>
-                            <div class="article-created-at">2023. 10. 31.</div>
-                        </div>
-                        <div class="flex-box gap8">
-                            <div class="flex-box gap8">
-                                <div class="position_tag">
-                                    <li class="position_tag_item">backend</li>
-                                </div>
-                            </div>
-                            <div>
-                                <ul class="stack_tag">
-                                    <li class="stack-icon"><img src="../imgs/study/django_icon.png"></li>
-                                    <li class="stack-icon"><img src="../imgs/study/python_icon.png"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> -->
-
-
-
-
                 </div>
             </div>
-
-
-            <!-- 스토리 버전 -->
-            <!-- <div class="sub">
-                <div class="sub-article">
-                    <div class="sub-article-img">
-                        <img src="../media/profile/야경2.jpg" alt="">
-                    </div>
-                    <div class="sub-article-content">오늘 인프콘 갔다왔다. 정말 재밌었다!</div>
-                </div>
-                <div class="sub-article">
-                    <div class="sub-article-img">
-                    </div>
-                    <div class="sub-article-content">오늘 인프콘 갔다왔다. 정말 재밌었다!</div>
-                </div>
-            </div> -->
-
-
         </div>
 
 
@@ -321,58 +170,13 @@
         <div class="content-bottum" id="sideCOut">
 
             <div class="main-imglist" id="sideD">
-                <!-- <a href="">
-                    <div class="main-content">
-                        <div class="main-img"><img src="../imgs/user/icon3.png"></div>
 
-                        <div class="main-right">
-                            <div class="article-img-btns">
-                                <div class="views">
-                                    <img src="../imgs/study/viewsicon.png">
-                                    <p>3</p>
-                                </div>
-                                <div class="likes">
-                                    <img src="../imgs/study/pinkheart.png">
-                                    <p>4</p>
-                                </div>
-                            </div>
-                            <div class="imglisttext">감자감자왕감자 감자감자왕감자 감자감자왕감자 감자감자왕감자</div>
-                        </div>
-                    </div>
-                </a> -->
             </div>
 
 
             <div class="all-imglist" id="sideC">
 
-                <!-- <a href="">
-                    <div class="imglist">
-                        <div class="imghovertext">스토리 보러가기</div>
-                        <div class="imghover"></div>
-                        <img src="../imgs/user/icon1.png">
-                    </div>
-                </a>
-                <a href="">
-                    <div class="imglist">
-                        <div class="imghovertext">스토리 보러가기</div>
-                        <div class="imghover"></div>
-                        <img src="../imgs/study/banner_icon.png">
-                    </div>
-                </a>
-                <a href="">
-                    <div class="imglist">
-                        <div class="imghovertext">스토리 보러가기</div>
-                        <div class="imghover"></div>
-                        <img src="../imgs/study/banner_icon.png">
-                    </div>
-                </a>
-                <a href="">
-                    <div class="imglist">
-                        <div class="imghovertext">스토리 보러가기</div>
-                        <div class="imghover"></div>
-                        <img src="../imgs/study/banner_icon.png">
-                    </div>
-                </a>-->
+
                 <a href="">
                     <div class="imglist">
                         <div class="imghovertext">스토리 보러가기</div>
@@ -410,6 +214,13 @@
 </body>
 <script src="../js/profile.js"></script>
 <script src="../js/sidebar.js"></script>
-
 <script src="../js/auth.js"></script>
+
+<script src="../js/login.js"></script>
+
+<script src="../js/alarm.js"></script>
+<script src="../js/alarmCount.js"></script>
+<script src="../js/alrarm.js"></script>
+
+<script src="../js/profilelocation.js" type="module"></script>
 </html>

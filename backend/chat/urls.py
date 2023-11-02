@@ -17,5 +17,6 @@ urlpatterns = [
     path('api', views.ChatList.as_view(), name='chat'),
     path('create_chatroom', views.Create_chatroom.as_view(), name='chat2'),
     path('chat_desc', views.Chat_desc.as_view(), name='chat3'),
+    path('ai', views.Chat_AI.as_view(), name='ai'),
     # path('api/send_message', views.send_message, name='cmessage'),
 ]

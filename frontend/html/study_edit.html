@@ -1,17 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> estagram </title>
+    <title>Document</title>
+
     <link rel="stylesheet" href="../css/study_write.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/reset.css">
 </head>
+
+
 <body>
+    <!-- nav바 시작-->
+    <header class="desktop">
+        <div class="nav-container">
+            <div class="nav-hamburger">
+                <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            </a>
+            <div class="nav-buttons">
+                <a href=""><img src="../imgs/common/chat.png" alt="채팅" class="icon2" /></a>
+                <div class="notify_count">
+                    0
+                </div>
+                <div id="notification-trigger">
+                    <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
+                    <!-- 알림 모달 -->
+                    <div id="notification-modal">
+                        <section class="notify_seciton">
+                            <div>
+                                <p class="notify_title">알림</p>
+                            </div>
+                            <div class="notify_list">
+                                <div class="notify_none">
+                                    <div class="sender_info">
+                                        <p class="notnew">새로운 알림이 없습니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notify2-section">
+                                <p class="notify_title2">이전알림</p>
+                            </div>
+
+                            <div class="notify_list2"></div>
+                        </section>
+                    </div>
+                </div>
+                <!-- 로그인 여부에 따라 변경요망 -->
+                <div class="user_icon">
+                    <a href="#">
+                        <img src="../imgs/common/user.png" class="icon user_icon">
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="#" id="profile-change-link">프로필 변경</a>
+                        <a href="#" id="logout-button">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--nav바 종료-->
+
+
+    <!-- side바 시작 -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-container">
+            <div class="sidebar-hamburger">
+                <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
+                        alt="햄버거" class="hamburger" /></button>
+            </div>
+            <a href="feed.html" class="logo-link">
+                <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
+            </a>
+        </div>
+        <div id="side1">
+            <div class="sidebar-list">
+                <a href="feed.html">
+                    <img src="../imgs/common/home.png" />
+                    <span class="sidebar-text">홈</span>
+                </a>
+            </div>
+            <div class="sidebar-list">
+                <a href="#" onclick="toggleSubSidebar()">
+                    <img src="../imgs/common/search.png" />
+                    <span class="sidebar-text">검색</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="studylist.html">
+                    <img src="../imgs/common/study.png" />
+                    <span class="sidebar-text">스터디 / 프로젝트</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="story_write.html">
+                    <img src="../imgs/common/create.png" />
+                    <span class="sidebar-text">글 작성</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="profile.html" id ="profile-link">
+                    <img src="../imgs/common/profile.svg" class="sidebar-profile" />
+                    <span class="sidebar-text">프로필</span>
+                </a>
+            </div>
+
+            <div class="sidebar-list">
+                <a href="#">
+                    <img src="../imgs/common/settings.png.png" />
+                    <span class="sidebar-text">설정</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="sub-sidebar" style="display: none;">
+        <div class="user-search">
+            <h1>검색</h1>
+            <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+        </div>
+        <div id="searchResultsContainer" class="searchResults">
+            <!-- 검색 결과 -->
+        </div>
+    </div>
+    <div id="overlay" onclick="closeSidebar()">
+    </div>
+    <!-- sub-sidebar -->
+
+
 
     <form method="post" class="study-form" id="studyForm">
         <div class="upside">
             <div class="side-title">
-                <p class = "num-cir">1</p>
+                <p class="num-cir">1</p>
                 <p class="title-main">프로젝트 기본정보를 입력해 주세요.</p>
             </div>
             <div class="upside-form">
@@ -24,7 +152,7 @@
                             <option value="project">프로젝트</option>
                         </select>
                     </div>
-                    
+
                     <div class="input-container">
                         <label for="online_offline">진행방식</label>
                         <select name="online_offline" id="online_offline" class="input-content">
@@ -45,7 +173,7 @@
                             <option value="react">Django</option>
                         </select>
                     </div>
-                    
+
                     <div class="input-container">
                         <label for="field">모집 포지션</label>
                         <select name="field" id="field" class="input-content">
@@ -77,7 +205,7 @@
                             <option value="10">10명이상</option>
                         </select>
                     </div>
-                    
+
                     <div class="input-container">
                         <label for="period">진행기간</label>
                         <select name="period" id="period" class="input-content">
@@ -90,7 +218,7 @@
                             <option value="6">6개월 이상</option>
                         </select>
                     </div>
-                    
+
                     <div class="input-container">
                         <label for="public_private">공개 설정</label>
                         <select name="public_private" id="public_private" class="input-content">
@@ -98,20 +226,20 @@
                             <option value="private">비공개</option>
                         </select>
                     </div>
-                    
-                    <div class="input-container">
-                        <label for="end_at">모집 마감일</label>
-                        <input type="date" id="end_at" name="end_at" placeholder="2023-11-03">
-                    </div>
-                    
-                    <div class="input-container">
-                        <label for="start_at">스터디 시작일</label>
-                        <input type="date" id="start_at" name="start_at" placeholder="2023-11-03">
-                    </div>
+                    <div class="calender-container">
+                        <div class="calender">
+                            <label for="end_at">모집 마감일</label>
+                            <input type="date" id="end_at" name="end_at" placeholder="2023-11-03">
+                        </div>
 
+                        <div class="calender">
+                            <label for="start_at">스터디 시작일</label>
+                            <input type="date" id="start_at" name="start_at" placeholder="2023-11-03">
+                        </div>
+                    </div>
 
                 </div>
-                
+
             </div>
 
         </div>
@@ -122,22 +250,31 @@
                 <p class="num-cir">2</p>
                 <p class="title-main">프로젝트에 대해 소개해 주세요.</p>
             </div>
-            
+
             <div class="downside-form">
                 <input type="text" name="title" placeholder="제목을 입력하세요">
                 <textarea name="content" placeholder="내용을 입력하세요"></textarea>
             </div>
             <div class="btnside">
                 <button class="cancel">취소</button>
-                <button type="submit">수정 완료</button>
+                <button type="submit">글 등록</button>
             </div>
         </div>
-        
+
     </form>
-    
-    
-            
+
+
+
 </body>
 
 <script src="../js/study_edit.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/sidebar.js"></script>
+
+<script src="../js/login.js"></script>
+
+<script src="../js/alarm.js"></script>
+<script src="../js/alarmCount.js"></script>
+<script src="../js/alrarm.js"></script>
+
 </html>

@@ -19,7 +19,7 @@
             const newNotify = JSON.parse(localStorage.getItem('myNotify2'))
             const $notify_count = document.querySelector('.notify_count')
 
-            if(newNotify.length > 0) {
+            if(newNotify && newNotify.length > 0) {
                 $notify_count.style.display = 'flex'
                 $notify_count.innerText = newNotify.length
             } else {
