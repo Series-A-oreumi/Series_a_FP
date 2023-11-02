@@ -186,7 +186,7 @@
     display:flex;
     font-size: 30px;
     display: inline-block; /* 수정 */
-    padding-left: 450px;
+    padding-left: 400px;
 }
 
 .contents_detail_box .modal2 {
