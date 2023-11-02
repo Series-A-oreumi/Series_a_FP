@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             return `
             <div class="up-profile">
                 <div class="up-profile-img">
-                    <img src="${data.profile_img}.url" alt="" class="up-img">
+                    <img src="${data.profile_img}" alt="" class="up-img">
                 </div>
                 <div class="up-detail-profile">
                     <div class="up-profile-name">
