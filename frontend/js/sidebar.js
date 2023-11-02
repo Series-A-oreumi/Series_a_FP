@@ -29,7 +29,6 @@ function closeSidebar() {
     const sidebar = document.getElementById("sidebar");
     const subSidebar = document.getElementById("sub-sidebar");
     const overlay = document.getElementById("overlay");
-    const overlay2 = document.getElementById("overlay2");
 
     sidebar.style.transform = "translateX(-280px)";
     subSidebar.style.display = "none"; // 초기에도 왼쪽으로 이동

@@ -132,7 +132,7 @@ def comment_action(sender, instance, created, **kwargs):
         sender_user = comment.author # 댓글은 단 유저
         receiver_user = study.author # 해당 게시물 작성자
 
-        content = f'{sender_user.nickname}님이 회원님의 {study.title}에 댓글을 남겼습니다.'
+        content = f'{sender_user.nickname}님이 {study.title}에 댓글을 남겼습니다.'
         
         alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
 
@@ -157,7 +157,7 @@ def like_action(sender, instance, created, **kwargs):
         sender_user = like.user # 댓글은 단 유저
         receiver_user = study.author # 해당 게시물 작성자
 
-        content = f'{sender_user.nickname}님이 회원님의 {study.title}에 좋아요를 눌렀습니다.'
+        content = f'{sender_user.nickname}님이 {study.title}에 좋아요를 눌렀습니다.'
         
         alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
 

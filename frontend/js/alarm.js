@@ -31,9 +31,9 @@ const create_notify = (data) => {
     sender_info_p.innerText = `${data.check_alarm.content}`
     sender_info.append(sender_info_p)
     
-    accept_div.className = 'accept_div'
-    accept_btn.innerText = '읽음'
-    accept_btn.id = data.check_alarm.id
+    // accept_div.className = 'accept_div'
+    // accept_btn.innerText = '읽음'
+    // accept_btn.id = data.check_alarm.id
 
     
     accept_div.append(accept_btn)
@@ -63,7 +63,7 @@ const CheckhNotifications = async () => {
         if (response.ok) {
             const data = await response.json();
             
-            const notifications = data.alarm;
+            const notifications = data.alarm.slice(0, 10);
             notifications.forEach(notification => {
                 const element = create_notify(notification);
                 notifyList2.append(element);
@@ -110,11 +110,11 @@ const UnCheckhNotifications = async () => {
             const $notify_count = document.querySelector('.notify_count')
 
             if(newNotify.length > 0) {
-                $notify_none.remove()
-                $notify_count.style.display = 'flex'
-                $notify_count.innerText = newNotify.length
+                $notify_none.remove();
+                $notify_count.style.display = 'flex';
+                $notify_count.innerText = newNotify.length;
             } else {
-                $notify_count.style.display = 'none'
+                $notify_count.style.display = 'none';
             }
         } else {
             console.error('Failed to fetch notifications');
@@ -124,8 +124,8 @@ const UnCheckhNotifications = async () => {
     }
 }
 
-CheckhNotifications()
-UnCheckhNotifications()
+CheckhNotifications();
+UnCheckhNotifications();
 // const myNotification = async () => {
 //     const $notifyList = document.querySelector('.notify_list');
 //     const $notifyList2 = document.querySelector('.notify_list2'); // 이전 알림을 표시할 요소

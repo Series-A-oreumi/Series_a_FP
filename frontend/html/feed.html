@@ -44,14 +44,36 @@
         <div class="notify_count">
           0
         </div>
-        <a href="../html/alarm.html"><img src="../imgs/common/alarm.png" alt="알림" class="icon" /></a>
+        <div id="notification-trigger">
+          <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
+          <!-- 알림 모달 -->
+          <div id="notification-modal">
+            <section class="notify_seciton">
+              <div>
+                <p class="notify_title">알림</p>
+              </div>
+              <div class="notify_list">
+                <div class="notify_none">
+                  <div class="sender_info">
+                    <p class="notnew">새로운 알림이 없습니다.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="notify2-section">
+                <p class="notify_title2">이전알림</p>
+              </div>
+
+              <div class="notify_list2"></div>
+            </section>
+          </div>
+        </div>
         <!-- 로그인 여부에 따라 변경요망 -->
         <div class="user_icon">
           <a href="#">
             <img src="../imgs/common/user.png" class="icon user_icon">
           </a>
           <div class="dropdown-content">
-            <a href="profile_write.html">프로필 변경</a>
+            <a href="#" id="profile-change-link">프로필 변경</a>
             <a href="#" id="logout-button">로그아웃</a>
           </div>
         </div>
@@ -176,7 +198,9 @@
   <script src="../js/sidebar.js"></script>
   <script src="../js/login.js"></script>
   <script src="../js/feedDetail.js" type="module"></script>
+  <script src="../js/alarm.js"></script>
   <script src="../js/alarmCount.js"></script>
+  <script src="../js/alrarm.js"></script>
   <script src="../js/auth.js"></script>
 </body>
 
