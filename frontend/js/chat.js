@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 })
                                     .then(response => response.json())
                                     .then(data => {
-                                        console.log(data)
+                                        // console.log(data)
                                         receiver_rece_ai.innerHTML = data.message                                 
                                         chat_descs.appendChild(chats_receiver_ai);
                                         
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-
+                console.log(riceve_user_nickname)
                 const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
                     method: 'POST',
                     headers: {
@@ -202,6 +202,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     return response.json();
                 })
                     ;
+                // console.log(chat_list)
                 // const chat_lists = await response_json.user.nickname;
                 for (const chatroom of chat_list) {
                     const chat_partner = chatroom.chat_partner;
@@ -227,8 +228,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-                    if (chatroom.profile_id){
-                        profile_img.src = chatroom.profile_id
+                    if (chatroom.profile_img){
+                        console.log(chatroom.profile_img)
+                        // console.log(`https://estagram.s3.ap-northeast-2.amazonaws.com/${chatroom.profile_img}`)
+                        profile_img.src = chatroom.profile_img
                         // profile_img.src = 'chatroom.profile_id' + '.url'
                         // profile_img.src = chatroom.profile_id.url
                     }
