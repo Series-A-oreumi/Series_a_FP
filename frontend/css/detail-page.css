@@ -35,7 +35,7 @@
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     width: 620px;
-    height: 90vh;
+    /* height: 90vh; */
     position: relative;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -90,13 +90,14 @@
 
 .contents_detail {
     flex-direction: column; /* 세로 형태로 변경 */
-    margin-top: 20px;
+    padding-top: 20px;
     width:100%;
     max-height: 80vh; /* 높이를 내용에 맞게 자동 조정 */
     overflow-y: auto;
     overflow-x: hidden; /* 가로 스크롤 허용 */
     scrollbar-color: #ced0d4 transparent; 
     position: relative; /* 추가 */
+    /* height: 88%; */
 
 }
 
@@ -265,6 +266,7 @@
     justify-content: space-between;
     align-items: center;
     width: 560px;
+    margin-top: 1rem;
 }
 
 .like_count_container {
@@ -299,11 +301,11 @@
     margin-bottom: 20px;
 }
 .contents_detail_box .comment-item {
-    width: auto;
+    width: fit-content;
     margin-bottom: 20px;
     background-color: #f0f0f0; /* 말풍선 배경색 */
     border-radius: 10px; /* 말풍선 모서리 둥글게 */
-    padding: 10px; /* 내용과 말풍선 테두리 사이의 간격 */
+    padding: .5rem 1rem .5rem .4rem; /* 내용과 말풍선 테두리 사이의 간격 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
     display: flex;
     flex-direction: column; /* 세로로 나타내도록 변경 */
@@ -313,11 +315,13 @@
     margin-bottom: 5px;
     font-weight: bold;
     font-size: 12px;
+    width: fit-content;
 }
 
 .contents_detail_box .comment-content {
-    flex-grow: 1; /* 내용이 말풍선 내에서 최대한 확장되도록 설정 */
+    /* flex-grow: 1; 내용이 말풍선 내에서 최대한 확장되도록 설정 */
     font-size: 14px;
+    width: fit-content;
 }
 
 

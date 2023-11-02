@@ -228,7 +228,7 @@ function createDetailSection3(data) {
                 <div class="comment-inner" data-comment-id="${comment.id}">
                     <a href="${commentProfileURL}">
                         <div class="comment-user-icon">
-                            <img src="${comment.author.profile_img}.url">
+                            <img src="${comment.author.profile_img}">
                         </div>
                     </a>
                     <div class="comment-content">
