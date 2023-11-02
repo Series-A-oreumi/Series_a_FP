@@ -234,9 +234,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     document.body.style.overflowY = "hidden";
 
                     //모달 처리 코드 작성
-                    feedDetail(post.pk, function(){
-                        console.log('hello');
-                    });
+                    feedDetail(post.pk);
                     // contentsBox.appendChild(image);
 
             
@@ -257,7 +255,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             modal.style.display = "none";
                             document.body.style.overflowY = "visible";
                             clearFeedDetail();
-                            // 리프레시
+                            //리프레시
                             window.location.reload();
                         }
                     });
@@ -351,8 +349,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             commentListContainer.id = "comment-list-container";
             const commentList = document.createElement("div");
             commentList.id = "comment-list";
+            // comment-display 엘리먼트를 생성
+            const commentDisplay = document.createElement("div");
+            commentDisplay.className = "comment-display";
             commentListContainer.appendChild(commentList);
-            
+            commentListContainer.appendChild(commentDisplay);
+            displayComments(commentDisplay, post.comments);
             // 나머지 코드는 이전과 동일하게 유지
             
             publishButton.addEventListener("click", async function(event){
@@ -366,39 +368,71 @@ document.addEventListener("DOMContentLoaded", async function () {
                         },
                         body: new URLSearchParams({ content: inputField.value }).toString(),
                     });
-            
+                    // console.log(response);
                     const res = await response.json();
                     console.log(res);
             
-                    // 새로운 댓글을 list 배열에 추가
-                    list.push({
-                        content: inputField.value,
-                    });
-                    console.log(list);
-            
-                    // 댓글 리스트 업데이트
-                    drawing();
+
+                    // 서버에서 댓글 목록을 받아와 화면에 표시
+                    const comments = await fetchComments(postId);
+                    displayComments(comments);
+
             
                 } catch (error) {
                     console.error('Error adding comment:', error);
                 }
-                console.log(inputField.value);
             });
 
-            // 댓글 리스트를 업데이트하는 함수
-            function drawing(){
-                commentList.innerHTML = "";
-                for(let i = 0; i < list.length; i++){
-                    const row = createRow(list[i].content);
-                    commentList.append(row);
+            // 서버에서 댓글 목록을 받아오는 함수
+            async function fetchComments(postId) {
+                try {
+                    const response = await fetch(`http://localhost:8000/api/story/${postId}/commentlist/`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    const data = await response.json();
+            
+                    const dataArray = Object.values(data);
+            
+                    // 최신순으로 정렬
+                    const sortedComments = dataArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    console.log(sortedComments);
+                    // 최신 댓글 하나만 가져오기
+                    const latestComment = sortedComments.length > 0 ? sortedComments[sortedComments.length - 1] : null;
+            
+                    return latestComment ? [latestComment] : [];
+                } catch (error) {
+                    console.error('Error fetching comments:', error);
+                    return [];
                 }
             }
+            
+            // 서버 응답에서 댓글 목록을 받아와 화면에 표시하는 함수
+            function displayComments(element, comments) {
+                console.log(comments);
+                // comment-display 엘리먼트를 선택
 
-            // 댓글을 표시할 row 생성 함수 
-            function createRow(content) {
-                const row = document.createElement('div');
-                row.textContent = `${content}`;
-                return row;
+                // 기존에 표시된 내용을 지우고 새로운 댓글 목록을 표시
+                // commentDisplay.innerHTML = '';
+                if (comments.length > 0) {
+                    const latestComment = comments[0]; // 최신 댓글 하나만 가져옴
+
+                 const commentItem = document.createElement('div');
+                commentItem.className = "comment-item";
+                const commentItem1 = document.createElement('div');
+                commentItem1.className="comment-content";
+                commentItem1.textContent = latestComment.content;
+                const commentItem2 = document.createElement('div');
+                commentItem2.className="comment-username";
+                commentItem2.textContent = latestComment.author.username;
+                commentItem.appendChild(commentItem2);
+                commentItem.appendChild(commentItem1);
+                element.appendChild(commentItem);
+                    console.log(commentItem);
+                }
             }
             
             
