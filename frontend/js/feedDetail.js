@@ -266,7 +266,7 @@ export async function feedDetail(postId) {
 
         const commentAdd = document.createElement("div");
         commentAdd.className = "comment_field";
-        commentAdd.id = "add-comment-post8";
+        commentAdd.id =  `${post.pk}`; 
 
         // "댓글 달기" 입력 필드 생성
         const inputField = document.createElement("input");
@@ -285,7 +285,78 @@ export async function feedDetail(postId) {
         publishButton.setAttribute("name", "8");
         publishButton.setAttribute("data-name", "comment");
         publishButton.textContent = "게시";
+        publishButton.id = `${post.pk}`
+        
 
+        const commentListContainer = document.createElement("div");
+        commentListContainer.id = "comment-list-container";
+        const commentList = document.createElement("div");
+        commentList.id = "comment-list";
+            // comment-display 엘리먼트를 생성
+        const commentDisplay = document.createElement("div");
+        commentDisplay.className = "comment-display";
+        commentListContainer.appendChild(commentList);
+        commentListContainer.appendChild(commentDisplay);
+        displayComments(commentDisplay, post.comments);
+        
+            
+        publishButton.addEventListener("click", async function(event){
+            const postId = event.currentTarget.id;
+            try {
+                const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ content: inputField.value }).toString(),
+                });
+                // console.log(response);
+                const res = await response.json();
+                console.log(res);
+        
+
+
+                // 서버에서 댓글 목록을 받아와 화면에 표시
+                const comments = await fetchComments(postId);
+                displayComments(comments);
+                console.log(comments);
+
+        
+            } catch (error) {
+                console.error('Error adding comment:', error);
+            }
+        });
+        
+        // 서버에서 댓글 목록을 받아오는 함수
+        async function fetchComments(postId) {
+            const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`);
+            const data = await response.json();
+            return data;
+        }
+        
+        // 서버 응답에서 댓글 목록을 받아와 화면에 표시하는 함수
+        function displayComments(element, comments) {
+            console.log(comments);
+            // comment-display 엘리먼트를 선택
+
+            // 기존에 표시된 내용을 지우고 새로운 댓글 목록을 표시
+            // commentDisplay.innerHTML = '';
+            comments.forEach(comment => {
+                const commentItem = document.createElement('div');
+                commentItem.className = "comment-item";
+                const commentItem1 = document.createElement('div');
+                commentItem1.className="comment-content";
+                commentItem1.textContent = comment.content;
+                const commentItem2 = document.createElement('div');
+                commentItem2.className="comment-username";
+                commentItem2.textContent = comment.author.username;
+                commentItem.appendChild(commentItem2);
+                commentItem.appendChild(commentItem1);
+                element.appendChild(commentItem);
+                console.log(commentItem);
+            });
+        }
         // 로그인 확인 여부 코드 추가해야됨!
         // publishButton.addEventListener("click", function() {
         // alert("댓글을 작성하려면 로그인이 필요합니다");
@@ -294,26 +365,28 @@ export async function feedDetail(postId) {
         // 생성한 엘리먼트들을 부모 엘리먼트에 추가.
         commentAdd.appendChild(inputField);
         commentAdd.appendChild(publishButton);
-
         // detailBox에 추가
         detailBox.appendChild(header);
         detailBox.appendChild(content);
         detailBox.appendChild(scrollSection);
         detailBox.appendChild(iconsContainer);
         detailBox.appendChild(interactionContainer);
-        detailBox.appendChild(commentAdd);
-
-
+        detailBox.appendChild(commentListContainer);
+        // detailBox.appendChild(commentAdd);
+        
+        
         // 나머지 요소들을 article에 추가
         article.appendChild(detailBox);
         article.appendChild(imgSection);
         article.appendChild(interactionContainer);
         // article.appendChild(commentContainer);
         article.appendChild(iconsContainer);
-        article.appendChild(commentAdd);
+        article.appendChild(commentListContainer);
+        // article.appendChild(commentAdd);
         // article을 postContainer에 추가
         contentsBox.appendChild(article);
-
+        contentsBox.appendChild(commentAdd);
+        
     } catch (error) {
         console.error("Error fetching data:", error);
     }
