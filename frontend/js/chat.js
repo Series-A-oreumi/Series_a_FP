@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 `
                                 receiver_rece_ai.innerHTML = loading_msg
                                 chat_descs.appendChild(chats_receiver_ai);
-                                fetch('http://localhost:8000/chat/ai', {
+                                fetch('https://estagram.site//chat/ai', {
                                     method: 'POST',
                                     headers: {
                                         'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 console.log(riceve_user_nickname)
                 console.log(riceve_user_nickname)
-                const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
+                const chat_list = await fetch(`https://estagram.site/chat/create_chatroom`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -314,9 +314,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                         chat_info.appendChild(profile_id_2);
                         chat_info.style.borderBottom = '1px solid rgb(219, 219, 219)';
 
-
+ 
                         // 채팅 내용을 불러온다
-                        const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
+                        const chat_desc = await fetch(`https://estagram.site/chat/chat_desc`, {
                             method: 'POST',
                             headers: {
                                 'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -380,7 +380,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         const encodedUserData = encodeURIComponent(JSON.stringify(userCustomData));
 
 
-                        sockets[chat_room_id] = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/?${encodedUserData}`);
+                        sockets[chat_room_id] = new WebSocket(`ws://estagram.site/ws/chat/${chat_room_id}/?${encodedUserData}`);
 
 
 
