@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 password: password,
             };
 
-            fetch('https://estagram.site/api/login/', {
+            fetch('http://localhost:8000/api/login/', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {

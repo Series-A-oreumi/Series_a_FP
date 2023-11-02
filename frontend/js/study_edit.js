@@ -10,7 +10,7 @@ async function fetchStudyData(studyId) {
     const accessToken = localStorage.getItem('access_token');
 
     try {
-        const response = await fetch(`https://estagram.site/api/study/${studyId}`, {
+        const response = await fetch(`http://localhost:8000/api/study/${studyId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -71,7 +71,7 @@ studyForm.addEventListener('submit', async (event) => {
     const selectedStack = Array.from(document.querySelectorAll('#stacks option:checked')).map(option => option.value);
 
     try {
-        const response = await fetch(`https://estagram.site/api/study/${studyId}/`, {
+        const response = await fetch(`http://localhost:8000/api/study/${studyId}/`, {
             method: 'PUT', // Use PUT for updates
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
