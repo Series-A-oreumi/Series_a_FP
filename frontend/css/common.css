@@ -580,9 +580,12 @@ button {
     position: relative;
 }
 
+#notification-trigger img {
+    cursor: pointer;
+}
+
 #notification-modal {
     display: none;
-    cursor: pointer;
     position: absolute;
     z-index: 9999;
     left: -380px;
