@@ -71,22 +71,20 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (response_json) {
                 //로그인한 유저의 닉네임
                 const username = await response_json.user.nickname;
-                const userimg = await response_json.user.profile_img;
                 var myNickElement = document.getElementById("my_nick");
                 var myProfileimg = document.getElementById("my_profileimg")
-                console.log(userimg)
+                const defaultImage = document.createElement('img');
 
-                if (userimg === null) {
-                    const defaultImage = document.createElement('img');
-                    defaultImage.src = '../imgs/user/testimg.png';
-
-                    myProfileimg.innerHTML = '';
+                if (response_json.user.profile_img) {
+                    defaultImage.src = response_json.user.profile_img;
+            
+                } else {
+                    defaultImage.src = '../imgs/user/test.png';
                     myProfileimg.appendChild(defaultImage);
                 }
 
-
                 myNickElement.innerHTML = username;
-                myProfileimg.innerHTML = userimg;
+                myProfileimg.appendChild(defaultImage);
 
                 const socket_alarm = new WebSocket(`ws://localhost:8000/ws/chat_alarm/${username}/`);
 

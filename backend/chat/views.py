@@ -90,7 +90,8 @@ class Create_chatroom(APIView):
                     # 최종적으로 넘겨줄 결과 chatroom 리스트 초기화
                     chatrooms_context = []
                     print(guest_bool)
-                       
+                    
+                    partner_profile_img = UserProfile.objects.get(nickname=chatroom.chat_guest).profile_img.url
                     # 각 chatroom에 대해 필요한 정보 가져옴
                     for chatroom in chatrooms:                                                              
                         if chatroom.chat_host == str(host):                                        
@@ -99,8 +100,8 @@ class Create_chatroom(APIView):
                             chat_partner = UserProfile.objects.get(nickname=chatroom.chat_host)                        
                         unread_chatrooms = Message.objects.filter(receiver=host, is_read=False,chatroom_id=chatroom.id)
                         unread_count = unread_chatrooms.count()  
-                    
-                        if guest_bool.profile_img:                            
+                        
+                        if partner_profile_img:                            
                             print("이미지 있음")
                             print(guest_bool.profile_img)
                             result = {
