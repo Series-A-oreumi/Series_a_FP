@@ -53,13 +53,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             userContainer.appendChild(profileLink); // 변경하기 꼭 (테스트 추가한 부분)
 
 
-            header.appendChild(userContainer);
+            
 
             // 사용자 이름 및 국가 추가
             const userName = document.createElement("div");
             userName.className = "user_name";
             const nickName = document.createElement("div");
-            nickName.className = "nick_name m_text";
+            nickName.className = "nick_name-m_text";
 
             const postTime = formatTimeAgo(`${post.created_at}`);
 
@@ -68,6 +68,92 @@ document.addEventListener("DOMContentLoaded", async function () {
             usernameSpan.textContent = post.author.username;
             usernameSpan.style.color = "black";  // 사용자 이름의 글자색을 여기에 지정
 
+
+            //수정하기 삭제하기 ···버튼
+            const buttonall =document.createElement("div");
+            buttonall.className="button-all";
+            buttonall.textContent = "···";
+
+            // 모달 엘리먼트 생성
+            const modal2 = document.createElement('div');
+            modal2.className = 'modal2';
+
+            // 모달 내부 컨텐츠 생성
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+
+            // 수정하기 버튼 생성 및 클릭 이벤트 추가
+            const updateButton = document.createElement('button');
+            updateButton.textContent = '수정하기';
+            updateButton.addEventListener('click', function() {
+                const postIdToUpdate = `${post.pk}`;
+                updatePost(postIdToUpdate);
+            });
+
+            // 삭제하기 버튼 생성 및 클릭 이벤트 추가
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '삭제하기';
+            deleteButton.addEventListener('click', function() {
+                const postIdToDelete = `${post.pk}`;
+                deletePost(postIdToDelete);
+            });
+
+            // 모달에 버튼들 추가
+            modalContent.appendChild(updateButton);
+            modalContent.appendChild(deleteButton);
+
+            // 모달에 컨텐츠 추가
+            modal2.appendChild(modalContent);
+
+            buttonall.appendChild(modal2);
+
+            // 버튼을 클릭하면 모달 열기
+            buttonall.addEventListener('click', function() {
+                // 여기에 모달이 나타나도록 하는 코드를 추가해야 해요.
+                modal2.style.display = 'block'; // 예를 들어, display 속성을 'block'으로 설정하는 식으로 사용할 수 있어요.
+            });
+
+            // 모달 외부를 클릭했을 때 모달 닫기
+            document.addEventListener('click', function(event) {
+                if (event.target !== buttonall && !modal2.contains(event.target)) {
+                    // 버튼이나 모달 영역 외의 부분을 클릭했을 때 모달 닫기
+                    modal2.style.display = 'none';
+                }
+            });
+
+            //삭제하기
+            function deletePost(postId) {
+                const accessToken = localStorage.getItem('access_token');
+            
+                const apiUrl = `http://localhost:8000/api/story/${postId}/`;
+                const headers = {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                };
+            
+                // 확인 대화상자 띄우기
+                const confirmation = window.confirm('글을 삭제하시겠습니까?');
+            
+                if (confirmation) {
+                    // DELETE 요청 보내기
+                    fetch(apiUrl, {
+                        method: 'DELETE',
+                        headers: headers,
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        window.location.href = '../html/feed.html';
+                    })
+                    .catch(error => {
+                        console.error('Error deleting post:', error);
+                    });
+                }
+            }
+
+
+
             //모달 게시물 헤더
             const postOwner = document.createElement("div");
             postOwner.textContent = `${post.author.username} 님의 게시물`;  // 여기서 username을 사용하고 있습니다. 실제로 사용하는 데이터 필드로 변경해주세요.
@@ -75,10 +161,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // postTime 설정 및 스타일 지정
             const postTimeSpan = document.createElement("span");
-            postTimeSpan.textContent = ` • ${postTime}`;
+            postTimeSpan.textContent = `• ${postTime}`;
             postTimeSpan.style.color = "#888";
+
             nickName.appendChild(usernameSpan);
             nickName.appendChild(postTimeSpan);
+            nickName.appendChild(buttonall);
+            header.appendChild(userContainer);
             // const country = document.createElement("div");
             // country.className = "country s_text";
             // country.textContent = "Seoul, South Korea"; // 요것도 아직 지역 필드 없어서 서울로 임의로 설정 추후 변경 예정!

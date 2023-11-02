@@ -404,6 +404,62 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
+}
+
+.contents_box .nick_name-m_text{
+    display: flex;
+    align-items: center;
+}
+
+/* 수정하기 삭제 하기 */
+.contents_box .button-all{
+    padding-left: 315px;
+    font-size: 30px;
+    display: inline-block; /* 수정 */
+}
+
+.contents_box .modal2 {
+    display: none;
+    position: absolute; /* absolute로 변경 */
+    top: 100%; /* 아래로 떨어지도록 설정, 조절 가능 */
+    left: 70%; /* 좌측 정렬 */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* 모달 내부 컨텐츠 스타일 */
+.contents_box .modal-content {
+    text-align: center;
+}
+
+/* 수정하기, 삭제하기 버튼 스타일 */
+.contents_box .button-all {
+    position: relative;
+    cursor: pointer;
+}
+
+.contents_box .button-all:hover .modal2 {
+    display: block;
+}
+
+/* 버튼 스타일 */
+.contents_box button {
+    display: block; /* 수정 */
+    width: 100%; /* 수정 */
+    padding: 15px;
+    background-color: transparent;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.contents_box button:hover {
+    background-color: #cccccc;
 }
 
 .contents .toggle_box {
