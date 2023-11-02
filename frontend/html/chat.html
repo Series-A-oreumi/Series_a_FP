@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>챗</title>
 
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/reset.css">
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/common.css">
-    <link rel="stylesheet" href="Series_a_FP/frontend/css/style.css">
-    <link rel="stylesheet" type="text/css" href="Series_a_FP/frontend/css/chat.css" />
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/chat.css">
 </head>
 
 <body>
@@ -140,21 +140,16 @@
         <section class="list">
             <div class="chat_my_nick">
                 <div id="mynick_info">
-                    <div id="my_nick">
-                        이름
+                    <div id="my_profileimg">
+
                     </div>
-                    <div id="new_message">
-                        그림
-                    </div>
-                </div>
-                <div id="alarms">
-                    <div>메시지</div>
-                    <div id="alarm">요청</div>
+
+                    <div id="my_nick">닉네임</div>
                 </div>
             </div>
             <div class="chat_nick" id="bot">
-                <img class="profile_img" src="Series_a_FP/frontend/media/profile/행복오르미.jpg">
-                <div class="profile_id">AI 챗봇</div>
+                <img class="ai_img" src="../imgs/common/ai2.png">
+                <div class="ai_name">AI 챗봇</div>
             </div>
             <!-- <div class="lists">
 
@@ -164,10 +159,8 @@
             <div id="chat_info">
 
             </div>
-            <div id="chat_desc_">
-                <div id="chat_desc">
+            <div id="chat_desc">
 
-                </div>
             </div>
 
             <textarea id="chat_input" rows="4" cols="50" placeholder="메시지입력.."></textarea>
