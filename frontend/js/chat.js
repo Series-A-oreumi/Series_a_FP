@@ -163,6 +163,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                                     .then(data => {
                                         // console.log(data)
                                         receiver_rece_ai.innerHTML = data.message
+                                        // console.log(data)
+                                        receiver_rece_ai.innerHTML = data.message                                 
                                         chat_descs.appendChild(chats_receiver_ai);
 
                                     })
@@ -199,7 +201,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-                console.log(riceve_user_nickname)
                 console.log(riceve_user_nickname)
                 const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
                     method: 'POST',
