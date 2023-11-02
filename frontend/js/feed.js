@@ -295,6 +295,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                 //모달 처리 코드 작성
                 feedDetail(post.pk);
 
+                // 모달이 열린 후에 inputField에 focus 설정
+                setTimeout(() => {
+                    inputField.focus();
+                }, 100);
+
                 // 모달 닫기 코드
                 const buttonCloseModal = document.getElementById("close_modal");
                 buttonCloseModal.addEventListener("click", e => {
@@ -345,15 +350,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             publishButton.textContent = "게시";
             publishButton.id = `${post.pk}`
 
-            const commentListContainer = document.createElement("div");
-            commentListContainer.id = "comment-list-container";
-            const commentList = document.createElement("div");
-            commentList.id = "comment-list";
+
             // comment-display 엘리먼트를 생성
             const commentDisplay = document.createElement("div");
             commentDisplay.className = "comment-display";
-            commentListContainer.appendChild(commentList);
-            commentListContainer.appendChild(commentDisplay);
             displayComments(commentDisplay, post.comments);
             // 나머지 코드는 이전과 동일하게 유지
 
@@ -369,13 +369,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                         body: new URLSearchParams({ content: inputField.value }).toString(),
                     });
 
-                    const res = await response.json();
-                    console.log(res);
-            
-
                     // 서버에서 댓글 목록을 받아와 화면에 표시
-                    const comments = await fetchComments(postId);
-                    displayComments(comments);
+                    // const comments = await fetchComments(postId);
+                    // console.log(comments);
+                    // displayComments(comments);
+                    commentDisplay.innerHTML = '';
+                    addcomment(commentDisplay,inputField.value,post.author.username,postId);
+                    inputField.value='';
+
+
 
             
                 } catch (error) {
@@ -417,10 +419,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 // 기존에 표시된 내용을 지우고 새로운 댓글 목록을 표시
                 // commentDisplay.innerHTML = '';
+                
+                    // 최신순으로 정렬
+                const sortedComments = comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 if (comments.length > 0) {
-                    const latestComment = comments[0]; // 최신 댓글 하나만 가져옴
+                    const latestComment = sortedComments[0]; // 최신 댓글 하나만 가져옴
 
-                 const commentItem = document.createElement('div');
+                const commentItem = document.createElement('div');
                 commentItem.className = "comment-item";
                 const commentItem1 = document.createElement('div');
                 commentItem1.className="comment-content";
@@ -433,6 +438,29 @@ document.addEventListener("DOMContentLoaded", async function () {
                 element.appendChild(commentItem);
                     console.log(commentItem);
                 }
+            }
+
+            function addcomment(element,comment, username,postId){
+                const commentcount=document.getElementById(`comment-all-${postId}`);
+                let commentinner=commentcount.innerHTML;
+                const regex = /[^0-9]/g;
+                const result = commentinner.replace(regex, "");
+                const number = parseInt(result);
+
+                commentcount.innerHTML = `댓글 ${number+1}개 모두보기`;
+
+
+                const commentItem = document.createElement('div');
+                commentItem.className = "comment-item";
+                const commentItem1 = document.createElement('div');
+                commentItem1.className="comment-content";
+                commentItem1.textContent = comment;
+                const commentItem2 = document.createElement('div');
+                commentItem2.className="comment-username";
+                commentItem2.textContent = username;
+                commentItem.appendChild(commentItem2);
+                commentItem.appendChild(commentItem1);
+                element.appendChild(commentItem);
             }
 
 
@@ -452,7 +480,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             article.appendChild(bottomIcons);
             article.appendChild(likeText);
             article.appendChild(commentContainer);
-            article.appendChild(commentListContainer);
+            article.appendChild(commentDisplay);
             article.appendChild(commentAdd);
 
             // article을 postContainer에 추가
