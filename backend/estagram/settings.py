@@ -13,6 +13,7 @@ from datetime import timedelta
 from datetime import timedelta
 from pathlib import Path
 import os, json
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-PASSWORD_FILE = os.path.join(BASE_DIR, 'secret.json')
+PASSWORD_FILE = os.path.join(BASE_DIR, "secret.json")
 secrets = json.load(open(PASSWORD_FILE))
-SECRET_KEY = secrets['SECRET_KEY']
+SECRET_KEY = secrets["SECRET_KEY"]
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -36,39 +37,31 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # channel 설정
-    'channels',
-    'daphne',
-
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    # cors 
-    'corsheaders',
-
-     # framework
-    'rest_framework',
-    'rest_framework_simplejwt',
-
+    "channels",
+    "daphne",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    # cors
+    "corsheaders",
+    # framework
+    "rest_framework",
+    "rest_framework_simplejwt",
     # app
-    'user',
-    'chat',
-    'story',
-    'study',
-    'alarm',
-    'alrarm',
-
+    "user",
+    "chat",
+    "story",
+    "study",
+    "alarm",
+    "alrarm",
     # s3 storage
-    'storages',
-
+    "storages",
     # swagger
-    'drf_yasg',
-
+    "drf_yasg",
 ]
-
 
 
 # 초기 인증 제거 -> 추후에 필요하면 살리면 될듯
@@ -78,41 +71,46 @@ INSTALLED_APPS = [
 #     )
 # }
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', # <- 가능한 높게 위치시켜야 
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",  # <- 가능한 높게 위치시켜야
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True # <- 모든 호스트 허용
+CORS_ORIGIN_ALLOW_ALL = True  # <- 모든 호스트 허용
 
-ROOT_URLCONF = 'estagram.urls'
+ROOT_URLCONF = "estagram.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'estagram.wsgi.application'
+WSGI_APPLICATION = "estagram.wsgi.application"
 
-ASGI_APPLICATION = 'estagram.asgi.application' # asgi 설정 추가
+ASGI_APPLICATION = "estagram.asgi.application"  # asgi 설정 추가
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -126,28 +124,28 @@ ASGI_APPLICATION = 'estagram.asgi.application' # asgi 설정 추가
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': secrets["postgresql_name"], # 데이터베이스 이름
-        'USER': secrets["postgresql_user"],
-        'PASSWORD': secrets["postgresql_pwd"],
-        'HOST': secrets["postgresql_host"],
-        'PORT': secrets["postgresql_port"],
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": secrets["postgresql_name"],  # 데이터베이스 이름
+        "USER": secrets["postgresql_user"],
+        "PASSWORD": secrets["postgresql_pwd"],
+        "HOST": secrets["postgresql_host"],
+        "PORT": secrets["postgresql_port"],
     }
 }
 
-# Redis 
+# Redis
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [
-                    {
-                        "host": secrets['REDIS_HOST'],
-                        "port": secrets['REDIS_PORT'] or 6379,
-                        "password": secrets['REDIS_PASSWORD'],
-                    }
-                ]
+                {
+                    "host": secrets["REDIS_HOST"],
+                    "port": secrets["REDIS_PORT"] or 6379,
+                    "password": secrets["REDIS_PASSWORD"],
+                }
+            ]
         },
     },
 }
@@ -157,16 +155,16 @@ CHANNEL_LAYERS = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -174,9 +172,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = "ko-kr"
 
-TIME_ZONE = 'Asia/Seoul'
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
@@ -186,19 +184,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # s3 저장소에 연결 전까지 임시로 media 파일 설정
-MEDIA_URL = secrets['AWS_S3_BUCKET']
+MEDIA_URL = secrets["AWS_S3_BUCKET"]
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=2)
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
 }
