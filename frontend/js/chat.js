@@ -107,8 +107,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         console.log("읽음")
                     }
                 };
-                inputElement.addEventListener("keydown", function (event) {
-                };
+    
                 inputElement.addEventListener("keydown", function (event) {
                     // event.preventDefault();
                     console.log("요곤가?" + externalVariable)
@@ -127,10 +126,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 const chat_descs = document.getElementById("chat_desc")
                                 const message = inputElement.value;
                                 const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                                const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
                                 const chats_sender_ai = document.createElement("div");
-                                const chats_receiver_ai = document.createElement("div");
                                 const chats_receiver_ai = document.createElement("div");
                                 chats_sender_ai.className = "chats_sender";
                                 chats_receiver_ai.className = "chats_receiver";
@@ -192,7 +189,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                             }
                             else {
-                            else {
                                 const message = inputElement.value;
                                 // console.log(message)
                                 const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
@@ -220,10 +216,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-                console.log(riceve_user_nickname)
-                console.log(riceve_user_nickname)
-                console.log(riceve_user_nickname)
-                console.log(riceve_user_nickname)
                 const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
                     method: 'POST',
                     headers: {
