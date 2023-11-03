@@ -1,5 +1,5 @@
 
-import { UserInfo } from "./js/jwtUserId.js"
+import { UserInfo } from "../js/jwtUserId.js"
 
 const accessToken = localStorage.getItem('access_token');
 

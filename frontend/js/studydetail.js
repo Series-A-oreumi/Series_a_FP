@@ -1,5 +1,5 @@
 // 로그인한 유저 아이디
-import { UserInfo } from "./js/jwtUserId.js"
+import { UserInfo } from "../js/jwtUserId.js"
 
 const accessToken = localStorage.getItem('access_token');
 UserInfo(accessToken)
@@ -379,7 +379,7 @@ async function fetchDetailFromAPI() {
     const urlParams = new URLSearchParams(window.location.search);
     const dataId = urlParams.get('id');
     const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = `https://estagram.site/api/study/${dataId}/`;
+    const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
 
     try {
         const response = await fetch(apiEndpoint, {
@@ -421,7 +421,7 @@ document.addEventListener('click', async function (event) {
             const urlParams = new URLSearchParams(window.location.search);
             const dataId = urlParams.get('id');
             const accessToken = localStorage.getItem('access_token');
-            const apiEndpoint = `https://estagram.site/api/study/${dataId}/`;
+            const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
             const options = {
                 method: 'DELETE',
                 headers: {
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const commentText = commentArea.value;
         const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = `https://estagram.site/api/study/${dataId}/comments/`;
+        const apiEndpoint = `http://localhost:8000/api/study/${dataId}/comments/`;
         const options = {
             method: 'POST',
             headers: {
@@ -486,7 +486,7 @@ async function updateComments() {
     const urlParams = new URLSearchParams(window.location.search);
     const dataId = urlParams.get('id');
     const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = `https://estagram.site/api/study/${dataId}/comments/`;
+    const apiEndpoint = `http://localhost:8000/api/study/${dataId}/comments/`;
 
     try {
         const response = await fetch(apiEndpoint, {
@@ -544,7 +544,7 @@ document.addEventListener('click', async function (event) {
                     const updatedContent = commentEditText.value;
                     const commentId = commentElement.dataset.commentId;
                     const accessToken = localStorage.getItem('access_token');
-                    const apiEndpoint = `https://estagram.site/api/study/comments/${commentId}/`;
+                    const apiEndpoint = `http://localhost:8000/api/study/comments/${commentId}/`;
 
                     const options = {
                         method: 'PUT',
@@ -582,7 +582,7 @@ document.addEventListener('click', async function (event) {
                 if (isConfirmed) {
                     const commentId = commentElement.dataset.commentId;
                     const accessToken = localStorage.getItem('access_token');
-                    const apiEndpoint = `https://estagram.site/api/study/comments/${commentId}/`;
+                    const apiEndpoint = `http://localhost:8000/api/study/comments/${commentId}/`;
                     const options = {
                         method: 'DELETE',
                         headers: {
@@ -623,7 +623,7 @@ document.addEventListener('click', async function (event) {
         const urlParams = new URLSearchParams(window.location.search);
         const studyId = urlParams.get('id');
         const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = `https://estagram.site/api/study/liked/${studyId}/`;
+        const apiEndpoint = `http://localhost:8000/api/study/liked/${studyId}/`;
 
         const options = {
             method: 'POST',

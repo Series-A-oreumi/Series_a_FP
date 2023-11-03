@@ -183,7 +183,7 @@ const LoadNotifications = async () => {
     const accessToken = localStorage.getItem('access_token');
 
     try {
-        const response1 = await fetch('https://estagram.site/api/alarm/uncheck/', {
+        const response1 = await fetch('http://locatlhost:8000/api/alarm/uncheck/', {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
@@ -218,7 +218,7 @@ const LoadNotifications = async () => {
             console.error('Failed to fetch notifications (uncheck)');
         }
 
-        const response2 = await fetch('https://estagram.site/api/alarm/check/', {
+        const response2 = await fetch('http://locatlhost:8000/api/alarm/check/', {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
