@@ -1,13 +1,13 @@
 
-import { UserInfo } from "./jwtUserId.js"
+import { UserInfo } from "../js/jwtUserId.js"
 
 const accessToken = localStorage.getItem('access_token');
 
 // 프로필 변경 버튼 클릭 시 본인 프로필 변경 페이지로 이동
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const profileChangeLink = document.getElementById('profile-change-link');
 
-    profileChangeLink.addEventListener('click', function(e) {
+    profileChangeLink.addEventListener('click', function (e) {
         e.preventDefault();
 
         const user_id = UserInfo(accessToken).userId;
@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // 사이드 바에서 프로필 버튼 클릭 시 본인의 프로필로 이동시키기
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const profileChangeLink = document.getElementById('profile-link');
 
-    profileChangeLink.addEventListener('click', function(e) {
+    profileChangeLink.addEventListener('click', function (e) {
         e.preventDefault();
 
         const user_id = UserInfo(accessToken).userId;

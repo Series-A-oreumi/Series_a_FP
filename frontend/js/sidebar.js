@@ -90,8 +90,14 @@ const updateSearchResults = async () => {
 
 
                 // 프로필 이미지를 표시
+                // 프로필 이미지를 표시
                 const profileImage = document.createElement('img');
-                profileImage.src = "../imgs/common/profile.png"; // 유저 객체에 프로필 이미지 URL이 있다고 가정
+
+                if (user.profile_img) {
+                    profileImage.src = user.profile_img
+                } else {
+                    profileImage.src = "../imgs/common/profile.png";
+                }
                 profileImage.alt = 'Profile Image';
                 profileImage.className = 'result-profile-image';
                 resultItem.appendChild(profileImage);

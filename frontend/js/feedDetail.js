@@ -1,5 +1,5 @@
 // 시간 포맷 함수를 사용하여 시간을 포맷
-import { formatTimeAgo } from "./format.js"
+import { formatTimeAgo } from "../js/format.js"
 
 // 페이지 로딩이 완료되면 실행됩니다.
 export async function feedDetail(postId) {
@@ -63,7 +63,7 @@ export async function feedDetail(postId) {
         const profileImg = document.createElement("div");
         profileImg.className = "profile_img";
         const img = document.createElement("img");
-        
+
         if (post.author.profile_img) {
             img.src = post.author.profile_img
         } else {
@@ -78,7 +78,7 @@ export async function feedDetail(postId) {
         const userName = document.createElement("div");
         userName.className = "user_name";
         const nickName = document.createElement("div");
-        nickName.className = "nick_name m_text";
+        nickName.className = "nick_name-m_text";
         const postTime = formatTimeAgo(`${post.created_at}`);
         const usernameSpan = document.createElement("span");
         usernameSpan.textContent = post.author.username;
@@ -88,8 +88,97 @@ export async function feedDetail(postId) {
         const postTimeSpan = document.createElement("span");
         postTimeSpan.textContent = `${postTime}`;
         postTimeSpan.style.color = "#888";
-        nickName.appendChild(usernameSpan);
-        nickName.appendChild(postTimeSpan);
+
+        const spanContainer = document.createElement("div");
+        spanContainer.className = "span-Container";
+
+
+        //수정하기 삭제하기 ···버튼
+        const buttonall =document.createElement("div");
+        buttonall.className="button-all";
+        buttonall.textContent = "···";
+
+        // 모달 엘리먼트 생성
+        const modal2 = document.createElement('div');
+        modal2.className = 'modal2';
+
+        // 모달 내부 컨텐츠 생성
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+
+        // 수정하기 버튼 생성 및 클릭 이벤트 추가
+        const updateButton = document.createElement('button');
+        updateButton.textContent = '수정하기';
+        updateButton.addEventListener('click', function() {
+            const postIdToUpdate = `${post.pk}`;
+            updatePost(postIdToUpdate);
+        });
+
+        // 삭제하기 버튼 생성 및 클릭 이벤트 추가
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '삭제하기';
+        deleteButton.addEventListener('click', function() {
+            const postIdToDelete = `${post.pk}`;
+            deletePost(postIdToDelete);
+        });
+
+        // 모달에 버튼들 추가
+        modalContent.appendChild(updateButton);
+        modalContent.appendChild(deleteButton);
+
+        // 모달에 컨텐츠 추가
+        modal2.appendChild(modalContent);
+
+        buttonall.appendChild(modal2);
+
+        // 버튼을 클릭하면 모달 열기
+        buttonall.addEventListener('click', function() {
+            // 여기에 모달이 나타나도록 하는 코드를 추가해야 해요.
+            modal2.style.display = 'block'; // 예를 들어, display 속성을 'block'으로 설정하는 식으로 사용할 수 있어요.
+        });
+
+        // 모달 외부를 클릭했을 때 모달 닫기
+        document.addEventListener('click', function(event) {
+            if (event.target !== buttonall && !modal2.contains(event.target)) {
+                // 버튼이나 모달 영역 외의 부분을 클릭했을 때 모달 닫기
+                modal2.style.display = 'none';
+            }
+        });
+
+        //삭제하기
+        function deletePost(postId) {
+            const accessToken = localStorage.getItem('access_token');
+        
+            const apiUrl = `http://localhost:8000/api/story/${postId}/`;
+            const headers = {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            };
+        
+            // 확인 대화상자 띄우기
+            const confirmation = window.confirm('글을 삭제하시겠습니까?');
+        
+            if (confirmation) {
+                // DELETE 요청 보내기
+                fetch(apiUrl, {
+                    method: 'DELETE',
+                    headers: headers,
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    window.location.href = '../html/feed.html';
+                })
+                .catch(error => {
+                    console.error('Error deleting post:', error);
+                });
+            }
+        }
+        spanContainer.appendChild(usernameSpan);
+        spanContainer.appendChild(postTimeSpan);
+        nickName.appendChild(spanContainer);
+        nickName.appendChild(buttonall);
         // const country = document.createElement("div");
         // country.className = "country s_text";
         // country.textContent = "Seoul, South Korea"; // 요것도 아직 지역 필드 없어서 서울로 임의로 설정 추후 변경 예정!
@@ -227,6 +316,10 @@ export async function feedDetail(postId) {
         iconsContainer.appendChild(likeContainer);
         iconsContainer.appendChild(commentContainer2);
 
+        commentContainer2.addEventListener('click', function () {
+            inputField.focus();
+        });
+
 
         const interactionContainer = document.createElement('div');
         interactionContainer.className = 'interaction_container';
@@ -258,7 +351,7 @@ export async function feedDetail(postId) {
 
         // 댓글 개수를 표시합니다.
         comment.textContent = `댓글 ${post.comments_count}개`;
-        comment.id = `comment-all-${post.pk}`;
+        comment.id = `comment-all2-${post.pk}`;
         commentContainer.appendChild(comment);
 
         interactionContainer.appendChild(likeCountContainer);
@@ -274,7 +367,7 @@ export async function feedDetail(postId) {
 
         const commentAdd = document.createElement("div");
         commentAdd.className = "comment_field";
-        commentAdd.id =  `${post.pk}`; 
+        commentAdd.id = `${post.pk}`;
 
         // "댓글 달기" 입력 필드 생성
         const inputField = document.createElement("input");
@@ -294,21 +387,16 @@ export async function feedDetail(postId) {
         publishButton.setAttribute("data-name", "comment");
         publishButton.textContent = "게시";
         publishButton.id = `${post.pk}`
-        
 
-        const commentListContainer = document.createElement("div");
-        commentListContainer.id = "comment-list-container";
-        const commentList = document.createElement("div");
-        commentList.id = "comment-list";
-            // comment-display 엘리먼트를 생성
+
+
+        // comment-display 엘리먼트를 생성
         const commentDisplay = document.createElement("div");
         commentDisplay.className = "comment-display";
-        commentListContainer.appendChild(commentList);
-        commentListContainer.appendChild(commentDisplay);
         displayComments(commentDisplay, post.comments);
-        
-            
-        publishButton.addEventListener("click", async function(event){
+
+
+        publishButton.addEventListener("click", async function (event) {
             const postId = event.currentTarget.id;
             try {
                 const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`, {
@@ -320,29 +408,29 @@ export async function feedDetail(postId) {
                     body: new URLSearchParams({ content: inputField.value }).toString(),
                 });
                 // console.log(response);
-                const res = await response.json();
-                console.log(res);
-        
+                addcomment(commentDisplay, inputField.value, post.author.username, postId);
+                console.log(postId);
+                inputField.value = '';
+                // 댓글이 추가될 때 스크롤을 아래로 이동
 
+                const scrollElements = document.getElementsByClassName('contents_detail');
+                if (scrollElements.length > 0) {
+                    const scroll = scrollElements[0];
+                    scroll.scrollTop = scroll.scrollHeight;
+                }
 
-                // 서버에서 댓글 목록을 받아와 화면에 표시
-                const comments = await fetchComments(postId);
-                displayComments(comments);
-                console.log(comments);
-
-        
             } catch (error) {
                 console.error('Error adding comment:', error);
             }
         });
-        
+
         // 서버에서 댓글 목록을 받아오는 함수
         async function fetchComments(postId) {
-            const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`);
+            const response = await fetch(`http://localhost:8000/api/story/${postId}/commentlist/`);
             const data = await response.json();
             return data;
         }
-        
+
         // 서버 응답에서 댓글 목록을 받아와 화면에 표시하는 함수
         function displayComments(element, comments) {
             console.log(comments);
@@ -354,10 +442,10 @@ export async function feedDetail(postId) {
                 const commentItem = document.createElement('div');
                 commentItem.className = "comment-item";
                 const commentItem1 = document.createElement('div');
-                commentItem1.className="comment-content";
+                commentItem1.className = "comment-content";
                 commentItem1.textContent = comment.content;
                 const commentItem2 = document.createElement('div');
-                commentItem2.className="comment-username";
+                commentItem2.className = "comment-username";
                 commentItem2.textContent = comment.author.username;
                 commentItem.appendChild(commentItem2);
                 commentItem.appendChild(commentItem1);
@@ -365,6 +453,33 @@ export async function feedDetail(postId) {
                 console.log(commentItem);
             });
         }
+
+        function addcomment(element, comment, username, postId) {
+            const commentcount1 = document.getElementById(`comment-all2-${postId}`);
+            let commentinner = commentcount1.innerHTML;
+            const regex = /[^0-9]/g;
+            const result = commentinner.replace(regex, "");
+            const number = parseInt(result);
+            console.log(number)
+            commentcount1.innerHTML = `댓글 ${number + 1}개`;
+            console.log(commentcount1)
+
+
+            const commentItem = document.createElement('div');
+            commentItem.className = "comment-item";
+            const commentItem1 = document.createElement('div');
+            commentItem1.className = "comment-content";
+            commentItem1.textContent = comment;
+            const commentItem2 = document.createElement('div');
+            commentItem2.className = "comment-username";
+            commentItem2.textContent = username;
+            commentItem.appendChild(commentItem2);
+            commentItem.appendChild(commentItem1);
+            element.appendChild(commentItem);
+
+
+        }
+
         // 로그인 확인 여부 코드 추가해야됨!
         // publishButton.addEventListener("click", function() {
         // alert("댓글을 작성하려면 로그인이 필요합니다");
@@ -379,22 +494,24 @@ export async function feedDetail(postId) {
         detailBox.appendChild(scrollSection);
         detailBox.appendChild(iconsContainer);
         detailBox.appendChild(interactionContainer);
-        detailBox.appendChild(commentListContainer);
+        detailBox.appendChild(commentDisplay);
         // detailBox.appendChild(commentAdd);
-        
-        
+
+
         // 나머지 요소들을 article에 추가
         article.appendChild(detailBox);
         article.appendChild(imgSection);
         article.appendChild(interactionContainer);
         // article.appendChild(commentContainer);
         article.appendChild(iconsContainer);
-        article.appendChild(commentListContainer);
+        article.appendChild(commentDisplay);
         // article.appendChild(commentAdd);
         // article을 postContainer에 추가
+        console.log(article);
         contentsBox.appendChild(article);
         contentsBox.appendChild(commentAdd);
-        
+        console.log(contentsBox);
+
     } catch (error) {
         console.error("Error fetching data:", error);
     }

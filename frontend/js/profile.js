@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="imglist">
                         <div class="imghovertext">스토리 보러가기</div>
                         <div class="imghover"></div>
-                        <img src="${data.images}.url">
+                        <img src="${data.images}">
                     </div>
                 </a>
             `
@@ -139,33 +139,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             `
         }
 
-        // function createStory2(data) {
-        //     const storyUrl2 = `../html/story.html?id=${data.pk}`
-
-        //     return `
-        // <a href="${storyUrl2}">
-        //     <div class="main-content">
-        //         <div class="main-img">
-        //             <img src="${data.images}">
-        //         </div>
-
-        //         <div class="main-right">
-        //             <div class="article-img-btns">
-        //                 <div class="views">
-        //                     <img src="../imgs/study/viewsicon.png">
-        //                     <p>${data.views}</p>
-        //                 </div>
-        //                 <div class="likes">
-        //                     <img src="../imgs/study/pinkheart.png">
-        //                     <p>${data.likes_count}</p>
-        //                 </div>
-        //             </div>
-        //             <div class="imglisttext">${data.content}</div>
-        //         </div>
-        //     </div>
-        // </a>
-        //     `;
-        // }
 
         function sideCStory(data) {
             const innerContent3 = document.getElementById("sideC")
@@ -175,13 +148,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             innerContent3.innerHTML += instudyHTML3;
         }
 
-        // function sideDStory(data) {
-        //     const innerContent4 = document.getElementById("sideD")
-        //     const instudyHTML4 = `
-        //         ${createStory2(data)}
-        //     `;
-        //     innerContent4.innerHTML += instudyHTML4;
-        // }
 
 
         // 아래쪽 - 스터디 버전

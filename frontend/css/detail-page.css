@@ -2,14 +2,16 @@
 
 @keyframes fadeIn {
     from {
-      opacity: 0;
+        opacity: 0;
     }
+
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
-#modal_add_feed .modal_overlay{
-    top:0 !important;
+}
+
+#modal_add_feed .modal_overlay {
+    top: 0 !important;
 }
 
 .modal_overlay {
@@ -22,7 +24,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(200, 200, 200, 0.3) ;
     backdrop-filter: blur(1.5px);
     -webkit-backdrop-filter: blur(1.5px);
     animation: fadeIn 0.5s ease;
@@ -32,16 +34,17 @@
     background: white;
     backdrop-filter: blur(13.5px);
     -webkit-backdrop-filter: blur(13.5px);
-    border-radius: 10px;
+    border-radius: 7px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     width: 620px;
-    height: 90vh;
+    /* height: 90vh; */
     position: relative;
     padding-top: 10px;
     padding-bottom: 10px;
     animation: fadeIn 0.5s ease;
     display: flex;
     flex-direction: column;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .modal_title {
@@ -51,37 +54,37 @@
     font-weight: bold;
     font-size: 20px;
     width: 100%;
-    border-bottom: 2px solid #efefef;
+    border-bottom: 1px solid #cccccc;
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  
-  .modal_title_center {
+
+.modal_title_center {
     flex: 1;
     text-align: center;
-  }
-  
-  .modal_title_side {
+}
+
+.modal_title_side {
     flex: 0 0 auto;
     text-align: center;
-  }
-  
-  #close_modal_container {
+}
+
+#close_modal_container {
     position: relative;
     top: -60px;
     right: -30px;
     cursor: pointer;
-  }
+}
 
-  #close_modal {
+#close_modal {
     font-size: 30px; 
-    color: white; 
+    color: #999999; 
   }
 
 /* 피드 디테일 페이지 스타일 */
 .contents_detail_box {
     max-height: 100vh;
-    width:100%;
+    width: 100%;
     margin: 0;
 
 }
@@ -89,24 +92,30 @@
 
 
 .contents_detail {
-    flex-direction: column; /* 세로 형태로 변경 */
-    margin-top: 20px;
-    width:100%;
-    max-height: 80vh; /* 높이를 내용에 맞게 자동 조정 */
+    flex-direction: column;
+    /* 세로 형태로 변경 */
+    padding-top: 20px;
+    width: 100%;
+    max-height: 80vh;
+    /* 높이를 내용에 맞게 자동 조정 */
     overflow-y: auto;
-    overflow-x: hidden; /* 가로 스크롤 허용 */
-    scrollbar-color: #ced0d4 transparent; 
-    position: relative; /* 추가 */
+    overflow-x: hidden;
+    /* 가로 스크롤 허용 */
+    scrollbar-color: #ced0d4 transparent;
+    position: relative;
+    /* 추가 */
+    /* height: 88%; */
 
 }
 
 .contents_detail::-webkit-scrollbar {
-    width: 8px; /* 세로 스크롤 바 너비 조정 (Chrome, Safari, Edge) */
+    width: 8px;
+    /* 세로 스크롤 바 너비 조정 (Chrome, Safari, Edge) */
 }
 
 .contents_detail::-webkit-scrollbar-thumb {
     background-color: #ced0d4;
-    border-radius: 3px; 
+    border-radius: 3px;
 }
 
 
@@ -115,13 +124,15 @@
 }
 
 .trans_inner img {
-    width:590px;
-    height:500px;
+    width: 590px;
+    height: 500px;
+    display: block;
+    margin: 0 auto;
 }
 
 
 .detail--right_box {
-    order: 1; 
+    order: 1;
     padding: 0px 20px 20px 20px;
 }
 
@@ -130,7 +141,8 @@
     align-items: center;
     padding-bottom: 20px;
 }
-.contents_detail_box .user_container{
+
+.contents_detail_box .user_container {
     display: flex;
     align-items: center;
 }
@@ -158,6 +170,68 @@
     font-size: 11px;
     color: #888;
 }
+.contents_detail_box .nick_name-m_text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.contents_detail_box .span-Container{
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 수정 삭제하기 */
+.contents_detail_box .button-all{
+    display:flex;
+    font-size: 30px;
+    display: inline-block; /* 수정 */
+    padding-left: 450px;
+}
+
+.contents_detail_box .modal2 {
+    display: none;
+    position: absolute; /* absolute로 변경 */
+    top: 100%; /* 아래로 떨어지도록 설정, 조절 가능 */
+    left: 80%; /* 좌측 정렬 */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* 모달 내부 컨텐츠 스타일 */
+.contents_detail_box .modal-content {
+    text-align: center;
+}
+
+/* 수정하기, 삭제하기 버튼 스타일 */
+.contents_detail_box .button-all {
+    position: relative;
+    cursor: pointer;
+}
+
+.contents_detail_box .button-all:hover .modal2 {
+    display: block;
+}
+
+/* 버튼 스타일 */
+.contents_detail_box button {
+    display: block; /* 수정 */
+    width: 100%; /* 수정 */
+    padding: 15px;
+    background-color: transparent;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.contents_detail_box button:hover {
+    background-color: #cccccc;
+}
+
 
 .more_detail {
     list-style: none;
@@ -174,28 +248,35 @@
 .contents_detail_box .like_container:hover,
 .contents_detail_box .comment_container2:hover {
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.1); /* 회색 투명 배경 */
-    transition: background-color 0.3s ease; /* 배경 트랜지션 효과 */
+    background-color: rgba(0, 0, 0, 0.1);
+    /* 회색 투명 배경 */
+    transition: background-color 0.3s ease;
+    /* 배경 트랜지션 효과 */
 }
 
 /* 좋아요 버튼 호버 효과 */
 
 .contents_detail_box .like_container:hover {
-    transform: scale(1.1); /* 크기를 1.2배로 확대 */
-    transition: transform 0.3s ease; /* 부드러운 트랜지션 효과 */
+    transform: scale(1.1);
+    /* 크기를 1.2배로 확대 */
+    transition: transform 0.3s ease;
+    /* 부드러운 트랜지션 효과 */
 }
 
 /* 댓글 버튼 호버 효과 */
 
 .contents_detail_box .comment_container2:hover {
-    transform: scale(1.1); /* 크기를 1.2배로 확대 */
-    transition: transform 0.3s ease; /* 부드러운 트랜지션 효과 */
+    transform: scale(1.1);
+    /* 크기를 1.2배로 확대 */
+    transition: transform 0.3s ease;
+    /* 부드러운 트랜지션 효과 */
 }
 
 .contents_detail_box .sprite_heart_icon_outline.on {
     background: url('../imgs/like2.png') no-repeat;
-    
+
 }
+
 .contents_detail_box .sprite_heart_icon_outline {
     display: inline-block;
     background: url('../imgs/like.png') no-repeat;
@@ -210,14 +291,14 @@
     align-items: center;
     margin: 10px;
     padding:5px 20px 5px 20px;
-    border-top: 2px solid #efefef; 
-    border-bottom: 2px solid #efefef;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
     justify-content: center;
-    width: 550px;
+    width: 560px;
 
 }
 
-.like_container{
+.like_container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -226,11 +307,12 @@
     height: 30px;
     border-radius: 5px;
 }
-.like_container span{
+
+.like_container span {
     font-size: 14px;
 }
 
-.contents_detail_box .comment_container2{
+.contents_detail_box .comment_container2 {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -241,15 +323,18 @@
 }
 
 .content_detail_bottom_icons {
-    order: 4; /* content_detail_bottom_icons를 like_count_container 아래로 이동 */
+    order: 4;
+    /* content_detail_bottom_icons를 like_count_container 아래로 이동 */
     margin-top: 10px;
 }
-.contents_detail_box .comment_img{
-    width:30px;
+
+.contents_detail_box .comment_img {
+    width: 30px;
     height: 20px;
     padding-right: 5px;
 }
-.contents_detail_box .comment_container2 span{
+
+.contents_detail_box .comment_container2 span {
     font-size: 14px;
 }
 
@@ -259,12 +344,14 @@
     padding: 10px;
     margin-top: 10px;
 }
-.interaction_container{
+
+.interaction_container {
     padding-left: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 560px;
+    width: 580px;
+    margin-top: 1rem;
 }
 
 .like_count_container {
@@ -274,10 +361,11 @@
     align-items: center;
 }
 
-.like_count_container span{
+.like_count_container span {
     text-align: center;
 }
-.contents_detail_box .comment_container{
+
+.contents_detail_box .comment_container {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -294,30 +382,38 @@
 
 /* 댓글 리스트 */
 
-.contents_detail_box .comment-display{
-    padding:10px;
+.contents_detail_box .comment-display {
+    padding: 10px;
     margin-bottom: 20px;
 }
+
 .contents_detail_box .comment-item {
-    width: auto;
+    width: fit-content;
     margin-bottom: 20px;
-    background-color: #f0f0f0; /* 말풍선 배경색 */
-    border-radius: 10px; /* 말풍선 모서리 둥글게 */
-    padding: 10px; /* 내용과 말풍선 테두리 사이의 간격 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    background-color: #f0f0f0;
+    /* 말풍선 배경색 */
+    border-radius: 10px;
+    /* 말풍선 모서리 둥글게 */
+    padding: .5rem 1rem .5rem .4rem;
+    /* 내용과 말풍선 테두리 사이의 간격 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 그림자 추가 */
     display: flex;
-    flex-direction: column; /* 세로로 나타내도록 변경 */
+    flex-direction: column;
+    /* 세로로 나타내도록 변경 */
 }
 
 .contents_detail_box .comment-username {
     margin-bottom: 5px;
     font-weight: bold;
     font-size: 12px;
+    width: fit-content;
 }
 
 .contents_detail_box .comment-content {
-    flex-grow: 1; /* 내용이 말풍선 내에서 최대한 확장되도록 설정 */
+    /* flex-grow: 1; 내용이 말풍선 내에서 최대한 확장되도록 설정 */
     font-size: 14px;
+    width: fit-content;
 }
 
 
@@ -326,7 +422,7 @@
 
 
 
-.comment_form{
+.comment_form {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -334,7 +430,7 @@
 }
 
 .contents_detail_box .comment_field {
-    height: 40px;
+    height: 50px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -350,7 +446,7 @@
 
 .contents_detail_box .comment_field input{
     width: 100%;
-    height: 30px;
+    height: 40px;
     border: none;
     outline: none;
     background: white;
@@ -358,28 +454,30 @@
 }
 
 .contents_detail_box .comment_field input:focus {
-    background: transparent; /* 포커스 시에도 배경 색상 유지 */
+    background: transparent;
+    /* 포커스 시에도 배경 색상 유지 */
 }
 
-.contents_detail_box .comment_field input:focus ~ .upload_btn{
+.contents_detail_box .comment_field input:focus~.upload_btn {
     pointer-events: initial;
     opacity: 1;
-    background: transparent; /* 포커스 시에도 배경 색상 유지 */
+    background: transparent;
+    /* 포커스 시에도 배경 색상 유지 */
 }
 
- .contents_detail_box .comment-form {
+.contents_detail_box .comment-form {
     width: 80%;
-    padding: 5px;
+    padding: 5px 5px 5px 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
 } 
 
 .contents_detail_box .upload_btn {
-    color:#3897f0;
+    color: #3897f0;
     position: absolute;
     right: 20px;
     top: 45%;
-    transform:translateY(-50%);
+    transform: translateY(-50%);
     cursor: pointer;
     /*pointer-events: none;*/
     opacity: 0.6;

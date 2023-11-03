@@ -7,22 +7,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='UserProfile',
+            name="UserProfile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(max_length=254, unique=True)),
-                ('username', models.CharField(max_length=50)),
-                ('password', models.CharField(max_length=255)),
-                ('nickname', models.CharField(max_length=255)),
-                ('bootcamp', models.CharField(max_length=255)),
-                ('profile_img', models.FileField(blank=True, null=True, upload_to='')),
-                ('info', models.TextField(blank=True, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("email", models.EmailField(max_length=254, unique=True)),
+                ("username", models.CharField(max_length=50)),
+                ("password", models.CharField(max_length=255)),
+                ("nickname", models.CharField(max_length=255)),
+                ("bootcamp", models.CharField(max_length=255)),
+                ("profile_img", models.FileField(blank=True, null=True, upload_to="")),
+                ("info", models.TextField(blank=True, null=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

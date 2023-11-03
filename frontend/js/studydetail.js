@@ -1,5 +1,5 @@
 // 로그인한 유저 아이디
-import { UserInfo } from "./jwtUserId.js"
+import { UserInfo } from "../js/jwtUserId.js"
 
 const accessToken = localStorage.getItem('access_token');
 UserInfo(accessToken)
@@ -54,8 +54,8 @@ function createDetailSection1(data) {
 
 
 // const heartImageSrc = data.likes
-//     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
-//     : "Series_a_FP/frontend/imgs/study/grayheart.png";
+//     ? "../imgs/study/pinkheart.png"
+//     : "../imgs/study/grayheart.png";
 
 
 // 본문~
@@ -228,7 +228,7 @@ function createDetailSection3(data) {
                 <div class="comment-inner" data-comment-id="${comment.id}">
                     <a href="${commentProfileURL}">
                         <div class="comment-user-icon">
-                            <img src="${comment.author.profile_img}.url">
+                            <img src="${comment.author.profile_img}">
                         </div>
                     </a>
                     <div class="comment-content">
@@ -348,7 +348,7 @@ function renderComments(comments) {
             <div class="comment-inner">
                 <a href="${commentProfileURL}">
                     <div class="comment-user-icon">
-                        <img src="${comment.author.profile_img}.url">
+                        <img src="${comment.author.profile_img}">
                     </div>
                 </a>
                 <div class="comment-content">

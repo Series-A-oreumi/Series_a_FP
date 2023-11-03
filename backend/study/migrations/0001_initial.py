@@ -9,19 +9,40 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('user', '0001_initial'),
+        ("user", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Stack',
+            name="Stack",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(choices=[('python', 'Python'), ('java', 'Java'), ('javascript', 'Javascript'), ('spring', 'Spring'), ('django', 'Django'), ('react', 'React')], max_length=12)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        choices=[
+                            ("python", "Python"),
+                            ("java", "Java"),
+                            ("javascript", "Javascript"),
+                            ("spring", "Spring"),
+                            ("django", "Django"),
+                            ("react", "React"),
+                        ],
+                        max_length=12,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Study',
+            name="Study",
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(blank=True, max_length=100, null=True)),
@@ -43,7 +64,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Like',
+            name="Like",
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('liked', models.BooleanField(default=False)),
@@ -52,13 +73,35 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.CharField(max_length=100)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments_author', to='user.userprofile')),
-                ('study', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments_study', to='study.study')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.CharField(max_length=100)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comments_author",
+                        to="user.userprofile",
+                    ),
+                ),
+                (
+                    "study",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comments_study",
+                        to="study.study",
+                    ),
+                ),
             ],
         ),
     ]
