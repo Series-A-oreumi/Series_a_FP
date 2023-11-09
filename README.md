@@ -266,7 +266,7 @@
     ```
 ```  
 
-<h1>5. 팀원 소개</h1>
+<h1>6. 팀원 소개</h1>
 <table>
   <tr>
     <td align="center" width="150px">
