@@ -2,8 +2,10 @@
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/cb05ae65-1635-45a1-8a17-e1bb68ecdea7">
 
 <h3>부트캠프에 참여한 학생들을 위한 커뮤니티 서비스</h3>
+
 > 부트캠프에 참여하고 있는 사람들이 일상을 공유하고, 스터디•프로젝트 모집 혹은 참여할 수 있도록 서비스를 제공하는 커뮤니티 사이트      
 <br />
+
 <h1>2. 개발 환경</h1>
 
 <h3>🛠주요 기술</h3>
@@ -50,28 +52,35 @@ DB
 <img src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/1984d679-2231-4765-929b-97b72f430df9">
 
 <h3>2. 스토리</h3>
-```사람들이 올릴 수 있는 SNS로 일상 혹은 공부한 내용 등을 공유하는 페이지입니다.```
+
+```
+사람들이 올릴 수 있는 SNS로 일상 혹은 공부한 내용 등을 공유하는 페이지입니다.
+```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/5e1eab75-fc86-4088-91be-f528ac24b192">
 
 <h3>3. 스터디&프로젝트</h3>
+
 ```
 해커톤, 프로젝트 등 팀원을 모집하거나, 스터디원 모집과 참가를 할 수 있습니다. 필요에 따라 기술 스택, 포지션 등 필터를 적용할 수 있으며 검색을 할 수 있습니다.
 ```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/e09f0d9e-4d3d-4624-ae40-aa6a0ae0ab92">
 
 <h3>4. 알람</h3>
+
 ```
 자신의 게시글에 다른 사람이 댓글을 남기거나 좋아요 버튼을 누를 경우 알람이 표시됩니다.
 ```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/44717e10-cde9-4808-87c6-71c1cc6123ac">
 
 <h3>5. 프로필</h3>
+
 ```
 닉네임, 프로필 사진을 변경할 수 있고, 자신의 스토리 게시글, 스터디&프로젝트 게시글들을 확인할 수 있습니다.
 ```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/db967112-1691-41e3-a406-769ca29bb145">
 
 <h3>6. 채팅</h3>
+
 ```
 다른 사람들과 채팅을 나눌 수 있고, AI 챗봇을 통한 채팅도 가능합니다.
 ```
@@ -97,6 +106,7 @@ DB
 ```   
 
 <h3>컨벤션 및 브랜치 전략</h3>
+
 ```
 ## 브랜치 전략
 
@@ -246,7 +256,7 @@ DB
   <tr>
     <td align="center" width="150px">
       <a href="" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/49267413?v=4" alt="문길호 프로필" />
+        <img src="" alt="문길호 프로필" />
       </a>
     </td>
     <td align="center" width="150px">
@@ -256,7 +266,7 @@ DB
     </td>
     <td align="center" width="150px">
       <a href="https://github.com/minsuhaha" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/120551363?v=4" alt="하민수 프로필" />
+        <img src="" alt="하민수 프로필" />
       </a>
     </td>
     <td align="center" width="150px">
