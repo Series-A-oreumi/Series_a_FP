@@ -9,27 +9,27 @@
 <h1>2. 개발 환경</h1>
 
 <h3>🛠주요 기술</h3>
-Backend
+#Backend
 
 ```
 - Django
-- Ddjango-restframework
+- Django-restframework
 ```
 
-Frontend
+#Frontend
 ```
 - JavaScript
 - Figma
 - HTML5
 ```
-CI/CD
+#CI/CD
 ```
 - Docker
 - Jenkins
 - AWS EC2
 - AWS S3
 ```
-DB
+#DB
 ```
 - postgreSQL
 ```
