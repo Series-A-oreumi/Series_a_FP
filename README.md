@@ -3,11 +3,12 @@
 
 <h3>부트캠프에 참여한 학생들을 위한 커뮤니티 서비스</h3>
 > 부트캠프에 참여하고 있는 사람들이 일상을 공유하고, 스터디•프로젝트 모집 혹은 참여할 수 있도록 서비스를 제공하는 커뮤니티 사이트      
-
+<br />
 <h1>2. 개발 환경</h1>
 
 <h3>🛠주요 기술</h3>
 Backend
+
 ```
 - Django
 - Ddjango-restframework
@@ -38,47 +39,45 @@ DB
 <img width="1272" alt="Untitled" src="">   
 
 
-<h1>3. 주요 기능</h1>
-<h3>서비스 소개</h3> gif 전부 바꿀 예정
+<h1>3. 주요 기능</h1>gif 전부 바꿀 예정
+<h2>서비스 소개</h2>
 
-<h4>1. 회원가입 및 로그인</h4>
+<h3>1. 회원가입 및 로그인</h3>
+
 ```
 로그인, 회원가입을 통해 메인 화면으로 이동할 수 있습니다.
 ```
 <img src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/1984d679-2231-4765-929b-97b72f430df9">
 
-<h4>2. 스토리</h4>
+<h3>2. 스토리</h3>
 ```사람들이 올릴 수 있는 SNS로 일상 혹은 공부한 내용 등을 공유하는 페이지입니다.```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/5e1eab75-fc86-4088-91be-f528ac24b192">
 
-<h4>3. 스터디&프로젝트</h4>
+<h3>3. 스터디&프로젝트</h3>
 ```
 해커톤, 프로젝트 등 팀원을 모집하거나, 스터디원 모집과 참가를 할 수 있습니다. 필요에 따라 기술 스택, 포지션 등 필터를 적용할 수 있으며 검색을 할 수 있습니다.
 ```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/e09f0d9e-4d3d-4624-ae40-aa6a0ae0ab92">
 
-<h4>4. 알람</h4>바꿀예정
+<h3>4. 알람</h3>
 ```
 자신의 게시글에 다른 사람이 댓글을 남기거나 좋아요 버튼을 누를 경우 알람이 표시됩니다.
 ```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/44717e10-cde9-4808-87c6-71c1cc6123ac">
 
-<h4>5. 프로필</h4>바꿀예정
+<h3>5. 프로필</h3>
 ```
 닉네임, 프로필 사진을 변경할 수 있고, 자신의 스토리 게시글, 스터디&프로젝트 게시글들을 확인할 수 있습니다.
 ```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/db967112-1691-41e3-a406-769ca29bb145">
 
-<h4>6. 채팅</h4>바꿀예정
+<h3>6. 채팅</h3>
 ```
 다른 사람들과 채팅을 나눌 수 있고, AI 챗봇을 통한 채팅도 가능합니다.
 ```
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/05e0e33b-2862-4cf1-8724-0e86b18e983b">
 
-<h3>기술 특이점</h3>
-1. openAI API 활용
-2. WebSocket을 통한 실시간 알람
-3. WebSocket을 통한 실시간 채팅
+<br />
 
 <h1>4. 설계 문서</h1>
 <h3>Figma</h3>
@@ -87,8 +86,9 @@ DB
 <h3>API 명세서</h3>
 <img width="700" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/47171395-6ef0-4fce-a868-78b696c259b4">
 
-<h1>4. 협업툴, 컨벤션</h1>
+<h1>4. 협업툴, 컨벤션</h1> 컨벤션 수정 예정
 <h3>협업툴</h3>
+
 ```
 - Notion
   - git
@@ -96,7 +96,7 @@ DB
 - Figma
 ```   
 
-<h3>컨벤션 및 브랜치 전략</h3> 수정 예정
+<h3>컨벤션 및 브랜치 전략</h3>
 ```
 ## 브랜치 전략
 
