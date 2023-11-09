@@ -9,30 +9,36 @@
 <h1>2. 개발 환경</h1>
 
 <h3>🛠주요 기술</h3>
-#Backend
+<h4>Backend</h4>
 
 ```
 - Django
 - Django-restframework
 ```
+<h4>Frontend</h4>
 
-#Frontend
 ```
 - JavaScript
 - Figma
 - HTML5
 ```
-#CI/CD
+
+<h4>CI/CD</h4>
+
 ```
 - Docker
 - Jenkins
 - AWS EC2
 - AWS S3
 ```
-#DB
+
+<h4>DB</h4>
+
 ```
 - postgreSQL
 ```
+<br />
+
 <h3>💻서비스 아키텍처</h3>아키텍처 바꿀 예정
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/462d060a-3642-4f03-b6ce-89ed16e60323">
 <h3>📋ERD</h3> 수정 예정
@@ -40,6 +46,7 @@
 <h3>👩‍💼유저 플로우</h3> 수정 예정
 <img width="1272" alt="Untitled" src="">   
 
+<br />
 
 <h1>3. 주요 기능</h1>gif 전부 바꿀 예정
 <h2>서비스 소개</h2>
@@ -84,19 +91,26 @@
 ```
 다른 사람들과 채팅을 나눌 수 있고, AI 챗봇을 통한 채팅도 가능합니다.
 ```
-<img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/05e0e33b-2862-4cf1-8724-0e86b18e983b">
+<img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/05e0e33b-2862-4cf1-8724-0e86b18e983b"><br/><br/>
 
-<br />
+   
+
+
 
 <h1>4. 설계 문서</h1>
-<h3>Figma</h3>
+
+<h3>🎨Figma</h3>
+
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/3163e5ef-e510-4fc5-84b3-c961a9836905">
 
-<h3>API 명세서</h3>
-<img width="700" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/47171395-6ef0-4fce-a868-78b696c259b4">
+<h3>📑API 명세서</h3>
 
-<h1>4. 협업툴, 컨벤션</h1> 컨벤션 수정 예정
-<h3>협업툴</h3>
+<img width="700" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/41766441-79b2-4666-945d-b9eb28fae93f"><br/>  
+
+
+<h1>5. 협업툴, 컨벤션</h1> 컨벤션 수정 예정
+
+<h3>🗣협업툴</h3>
 
 ```
 - Notion
@@ -105,7 +119,7 @@
 - Figma
 ```   
 
-<h3>컨벤션 및 브랜치 전략</h3>
+<h3>❗컨벤션 및 브랜치 전략</h3>
 
 ```
 ## 브랜치 전략
@@ -249,7 +263,7 @@
     #   chore   : 기타 변경사항 (빌드 스크립트 수정 등 MD 제외 모든 파일)
     #   예시) chore : gitignore redis 추가, chore : migrations 파일 추가
     ```
-```
+```  <br/>
 
 <h1>5. 팀원 소개</h1>
 <table>
