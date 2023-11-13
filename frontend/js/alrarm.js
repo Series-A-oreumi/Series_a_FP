@@ -1,40 +1,12 @@
 import { UserInfo } from './jwtUserId.js';
-
 // 서버로부터 UserIds를 가져오는 함수
-async function fetchStudyIds() {
-    const accessToken = localStorage.getItem('access_token');
-    const userInfo = UserInfo(accessToken); // 사용자 정보 추출
-
-    if (typeof userInfo === 'object' && userInfo.userId) {
-        try {
-            const response = await fetch("http://localhost:8000/api/alrarm/", {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                    'User-ID': userInfo.userId // 사용자 ID를 헤더에 추가
-                },
-            });
-
-            const data = await response.json();
-            console.log(data);
-            return data.UserIds;
-        } catch (error) {
-            console.error('Error fetching UserIds:', error);
-            return [];
-        }
-    } else {
-        console.error('Error extracting user ID');
-        return [];
-    }
-}
-
 
 // 웹소켓 연결 및 알림 처리 함수
 async function setupWebSocket() {
+    console.log('연결')
     const accessToken = localStorage.getItem('access_token');
     try {
-        const response = await fetch("http://localhost:8000/api/alrarm/", {
+        const response = await fetch("http://localhost:8000/api/notifications/", {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -46,8 +18,8 @@ async function setupWebSocket() {
 
         console.log(data)
 
-        UserIds.forEach(studyId => {
-            let userId = studyId;// 사용자 ID를 얻어올 수 있는 방법에 따라 userId 값을 설정
+        UserIds.forEach(userId => {
+            let userId = userId;// 사용자 ID를 얻어올 수 있는 방법에 따라 userId 값을 설정
 
             if (userId === null) {
                 userId = '1';
@@ -60,8 +32,7 @@ async function setupWebSocket() {
 
             if (userId.User == user.userId) {
 
-                const socket = new WebSocket(`ws://127.0.0.1:8000/ws/notifications/${userId.User}/`);
-                // const socket = new WebSocket(`ws://127.0.0.1:8000/ws/notifications/${user_noti[0]}/`);
+                const socket = new WebSocket(`ws://127.0.0.1:8000/ws/study/${userId.User}/`);
                 console.log(userId.User, user.userId, "아이디와 사용자아이디가 일치합니다.");
 
 
@@ -99,7 +70,7 @@ async function setupWebSocket() {
             }
         });
     } catch (error) {
-        console.error('Error fetching studyIds:', error);
+        console.error('Error fetching userIds:', error);
     }
 }
 

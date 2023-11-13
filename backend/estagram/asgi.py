@@ -13,13 +13,14 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "estagram.settings")
 import chat.routing
 import alarm.routing
 import alrarm.routing
+import notifications.routing
 
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
         "websocket": AllowedHostsOriginValidator(
             AuthMiddlewareStack(
-                URLRouter(alrarm.routing.websocket_urlpatterns + chat.routing.websocket_urlpatterns)
+                URLRouter(notifications.routing.websocket_urlpatterns + alrarm.routing.websocket_urlpatterns + chat.routing.websocket_urlpatterns)
             )
         ),
     }
