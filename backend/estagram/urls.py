@@ -14,7 +14,7 @@ schema_view = get_schema_view(
         default_version = 'v1.0',
         description = 'Estagram API 문서',
         terms_of_service = 'https://127.0.0.1/terms/',
-        contact = openapi.Contact(email= "haminsu5@gmail.com"),
+        contact = openapi.Contact(email= "dlgusrud0322@naver.com"),
         license = openapi.License(name = 'MIT'), # MIT -> 모두가 쓸 수 있는
     ),
     public=True,
