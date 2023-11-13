@@ -1,5 +1,3 @@
-# consumers.py
-
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
@@ -8,21 +6,18 @@ from asgiref.sync import async_to_sync
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework_simplejwt.tokens import AccessToken
-from rest_framework.authtoken.models import Token
 from alarm.models import Alarm
 from alarm.serializers import AlarmSerializer
 from user.serializers import UserProfileSerializer
 from user.models import UserProfile  # 사용자 모델 임포트
 
-# const token = "your_jwt_token_here"; // 획득한 JWT 토큰
-# const socket = new WebSocket("ws://your_websocket_server_url?token=" + token);
 class MyConsumer(AsyncWebsocketConsumer):
-
-     # 클라이언트가 WebSocket 연결을 시도할 때 호출되며, 연결을 수락하고 그룹에 사용자를 추가합니다.
+    ''' 알람 웹소켓 '''
+        
+    # 클라이언트가 WebSocket 연결을 시도할 때 호출되며, 연결을 수락하고 그룹에 사용자를 추가합니다.
     async def connect(self):
         
         # WebSocket 연결 시 클라이언트로부터 토큰을 받아옴
-        # token = self.scope.get('query_string').decode('utf-8').split('=')[1]
         token = self.scope.get('url_route')['kwargs']['token']
 
         # 토큰 유효성 검사 및 사용자 인증
