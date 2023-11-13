@@ -1,8 +1,7 @@
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework.response import Response
 from rest_framework import status
-from .models import UserProfile  # UserProfile 모델을 정확한 모델로 수정하세요
+from .models import UserProfile 
 from pathlib import Path
 
 import json, os, uuid, boto3

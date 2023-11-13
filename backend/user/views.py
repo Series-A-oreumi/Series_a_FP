@@ -11,18 +11,15 @@ from .models import *
 from .forms import *
 from .serializers import *
 
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.generics import GenericAPIView, RetrieveAPIView
+from rest_framework.generics import GenericAPIView
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 
 from user.permissions import IsTokenValid
 
-# login
 class LoginView(GenericAPIView):
-    permission_classes = (AllowAny,)
+    '''로그인'''
     serializer_class = LoginSerializer
 
     def post(self, request):
@@ -48,9 +45,8 @@ class LoginView(GenericAPIView):
             return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# register
 class RegisterView(APIView):
-    permission_classes = (AllowAny,)
+    '''회원가입'''
     serializer_class = RegistrationSerializer
 
     def post(self, request):
@@ -64,8 +60,8 @@ class RegisterView(APIView):
             return Response(serializer.errors)
 
 
-# profile detail
 class ProfileDetail(APIView):
+    '''마이프로필'''
     permission_classes = [IsTokenValid]
 
     def get(self, request, user_id):
@@ -113,14 +109,13 @@ class ProfileDetail(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         
-# profile edit & delete
+
 class ProfileUpdateDelete(APIView):
-    
+    '''프로필 수정 및 삭제'''
     permission_classes = [IsTokenValid]
 
-    # edit
     def put(self, request):
-        user = get_user_from_token(request) # 토큰 decode 통해 로그인 한 유저 담아주기
+        user = get_user_from_token(request) 
         user_profile = get_object_or_404(UserProfile, id = user.id)
 
         serializer = ProfileUpdateSerializer(user_profile, data=request.data, partial=True)
@@ -133,12 +128,10 @@ class ProfileUpdateDelete(APIView):
 
             # profile img 가 데이터에 포함되어있다면
             if profile_img:
-                img_uploader = S3ImgUploader(profile_img)  # S3ImgUploader 인스턴스 생성
-                uploaded_url = img_uploader.upload()  # 이미지 업로드 및 URL 가져오기
-                user_profile.profile_img = uploaded_url # 프로필 이미지 URL 업데이트
+                img_uploader = S3ImgUploader(profile_img) 
+                uploaded_url = img_uploader.upload()  
+                user_profile.profile_img = uploaded_url 
                 user_profile.save()
-
-                print(user_profile.profile_img)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

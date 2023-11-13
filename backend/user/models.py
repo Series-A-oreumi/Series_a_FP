@@ -2,6 +2,7 @@ from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserProfile(models.Model):
+    '''유저 모델'''
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=255)
