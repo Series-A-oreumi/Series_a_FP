@@ -19,7 +19,6 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ['content']
 
-# studylist
 class StudySerializer(serializers.ModelSerializer):
     author = UserProfileSerializer(read_only=True) # 스터디 게시한 사람
     stacks = StackSerializer(many=True, read_only=True) # 해당 스터디 기술 스택
@@ -31,11 +30,10 @@ class StudySerializer(serializers.ModelSerializer):
                   'likes_count', 'likes', 'likes_users', 'online_offline', 'field', 'stacks', 'public_private']
 
     def get_likes_users(self, post):
-        # post는 현재 직렬화되는 Post 인스턴스
         likes_users = post.likes.all()
         return [user.username for user in likes_users] # 좋아요를 누른 유저들의 정보를 시리얼라이즈하여 반환.
 
-# studydetail
+
 class StudyDetailSerializer(serializers.ModelSerializer):
     author = UserProfileSerializer(read_only=True) # 스터디 게시할 사람
     likes_users = serializers.SerializerMethodField(read_only=True) # 좋아요를 누른 유저 목록을 가져올 필드를 추가합니다.
@@ -58,17 +56,12 @@ class StudyDetailSerializer(serializers.ModelSerializer):
         return 0
     
     def get_likes_users(self, study):
-        # study 현재 직렬화되는 Study 인스턴스
-
         likes_users = study.likes.all()
-        # 좋아요를 누른 유저들의 정보를 시리얼라이즈하여 반환.
         return [user.username for user in likes_users]
     
     def get_participant_users(self, study):
-        # study 현재 직렬화되는 Study 인스턴스
 
         participant_users = study.participants.all()
-        # 참여자 유저들의 정보를 시리얼라이즈하여 반환.
         return [user.username for user in participant_users]
     
     def get_comments_count(self, study):
@@ -77,8 +70,6 @@ class StudyDetailSerializer(serializers.ModelSerializer):
     
     def get_comments_list(self, study):
         comments = study.comments_study.all() 
-
-        # comments는 queryset 형태이기 때문에 직렬화 작업 해주기
         serialized_comments = CommentSerializer(comments, many=True).data 
         return serialized_comments
     
@@ -86,9 +77,9 @@ class StudyDetailSerializer(serializers.ModelSerializer):
         model = Study
         fields = '__all__'
 
-# studycreate
+
 class StudyCreateSerializer(serializers.ModelSerializer):
-     # stacks 필드를 ListField로 정의하여 문자열 리스트로 처리
+    
     stacks = serializers.ListField(child=serializers.CharField(max_length=12), write_only=True, required=False)
 
     class Meta:
@@ -112,7 +103,6 @@ class StudyCreateSerializer(serializers.ModelSerializer):
         data['stacks'] = stack_pks
         return super().to_internal_value(data)
     
-    # like serializer
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
