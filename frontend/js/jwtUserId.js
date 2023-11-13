@@ -1,13 +1,3 @@
-// 사용 방법 ~
-// import { UserInfo } from "./jwtUserId.js"
-
-// const accessToken = localStorage.getItem('access_token');
-// const UserInfo = UserInfo(accessToken)
-// const userName = userInfo.userName;
-// ~사용 방법
-
-
-
 // 사용자 아이디 반환
 export function UserInfo(accessToken) {
     // access_token이 존재하는지 확인

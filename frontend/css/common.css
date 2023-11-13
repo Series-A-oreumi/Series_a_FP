@@ -2,6 +2,11 @@ body {
     background: #fff
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 /* header 시작 */
 header.desktop {
     background-color: #fff;
@@ -86,9 +91,9 @@ button {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: #ccc;
     min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 1px #eaebec, 0 4px 8px 3px rgba(0, 0, 0, .8);
     z-index: 1;
     top: 100%;
     right: 0;
@@ -393,7 +398,7 @@ button {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     /* 투명한 검은 배경 */
-    z-index: 1;
+    z-index: 300;
     /* 사이드바 위에 나타나도록 설정 */
 }
 
@@ -412,7 +417,7 @@ button {
 /* sidebar끝 */
 
 /* sub sidebar */
-#sub-sidebar  {
+#sub-sidebar {
     position: fixed;
     top: 0;
     left: 0;
@@ -425,16 +430,16 @@ button {
     display: none;
     transition: width 0.3s ease;
 }
-#sub-sidebar .user-search{
+
+#sub-sidebar .user-search {
     padding: 20px 20px 20px 15px;
 }
 
 #sub-sidebar input {
-    width: 250px;
+    width: 206px;
     height: 20px;
     padding: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin: 0 13px;
     border: none;
     /* 테두리 없애기 */
     background-color: #f5f5f5;
@@ -446,8 +451,7 @@ button {
     font-size: 24px;
     /* 적절한 크기로 조절하세요 */
     font-weight: bold;
-    padding-left: 7px;
-    padding-bottom: 35px;
+    margin: 17px;
 }
 
 #sub-sidebar .search-result {
@@ -458,6 +462,60 @@ button {
 #sub-sidebar .search-result:last-child {
     border-bottom: none;
 }
+
+
+/* 추가 */
+#searchResultsContainer {
+    border-radius: 5px;
+    width: 100%;
+
+}
+
+.result-item {
+    padding: 10px 10px 10px 18px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    max-width: 100%;
+}
+
+.result-item:hover {
+    background-color: #e0e0e0;
+}
+
+.result-item div {
+    margin: 0;
+    padding: 2px;
+}
+
+.result-profile-image {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.result-user-info {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+
+}
+
+.result-username {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.result-nickname {
+    font-size: 13px;
+    color: #888;
+}
+
+
 
 .dropdown-content {
     display: none;
@@ -509,6 +567,136 @@ button {
     right: 104px;
     padding: 1px;
     font-size: 12px;
+    z-index: 100;
 }
 
-/*-------------------------------------//icons*/
+
+
+
+
+/*알림 모달*/
+
+#notification-trigger {
+    position: relative;
+}
+
+#notification-trigger img {
+    cursor: pointer;
+}
+
+#notification-modal {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: -415px;
+    top: 40px;
+    margin-top: 8px;
+    margin-left: 12px;
+    margin-right: 12px;
+    width: 450px;
+    max-height: 442px;
+
+    background-color: #f3f5fe;
+    border-color: #ebebeb;
+    border-radius: 8px;
+    box-shadow: 4px 12px 20px 6px rgba(0, 0, 0, .1);
+    overflow-y: scroll;
+    transition-property: opacity, transform;
+    transition-duration: 270ms;
+    transition-timing-function: ease;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 14px;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #868e96;
+}
+
+.close:hover {
+    color: #3498db;
+}
+
+#notification-modal::-webkit-scrollbar {
+    width: 10px;
+}
+
+#notification-modal::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+#notification-modal::-webkit-scrollbar-track {
+
+    border-radius: 10px;
+}
+
+
+
+.notify_seciton {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.notify_title,
+.notify_title2 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.sender_info {
+    line-height: 1.3;
+}
+
+.notnew {
+    color: #868e96;
+}
+
+.notify {
+    display: flex;
+    align-items: center;
+    border: solid 1px #d1d1d1;
+    border-radius: 10px;
+    background-color: white;
+    margin: 10px 0;
+    padding: 8px;
+    gap: 10px;
+    height: 50px;
+}
+
+.notify2-section {
+    margin-top: 17px;
+}
+
+.sender_img {
+    border-radius: 50%;
+}
+
+.sender_img img {
+    width: 30px;
+    height: 30px;
+}
+
+.sender_info p {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 40px;
+    line-height: 20px;
+}
+
+
+.notify_list2 {
+    opacity: 70%;
+}

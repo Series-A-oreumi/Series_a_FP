@@ -163,8 +163,8 @@ class ProfileUpdateDelete(APIView):
                 user_profile.save()
 
                 print(user_profile.profile_img)
-            messages = {"success": "프로필이 성공적으로 수정되었습니다."}
-            return Response(messages, status=status.HTTP_200_OK)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):

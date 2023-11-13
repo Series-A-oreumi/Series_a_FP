@@ -25,12 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => {
                     if (response.ok) {
                         response.json().then(data => {
-                            
-                             // 기존 로그인 된 유저의 localstorage 비워주기
-                             localStorage.removeItem('access_token');
-                             localStorage.removeItem('refresh_token');
-                             localStorage.removeItem('myNotify');
-                             localStorage.removeItem('myNotify2');
+
+                            // 기존 로그인 된 유저의 localstorage 비워주기
+                            localStorage.removeItem('access_token');
+                            localStorage.removeItem('refresh_token');
+                            localStorage.removeItem('myNotify');
+                            localStorage.removeItem('myNotify2');
 
                             // JWT 토큰을 로컬 스토리지에 저장
                             localStorage.setItem('access_token', data.access);

@@ -21,7 +21,7 @@
                 <button href="#" id='hamburger' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
                         alt="햄버거" class="hamburger" /></button>
             </div>
-            <a href="feed.html" class="logo-link">
+            <a href="../html/feed.html" class="logo-link">
                 <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
             </a>
             <div class="nav-buttons">
@@ -29,14 +29,38 @@
                 <div class="notify_count">
                     0
                 </div>
-                <a href="../html/alarm.html"><img src="../imgs/common/alarm.png" alt="알림" class="icon" /></a>
+                <div id="notification-trigger">
+                    <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
+                    <!-- 알림 모달 -->
+                    <div id="notification-modal">
+
+                        <section class="notify_seciton">
+                            <span id="closeModal" class="close">&times;</span>
+                            <div>
+                                <p class="notify_title">알림</p>
+                            </div>
+                            <div class="notify_list">
+                                <div class="notify_none">
+                                    <div class="sender_info">
+                                        <p class="notnew">새로운 알림이 없습니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notify2-section">
+                                <p class="notify_title2">이전알림</p>
+                            </div>
+
+                            <div class="notify_list2"></div>
+                        </section>
+                    </div>
+                </div>
                 <!-- 로그인 여부에 따라 변경요망 -->
                 <div class="user_icon">
                     <a href="#">
                         <img src="../imgs/common/user.png" class="icon user_icon">
                     </a>
                     <div class="dropdown-content">
-                        <a href="profile_write.html">프로필 변경</a>
+                        <a href="#" id="profile-change-link">프로필 변경</a>
                         <a href="#" id="logout-button">로그아웃</a>
                     </div>
                 </div>
@@ -53,13 +77,13 @@
                 <button href="#" id='hamburger2' onclick="toggleSidebar()"><img src="../imgs/common/hamburger.png"
                         alt="햄버거" class="hamburger" /></button>
             </div>
-            <a href="feed.html" class="logo-link">
+            <a href="../html/feed.html" class="logo-link">
                 <img src="../imgs/common/Estagram.png" alt="헤더 로고" class="title-logo" />
             </a>
         </div>
         <div id="side1">
             <div class="sidebar-list">
-                <a href="feed.html">
+                <a href="../html/feed.html">
                     <img src="../imgs/common/home.png" />
                     <span class="sidebar-text">홈</span>
                 </a>
@@ -72,21 +96,21 @@
             </div>
 
             <div class="sidebar-list">
-                <a href="studylist.html">
+                <a href="../html/studylist.html">
                     <img src="../imgs/common/study.png" />
                     <span class="sidebar-text">스터디 / 프로젝트</span>
                 </a>
             </div>
 
             <div class="sidebar-list">
-                <a href="story_write.html">
+                <a href="../html/story_write.html">
                     <img src="../imgs/common/create.png" />
                     <span class="sidebar-text">글 작성</span>
                 </a>
             </div>
 
             <div class="sidebar-list">
-                <a href="profile.html">
+                <a href="../html/profile.html" id="profile-link">
                     <img src="../imgs/common/profile.svg" class="sidebar-profile" />
                     <span class="sidebar-text">프로필</span>
                 </a>
@@ -101,9 +125,13 @@
         </div>
     </div>
     <div id="sub-sidebar" style="display: none;">
-        <h1>검색</h1>
-        <input type="text" id="search-input" placeholder="검색어를 입력하세요">
-        <!-- 검색 결과를 표시할 곳 추가 -->
+        <div class="user-search">
+            <h1>검색</h1>
+            <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+        </div>
+        <div id="searchResultsContainer" class="searchResults">
+            <!-- 검색 결과 -->
+        </div>
     </div>
     <div id="overlay" onclick="closeSidebar()">
     </div>
@@ -114,7 +142,7 @@
     <!-- 메인 -->
     <div class="content-box">
         <div class="top-section">
-            <a href="studylist.html">
+            <a href="../html/studylist.html">
                 <div class="back-btn">
                     <img src="../imgs/study/arrow.png">
                 </div>
@@ -167,7 +195,14 @@
 <script type="module" src="../js/studydetail.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="../js/sidebar.js"></script>
-<script type="module" src="../js/auth.js"></script>
-<!-- <script src="../js/alrarm.js"></script> -->
+<script src="../js/auth.js"></script>
+
+<script src="../js/login.js"></script>
+
+<script src="../js/alarm.js"></script>
+<script src="../js/alarmCount.js"></script>
+<script src="../js/alrarm.js"></script>
+
+<script src="../js/profilelocation.js" type="module"></script>
 
 </html>

@@ -1,5 +1,5 @@
 // 로그인한 유저 아이디
-import { UserInfo } from "./jwtUserId.js"
+import { UserInfo } from "../js/jwtUserId.js"
 
 const accessToken = localStorage.getItem('access_token');
 UserInfo(accessToken)
@@ -18,8 +18,8 @@ function formatDate(dateString) {
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
-    const userProfileURL = `../html/profile.html?data=${data.author.id}`;
-    const chatURL = `../html/chat.html?id=${data.author.nickname}`;
+    const userProfileURL = `../html/profile.html?id=${data.author.id}`;
+    const chatURL = `../html/chat.html?data=${data.author.nickname}`;
 
     let inviteBtn = '';
     const accessToken = localStorage.getItem('access_token');
@@ -54,8 +54,8 @@ function createDetailSection1(data) {
 
 
 // const heartImageSrc = data.likes
-//     ? "Series_a_FP/frontend/imgs/study/pinkheart.png"
-//     : "Series_a_FP/frontend/imgs/study/grayheart.png";
+//     ? "../imgs/study/pinkheart.png"
+//     : "../imgs/study/grayheart.png";
 
 
 // 본문~
@@ -79,9 +79,11 @@ function createDetailSection2(user, data) {
 
 
     let participantCount = '';
-    if (data.participant_count === 'undefined') {
+    if (data.participant_count === '0') {
         participantCount = `<div class="sub-content">인원 미정</div>`;
-    } else { `<div class="sub-content">${data.participant_count}명</div>` }
+    } else if (data.participant_count === '10') {
+        participantCount = `<div class="sub-content">${data.participant_count}명 이상</div>`
+    } else { participantCount = `<div class="sub-content">${data.participant_count}명</div>` }
 
     const startAt = data.start_at
     const formattedStartDate = formatDate(startAt);
@@ -315,7 +317,7 @@ function renderComments(comments) {
 
     // 최신댓글 위로 가게
     const reversedComments = comments.reverse();
-    
+
     reversedComments.forEach(comment => {
         const commentProfileURL = `../html/profile.html?id=${comment.author.id}`;
         const formattedCommentDate = formatDate(comment.created_at);
@@ -615,7 +617,7 @@ document.addEventListener('click', async function (event) {
         const likeButton = LikesButton.querySelector('#likeTF img');
         const currentImageSrc = likeButton.src;
         const likeCountElement = document.getElementById('likeCount');
-        const likeCount = likeCountElement.textContent;
+        const likeCount = parseInt(likeCountElement.textContent, 10);
 
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -642,6 +644,7 @@ document.addEventListener('click', async function (event) {
                     likeButton.src = '../imgs/study/pinkheart.png';
                     likeCountElement.textContent = likeCount + 1;
                 }
+
                 // updateLikes();
             } else {
                 // 좋아요 요청 실패 처리

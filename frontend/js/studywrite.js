@@ -12,7 +12,7 @@ studyForm.addEventListener('submit', async (event) => {
     const accessToken = localStorage.getItem('access_token');
 
     //  선택한 기술 스택이 여러개 일 경우 선택한 값을 가져옵니다.
-     const selectedStack = Array.from(document.querySelectorAll('#stacks option:checked')).map(option => option.value);
+    const selectedStack = Array.from(document.querySelectorAll('#stacks option:checked')).map(option => option.value);
 
     try {
         const response = await fetch('http://localhost:8000/api/study/create/', {
@@ -23,7 +23,7 @@ studyForm.addEventListener('submit', async (event) => {
             },
             body: JSON.stringify({
                 ...Object.fromEntries(formData),
-                stacks: selectedStack, 
+                stacks: selectedStack,
             }),
         });
 
@@ -31,7 +31,7 @@ studyForm.addEventListener('submit', async (event) => {
             // 성공적으로 데이터를 보냈을 때 처리
             alert('스터디 글을 성공적으로 생성했습니다.');
             window.location.href = '../html/studylist.html';
-            
+
         } else {
             // 데이터 전송 실패 시 처리
             alert('모든 항목들을 입력해주세요.');

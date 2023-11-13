@@ -86,9 +86,6 @@ class StorySearch(APIView):
        users  = UserProfile.objects.all()
        serializer = UserProfileSerializer(users, many=True)
        return Response(serializer.data, status=status.HTTP_200_OK)
-       users  = UserProfile.objects.all()
-       serializer = UserProfileSerializer(users, many=True)
-       return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # class StoryPost(APIView):
@@ -238,7 +235,18 @@ class ToggleLike(APIView):
             likes_count = post.likes.count()
             return Response({"likes_count": likes_count}, status=status.HTTP_201_CREATED)
 
-
+# comment list
+class CommentList(APIView):
+    permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용
+    
+    def get(self, request, post_id):
+        try:
+            story_comments = Comment.objects.filter(post_id=post_id)
+            serializer = CommentSerializer(story_comments, many=True)
+            return Response(serializer.data)
+        except Post.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
 # comment create
 class CommentCreate(APIView):
     permission_classes = [IsTokenValid]  # IsTokenValid 권한을 적용

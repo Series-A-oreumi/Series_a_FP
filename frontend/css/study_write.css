@@ -1,40 +1,22 @@
-html{
-    margin: 0;
-    padding: 0;
-    width:100%;
-    height: 100%;
-
-}
-
-body{
-    margin: 0;
-    padding: 0;
+.study-form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.study-form{
-    display: flex;
-    flex-direction: column;
-    margin: 2rem 4rem 0 4rem;
-    width: 60%;
+    margin: auto;
+    width: 1200px;
     height: 100%;
 }
 
 
-.side-title{
+.side-title {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    border-bottom: 2px solid #d9d9d9;
-    padding-bottom: 1rem;
+    margin: 30px 0;
+    border-bottom: 2px solid #f2f2f2;
+    gap: 9px;
+    padding: 30px 0;
 }
 
-.num-cir{
+.num-cir {
     display: flex;
     justify-content: center;
     width: 1.5rem;
@@ -46,81 +28,119 @@ body{
     border-radius: 50%;
 }
 
-.title-main{
-    font-size: 1.2rem;
+.title-main {
+    font-size: 22px;
     font-weight: 700;
 }
 
 
-.upside-form{
+.upside-form {
     display: flex;
     gap: 1rem;
-    margin: 1rem 0 2rem 0;
+    margin: 30px 0;
     justify-content: space-around;
-    align-items: center;
 }
 
-.input-container{
+.input-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 12px;
+    margin-bottom: 2rem;
 }
 
-.input-container label{
-    font-size: 0.9rem;
-    font-weight: 700;
+.input-container label {
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
 }
 
-select{
-    height:50px;
-    border: #d9d9d9 1px solid;
-    font-size:1rem;
-    font-weight: 500;
-    padding-left: .5rem;
-
-    -moz-appearance: none;
-    -webkit-appearance: none;
+select {
     appearance: none;
-    background: url('../media/study_write/arrow.png') no-repeat 97% 50%/20px auto;
-    padding-right: 25px;
+    width: -webkit-fill-available;
+    background-color: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    opacity: 70%;
+    border-radius: 10px;
+    padding: 18px;
+    padding-right: 30px;
+    background-image: url('../imgs/study/drop.png');
+    background-size: 30px 30px;
+    background-color: rgba(250, 250, 250, 0.6);
+    background-repeat: no-repeat;
+    background-position: right center;
 }
 
-input[type='text']{
-    height:48.222px;
-    padding:0 .5rem;
-    border: #d9d9d9 1px solid;
+select option {
+    width: 20rem;
+    height: 2.5rem;
+    outline: none;
     font-size: 1rem;
+    padding: 0 1.5rem;
+    border: 3px solid #4482f7;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
 }
 
-.left,.right{
+.calender-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.calender {
+    width: 45%;
+}
+
+.calender label {
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
+}
+
+.calender input {
+    background-color: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    opacity: 70%;
+    border-radius: 10px;
+    padding: 18px;
+    margin-top: 12px;
+    width: 216px;
+    height: 15px;
+}
+
+.left,
+.right {
     width: 47%;
 }
 
 
 
-.downside-form{
+.downside-form {
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
 }
 
-.downside-form input{
-    height: 1.5rem;
-    border: #d9d9d9 1px solid;
-    margin: 0 0 .5rem 0;
-    padding: .5rem;
+.downside-form input {
+    background-color: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    opacity: 70%;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 20px;
 }
 
-textarea{
-    resize:none;
-    height: 30rem;
-    font-size: 1.2rem;
-    padding: .5rem;
-    border: #d9d9d9 1px solid;
+textarea {
+    background-color: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    opacity: 70%;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 20px;
+    height: 300px;
+    resize: none;
 }
 
-.btnside{
+.btnside {
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -129,25 +149,28 @@ textarea{
     margin-bottom: 5rem;
 }
 
-button{
-    border: none;
-    width: 5rem;
-    height: 2rem;
-    border-radius: .5rem;
-    background: #d9d9d9;
+.btnside button {
+    display: flex;
+    border: solid 1px #cacaca;
+    background-color: #ffffff;
+    border-radius: 3px;
+    align-items: center;
+    text-align: center;
+    height: 38px;
+    width: 106;
+    padding: 3px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
+    color: black;
+    text-decoration: none;
 }
 
-button[type='submit']{
-    background: black;
+
+.btnside button:hover {
+    border: solid 1px #228CEE;
+    background-color: #228CEE;
     color: white;
-}
-
-/* CSS for date input fields */
-.input-container input[type="date"] {
-    width: 100%;
-    padding: 10px;
-    /* margin-bottom: 10px; */
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+    text-decoration: none;
 }
