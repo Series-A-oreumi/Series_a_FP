@@ -40,16 +40,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         chat_descs.appendChild(chats_receiver_ai);
 
 
-
-
-
     })
 
 
     async function fetchData() {
         try {
             //현재 토큰값으로 API 요청하여 로그인한 유저 정보를 불러옴
-            const response_json = await fetch(`http://localhost:8000/chat/api?riceve_user_nickname=${riceve_user_nickname}`, {
+            const response_json = await fetch(`http://localhost:8000/chat/api`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -75,14 +72,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                     defaultImage.src = response_json.user.profile_img;
 
                 } else {
-                    defaultImage.src = '../imgs/user/test.png';
+                    defaultImage.src = "../media/profile/행복오르미.jpg";
                     myProfileimg.appendChild(defaultImage);
                 }
 
                 myNickElement.innerHTML = username;
                 myProfileimg.appendChild(defaultImage);
 
-                const socket_alarm = new WebSocket(`ws://http://localhost:8000/ws/chat_alarm/${username}/`);
+                const socket_alarm = new WebSocket(`ws://localhost:8000/ws/chat_alarm/${username}/`);
 
 
                 socket_alarm.onmessage = function (event) {
@@ -192,11 +189,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 });
 
-
-
-
-                console.log(riceve_user_nickname)
-                console.log(riceve_user_nickname)
                 const chat_list = await fetch(`http://localhost:8000/chat/create_chatroom`, {
                     method: 'POST',
                     headers: {
@@ -211,9 +203,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     return response.json();
                 })
                     ;
-                // console.log(chat_list)
-                // console.log(chat_list)
-                // const chat_lists = await response_json.user.nickname;
+            
                 for (const chatroom of chat_list) {
                     const chat_partner = chatroom.chat_partner;
                     const chat_room_id = chatroom.chatroom
@@ -229,18 +219,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     alarm.id = chat_room_id;
 
 
-
-
-
-
-
-
-
-
-
                     if (chatroom.profile_img) {
-                        console.log(chatroom.profile_img)
-                        // console.log(`https://estagram.s3.ap-northeast-2.amazonaws.com/${chatroom.profile_img}`)
                         profile_img.src = chatroom.profile_img
                         // profile_img.src = 'chatroom.profile_id' + '.url'
                         // profile_img.src = chatroom.profile_id.url
@@ -380,7 +359,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         const encodedUserData = encodeURIComponent(JSON.stringify(userCustomData));
 
 
-                        sockets[chat_room_id] = new WebSocket(`ws://estagram.site/ws/chat/${chat_room_id}/?${encodedUserData}`);
+                        sockets[chat_room_id] = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/?${encodedUserData}`);
 
 
 
@@ -429,71 +408,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 sender: username,
                                 "chatroom_id": chat_room_id
                             }));
-                        };
-
-
-
-                        // inputElement.addEventListener("keydown", function (event) {                            
-                        //     // event.preventDefault();
-                        //     console.log("요곤가?" + chat_room_id)
-                        //     if (event.key === 'Enter' && event.shiftKey) {
-
-                        //         inputElement.value += '\n';
-                        //         // 쉬프트 + Enter를 눌렀을 때 줄바꿈 추가                                
-                        //     } else if (event.key === 'Enter' && !event.shiftKey) {
-                        //         // Enter 키를 눌렀고, 쉬프트 키가 눌리지 않았을 때만 메시지 전송
-                        //         event.preventDefault(); // 기본 엔터 키 동작을 막음
-                        //         if (inputElement.value != ''){
-                        //             const message = inputElement.value;
-                        //             // console.log(message)
-                        //             const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                        //             // console.log(messages)
-                        //             console.log("이건가?" + chat_room_id)
-                        //             sockets[chat_room_id].send(JSON.stringify({
-                        //                 "type" : "send",
-                        //                 message: messages,
-                        //                 chat_room_id: chat_room_id,
-                        //                 sender: username,
-                        //                 receiver: chat_partner
-                        //             }));
-                        //             inputElement.value = '';
-                        //         }
-
-                        //     }
-
-                        // });                             
-
+                        };                     
                     });
-                    // function setupInputHandler(inputElement, chat_room_i, username, chat_partner) {
-                    //     inputElement.addEventListener("keydown", function (event) {
-                    //         // console.log(chat_room_id)
-                    //         if (event.key === 'Enter' && event.shiftKey) {
-                    //             event.preventDefault();
-                    //             inputElement.value += '\n';
-                    //             // 쉬프트 + Enter를 눌렀을 때 줄바꿈 추가                                
-                    //         } else if (event.key === 'Enter' && !event.shiftKey) {
-                    //             // Enter 키를 눌렀고, 쉬프트 키가 눌리지 않았을 때만 메시지 전송
-                    //             event.preventDefault(); // 기본 엔터 키 동작을 막음
-                    //             if (inputElement.value != ''){
-                    //                 const message = inputElement.value;
-                    //                 // console.log(message)
-                    //                 const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                    //                 // console.log(messages)
-                    //                 console.log("이건가?" + chat_room_i)
-                    //                 sockets[chat_room_i].send(JSON.stringify({
-                    //                     "type" : "send",
-                    //                     message: messages,
-                    //                     chat_room_id: chat_room_i,
-                    //                     sender: username,
-                    //                     receiver: chat_partner
-                    //                 }));
-                    //                 inputElement.value = '';
-                    //             }
-
-                    //         }
-
-                    //     });
-                    // }
                     section.appendChild(tagElement);
                 }
 
