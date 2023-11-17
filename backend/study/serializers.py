@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Like, Study, Comment, Stack
+
+from user.utils import get_user_from_token
+from .models import Like, Study, Comment, Stack, Team, TeamMember
 from user.serializers import UserProfileSerializer
 
 class StackSerializer(serializers.ModelSerializer):
@@ -38,7 +40,8 @@ class StudyDetailSerializer(serializers.ModelSerializer):
     author = UserProfileSerializer(read_only=True) # 스터디 게시할 사람
     likes_users = serializers.SerializerMethodField(read_only=True) # 좋아요를 누른 유저 목록을 가져올 필드를 추가합니다.
     stacks = StackSerializer(many=True, read_only=True) # 해당 스터디 기술 스택
-    participant_users = serializers.SerializerMethodField(read_only=True) # 스터디 및 프로젝트 참여자 목록 (리스트)
+    team_members = serializers.SerializerMethodField(read_only=True) # 팀 멤버 구성원
+    user_application_status = serializers.SerializerMethodField(read_only=True) # 팀 지원 상태
     comments_count = serializers.SerializerMethodField(read_only=True) # 해당 스터디에 달린 댓글수
     comments_list = serializers.SerializerMethodField(read_only=True) # 해당 스터디에 달린 댓글 리스트
     likes_count = serializers.SerializerMethodField(read_only=True)
@@ -46,7 +49,7 @@ class StudyDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Study
         fields = ('pk', 'author', 'title', 'content', 'end_at', 'views', 'comments_count', 'project_study', 
-                  'likes_count','participant_count', 'likes', 'likes_users', 'online_offline', 'field', 'stacks', 'public_private')
+                  'likes_count', 'likes_users', 'likes', 'participant_count', 'team_members', 'online_offline', 'field', 'stacks', 'public_private')
 
     
     def get_likes_count(self, study):
@@ -59,10 +62,6 @@ class StudyDetailSerializer(serializers.ModelSerializer):
         likes_users = study.likes.all()
         return [user.username for user in likes_users]
     
-    def get_participant_users(self, study):
-
-        participant_users = study.participants.all()
-        return [user.username for user in participant_users]
     
     def get_comments_count(self, study):
         comment_count = study.comments_study.all().count()
@@ -72,7 +71,24 @@ class StudyDetailSerializer(serializers.ModelSerializer):
         comments = study.comments_study.all() 
         serialized_comments = CommentSerializer(comments, many=True).data 
         return serialized_comments
-    
+
+    def get_team_members(self, study):
+        '''팀 멤버 구성원'''
+        if study.teams.exists():
+            team = study.teams.first() 
+            return [user_profile.username for user_profile in team.members.all()]
+
+    def get_user_application_status(self, study):
+        '''멤버 지원 상태'''
+        request = self.context.get('request')
+        user = get_user_from_token(request)
+       
+        if user.teams.filter(study=study).exists():
+            return "Member"
+        elif user.team_applications.filter(study=study).exists():
+            return "Applied"
+        else:
+            return "Not Applied"
     class Meta:
         model = Study
         fields = '__all__'
@@ -102,7 +118,27 @@ class StudyCreateSerializer(serializers.ModelSerializer):
         # 변환된 스택의 기본 키 값을 'stacks' 필드에 설정
         data['stacks'] = stack_pks
         return super().to_internal_value(data)
-    
+
+class TeamSerializer(serializers.ModelSerializer):
+    applications = serializers.SerializerMethodField(read_only=True)
+    members = serializers.SerializerMethodField(read_only=True)
+
+    def get_applications(self, team):
+        applications = team.applications.all()
+        return UserProfileSerializer(applications, many=True).data
+
+    def get_members(self, team):
+        members = team.members.all()
+        return UserProfileSerializer(members, many=True).data
+    class Meta:
+        model = Team
+        fields = ('id', 'study', 'name', 'max_members', 'applications', 'members')
+
+
+class MemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TeamMember
+        fields = '__all__'
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
