@@ -3,8 +3,10 @@ from django.db.models import Q
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Comment, Like, Stack, Study
-from .serializers import CommentCreateSerializer, CommentSerializer, StudyCreateSerializer, StudyDetailSerializer, StudySerializer
+
+from alarm.models import Alarm
+from .models import Comment, Like, Stack, Study, Team, TeamMember
+from .serializers import CommentCreateSerializer, CommentSerializer, StudyCreateSerializer, StudyDetailSerializer, StudySerializer, TeamSerializer
 from study.serializers import LikeSerializer
 from user.serializers import UserProfileSerializer
 from user.permissions import IsTokenValid
@@ -51,7 +53,6 @@ class StudyCreate(APIView):
         serializer = StudyCreateSerializer(data=request.data)
         if serializer.is_valid():
             study = serializer.save()
-            study.participants.set([user]) # participants 집어넣기
 
             stack_data = request.data.get('stacks')
             for stack_pk in stack_data:
@@ -89,7 +90,7 @@ class StudyDetail(APIView):
             study.views += 1 
             study.save()
        
-        post_serializer = StudyDetailSerializer(study)
+        post_serializer = StudyDetailSerializer(study, context={'request': request})
 
         data = {
             'request_user' : user_serializer.data,
@@ -173,10 +174,107 @@ class StudySearch(APIView):
         return Response(messages)
     
 
+class TeamDetailView(APIView):
+    '''팀 상세'''
+    permission_classes = [IsTokenValid] 
+    
+    def get(self, request, team_id):
+        try:
+            team = Team.objects.get(pk=team_id)
+        except Team.DoesNotExist:
+            return Response({'detail': 'Team not found'}, status=404)
 
-class StudyJoin(APIView):
-    '''스터디 참가'''
-    pass
+        serializer = TeamSerializer(team)
+        return Response(serializer.data)
+    
+class TeamApplyView(APIView):
+    '''스터디 지원'''
+    permission_classes = [IsTokenValid] 
+
+    def post(self, request, team_id):
+        team = Team.objects.get(pk=team_id)
+        user = get_user_from_token(request)
+        
+        # 이미 팀 멤버일때
+        if team.members.filter(id=user.id).exists():
+            return Response({'detail': 'You are already a member of this team'}, status=status.HTTP_400_BAD_REQUEST)
+        # 이미 팀 지원서를 냈을 때
+        if team.applications.filter(id=user.id).exists():
+            return Response({'detail': 'Application already submitted'}, status=status.HTTP_400_BAD_REQUEST)
+        # 팀 정원이 이미 꽉 찼을때
+        if team.is_full():
+            return Response({'detail': 'The team is already full'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        application = TeamMember(team=team, user=user)
+        application.save()
+				
+		# Create and send an alarm/notification to the team owner or admin
+        leader = team.study.author 
+        alarm_content = f'{user.username}님이 "{team.name}"에 지원 하셨습니다.'
+        Alarm.objects.create(sender=user, receiver=leader, content=alarm_content)
+
+        return Response({'success': 'Application submitted'}, status=status.HTTP_200_OK)
+
+class TeamAcceptView(APIView):
+    '''팀 멤버 승인 / application_id -> 승인받아야되는 user_id'''
+    permission_classes = [IsTokenValid] 
+
+    def post(self, request, team_id, application_id):
+        team = Team.objects.get(pk=team_id)
+        user = get_user_from_token(request)
+
+        try:
+            user = UserProfile.objects.get(pk=user.id)
+            apply_user = UserProfile.objects.get(pk=application_id)
+        except UserProfile.DoesNotExist:
+            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # 팀 리더와 현재 요청한 유저가 다르면 접근 불가.
+        if team.study.author != user:
+            return Response({'detail': 'You are not authorized to approve team members.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        application = TeamMember.objects.filter(user=apply_user, team=team, is_approved=False).first()
+        if application:
+            application.is_approved = True  # Approve the application
+            application.save()
+            team.members.add(application.user)
+            team.save()
+				
+            alarm_content = f'"{team.name}" 지원이 승인되었습니다.'
+            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content)
+
+            return Response({'detail': 'Application accepted'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'detail': 'Application not found or already approved'}, status=status.HTTP_404_NOT_FOUND)
+
+class TeamRejectView(APIView):
+    '''팀 지원 거절'''
+    permission_classes = [IsTokenValid] 
+
+    def post(self, request, team_id, application_id):
+        team = Team.objects.get(pk=team_id)
+        user = get_user_from_token(request)
+
+        try:
+            user = UserProfile.objects.get(pk=user.id)
+            apply_user = UserProfile.objects.get(pk=application_id)
+        except UserProfile.DoesNotExist:
+            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # 팀 리더와 현재 요청한 유저가 다르면 접근 불가.
+        if team.study.author != user:
+            return Response({'detail': 'You are not authorized to approve team members.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        application = TeamMember.objects.filter(user=apply_user, team=team, is_approved=False).first()
+        if application:
+            application.delete()
+	
+            alarm_content = f'"{team.name}" 지원이 거절되었습니다.'
+            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content)
+
+            return Response({'detail': 'Application rejected'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'detail': 'Application not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class CommentCreate(APIView):
