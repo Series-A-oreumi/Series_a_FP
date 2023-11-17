@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'story',
     'study',
     'alarm',
-    'alrarm',
+    # 'alrarm',
 
     # s3 storage
     'storages',
