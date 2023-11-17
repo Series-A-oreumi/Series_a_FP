@@ -79,7 +79,6 @@ class Study(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # 모집 공고 올린 날짜
     end_at = models.DateTimeField() # 모집 마감 날짜
     start_at = models.DateTimeField() # 프로젝트 or 스터디 시작 기간
-    participants = models.ManyToManyField(UserProfile, blank=True, related_name='study_participants') # 참여자
     views = models.IntegerField(default=0) # 조회수
     likes = models.ManyToManyField(UserProfile, related_name='study_likes', blank=True) # 좋아요
 
@@ -104,6 +103,48 @@ class Study(models.Model):
     def comments_count(self):
         ''' Get all comments '''
         return self.comments_study.count()
+
+    @staticmethod
+    def convert_participant_count_to_max_members(participant_count):
+        if participant_count == '0':
+            return 0  
+        elif participant_count.isdigit():
+            return int(participant_count)
+        elif participant_count == '10':
+            return 10 
+        else:
+            return 4 
+        
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super(Study, self).save(*args, **kwargs)
+           
+            team_name = self.title if self.title else "Team"
+            team = Team(study=self, name=team_name, max_members=self.convert_participant_count_to_max_members(self.participant_count)) 
+            team.save()
+
+            team.members.add(self.author)
+        else:
+            super(Study, self).save(*args, **kwargs)
+            
+class Team(models.Model):
+    study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name='teams')
+    name = models.CharField(max_length=100)  # 팀 이름
+    max_members = models.PositiveIntegerField(default=4) 
+    members = models.ManyToManyField(UserProfile, related_name='teams', blank=True)  
+    applications = models.ManyToManyField(UserProfile, through='TeamMember', related_name='team_applications')
+
+    def is_full(self):
+        return self.members.count() >= self.max_members
+
+    def __str__(self):
+        return self.name
+
+class TeamMember(models.Model):
+    '''팀 신청 멤버'''
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
 
 class Comment(models.Model):
     study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name='comments_study')
