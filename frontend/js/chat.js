@@ -201,8 +201,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                         throw new Error("Network response was not ok");
                     }
                     return response.json();
-                });
-                
+                })
+                    ;
             
                 for (const chatroom of chat_list) {
                     const chat_partner = chatroom.chat_partner;
@@ -250,199 +250,170 @@ document.addEventListener("DOMContentLoaded", async function () {
                     tagElement.appendChild(profile_img);
                     tagElement.appendChild(profile_id);
                     tagElement.appendChild(alarm);
-                
-                // for문을 돌면서 로그인 한 유저가 채팅을 요청한 guest유저와 chat_partner 같은 경우를 찾아내서 채팅방 첫 화면으로 보여주기
-                if (chat_partner === riceve_user_nickname) {
-                    const chat_info = document.querySelector('#chat_info');
-                    chat_info.innerHTML = "";
-                    chat_info.appendChild(profile_img_2);
-                    chat_info.appendChild(profile_id_2);
-                    chat_info.style.borderBottom = '1px solid rgb(219, 219, 219)';
-
-                    // 채팅 내용을 불러온다
-                    const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ guest: chat_partner, chat_room_id: chat_room_id }),
-                    }).then(response => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
-                        }
-                        return response.json();
-                    })
-                    if (!chat_desc.messages) {
-                        console.log("데이터가 없습니다.")
-                    }
-                    //채팅 내용창 초기화
-                    const chat_descs = document.getElementById("chat_desc")
-                    chat_descs.innerHTML = '<br>';
-                    // console.log(chat_desc)
-                    // 채팅 내용을 반복문으로 태그 추가
-                    for (const message of chat_desc.messages) {
-                        const chats_sender = document.createElement("div");
-                        const chats_receiver = document.createElement("div");
-                        chats_sender.className = "chats_sender";
-                        chats_receiver.className = "chats_receiver";
-
-                        const receiver_send = document.createElement("p");
-                        const sender_send = document.createElement("p");
-                        receiver_send.className = "receiver"
-                        sender_send.className = "sender";
 
 
-                        const receiver_rece = document.createElement("p");
-                        const sender_rece = document.createElement("p");
-                        receiver_rece.className = "receiver"
-                        sender_rece.className = "sender";
 
-                        chats_sender.appendChild(receiver_send)
-                        chats_sender.appendChild(sender_send)
-                        chats_receiver.appendChild(receiver_rece)
-                        chats_receiver.appendChild(sender_rece)
-                        if (message.sender == username) {
-                            sender_send.innerHTML = message.content
-                            chat_descs.appendChild(chats_sender);
+
+
+
+
+                    console.log("D")
+
+                    const firstEntry = Object.keys(sockets);
+
+                    tagElement.addEventListener('click', async function () {
+                        // const chat_room_id = chatroom.chatroom;   
+                        // const chatrooms = tagElement.getAttribute('data-chat-room-id');  
+                        // inputElement.id = 
+                        chat_pa = chat_partner
+                        arrary.push(chat_room_id)
+                        var lastIndex = arrary.length - 1;
+                        externalVariable = chat_room_id
+                        if (Object.keys(sockets).length) {
+                            // console.log("차있음")
+                            console.log(arrary)
+                            console.log(sockets)
+                            console.log(arrary[lastIndex])
+                            console.log(sockets[arrary[lastIndex]])
+
+
+                            for (var key in sockets) {
+                                sockets[key].close()
+                            }
+
                         }
                         else {
-                            receiver_rece.innerHTML = message.content
-                            chat_descs.appendChild(chats_receiver);
+                            console.log("비어있음")
+
                         }
+                        // const chat_room_id = this.dataset.chatRoomId;            
+                        const chat_info = document.querySelector('#chat_info');
+                        chat_info.innerHTML = "";
+                        chat_info.appendChild(profile_img_2);
+                        chat_info.appendChild(profile_id_2);
+                        chat_info.style.borderBottom = '1px solid rgb(219, 219, 219)';
 
-                    }
-                    // chat_desc 엘리먼트의 스크롤을 맨 아래로 이동
+ 
+                        // 채팅 내용을 불러온다
+                        const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ guest: chat_partner, chat_room_id: chat_room_id }),
+                        }).then(response => {
+                            if (!response.ok) {
+                                throw new Error("Network response was not ok");
+                            }
+                            return response.json();
+                        })
+                        if (!chat_desc.messages) {
+                            console.log("데이터가 없습니다.")
+                        }
+                        //채팅 내용창 초기화
+                        const chat_descs = document.getElementById("chat_desc")
+                        chat_descs.innerHTML = '<br>';
+                        // console.log(chat_desc)
+                        // 채팅 내용을 반복문으로 태그 추가
+                        for (const message of chat_desc.messages) {
+                            const chats_sender = document.createElement("div");
+                            const chats_receiver = document.createElement("div");
+                            chats_sender.className = "chats_sender";
+                            chats_receiver.className = "chats_receiver";
 
-                    chat_descs.scrollTop = chat_descs.scrollHeight;
+                            const receiver_send = document.createElement("p");
+                            const sender_send = document.createElement("p");
+                            receiver_send.className = "receiver"
+                            sender_send.className = "sender";
+
+
+                            const receiver_rece = document.createElement("p");
+                            const sender_rece = document.createElement("p");
+                            receiver_rece.className = "receiver"
+                            sender_rece.className = "sender";
+
+                            chats_sender.appendChild(receiver_send)
+                            chats_sender.appendChild(sender_send)
+                            chats_receiver.appendChild(receiver_rece)
+                            chats_receiver.appendChild(sender_rece)
+                            if (message.sender == username) {
+                                sender_send.innerHTML = message.content
+                                chat_descs.appendChild(chats_sender);
+                            }
+                            else {
+                                receiver_rece.innerHTML = message.content
+                                chat_descs.appendChild(chats_receiver);
+                            }
+
+                        }
+                        // chat_desc 엘리먼트의 스크롤을 맨 아래로 이동
+
+                        chat_descs.scrollTop = chat_descs.scrollHeight;
+
+                        const userCustomData = {
+                            sender: username,
+                            receiver: chat_partner
+                        };
+
+                        const encodedUserData = encodeURIComponent(JSON.stringify(userCustomData));
+
+
+                        sockets[chat_room_id] = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/?${encodedUserData}`);
+
+
+
+                        sockets[chat_room_id].onmessage = (e) => {
+                            const senders = JSON.parse(e.data).sender;
+                            const content = JSON.parse(e.data).message;
+
+                            const chats_sender = document.createElement("div");
+                            const chats_receiver = document.createElement("div");
+                            chats_sender.className = "chats_sender";
+                            chats_receiver.className = "chats_receiver";
+
+                            const receiver_send = document.createElement("p");
+                            const sender_send = document.createElement("p");
+                            receiver_send.className = "receiver"
+                            sender_send.className = "sender";
+
+
+                            const receiver_rece = document.createElement("p");
+                            const sender_rece = document.createElement("p");
+                            receiver_rece.className = "receiver"
+                            sender_rece.className = "sender";
+
+                            chats_sender.appendChild(receiver_send)
+                            chats_sender.appendChild(sender_send)
+                            chats_receiver.appendChild(receiver_rece)
+                            chats_receiver.appendChild(sender_rece)
+
+                            // console.log(senders)
+                            if (senders == username) {
+                                sender_send.innerHTML = content
+                                chat_descs.appendChild(chats_sender);
+                            }
+                            else {
+                                receiver_rece.innerHTML = content
+                                chat_descs.appendChild(chats_receiver);
+                            }
+                            chat_descs.scrollTop = chat_descs.scrollHeight;
+                            // chatContainer.innerHTML += `<p>${message}</p>`;
+                        };
+
+                        sockets[chat_room_id].onopen = function (event) {
+                            // WebSocket 연결이 확립되면 메시지를 보낼 수 있음                            
+                            sockets[chat_room_id].send(JSON.stringify({
+                                "type": "page_visible",
+                                sender: username,
+                                "chatroom_id": chat_room_id
+                            }));
+                        };                     
+                    });
+                    section.appendChild(tagElement);
                 }
 
-                tagElement.addEventListener('click', async function () {
-                            
-                    const chat_info = document.querySelector('#chat_info');
-                    chat_info.innerHTML = "";
-                    chat_info.appendChild(profile_img_2);
-                    chat_info.appendChild(profile_id_2);
-                    chat_info.style.borderBottom = '1px solid rgb(219, 219, 219)';
 
-
-                    // 채팅 내용을 불러온다
-                    const chat_desc = await fetch(`http://localhost:8000/chat/chat_desc`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ guest: chat_partner, chat_room_id: chat_room_id }),
-                    }).then(response => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
-                        }
-                        return response.json();
-                    })
-                    if (!chat_desc.messages) {
-                        console.log("데이터가 없습니다.")
-                    }
-                    //채팅 내용창 초기화
-                    const chat_descs = document.getElementById("chat_desc")
-                    chat_descs.innerHTML = '<br>';
-                    // console.log(chat_desc)
-                    // 채팅 내용을 반복문으로 태그 추가
-                    for (const message of chat_desc.messages) {
-                        const chats_sender = document.createElement("div");
-                        const chats_receiver = document.createElement("div");
-                        chats_sender.className = "chats_sender";
-                        chats_receiver.className = "chats_receiver";
-
-                        const receiver_send = document.createElement("p");
-                        const sender_send = document.createElement("p");
-                        receiver_send.className = "receiver"
-                        sender_send.className = "sender";
-
-
-                        const receiver_rece = document.createElement("p");
-                        const sender_rece = document.createElement("p");
-                        receiver_rece.className = "receiver"
-                        sender_rece.className = "sender";
-
-                        chats_sender.appendChild(receiver_send)
-                        chats_sender.appendChild(sender_send)
-                        chats_receiver.appendChild(receiver_rece)
-                        chats_receiver.appendChild(sender_rece)
-                        if (message.sender == username) {
-                            sender_send.innerHTML = message.content
-                            chat_descs.appendChild(chats_sender);
-                        }
-                        else {
-                            receiver_rece.innerHTML = message.content
-                            chat_descs.appendChild(chats_receiver);
-                        }
-
-                    }
-                    // chat_desc 엘리먼트의 스크롤을 맨 아래로 이동
-
-                    chat_descs.scrollTop = chat_descs.scrollHeight;
-
-                    const userCustomData = {
-                        sender: username,
-                        receiver: chat_partner
-                    };
-
-                    const encodedUserData = encodeURIComponent(JSON.stringify(userCustomData));
-
-
-                    sockets[chat_room_id] = new WebSocket(`ws://localhost:8000/ws/chat/${chat_room_id}/?${encodedUserData}`);
-
-
-                    sockets[chat_room_id].onmessage = (e) => {
-                        const senders = JSON.parse(e.data).sender;
-                        const content = JSON.parse(e.data).message;
-
-                        const chats_sender = document.createElement("div");
-                        const chats_receiver = document.createElement("div");
-                        chats_sender.className = "chats_sender";
-                        chats_receiver.className = "chats_receiver";
-
-                        const receiver_send = document.createElement("p");
-                        const sender_send = document.createElement("p");
-                        receiver_send.className = "receiver"
-                        sender_send.className = "sender";
-
-
-                        const receiver_rece = document.createElement("p");
-                        const sender_rece = document.createElement("p");
-                        receiver_rece.className = "receiver"
-                        sender_rece.className = "sender";
-
-                        chats_sender.appendChild(receiver_send)
-                        chats_sender.appendChild(sender_send)
-                        chats_receiver.appendChild(receiver_rece)
-                        chats_receiver.appendChild(sender_rece)
-
-                        // console.log(senders)
-                        if (senders == username) {
-                            sender_send.innerHTML = content
-                            chat_descs.appendChild(chats_sender);
-                        }
-                        else {
-                            receiver_rece.innerHTML = content
-                            chat_descs.appendChild(chats_receiver);
-                        }
-                        chat_descs.scrollTop = chat_descs.scrollHeight;
-                        // chatContainer.innerHTML += `<p>${message}</p>`;
-                    };
-
-                    sockets[chat_room_id].onopen = function (event) {
-                        // WebSocket 연결이 확립되면 메시지를 보낼 수 있음                            
-                        sockets[chat_room_id].send(JSON.stringify({
-                            "type": "page_visible",
-                            sender: username,
-                            "chatroom_id": chat_room_id
-                        }));
-                    };                     
-                });
-                section.appendChild(tagElement);
-            }            
 
             } else {
                 // 정보가 없을 경우 대체 내용을 표시
