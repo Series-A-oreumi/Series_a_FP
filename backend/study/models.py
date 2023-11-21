@@ -103,30 +103,39 @@ class Study(models.Model):
     def comments_count(self):
         ''' Get all comments '''
         return self.comments_study.count()
+
+    @staticmethod
+    def convert_participant_count_to_max_members(participant_count):
+        if participant_count == '0':
+            return 0  
+        elif participant_count.isdigit():
+            return int(participant_count)
+        elif participant_count == '10':
+            return 10 
+        else:
+            return 4 
         
     def save(self, *args, **kwargs):
         if not self.pk:
             super(Study, self).save(*args, **kwargs)
            
             team_name = self.title if self.title else "Team"
-            team = Team(study=self, leader=self.author, name=team_name) 
+            team = Team(study=self, name=team_name, max_members=self.convert_participant_count_to_max_members(self.participant_count)) 
             team.save()
 
             team.members.add(self.author)
         else:
             super(Study, self).save(*args, **kwargs)
-
+            
 class Team(models.Model):
-    study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name='teams')   
-    leader = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name ='team_leader')
+    study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name='teams')
     name = models.CharField(max_length=100)  # 팀 이름
-    description = models.TextField(null=True, blank=True) # 팀 설명
+    max_members = models.PositiveIntegerField(default=4) 
     members = models.ManyToManyField(UserProfile, related_name='teams', blank=True)  
     applications = models.ManyToManyField(UserProfile, through='TeamMember', related_name='team_applications')
-    # max_members = models.PositiveIntegerField(default=4) 
-    
-    # def is_full(self):
-    #     return self.members.count() >= self.max_members
+
+    def is_full(self):
+        return self.members.count() >= self.max_members
 
     def __str__(self):
         return self.name
