@@ -120,6 +120,7 @@ class StudyCreateSerializer(serializers.ModelSerializer):
         return super().to_internal_value(data)
 
 class TeamSerializer(serializers.ModelSerializer):
+    leader = UserProfileSerializer(read_only=True)
     applications = serializers.SerializerMethodField(read_only=True)
     members = serializers.SerializerMethodField(read_only=True)
 
@@ -132,7 +133,7 @@ class TeamSerializer(serializers.ModelSerializer):
         return UserProfileSerializer(members, many=True).data
     class Meta:
         model = Team
-        fields = ('id', 'study', 'name', 'max_members', 'applications', 'members')
+        fields = ('id', 'study', 'leader', 'name', 'description', 'applications', 'members')
 
 
 class MemberSerializer(serializers.ModelSerializer):
