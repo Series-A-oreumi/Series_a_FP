@@ -88,8 +88,8 @@ class ProfileDetail(APIView):
                 
             else:
                 user_info = UserProfile.objects.get(id=user_id) # 해당 프로필 유저 정보
-                stories = Post.objects.filter(author=user).order_by('-created_at') #  공개되어있는 게시물만 보여지도록 (아직 스토리 공개/비공개/기수보기 설정 안함 추후 수정 예정!)
-                studies = Study.objects.filter(author=user, public_private='public').order_by('-created_at') # 공개되어있는 스터디, 프로젝트 게시물 보여지도록
+                stories = Post.objects.filter(author__id=user_id).order_by('-created_at') #  공개되어있는 게시물만 보여지도록 (아직 스토리 공개/비공개/기수보기 설정 안함 추후 수정 예정!)
+                studies = Study.objects.filter(author__id=user_id, public_private='public').order_by('-created_at') # 공개되어있는 스터디, 프로젝트 게시물 보여지도록
                 total_count = stories.count() + studies.count()  # 지금까지 썼던 게시글 총 개수
 
                 user_profile = UserProfileSerializer(user_info) # 유저 정보 직렬화
