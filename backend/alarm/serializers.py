@@ -5,6 +5,7 @@ from study.models import Team
 
 class AlarmSerializer(serializers.ModelSerializer):
     team = serializers.SerializerMethodField(read_only=True)
+    sender = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Alarm
         fields = '__all__'
@@ -18,4 +19,8 @@ class AlarmSerializer(serializers.ModelSerializer):
             except Team.DoesNotExist:
                 return None
         return None
+    
+    def get_sender(self, alarm):
+        sender = alarm.sender.nickname
+        return sender
     
