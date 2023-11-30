@@ -167,11 +167,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
                             }
+                            // 챗봇채팅이 아닌 일반채팅일 경우
                             else {
                                 const message = inputElement.value;
-                                // console.log(message)
                                 const messages = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                                // console.log(messages)
                                 console.log(externalVariable)
                                 console.log(sockets[externalVariable])
                                 sockets[externalVariable].send(JSON.stringify({
@@ -252,6 +251,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 
                 // for문을 돌면서 로그인 한 유저가 채팅을 요청한 guest유저와 chat_partner 같은 경우를 찾아내서 채팅방 첫 화면으로 보여주기
                 if (chat_partner === riceve_user_nickname) {
+                    chat_pa = chat_partner
                     externalVariable = chat_room_id
 
                     const chat_info = document.querySelector('#chat_info');
@@ -376,6 +376,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 };
 
                 tagElement.addEventListener('click', async function () {
+                    chat_pa = chat_partner
                     externalVariable = chat_room_id
                     
                     const chat_info = document.querySelector('#chat_info');
