@@ -36,12 +36,39 @@ body {
     cursor: pointer;
 }
 
-.title {
+.outline_title {
+    display: flex;
+    padding-bottom: 30px;
     width: 1200px;
     margin: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
     font-size: 30px;
     font-weight: 700;
-    padding-bottom: 40px;
+}
+
+.go_team {
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.go_team img {
+    width: 30px;
+}
+
+.go_team:hover {
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #717171;
+    text-decoration: none;
 }
 
 .border {
@@ -69,6 +96,8 @@ body {
     display: flex;
     gap: 10px;
 }
+
+
 
 
 .studyEdit,
