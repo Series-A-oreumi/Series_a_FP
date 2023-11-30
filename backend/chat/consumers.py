@@ -1,6 +1,9 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 from channels.db import database_sync_to_async
+
+from alarm.models import Alarm
+from user.models import UserProfile
 from .models import ChatRoom, Message
 from asgiref.sync import async_to_sync
 import urllib.parse
@@ -119,6 +122,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def save_message(self, chatroom_id, sender_id, receiver_id, message, is_read):
         Message.objects.create(chatroom=chatroom_id, sender=sender_id, receiver=receiver_id, content=message, is_read=is_read)
 
+        sender_user = UserProfile.objects.get(nickname=sender_id)
+        receiver_user = UserProfile.objects.get(nickname=receiver_id)
+
+        # 알람 생성 및 저장
+        content = f'{sender_id}님이 메시지를 보냈습니다.'  # 알람 내용 생성
+        alarm = Alarm.objects.create(sender=sender_user, receiver=receiver_user, content=content)
+    
     @database_sync_to_async        
     def get_chatroom(self, chatroom_id):
         return ChatRoom.objects.get(id=chatroom_id)
