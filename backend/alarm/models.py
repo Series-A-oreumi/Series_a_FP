@@ -9,6 +9,7 @@ class Alarm(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # 알람이 생성된 시간
     story = models.ForeignKey('story.Post', on_delete=models.CASCADE, blank=True, null=True) # 스토리
     study = models.ForeignKey('study.Study', on_delete=models.CASCADE, blank=True, null=True) # 스터디 
-
+    team = models.ForeignKey('study.Team', on_delete=models.CASCADE, blank=True, null=True) # 팀
+    
     def __str__(self):
         return f'{self.receiver}회원에게 온 알람'
