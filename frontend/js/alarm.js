@@ -137,6 +137,8 @@ const create_notify = (data) => {
         notify.href = `../html/feedDetail.html?id=${data.check_alarm.story}`;
     } else if (data.check_alarm.study) {
         notify.href = `../html/studyDetail.html?id=${data.check_alarm.study}`;
+    } else if (data.check_alarm.team) {
+        notify.href = `../html/studyDetail.html?id=${data.check_alarm.team}`;
     } else { 
         notify.href = `../html/chat.html?data=${data.check_alarm.sender}`
     } 
