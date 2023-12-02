@@ -210,7 +210,7 @@ class TeamApplyView(APIView):
 				
         leader = team.leader 
         alarm_content = f'{user.username}님이 "{team.name}"에 지원 하셨습니다.'
-        Alarm.objects.create(sender=user, receiver=leader, content=alarm_content)
+        Alarm.objects.create(sender=user, receiver=leader, content=alarm_content, team=team)
 
         return Response({'success': 'Application submitted'}, status=status.HTTP_200_OK)
 
@@ -240,7 +240,7 @@ class TeamAcceptView(APIView):
             team.save()
 				
             alarm_content = f'"{team.name}" 지원이 승인되었습니다.'
-            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content)
+            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content, team=team)
 
             return Response({'detail': 'Application accepted'}, status=status.HTTP_200_OK)
         else:
@@ -269,7 +269,7 @@ class TeamRejectView(APIView):
             application.delete()
 	
             alarm_content = f'"{team.name}" 지원이 거절되었습니다.'
-            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content)
+            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content, team=team)
 
             return Response({'detail': 'Application rejected'}, status=status.HTTP_200_OK)
         else:
