@@ -16,7 +16,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from user.permissions import IsTokenValid
+from user.permissions import IsAdminValid, IsTokenValid
 
 class LoginView(GenericAPIView):
     '''로그인'''
@@ -145,3 +145,116 @@ class ProfileUpdateDelete(APIView):
             'success' : '회원을 탈퇴하였습니다.'
             }
         return Response(messages, status=status.HTTP_200_OK)
+    
+
+# --------------------------------- 관리자 기능 --------------------------------- #
+class MemberList(APIView):
+    '''전체 회원 리스트(멤버만) : 운영진만 접근 가능'''
+    permission_classes = [IsAdminValid]
+    
+    def get(self, request):
+        users = UserProfile.objects.filter(is_active=True).exclude(is_member__isnull=True)
+        serializer = UserProfileSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class RegistrationRequestList(APIView):
+    '''회원가입 요청 리스트(아직 활성화가 되지 않은 유저)'''
+    permission_classes = [IsAdminValid]
+
+    def get(self, request):
+        request_users = UserProfile.objects.filter(is_active=False)
+        serializer = UserProfileSerializer(request_users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class UserActivate(APIView):
+    '''유저 활성화(수동)'''
+    permission_classes = [IsAdminValid]
+    
+    def get_user(self, user_id):
+        try:
+            user = UserProfile.objects.get(pk=user_id)
+            return user
+        except UserProfile.DoesNotExist:
+            return None
+
+    def put(self, request, user_id):
+        user = self.get_user(user_id)
+        if not user:
+            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = UserProfileSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            if 'is_active' in serializer.validated_data:
+                user.is_active = serializer.validated_data['is_active']
+            if 'is_member' in serializer.validated_data:
+                user.is_member = serializer.validated_data['is_member']
+
+            user.save()
+            return Response({'detail': 'User updated successfully'})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, user_id):
+        user = self.get_user(user_id)
+        if not user:
+            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        user.delete()
+        return Response({'detail': 'User deleted successfully'})
+
+class UserPostList(APIView):
+    '''회원 게시물 관리'''
+    permission_classes = [IsAdminValid]
+		
+    def get_user(self, user_id):
+        try:
+            user = UserProfile.objects.get(pk=user_id)
+            return user
+        except UserProfile.DoesNotExist:
+            return None
+
+    def get(self, request, user_id):
+        user = self.get_user(user_id)
+        if not user:
+            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        stories = Post.objects.filter(author=user).order_by('-created_at') # 유저가 썼던 스토리 글들 (공개, 나만보기, 기수공개 상관없이 전부)
+        studies = Study.objects.filter(author=user).order_by('-created_at') # 자신이 게시했던 스터디. 프로젝트 글 목록
+
+        user_stories = PostSerializer(stories, many=True) # 유저가 썼던 스토리 직렬화
+        user_studies = StudySerializer(studies, many=True) # 유저가 썼던 스터디, 프로젝트 직렬화
+
+        # 결과를 반환
+        response_data = {
+            'user_info': UserProfileSerializer(user).data,
+            'user_stories': user_stories.data,
+            'user_studies': user_studies.data,
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+class UserStoryDelete(APIView):
+    '''회원 스토리 글 삭제'''
+    permission_classes = [IsAdminValid]
+
+    def delete(self, request, story_id):
+        try:
+            story = Post.objects.get(pk=story_id)
+            story.delete()
+            return Response({'detail': 'Story deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        except Post.DoesNotExist:
+            return Response({'detail': 'Story not found or you do not have permission to delete it'},
+                            status=status.HTTP_404_NOT_FOUND)
+
+class UserStudyDelete(APIView):
+    '''회원 스터디 글 삭제'''
+    permission_classes = [IsAdminValid]
+
+    def delete(self, request, study_id):
+        try:
+            study = Study.objects.get(pk=study_id)
+            study.delete()
+            return Response({'detail': 'Study deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        except Study.DoesNotExist:
+            return Response({'detail': 'Study not found or you do not have permission to delete it'},
+                            status=status.HTTP_404_NOT_FOUND)
