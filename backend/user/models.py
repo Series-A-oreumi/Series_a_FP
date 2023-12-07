@@ -3,10 +3,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserProfile(models.Model):
     '''유저 모델'''
-    MEMBER_CHOICES = (
-        ('member', 'Member'),
-        ('admin', 'Admin'),
-    )
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=255)
@@ -16,7 +12,7 @@ class UserProfile(models.Model):
     info = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False) 
-    is_member = models.CharField(max_length=10, choices=MEMBER_CHOICES, blank=True, null=True)
+    is_admin = models.BooleanField(default=False)
     
     def __str__(self):
         return self.nickname
