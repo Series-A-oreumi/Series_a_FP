@@ -27,7 +27,7 @@ class LoginSerializer(serializers.ModelSerializer):
         if email and password:
             user = UserProfile.objects.filter(email=email).first()
             if user:
-                if user.is_active and user.is_member is not None: # is_active 상태 확인 및 is_member가 None이 아닐 경우
+                if user.is_active:
                     if user.password == password:
                         token_data = user.get_token()
                         refresh = token_data['refresh']
