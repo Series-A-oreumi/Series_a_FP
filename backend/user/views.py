@@ -153,7 +153,7 @@ class MemberList(APIView):
     permission_classes = [IsAdminValid]
     
     def get(self, request):
-        users = UserProfile.objects.filter(is_active=True).exclude(is_member__isnull=True)
+        users = UserProfile.objects.filter(is_active=True)
         serializer = UserProfileSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -165,43 +165,47 @@ class RegistrationRequestList(APIView):
         request_users = UserProfile.objects.filter(is_active=False)
         serializer = UserProfileSerializer(request_users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
+
 class UserActivate(APIView):
     '''유저 활성화(수동)'''
     permission_classes = [IsAdminValid]
-    
-    def get_user(self, user_id):
+
+    def post(self, request, user_id):
         try:
             user = UserProfile.objects.get(pk=user_id)
-            return user
-        except UserProfile.DoesNotExist:
-            return None
-
-    def put(self, request, user_id):
-        user = self.get_user(user_id)
-        if not user:
-            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = UserProfileSerializer(user, data=request.data, partial=True)
-        if serializer.is_valid():
-            if 'is_active' in serializer.validated_data:
-                user.is_active = serializer.validated_data['is_active']
-            if 'is_member' in serializer.validated_data:
-                user.is_member = serializer.validated_data['is_member']
-
+            user.is_active = True
             user.save()
-            return Response({'detail': 'User updated successfully'})
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'User updated successfully'})
+        except UserProfile.DoesNotExist:
+            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class AdminActivate(APIView):
+    '''운영진 활성화'''
+    permission_classes = [IsAdminValid]
+    
+    def post(self, request, user_id):
+        try:
+            user = UserProfile.objects.get(pk=user_id)
+            user.is_admin = not user.is_admin
+            user.save()
+            return Response({'message': 'User updated successfully'})
+        except UserProfile.DoesNotExist:
+            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+class UserDelete(APIView):
+    '''회원탈퇴(운영진만)'''
+    permission_classes = [IsAdminValid]
 
     def delete(self, request, user_id):
-        user = self.get_user(user_id)
-        if not user:
-            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        user.delete()
-        return Response({'detail': 'User deleted successfully'})
-
+        try:
+            user = UserProfile.objects.get(pk=user_id)
+            user.delete()
+            return Response({"message": "User deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+        except UserProfile.DoesNotExist:
+            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+        
 class UserPostList(APIView):
     '''회원 게시물 관리'''
     permission_classes = [IsAdminValid]
