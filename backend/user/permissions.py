@@ -20,6 +20,6 @@ class IsAdminValid(BasePermission):
             user_id = access_token.payload.get('user_id')
             user = UserProfile.objects.get(pk=user_id)
             
-            return user.is_active and user.is_member == 'admin'
+            return user.is_active and user.is_admin
         except Exception as e:
             return False
