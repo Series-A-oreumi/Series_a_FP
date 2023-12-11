@@ -270,7 +270,7 @@
 <table>
   <tr>
     <td align="center" width="150px">
-      <a href="" target="_blank">
+      <a href="https://github.com/wjsdlsghk12" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/77328701?v=4" alt="문길호 프로필" />
       </a>
     </td>
@@ -302,7 +302,7 @@
   </tr>
   <tr>
     <td align="center">
-      <a href="" target="_blank">
+      <a href="https://github.com/wjsdlsghk12" target="_blank">
         문길호
       </a>
     </td>
