@@ -276,7 +276,7 @@
     </td>
     <td align="center" width="150px">
       <a href="https://github.com/Dani8175" target="_blank">
-        <img src="" alt="전은태 프로필" />
+        <img src="https://avatars.githubusercontent.com/u/137133486?v=4" alt="전은태 프로필" />
       </a>
     </td>
     <td align="center" width="150px">
