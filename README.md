@@ -271,7 +271,7 @@
   <tr>
     <td align="center" width="150px">
       <a href="" target="_blank">
-        <img src="" alt="문길호 프로필" />
+        <img src="https://avatars.githubusercontent.com/u/77328701?v=4" alt="문길호 프로필" />
       </a>
     </td>
     <td align="center" width="150px">
@@ -281,12 +281,12 @@
     </td>
     <td align="center" width="150px">
       <a href="https://github.com/minsuhaha" target="_blank">
-        <img src="" alt="하민수 프로필" />
+        <img src="https://avatars.githubusercontent.com/u/105342203?v=4" alt="하민수 프로필" />
       </a>
     </td>
     <td align="center" width="150px">
       <a href="" target="_blank">
-        <img src="" alt="허승범 프로필" />
+        <img src="https://avatars.githubusercontent.com/u/18063935?v=4" alt="허승범 프로필" />
       </a>
     </td>
     <td align="center" width="150px">
@@ -296,7 +296,7 @@
     </td>
     <td align="center" width="150px">
       <a href="https://github.com/ansoyun12" target="_blank">
-        <img src="" alt="안소윤 프로필" />
+        <img src="https://avatars.githubusercontent.com/u/137133387?v=4" alt="안소윤 프로필" />
       </a>
     </td>
   </tr>
