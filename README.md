@@ -272,8 +272,8 @@
     <td align="center" width="150px">
       <a href="https://github.com/wjsdlsghk12" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/77328701?v=4" alt="문길호 프로필" />
+         <style> border-radius: 10px; </style>
       </a>
-       <style> border-radius: 10px; </style>
     </td>
     <td align="center" width="150px">
       <a href="https://github.com/Dani8175" target="_blank">
