@@ -1,12 +1,12 @@
 <h1>Estagram</h1>
 
 <h1>목차</h1>
-  1. Estagram 소개
-  2. 개발 환경
-  3. 주요기능
-  4. 설계 문서
-  5. 협업툴, 컨벤션
-  6. 팀원 소개
+  1. <a href="https://github.com/ansoyun12" target="_blank">Estagram 소개</a>
+  2. <a href="https://github.com/ansoyun12" target="_blank">개발 환경</a>
+  3. <a href="https://github.com/ansoyun12" target="_blank">주요 기능</a>
+  4. <a href="https://github.com/ansoyun12" target="_blank">설계 문서</a>
+  5. <a href="https://github.com/ansoyun12" target="_blank">협업툴, 컨벤션</a>
+  6. <a href="https://github.com/ansoyun12" target="_blank">팀원 소개</a>
   
 <h1>1. Estagram 소개</h1>이미지 바꿀 예정
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/cb05ae65-1635-45a1-8a17-e1bb68ecdea7">
