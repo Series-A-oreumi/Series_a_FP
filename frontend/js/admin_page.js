@@ -312,11 +312,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         }
 
-
-
-
-
-
     } catch (error) {
         console.error('요청 실패:', error);
 
