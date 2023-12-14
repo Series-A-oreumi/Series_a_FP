@@ -222,11 +222,11 @@ class UserPostList(APIView):
         if not user:
             return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        stories = Post.objects.filter(author=user).order_by('-created_at') # 유저가 썼던 스토리 글들 (공개, 나만보기, 기수공개 상관없이 전부)
-        studies = Study.objects.filter(author=user).order_by('-created_at') # 자신이 게시했던 스터디. 프로젝트 글 목록
+        stories = Post.objects.filter(author=user).order_by('-created_at') 
+        studies = Study.objects.filter(author=user).order_by('-created_at') 
 
-        user_stories = PostSerializer(stories, many=True) # 유저가 썼던 스토리 직렬화
-        user_studies = StudySerializer(studies, many=True) # 유저가 썼던 스터디, 프로젝트 직렬화
+        user_stories = PostSerializer(stories, many=True)
+        user_studies = StudySerializer(studies, many=True) 
 
         # 결과를 반환
         response_data = {
