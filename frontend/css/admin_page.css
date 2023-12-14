@@ -134,8 +134,12 @@
     background: #f2f2f2;
 }
 
-.styled-table tbody tr:last-of-type {
+.styled-table .main_list tr:last-of-type {
     border-bottom: 2px solid #6c7ae0;
+}
+
+.styled-table .inactive_list tr:last-of-type {
+    border-bottom: 2px solid #f2f2f2;
 }
 
 .styled-table tbody tr.active-row {
@@ -253,11 +257,37 @@
     white-space: nowrap;
 }
 
+.btnDiv {
+    display: flex;
+    gap: 5px;
+}
+
 .delete_btn {
     background-color: #f2f2f2;
     cursor: pointer;
     margin-left: 8px;
 }
+
+.member_edit {
+    margin-top: 15px;
+    padding: 5px 4px;
+    width: 150px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    background-color: #666666;
+    color: white;
+    margin-left: 8px;
+    border: solid 1px #666666;
+}
+
+.member_edit:hover {
+    color: black;
+    border: solid 1px black;
+    background-color: white;
+}
+
 
 .member_delete {
     margin-top: 15px;
@@ -268,6 +298,12 @@
     cursor: pointer;
     color: white;
     background-color: rgb(247, 87, 38);
+    border: solid 1px rgb(247, 87, 38);
     font-weight: 700;
     font-size: 14px;
+}
+
+.member_delete:hover {
+    background-color: white;
+    color: rgb(247, 87, 38);
 }

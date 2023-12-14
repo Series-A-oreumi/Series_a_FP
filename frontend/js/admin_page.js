@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
 
 
-    const apiEndpoint = `http://localhost:8000/api/admin/`;
+    const apiEndpoint = `http://localhost:8000/api/admin/members/`;
     const accessToken = localStorage.getItem('access_token');
 
 
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
         const responseData = await response.json();
-        const { member_list, member_detile } = responseData;
+        const { member_list } = responseData;
 
         member_list.forEach(data => {
             // 회원 리스트
@@ -33,29 +33,18 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-            clickDetail.addEventListener("click", (event) => {
+            clickDetail.addEventListener("click", async (event) => {
                 memberDetailActive.style.display = "blcok";
                 const clickedElement = event.target;
                 if (clickedElement.tagName === "TD" && clickedElement.id.startsWith("data_")) {
                     const memberId = clickedElement.id.substring(5);
-                    memberDetail(memberId);
-
-                    const member_story_list = memberId.story_list
-                    member_story_list.forEach(story => {
-                        storyList(story);
-                    });
-
-                    const member_study_list = memberId.study_list
-                    member_study_list.forEach(study => {
-                        studyList(study);
-                    });
+                    await showMemberDetail(memberId);
                 }
             });
         })
 
 
         // 회원 리스트
-        // 승인에 따라 버튼 생성 - data 확인 필요(active, 가입일)
         function createMemberList(data) {
             let memberActive = '';
             let idOrActive = '';
@@ -63,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 memberActive = `class="member_active" id="data_${data.id}"`;
                 idOrActive = `${data.id}`;
             } else {
-                idOrActive = `<div class="contant_btn">승인하기</div>`;
+                idOrActive = `<div class="contant_btn okBtn">승인하기</div>`; // 미승인 회원
             }
 
             return `
@@ -72,102 +61,258 @@ document.addEventListener("DOMContentLoaded", async function () {
                         <td>${data.email}</td>
                         <td>${data.name}</td>
                         <td>${data.nickname}</td>
-                        <td>${data.create_at}</td>
+                        <td>${data.bootcamp}</td>
                     </tr>
             `;
         }
 
+
         function memberList(data) {
+
             const memberContent = document.getElementById("memberContent")
-            const inHTML1 = `
-                ${createMemberList(data)}
-            `;
+            const inHTML1 = createMemberList(data);
             memberContent.innerHTML += inHTML1;
+
+            const okMembers = document.querySelectorAll(".okBtn")
+            okMembers.forEach(okMenber => {
+                okMenber.addEventListener('click', async function () {
+                    const okAPi = `http://localhost:8000/api/user-active/${data.id}/`;
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    };
+
+                    try {
+                        const response = await fetch(okAPi, options);
+                        if (response.ok) {
+                            inactiveMemberList(data);
+                        } else {
+                            // 실패 처리
+                            console.error('Failed to update:', response.status);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                })
+            })
+
         }
+
+
+
 
         // 회원 상세
+        async function showMemberDetail(memberId) {
+            const memberDetailContent = document.getElementById("memberDetailContent");
+            const apiDetailMember = `http://localhost:8000/api/admin/posts/${memberId}`;
 
-        // 회원 정보
-        // data 확인 필요
-        function createMemberDetil(data) {
-            return `
-            <div class="member_info_table">
-                <div class="member_info">
-                    <div class="member_info_title_icon">아이콘</div>
-                    <span class="member_icon"><img src="${data.profile_icon}"></span>
-                    <button class="edit_btn">삭제하기</button>
-                </div>
-                <div class="member_info">
-                    <div class="member_info_title">이메일</div>
-                    <div>${data.email}</div>
-                    <button class="edit_btn">수정하기</button>
-                </div>
-                <div class="member_info">
-                    <div class="member_info_title">이름</div>
-                    <div>${data.name}</div>
-                    <button class="edit_btn">수정하기</button>
-                </div>
-                <div class="member_info">
-                    <div class="member_info_title">닉네임</div>
-                    <div>${data.nickname}</div>
-                    <button class="edit_btn">수정하기</button>
-                </div>
-                <div class="member_info">
-                    <div class="member_info_title">비밀번호</div>
-                    <div>${data.password}</div>
-                    <button class="edit_btn">수정하기</button>
-                </div>
-                <div class="member_info">
-                    <div class="member_info_title">가입일</div>
-                    <div>${data.create_at}</div>
-                </div>
-            </div>
-            `;
+            try {
+                const responseDetail = await fetch(apiDetailMember, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!responseDetail.ok) {
+                    throw new Error('서버에서 상세 정보를 가져오는 데 실패했습니다.');
+                }
+
+                const detailData = await responseDetail.json();
+                const { user_info, user_stories, user_studies } = detailData;
+                memberDetail(user_info)
+                storyList(user_stories)
+                studyList(user_studies)
+
+                // 회원 정보 상세
+                function createMemberDetil(data) {
+                    return `
+                    <div class="member_info_table">
+                        <div class="member_info">
+                            <div class="member_info_title_icon">아이콘</div>
+                            <span class="member_icon"><img src="${data.profile_img}"></span>
+                            <button class="edit_btn">삭제하기</button>
+                        </div>
+                        <div class="member_info">
+                            <div class="member_info_title">이메일</div>
+                            <div>${data.email}</div>
+                        </div>
+                        <div class="member_info">
+                            <div class="member_info_title">이름</div>
+                            <div>${data.username}</div>
+                        </div>
+                        <div class="member_info">
+                            <div class="member_info_title">닉네임</div>
+                            <div>${data.nickname}</div>
+                        </div>
+                        <div class="member_info">
+                            <div class="member_info_title">비밀번호</div>
+                            <div>******</div>
+                        </div>
+                        <div class="member_info">
+                            <div class="member_info_title">부트캠프</div>
+                            <div>${data.bootcamp}</div>
+                            <div class="member_info_title">권한정보</div>
+                            <div>${data.is_member}</div>
+                        </div>
+                    </div>
+                `;
+                }
+
+                function memberDetail(user_info) {
+                    const memberDetailContent = document.getElementById("memberDetailContent")
+                    const inHTML2 = `
+                ${createMemberDetil(user_info)}
+                `;
+                    memberDetailContent.innerHTML = inHTML2;
+                }
+
+                // 스토리 목록
+                function createStoryList(data) {
+                    return `
+                    <div class="member_story_content" data_story_id="${data.pk}">
+                        <div class="member_story_title">${data}</div>
+                        <button class="delete_btn deleteStory">삭제하기</button>
+                    </div>
+                `;
+                }
+
+                function storyList(user_stories) {
+                    const memberStoryList = document.getElementById("memberStoryList")
+                    let inHTML3 = '';
+                    user_stories.forEach(story => {
+                        inHTML3 += createStoryList(story);
+                    });
+                    memberStoryList.innerHTML = inHTML3;
+
+
+                    // 스토리 삭제
+                    const deleteStoryButtons = document.querySelectorAll(".deleteStory");
+                    deleteStoryButtons.forEach(deleteStory => {
+                        deleteStory.addEventListener('click', async function () {
+                            const storyId = deleteStory.parentElement.dataset_story_id;
+                            const deleteStoryApi = `http://localhost:8000/api/posts/${memberId}/story/${storyId}/delete/`;
+                            const options = {
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Bearer ${accessToken}`,
+                                    'Content-Type': 'application/json',
+                                },
+                            };
+                            try {
+                                const response = await fetch(deleteStoryApi, options);
+                                if (response.ok) {
+                                    deleteStory.remove();
+                                } else {
+                                    // 삭제 실패 처리
+                                    console.error('Failed to delete comment:', response.status);
+                                }
+                            } catch (error) {
+                                console.error('Error:', error);
+                            }
+                        });
+                    });
+                }
+
+                // 스터디 목록
+                function createStudyList(data) {
+                    return `
+                    <div class="member_story_content" data_study_id="${data.pk}">
+                        <div class="member_story_title">${data}</div>
+                        <button class="delete_btn deleteStudy">삭제하기</button>
+                    </div>
+                `;
+                }
+
+                function studyList(user_studies) {
+                    const memberStudyList = document.getElementById("memberStudyList")
+                    let inHTML4 = '';
+                    user_studies.forEach(study => {
+                        inHTML4 += createStudyList(study);
+                    });
+                    memberStudyList.innerHTML = inHTML4;
+
+                    // 스터디 삭제
+                    const deleteStudyButtons = document.querySelectorAll(".deleteStudy");
+                    deleteStudyButtons.forEach(deleteStudy => {
+                        deleteStudy.addEventListener('click', async function () {
+                            const studyId = memberDetailContent.dataset.dataset_study_id;
+                            const deleteStudyApi = `http://localhost:8000/api/posts/${memberId}/story/${studyId}/delete/`;
+                            const options = {
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Bearer ${accessToken}`,
+                                    'Content-Type': 'application/json',
+                                },
+                            };
+                            try {
+                                const response = await fetch(deleteStudyApi, options);
+                                if (response.ok) {
+                                    deleteStudy.remove();
+                                } else {
+                                    // 삭제 실패 처리
+                                    console.error('Failed to delete comment:', response.status);
+                                }
+                            } catch (error) {
+                                console.error('Error:', error);
+                            }
+                        });
+                    });
+                }
+
+
+                // 회원 정보 수정
+                const editButtons = memberDetailContent.getElementById("editBtn");
+                editButtons.addEventListener('click', async function () {
+                    // 수정 처리
+
+                });
+
+                // 회원 정보 삭제
+                const deleteButtons = memberDetailContent.getElementById("deleteBtn");
+                deleteButtons.addEventListener('click', async function () {
+                    const isConfirmed = window.confirm('회원을 삭제하시겠습니까?');
+                    if (isConfirmed) {
+                        const deleteMemberApi = `http://localhost:8000/api/posts/${memberId}/delete/`;
+                        const options = {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${accessToken}`,
+                                'Content-Type': 'application/json',
+                            },
+                        };
+                        try {
+                            const response = await fetch(deleteMemberApi, options);
+                            if (response.ok) {
+                                window.location.href = '../html/admin_page.html';
+
+                            } else {
+                                // 삭제 실패 처리
+                                console.error('Failed to delete comment:', response.status);
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                    }
+                });
+
+
+
+
+
+
+
+            } catch (error) {
+                console.error('상세 정보를 가져오는 도중 오류가 발생했습니다:', error);
+            }
         }
 
-        function memberDetail(detailId) {
-            const memberDetailContent = document.getElementById("memberDetailContent")
-            const inHTML2 = `
-                ${createMemberDetil(detailId)}
-            `;
-            memberDetailContent.innerHTML = inHTML2;
-        }
 
-        // 스토리 목록
-        function createStoryList(data) {
-            return `
-                <div class="member_story_content">
-                    <div class="member_story_title">${data}</div>
-                    <button class="delete_btn">삭제하기</button>
-                </div>
-            `;
-        }
-
-        function storyList(story) {
-            const memberStoryList = document.getElementById("memberStoryList")
-            const inHTML3 = `
-                ${createStoryList(story)}
-            `;
-            memberStoryList.innerHTML += inHTML3;
-        }
-
-        // 스터디 목록
-        function createStudyList(data) {
-            return `
-                <div class="member_story_content">
-                    <div class="member_story_title">${data}</div>
-                    <button class="delete_btn">삭제하기</button>
-                </div>
-            `;
-        }
-
-        function studyList(study) {
-            const memberStudyList = document.getElementById("memberStudyList")
-            const inHTML4 = `
-                ${createStudyList(study)}
-            `;
-            memberStudyList.innerHTML += inHTML4;
-        }
 
 
 
