@@ -1,3 +1,13 @@
+<h1>Estagram</h1>
+
+<h1>목차</h1>
+  1. Estagram 소개
+  2. 개발 환경
+  3. 주요기능
+  4. 설계 문서
+  5. 협업툴, 컨벤션
+  6. 팀원 소개
+  
 <h1>1. Estagram 소개</h1>이미지 바꿀 예정
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/cb05ae65-1635-45a1-8a17-e1bb68ecdea7">
 
