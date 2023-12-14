@@ -48,9 +48,90 @@
 
 <br />
 
-<h1>3. 주요 기능</h1>gif 전부 바꿀 예정
+<h1>3. 주요 기능</h1>
 ```
-- **""**
+- User
+---
+  1. JWT 토큰 인증 방식 활용
+     1. [permissions.py](http://permissions.py)
+        
+        ```python
+        from rest_framework.permissions import BasePermission
+        from rest_framework_simplejwt.tokens import AccessToken
+        from .models import UserProfile
+        
+        class IsTokenValid(BasePermission):
+            def has_permission(self, request, view):
+                try:
+                    token = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[1]  # JWT 토큰 추출
+                    access_token = AccessToken(token)
+                    user = access_token.payload.get('user_id')
+                    return user is not None
+                except Exception as e:
+                    return False
+        
+        class IsAdminValid(BasePermission):
+            def has_permission(self, request, view):
+                try:
+                    token = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[1]  # JWT 토큰 추출
+                    access_token = AccessToken(token)
+                    user_id = access_token.payload.get('user_id')
+                    user = UserProfile.objects.get(pk=user_id)
+                    
+                    return user.is_active and user.is_admin
+                except Exception as e:
+                    return False
+        ```
+     2. [utils.py](http://utils.py) 
+        
+        ```python
+        def get_user_from_token(request):
+        
+            # JWT 토큰에서 사용자 정보 디코드
+            token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]  # JWT 토큰 추출
+            access_token = AccessToken(token)
+            user_id = access_token.payload['user_id']
+        
+            # 사용자 정보 가져오기
+            try:
+                user = UserProfile.objects.get(id=user_id)
+                return user
+            except UserProfile.DoesNotExist:
+                return Response({'detail': '사용자를 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+        ```
+     
+  2. 검색기능
+- Admin
+---
+  1.회원관리
+
+-Study & Project
+---
+  1. CRUD
+  2. 팀 관리
+  3. 댓글 및 좋아요 기능
+  4. 검색기능
+  5. 필터 기능
+
+- Story
+---
+  1.CRUD
+  2.댓글 및 좋아요 기능
+
+- Chat
+---
+  1.챗봇 api 활용 → 재발급 받아야 됨
+    a. secret.json chat ai key 넣어야 됨 (수정요함)
+  2. 1대1 채팅기능
+
+- Alarm
+---
+  1. 실시간 알람 (모달)
+     1. 채팅 알람
+     2. 스터디 및 프로젝트 알람
+     3. 스토리 알람
+     4. 댓글 및 좋아요 알람
+
 <h2>서비스 소개</h2>
 
 <h3>1. 회원가입 및 로그인</h3>
