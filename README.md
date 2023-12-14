@@ -1,4 +1,4 @@
-<h1>Estagram</h1>
+<center><h1>Estagram</h1></center>
 
 <h1>목차</h1>
   1. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#1-estagram-%EC%86%8C%EA%B0%9C" target="_blank">Estagram 소개</a> <br/>
