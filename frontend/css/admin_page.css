@@ -258,3 +258,16 @@
     cursor: pointer;
     margin-left: 8px;
 }
+
+.member_delete {
+    margin-top: 15px;
+    border: solid 1px;
+    padding: 5px 8px;
+    width: 110px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(247, 87, 38);
+    font-weight: 700;
+    font-size: 14px;
+}
