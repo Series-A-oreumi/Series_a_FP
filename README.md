@@ -50,8 +50,8 @@
 
 <h1>3. 주요 기능</h1>
 ```
-- User
----
+### User
+
   1. JWT 토큰 인증 방식 활용
      1. [permissions.py](http://permissions.py)
         
@@ -101,31 +101,31 @@
         ```
      
   2. 검색기능
-- Admin
----
+### Admin
+
   1.회원관리
 
--Study & Project
----
+### Study & Project
+
   1. CRUD
   2. 팀 관리
   3. 댓글 및 좋아요 기능
   4. 검색기능
   5. 필터 기능
 
-- Story
----
+### Story
+
   1.CRUD
   2.댓글 및 좋아요 기능
 
-- Chat
----
+### Chat
+
   1.챗봇 api 활용 → 재발급 받아야 됨
     a. secret.json chat ai key 넣어야 됨 (수정요함)
   2. 1대1 채팅기능
 
-- Alarm
----
+### Alarm
+
   1. 실시간 알람 (모달)
      1. 채팅 알람
      2. 스터디 및 프로젝트 알람
