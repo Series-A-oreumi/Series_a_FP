@@ -1,12 +1,12 @@
 <h1>Estagram</h1>
 
 <h1>목차</h1>
-  1. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#1-estagram-%EC%86%8C%EA%B0%9C" target="_blank">Estagram 소개</a>
-  2. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#2-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD" target="_blank">개발 환경</a>
-  3. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#3-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5" target="_blank">주요 기능</a>
-  4. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#4-%EC%84%A4%EA%B3%84-%EB%AC%B8%EC%84%9C" target="_blank">설계 문서</a>
-  5. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#5-%ED%98%91%EC%97%85%ED%88%B4-%EC%BB%A8%EB%B2%A4%EC%85%98" target="_blank">협업툴, 컨벤션</a>
-  6. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#6-%ED%8C%80%EC%9B%90-%EC%86%8C%EA%B0%9C" target="_blank">팀원 소개</a>
+  1. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#1-estagram-%EC%86%8C%EA%B0%9C" target="_blank">Estagram 소개</a> <br/>
+  2. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#2-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD" target="_blank">개발 환경</a> <br/>
+  3. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#3-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5" target="_blank">주요 기능</a> <br/>
+  4. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#4-%EC%84%A4%EA%B3%84-%EB%AC%B8%EC%84%9C" target="_blank">설계 문서</a> <br/>
+  5. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#5-%ED%98%91%EC%97%85%ED%88%B4-%EC%BB%A8%EB%B2%A4%EC%85%98" target="_blank">협업툴, 컨벤션</a> <br/>
+  6. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#6-%ED%8C%80%EC%9B%90-%EC%86%8C%EA%B0%9C" target="_blank">팀원 소개</a> <br/>
   
 <h1>1. Estagram 소개</h1>이미지 바꿀 예정
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/cb05ae65-1635-45a1-8a17-e1bb68ecdea7">
