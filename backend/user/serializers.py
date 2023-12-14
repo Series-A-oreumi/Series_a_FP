@@ -27,24 +27,26 @@ class LoginSerializer(serializers.ModelSerializer):
         if email and password:
             user = UserProfile.objects.filter(email=email).first()
             if user:
-                if user.password == password:
-                    token_data = user.get_token()
-                    refresh = token_data['refresh']
-                    access = token_data['access']
+                if user.is_active:
+                    if user.password == password:
+                        token_data = user.get_token()
+                        refresh = token_data['refresh']
+                        access = token_data['access']
 
-                    data = {
-                        'user': user,
-                        'refresh': refresh,
-                        'access': access,
-                    }
+                        data = {
+                            'user': user,
+                            'refresh': refresh,
+                            'access': access,
+                        }
 
-                    return data
+                        return data
+                    else:
+                        raise serializers.ValidationError("비밀번호가 일치하지 않습니다.")
                 else:
-                    raise serializers.ValidationError("비밀번호가 일치하지 않습니다.")
+                    raise serializers.ValidationError("사용자는 비활성화 상태입니다.")  # 비활성화된 사용자에 대한 에러
             else:
                 raise serializers.ValidationError("사용자가 존재하지 않습니다.")
 
-        
     class Meta:
         model = UserProfile
         fields = ["email", "password"]

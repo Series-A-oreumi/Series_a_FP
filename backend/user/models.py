@@ -12,7 +12,9 @@ class UserProfile(models.Model):
     profile_img = models.FileField(blank=True, null=True)
     info = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    is_active = models.BooleanField(default=False) 
+    is_admin = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.nickname
 

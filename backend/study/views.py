@@ -201,17 +201,16 @@ class TeamApplyView(APIView):
         # 이미 팀 지원서를 냈을 때
         if team.applications.filter(id=user.id).exists():
             return Response({'detail': 'Application already submitted'}, status=status.HTTP_400_BAD_REQUEST)
-        # 팀 정원이 이미 꽉 찼을때
-        if team.is_full():
-            return Response({'detail': 'The team is already full'}, status=status.HTTP_400_BAD_REQUEST)
+        # # 팀 정원이 이미 꽉 찼을때
+        # if team.is_full():
+        #     return Response({'detail': 'The team is already full'}, status=status.HTTP_400_BAD_REQUEST)
         
         application = TeamMember(team=team, user=user)
         application.save()
 				
-		# Create and send an alarm/notification to the team owner or admin
-        leader = team.study.author 
+        leader = team.leader 
         alarm_content = f'{user.username}님이 "{team.name}"에 지원 하셨습니다.'
-        Alarm.objects.create(sender=user, receiver=leader, content=alarm_content)
+        Alarm.objects.create(sender=user, receiver=leader, content=alarm_content, team=team)
 
         return Response({'success': 'Application submitted'}, status=status.HTTP_200_OK)
 
@@ -230,7 +229,7 @@ class TeamAcceptView(APIView):
             return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
         # 팀 리더와 현재 요청한 유저가 다르면 접근 불가.
-        if team.study.author != user:
+        if team.leader != user:
             return Response({'detail': 'You are not authorized to approve team members.'}, status=status.HTTP_403_FORBIDDEN)
         
         application = TeamMember.objects.filter(user=apply_user, team=team, is_approved=False).first()
@@ -241,7 +240,7 @@ class TeamAcceptView(APIView):
             team.save()
 				
             alarm_content = f'"{team.name}" 지원이 승인되었습니다.'
-            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content)
+            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content, team=team)
 
             return Response({'detail': 'Application accepted'}, status=status.HTTP_200_OK)
         else:
@@ -262,7 +261,7 @@ class TeamRejectView(APIView):
             return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
         # 팀 리더와 현재 요청한 유저가 다르면 접근 불가.
-        if team.study.author != user:
+        if team.leader != user:
             return Response({'detail': 'You are not authorized to approve team members.'}, status=status.HTTP_403_FORBIDDEN)
         
         application = TeamMember.objects.filter(user=apply_user, team=team, is_approved=False).first()
@@ -270,7 +269,7 @@ class TeamRejectView(APIView):
             application.delete()
 	
             alarm_content = f'"{team.name}" 지원이 거절되었습니다.'
-            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content)
+            Alarm.objects.create(sender=user, receiver=apply_user, content=alarm_content, team=team)
 
             return Response({'detail': 'Application rejected'}, status=status.HTTP_200_OK)
         else:

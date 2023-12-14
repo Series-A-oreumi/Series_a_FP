@@ -131,6 +131,7 @@ class StudyCreateSerializer(serializers.ModelSerializer):
 
 
 class TeamSerializer(serializers.ModelSerializer):
+    leader = UserProfileSerializer(read_only=True)
     applications = serializers.SerializerMethodField(read_only=True)
     members = serializers.SerializerMethodField(read_only=True)
 
@@ -144,8 +145,7 @@ class TeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Team
-        fields = ('id', 'study', 'name', 'max_members',
-                  'applications', 'members')
+        fields = ('id', 'study', 'leader', 'name', 'description', 'applications', 'members')
 
 
 class MemberSerializer(serializers.ModelSerializer):
