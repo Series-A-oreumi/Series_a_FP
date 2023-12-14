@@ -189,7 +189,7 @@
 
 <h3>📑API 명세서</h3>
 
-<img width="700" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/ed7ed179-7a6a-46d8-8073-7e0f3bcf3593">
+<img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/ed7ed179-7a6a-46d8-8073-7e0f3bcf3593">
 
 <h1>5. 협업툴, 컨벤션</h1> 컨벤션 수정 예정
 
