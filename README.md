@@ -1,16 +1,18 @@
 <h1 align="center">Estagram</h1>
 
 <h1>목차</h1>
-  1. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#1-estagram-%EC%86%8C%EA%B0%9C" target="_blank">Estagram 소개</a> <br/>
-  2. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#6-%ED%8C%80%EC%9B%90-%EC%86%8C%EA%B0%9C" target="_blank">팀원 소개 및 역할</a> <br/>
-  3. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#2-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD" target="_blank">개발 환경</a> <br/>
-  4. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#3-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5" target="_blank">주요 기능</a> <br/>
-  5. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#4-%EC%84%A4%EA%B3%84-%EB%AC%B8%EC%84%9C" target="_blank">서비스 소개</a> <br/>
-  6. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#4-%EC%84%A4%EA%B3%84-%EB%AC%B8%EC%84%9C" target="_blank">설계 문서</a> <br/>
-  7. <a href="https://github.com/Series-A-oreumi/Series_a_FP/blob/main/README.md#5-%ED%98%91%EC%97%85%ED%88%B4-%EC%BB%A8%EB%B2%A4%EC%85%98" target="_blank">협업툴, 컨벤션</a> <br/>
+
+  1. [Estagram 소개](#1)
+  2. [팀원 소개 및 역할](#2)
+  3. [개발 환경](#3)
+  4. [주요 기능](#4)
+  5. [서비스 소개](#5)
+  6. [설계 문서](#6)
+  7. [협업툴, 컨벤션](#7)
+
+<hr>
   
-  
-<h1>1. Estagram 소개</h1>이미지 바꿀 예정
+<h1 id="1">1. Estagram 소개</h1>이미지 바꿀 예정
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/cb05ae65-1635-45a1-8a17-e1bb68ecdea7">
 
 <h3>부트캠프에 참여한 학생들을 위한 커뮤니티 서비스</h3>
@@ -18,7 +20,7 @@
 > 부트캠프에 참여하고 있는 사람들이 일상을 공유하고, 스터디•프로젝트 모집 혹은 참여할 수 있도록 서비스를 제공하는 커뮤니티 사이트      
 <br />
 
-<h1>2. 팀원 소개 및 역할</h1>
+<h1 id="2">2. 팀원 소개 및 역할</h1>
 <table>
   <tr>
     <td align="center" width="150px">
@@ -90,18 +92,19 @@
 
 <br />
 
-<h1>3. 개발 기간 및 개발 환경</h1>
-<h3>1️⃣ 개발 기간</h3>
-<h4>1차 개발 : 23.10.17~23.11.2</h4>
+<h1 id="3">3. 개발 기간 및 개발 환경</h1>
+<h2>개발 기간</h2>
+
+<strong>1️⃣ 1차 개발 : 23.10.17~23.11.2</strong>
 
 * <strong>유저</strong> : 로그인/회원가입, 프로필 관리, 회원 검색, 실시간 알람
 * <strong>스토리 페이지</strong> : 게시글 CRUD, 스토리 게시글 보기
 * <strong>스터디 페이지</strong> : 게시글 CRUD, 필터 적용 및 검색
 * <strong>채팅 페이지</strong> : 1:1 채팅, AI 챗봇
-<img src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/e4af4840-fcb7-4df5-8829-c60754dc821f" width="800">
+<img src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/e4af4840-fcb7-4df5-8829-c60754dc821f" width="700">
 
 
-<h4>2차 개발 : 23.11.17~</h4>
+<strong>2️⃣ 2차 개발 : 23.11.17~</strong>
 
 * <strong>관리자 페이지</strong> : 회원 가입 승인 및 정보 관리
 * <strong>팀 페이지</strong> : 팀 생성, 팀원 추가 및 삭제
@@ -110,13 +113,12 @@
   * 프로필 페이지 피드, 스터디/프로젝트 클릭 시 작동하지 않는 오류 해결
   * 알람 ~~~
   * 채팅 ~~~
-
-<img src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/6a10239c-a2c7-41c0-890a-ad9e4e7babaf" width="800">
+<img src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/6a10239c-a2c7-41c0-890a-ad9e4e7babaf" width="700">
+<br />
 <br />
 
-
-<h3>2️⃣ 개발 환경</h3>
-  <h3> 🛠주요 기술</h3>
+<h2>개발 환경</h2>
+<h3> 🛠주요 기술</h3>
 <h4>Backend</h4>
 
 ```
@@ -158,7 +160,7 @@
 
 <br />
 
-<h1>4. 주요 기능</h1>
+<h1 id="4">4. 주요 기능</h1>
 
 ### -User
 
@@ -242,7 +244,7 @@
        3. 스토리 알람
        4. 댓글 및 좋아요 알람
 
-<h1>5. 서비스 소개</h1>
+<h1 id="5">5. 서비스 소개</h1>
 
 <h3>1. 회원가입 및 로그인</h3>
 
@@ -291,7 +293,7 @@
 
 
 
-<h1>6. 설계 문서</h1>
+<h1 id="6">6. 설계 문서</h1>
 
 <h3>🎨Figma</h3>
 
@@ -301,7 +303,7 @@
 
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/ed7ed179-7a6a-46d8-8073-7e0f3bcf3593">
 
-<h1>7. 협업툴, 컨벤션</h1> 컨벤션 수정 예정
+<h1 id="7">7. 협업툴, 컨벤션</h1> 컨벤션 수정 예정
 
 <h3>🗣협업툴</h3>
 
