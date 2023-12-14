@@ -14,16 +14,23 @@
     font-weight: 700;
 }
 
-.contant_btn {
+.fist_content {
+    width: 80px;
+}
+
+.content_btn {
     font-weight: 700;
     border-radius: 4px;
     padding: 3px 5px;
     color: #6c7ae0;
     cursor: pointer;
     font-size: 14px;
+    width: 70px;
+    align-items: center;
+    text-align: center;
 }
 
-.contant_btn:hover {
+.content_btn:hover {
     background-color: #6c7ae0;
     color: white;
 }

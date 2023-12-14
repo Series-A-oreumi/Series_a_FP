@@ -20,9 +20,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
         const responseData = await response.json();
-        const { member_list } = responseData;
-
-        member_list.forEach(data => {
+        responseData.forEach(data => {
             // 회원 리스트
             memberList(data);
 
@@ -34,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
             clickDetail.addEventListener("click", async (event) => {
-                memberDetailActive.style.display = "blcok";
+                memberDetailActive.style.display = "block";
                 const clickedElement = event.target;
                 if (clickedElement.tagName === "TD" && clickedElement.id.startsWith("data_")) {
                     const memberId = clickedElement.id.substring(5);
@@ -44,64 +42,142 @@ document.addEventListener("DOMContentLoaded", async function () {
         })
 
 
-        // 회원 리스트
+        // 승인 회원 리스트
         function createMemberList(data) {
-            let memberActive = '';
-            let idOrActive = '';
-            if (data.is_active) {
-                memberActive = `class="member_active" id="data_${data.id}"`;
-                idOrActive = `${data.id}`;
-            } else {
-                idOrActive = `<div class="contant_btn okBtn">승인하기</div>`; // 미승인 회원
-            }
-
             return `
-                    <tr ${memberActive}>
-                        <td>${idOrActive}</td>
+                    <tr class="member_active" id="data_${data.id}">
+                        <td>${data.id}</td>
                         <td>${data.email}</td>
-                        <td>${data.name}</td>
+                        <td>${data.username}</td>
                         <td>${data.nickname}</td>
                         <td>${data.bootcamp}</td>
                     </tr>
             `;
         }
 
-
         function memberList(data) {
-
             const memberContent = document.getElementById("memberContent")
-            const inHTML1 = createMemberList(data);
+            const inHTML1 = `
+                ${createMemberList(data)}
+            `;
             memberContent.innerHTML += inHTML1;
-
-            const okMembers = document.querySelectorAll(".okBtn")
-            okMembers.forEach(okMenber => {
-                okMenber.addEventListener('click', async function () {
-                    const okAPi = `http://localhost:8000/api/user-active/${data.id}/`;
-
-                    const options = {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                            'Content-Type': 'application/json',
-                        },
-                    };
-
-                    try {
-                        const response = await fetch(okAPi, options);
-                        if (response.ok) {
-                            inactiveMemberList(data);
-                        } else {
-                            // 실패 처리
-                            console.error('Failed to update:', response.status);
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
-                })
-            })
-
         }
 
+
+        // 미승인 회원 리스트, 클릭이벤트
+        const inactiveEndpoint = `http://localhost:8000/api/admin/register/`;
+        try {
+            const responseInactives = await fetch(inactiveEndpoint, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!responseInactives.ok) {
+                throw new Error('서버에서 오류 응답 : 미승인 멤버');
+            }
+
+            const responseDataInactive = await responseInactives.json();
+            responseDataInactive.forEach(data => {
+                inactiveMemberList(data);
+            });
+
+
+            function createMemberListInactive(data) {
+                return `
+                    <tr>
+                        <td class="fist_content">
+                            <div class="content_btn okBtn">승인하기</div>
+                        </td>
+                        <td>${data.email}</td>
+                        <td>${data.username}</td>
+                        <td>${data.nickname}</td>
+                        <td>${data.bootcamp}</td>
+                    </tr>
+                `;
+            }
+
+
+            function inactiveMemberList(data) {
+                const inactiveMemberContent = document.getElementById("inactiveMemberContent")
+                const inHTML5 = `${createMemberListInactive(data)}`;
+                inactiveMemberContent.innerHTML += inHTML5
+
+                const okMembers = document.querySelectorAll(".okBtn")
+                okMembers.forEach(okMenber => {
+                    okMenber.addEventListener('click', async function () {
+                        await handleApprovalClick(data);
+                    })
+                })
+
+            }
+
+            async function handleApprovalClick(data) {
+                const okAPi = `http://localhost:8000/api/admin/user-activate/${data.id}/`;
+
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                };
+
+                try {
+                    const response = await fetch(okAPi, options);
+                    if (response.ok) {
+                        refreshLists();
+                    } else {
+                        console.error('승인 실패:', response.status);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+
+            async function refreshLists() {
+                const inactiveMemberContent = document.getElementById("inactiveMemberContent");
+                inactiveMemberContent.innerHTML = '';
+
+                const responseInactives = await fetch(inactiveEndpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (responseInactives.ok) {
+                    const responseDataInactive = await responseInactives.json();
+                    responseDataInactive.forEach(data => {
+                        inactiveMemberList(data);
+                    });
+                } else {
+                    console.error('Failed to fetch inactive members:', responseInactives.status);
+                }
+                const memberContent = document.getElementById("memberContent");
+                memberContent.innerHTML = '';
+
+                const responseMembers = await fetch(apiEndpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (responseMembers.ok) {
+                    const membersData = await responseMembers.json();
+                    membersData.forEach(data => {
+                        memberList(data);
+                    });
+                } else {
+                    console.error('Failed to fetch members:', responseMembers.status);
+                }
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
 
 
 
@@ -311,7 +387,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 console.error('상세 정보를 가져오는 도중 오류가 발생했습니다:', error);
             }
         }
-
     } catch (error) {
         console.error('요청 실패:', error);
 
