@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/members/', MemberList.as_view()), # 전체 회원 리스트
     path('admin/register/', RegistrationRequestList.as_view()), # 회원가입 요청을 보낸 유저리스트
     path('admin/user-activate/<int:user_id>/', UserActivate.as_view()), # 유저 활성화
-    path('admin/admin-activate/<int:user_id>/', AdminActivate.as_view()), # 관리자 활성화
+    path('admin/<int:user_id>/update/', UserUpdate.as_view()), # 회원정보수정 (멤버권한변경 포함)
     path('admin/<int:user_id>/delete/', UserDelete.as_view()), # 회원탈퇴
     path('admin/posts/<int:user_id>/', UserPostList.as_view()), # 각 회원의 게시물 리스트
     path('admin/posts/<int:user_id>/story/<int:story_id>/delete/', UserStoryDelete.as_view()), # 스토리 삭제

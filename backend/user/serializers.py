@@ -107,3 +107,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         if password != password2:
             raise serializers.ValidationError("Passwords must match")
         return attrs
+    
+class AdminProfileUpdateSerializer(serializers.ModelSerializer):
+    '''관리자 : 회원정보변경'''
+    class Meta:
+        model = UserProfile
+        fields = '__all__' 

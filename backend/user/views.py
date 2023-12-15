@@ -181,19 +181,33 @@ class UserActivate(APIView):
             return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
-class AdminActivate(APIView):
-    '''운영진 활성화'''
+class UserUpdate(APIView):
+    '''회원정보수정(멤버 설정권한 포함)'''
     permission_classes = [IsAdminValid]
-    
-    def post(self, request, user_id):
+
+    def put(self, request, user_id):
         try:
             user = UserProfile.objects.get(pk=user_id)
-            user.is_admin = not user.is_admin
-            user.save()
-            return Response({'message': 'User updated successfully'})
         except UserProfile.DoesNotExist:
             return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
+        serializer = AdminProfileUpdateSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+
+            # 이미지 가져오기
+            profile_img = request.FILES.get('profile_img')
+            print(profile_img)
+
+            # profile img 가 데이터에 포함되어 있다면
+            if profile_img:
+                img_uploader = S3ImgUploader(profile_img)
+                uploaded_url = img_uploader.upload()
+                user.profile_img = uploaded_url
+                user.save()
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class UserDelete(APIView):
     '''회원탈퇴(운영진만)'''
     permission_classes = [IsAdminValid]
