@@ -6,11 +6,17 @@ from asgiref.sync import async_to_sync
 
 class NotificationsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.user = self.scope["url_route"]["kwargs"]["user"]
-        self.user_group_name = f"user_{self.user}"
-        print("connect complete")
+        # 사용자가 웹소켓에 연결되면 모든 사용자에게 알림을 전송합니다.
+        self.user_group_name = "all_users"
+
         await self.channel_layer.group_add(self.user_group_name, self.channel_name)
         await self.accept()
+    # async def connect(self):
+    #     self.user = self.scope["url_route"]["kwargs"]["user"]
+    #     self.user_group_name = f"user_{self.user}"
+    #     print("connect complete")
+    #     await self.channel_layer.group_add(self.user_group_name, self.channel_name)
+    #     await self.accept()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.user_group_name, self.channel_name)
@@ -56,3 +62,10 @@ class NotificationsConsumer(AsyncWebsocketConsumer):
             )
         else:
             print("Required fields are missing")
+
+    async def alarm(self, event):
+        message = event['message']
+        # 웹소켓으로 메세지 보냄
+        await self.send(text_data=json.dumps({
+            'message': message,
+        }))

@@ -18,26 +18,27 @@ async function setupWebSocket() {
 
         console.log(data)
 
-        UserIds.forEach(userId => {
-            let userId = userId;// 사용자 ID를 얻어올 수 있는 방법에 따라 userId 값을 설정
+        UserIds.forEach(user => {
+            let userId = user;// 사용자 ID를 얻어올 수 있는 방법에 따라 userId 값을 설정
 
             if (userId === null) {
                 userId = '1';
                 console.log(userId);
             }
 
-            const user = UserInfo(accessToken);
+            const userObject = UserInfo(accessToken);
+            console.log(userId);
+            console.log(typeof userId, userId.user, data, userObject.userId);
 
-            console.log(typeof userId, userId.User, data, user.userId);
+            if (userId.user == userObject.userId) {
 
-            if (userId.User == user.userId) {
-
-                const socket = new WebSocket(`ws://127.0.0.1:8000/ws/study/${userId.User}/`);
-                console.log(userId.User, user.userId, "아이디와 사용자아이디가 일치합니다.");
+                const socket = new WebSocket(`ws://127.0.0.1:8000/ws/notifications/${userId.user}/`);
+                console.log(userId.user, userObject.userId, "아이디와 사용자아이디가 일치합니다.");
 
 
                 // 알림 카운트를 업데이트하는 함수
                 function updateNotificationCount(count) {
+                    console.log(count, ' is checked');
                     const notificationCountElement = document.querySelector('.notify_count');
                     if (notificationCountElement) {
                         notificationCountElement.innerText = count;
@@ -50,6 +51,7 @@ async function setupWebSocket() {
 
                 socket.onmessage = function (e) {
                     console.log(e, ' is checked');
+                    console.log(e.data, ' is checked');
                     const data = JSON.parse(e.data);
                     const notificationMessage = data['message'];
                     const notificationCount = data['count'];
@@ -83,20 +85,20 @@ const notificationCountElement = document.querySelector('.notification-count');
 const notificationTrigger = document.querySelector('.notification-trigger');
 
 // 알림 아이콘 클릭 시 모달 열기
-notificationTrigger.addEventListener('click', function (event) {
-    event.preventDefault(); // 링크의 기본 동작을 막음
-    notificationModal.style.display = 'block';
-});
+// notificationTrigger.addEventListener('click', function (event) {
+//     event.preventDefault(); // 링크의 기본 동작을 막음
+//     notificationModal.style.display = 'block';
+// });
 
 // 알림 모달의 닫기 버튼 클릭 시 모달 닫기
-const closeButton = document.querySelector('.notification-modal .close');
-closeButton.addEventListener('click', function () {
-    notificationModal.style.display = 'none';
-});
+// const closeButton = document.querySelector('.notification-modal .close');
+// closeButton.addEventListener('click', function () {
+//     notificationModal.style.display = 'none';
+// });
 
 // 모달 외부를 클릭하면 모달 닫기
-window.addEventListener('click', function (event) {
-    if (event.target === notificationModal) {
-        notificationModal.style.display = 'none';
-    }
-});
+// window.addEventListener('click', function (event) {
+//     if (event.target === notificationModal) {
+//         notificationModal.style.display = 'none';
+//     }
+// });

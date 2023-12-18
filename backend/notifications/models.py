@@ -13,15 +13,5 @@ class Notifications(models.Model):
     category_likecomment = models.CharField(max_length=255)
     content = models.CharField(max_length= 300)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_check = models.BooleanField(default=False) # 확인했는지 여부
 
-class Noti_Comment(models.Model):
-    content = models.CharField(max_length=300)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-class Noti_Study(models.Model):
-    # Study 모델 필드들
-    comments = models.ManyToManyField('study.Comment', related_name='study_comments')
-
-class Noti_Story(models.Model):
-    # Story 모델 필드들
-    comments = models.ManyToManyField('story.Comment', related_name='story_comments')

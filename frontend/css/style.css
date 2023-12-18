@@ -335,7 +335,7 @@ body {
     justify-content: space-between;
 }
 
-#header .right_icons>div {}
+/* #header .right_icons>div {} */
 
 
 
@@ -407,23 +407,27 @@ body {
     width: 100%;
 }
 
-.contents_box .nick_name-m_text{
+.contents_box .nick_name-m_text {
     display: flex;
     align-items: center;
 }
 
 /* 수정하기 삭제 하기 */
-.contents_box .button-all{
+.contents_box .button-all {
     padding-left: 300px;
     font-size: 30px;
-    display: inline-block; /* 수정 */
+    display: inline-block;
+    /* 수정 */
 }
 
 .contents_box .modal2 {
     display: none;
-    position: absolute; /* absolute로 변경 */
-    top: 100%; /* 아래로 떨어지도록 설정, 조절 가능 */
-    left: 70%; /* 좌측 정렬 */
+    position: absolute;
+    /* absolute로 변경 */
+    top: 100%;
+    /* 아래로 떨어지도록 설정, 조절 가능 */
+    left: 70%;
+    /* 좌측 정렬 */
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -447,8 +451,10 @@ body {
 
 /* 버튼 스타일 */
 .contents_box button {
-    display: block; /* 수정 */
-    width: 100%; /* 수정 */
+    display: block;
+    /* 수정 */
+    width: 100%;
+    /* 수정 */
     padding: 15px;
     background-color: transparent;
     color: black;
