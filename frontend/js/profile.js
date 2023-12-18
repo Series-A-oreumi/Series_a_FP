@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         // 프로필
         function creatProfile(data, story, study) {
             const chatUrl = `../html/chat.html?data=${data.nickname}`
+            console.log(data.profile_img)
 
             return `
             <div class="up-profile">

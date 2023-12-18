@@ -10,10 +10,12 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('user', '0001_initial'),
+        ('user', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
+            name='Stack',
             name='Stack',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -89,7 +91,13 @@ class Migration(migrations.Migration):
         ),
         migrations.CreateModel(
             name='Comment',
+            name='Comment',
             fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('content', models.CharField(max_length=100)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments_author', to='user.userprofile')),
+                ('study', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments_study', to='study.study')),
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content', models.CharField(max_length=100)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),

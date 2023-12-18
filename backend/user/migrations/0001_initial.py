@@ -9,9 +9,12 @@ class Migration(migrations.Migration):
 
     dependencies = [
     ]
+    dependencies = [
+    ]
 
     operations = [
         migrations.CreateModel(
+            name='UserProfile',
             name='UserProfile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
