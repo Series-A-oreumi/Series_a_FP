@@ -5,7 +5,6 @@ from django.dispatch import receiver
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
-# Create your models here.
 class ChatRoom(models.Model):
     id = models.AutoField(primary_key=True)
     nickname = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True)    
@@ -27,20 +26,15 @@ def your_model_post_save(sender, instance, created, **kwargs):
     your_data = instance
     if created:
         message = your_data    
-
-    # # 채널 레이어를 통해 메시지를 전송
-    # chatroom_id = message.chatroom_id  # 메시지가 속한 채팅방 ID 가져오기
-    # # 그룹 이름 설정
-    # room_group_name = f'chat_{chatroom_id}'
         
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
-            'your_group_name',  # 메시지를 보낼 그룹 이름
+            'your_group_name',  
         {
-            'type': 'chat.message',  # Consumer의 메서드 이름
+            'type': 'chat.message',  
             'sender' : message.sender,
             'receiver' : message.receiver,
-            'message': message.is_read,  # 전송할 메시지
+            'message': message.is_read,  
             'chatroom_id' : message.chatroom_id
         }
     )

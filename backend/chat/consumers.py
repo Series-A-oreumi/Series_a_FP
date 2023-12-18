@@ -105,7 +105,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def chat_message(self, event):
         message = event['message']
         sender = event['sender']
-        # sent_at = event['sent_at']
 
         await self.send(text_data=json.dumps({   
             'type' : 'chat_message',         
@@ -113,7 +112,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'sender': sender,                
         }))
         
-    # 메시지가 '읽음' 처리되었음을 알리기 위해 호출됩니다.
+    # 메시지가 '읽음' 처리되었음을 알리기 위해 호출.
     async def read_message(self, event):
         print("읽")
     
@@ -141,7 +140,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         async_to_sync(self.channel_layer.group_send)('your_group_name', {
         'type': 'chat.message',
         'receiver': sender_nickname,
-        'message': True,  # 또는 다른 메시지
+        'message': True,  
         'chatroom_id': chatroom_id
         })
 
@@ -149,14 +148,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
 class Chat_alarm(AsyncWebsocketConsumer):
     async def connect(self):
         self.username = self.scope['url_route']['kwargs']['room_name']                
-        # WebSocket 연결 설정
 
         await self.accept()
         await self.channel_layer.group_add('your_group_name', self.channel_name)
 
 
     async def disconnect(self, close_code):
-        # WebSocket 연결 해제
         await self.channel_layer.group_discard('your_group_name', self.channel_name)
 
 
