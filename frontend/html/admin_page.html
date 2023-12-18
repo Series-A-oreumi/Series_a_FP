@@ -138,10 +138,6 @@
     <!-- 메인 -->
     <div class="main">
         <div class="title">회원 관리</div>
-        <div class="admin_seaerch">
-            <input class="search_bar" id="searchInput" type="search" placeholder=" 이메일, 이름, 닉네임 검색 🕵️‍♀️"
-                autocomplete="off">
-        </div>
 
         <!-- 회원 관리 -->
         <div class="main_contant">
@@ -166,75 +162,29 @@
             </table>
 
             <!-- 상세페이지 -->
-            <div class="member_detail" id="memberDetailContent">
-                <!-- <div class="member_info_table">
-                    <div class="member_info">
-                        <div class="member_info_title_icon">아이콘</div>
-                        <span class="member_icon"><img src="../imgs/user/test.jpg"></span>
-
-                    </div>
-                    <div class="member_info">
-                        <div class="member_info_title">이메일</div>
-                        <div>테스트테스트테스트테스트테스트테스트테스@naver.com</div>
-
-                    </div>
-                    <div class="member_info">
-                        <div class="member_info_title">이름</div>
-                        <div>테스트테스트테스트테스트테스트테스트테</div>
-
-                    </div>
-                    <div class="member_info">
-                        <div class="member_info_title">닉네임</div>
-                        <div>테스트테스트테스트테스트</div>
-
-                    </div>
-                    <div class="member_info">
-                        <div class="member_info_title">비밀번호</div>
-                        <div>******</div>
-                    </div>
-                    <div class="member_info">
-                        <div class="member_info_title">부트캠프</div>
-                        <div>어쩌구 1기</div>
-                        <div class="member_info_title">권한정보</div>
-                        <div>관리자</div>
-                    </div>
-                </div> -->
+            <div class="member_detail" id="memberDetail">
+                <div id="memberDetailContent" id="memberInfo"></div>
 
                 <div class="member_story_list">
                     <div class="member_story_list_title">스토리</div>
-                    <div class="member_story" id="memberStoryList">
-
-                        <!-- <div class="member_story_content">
-                            <div class="member_story_title">스토리 제목</div>
-                            <button class="delete_btn deleteStory">삭제하기</button>
-                        </div> -->
-
-
-                    </div>
+                    <div class="member_story" id="memberStoryList"></div>
                 </div>
-
 
                 <div class="member_story_list">
                     <div class="member_story_list_title">스터디/프로젝트</div>
-                    <div class="member_study" id="memberStudyList">
-
-                        <!-- <div class="member_study_content">
-                            <div class="member_study_title">스터디 제목</div>
-                            <button class="delete_btn deleteStory">삭제하기</button>
-                        </div> -->
-
-                    </div>
-
+                    <div class="member_study" id="memberStudyList"></div>
                 </div>
                 <div class="btnDiv">
                     <div class="member_edit" id="editBtn">회원정보 수정하기</div>
                     <div class="member_delete" id="deleteBtn">회원 삭제하기</div>
+                    <div class="member_save" id="saveBtn" style="display: none;">저장하기</div>
                 </div>
 
             </div>
 
 
         </div>
+
     </div>
 
 
