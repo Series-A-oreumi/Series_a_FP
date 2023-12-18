@@ -4,11 +4,18 @@ from rest_framework import status
 from .models import UserProfile 
 from pathlib import Path
 
-import json, os, uuid, boto3
+import json, os, uuid, boto3, environ
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-PASSWORD_FILE = os.path.join(BASE_DIR, "secret.json")
-secrets = json.load(open(PASSWORD_FILE))
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# PASSWORD_FILE = os.path.join(BASE_DIR, "secret.json")
+# secrets = json.load(open(PASSWORD_FILE))
 
 
 class S3ImgUploader:
@@ -18,13 +25,13 @@ class S3ImgUploader:
     def upload(self):
         s3_client = boto3.client(
             "s3",
-            aws_access_key_id = secrets["AWS_ACCESS_KEY_ID"],
-            aws_secret_access_key = secrets["AWS_SECRET_ACCESS_KEY"]
+            aws_access_key_id = env("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key = env("AWS_SECRET_ACCESS_KEY")
         )
         url = "img" + "/" + uuid.uuid1().hex
 
         s3_client.upload_fileobj(
-            self.file, secrets['S3_NAME'], url, ExtraArgs={"ContentType": self.file.content_type}
+            self.file, env('S3_NAME'), url, ExtraArgs={"ContentType": self.file.content_type}
         )
         return url
 
