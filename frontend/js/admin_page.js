@@ -26,19 +26,41 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // 회원 상세
             const clickDetail = document.getElementById(`data_${data.id}`);
+
             const memberDetailActive = document.getElementById("memberDetailContent");
             memberDetailActive.style.display = "none";
 
+            clickDetail.addEventListener("click", function () {
+                const currentDetailActive = document.getElementById("memberDetailContent");
+                currentDetailActive.style.display = "block";
 
-
-            clickDetail.addEventListener("click", async (event) => {
-                memberDetailActive.style.display = "block";
-                const clickedElement = event.target;
-                if (clickedElement.tagName === "TD" && clickedElement.id.startsWith("data_")) {
-                    const memberId = clickedElement.id.substring(5);
-                    await showMemberDetail(memberId);
+                if (clickDetail.tagName === "TR" && clickDetail.id.startsWith("data_")) {
+                    const memberId = clickDetail.id.substring(5);
+                    showMemberDetail(memberId);
                 }
             });
+
+
+            // const clickDetail = document.getElementById(`data_${data.id}`);
+            // console.log(clickDetail)
+            // const memberDetailActive = document.getElementById("memberDetailContent");
+            // memberDetailActive.style.display = "none";
+
+
+
+            // clickDetail.addEventListener("click", async (event) => {
+            //     console.log(event.target);
+            //     memberDetailActive.style.display = "block";
+            //     const clickedElement = event.currentTarget;
+
+            //     if (clickedElement.tagName === "TR" && clickedElement.id.startsWith("data_")) {
+            //         const memberId = clickedElement.id.substring(5);
+            //         await showMemberDetail(memberId);
+            //     }
+            // });
+
+
+
         })
 
 
@@ -61,7 +83,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                 ${createMemberList(data)}
             `;
             memberContent.innerHTML += inHTML1;
+
+
         }
+
+
+
 
 
         // 미승인 회원 리스트, 클릭이벤트
@@ -183,7 +210,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // 회원 상세
         async function showMemberDetail(memberId) {
-            const memberDetailContent = document.getElementById("memberDetailContent");
             const apiDetailMember = `http://localhost:8000/api/admin/posts/${memberId}`;
 
             try {
@@ -201,17 +227,39 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 const detailData = await responseDetail.json();
                 const { user_info, user_stories, user_studies } = detailData;
-                memberDetail(user_info)
-                storyList(user_stories)
-                studyList(user_studies)
+                memberDetail(user_info);
+                console.log(user_stories)
+                user_stories.forEach(story => {
+                    console.log(story)
+                    storyList(story);
+                });
+                user_studies.forEach(study => {
+                    studyList(study);
+                });
 
-                // 회원 정보 상세
+
+                // 회원 정보 상세, 프로필 null 값 시 데이터 수정 필요
                 function createMemberDetil(data) {
+                    let userAdmin = '';
+                    if (data.is_admin) {
+                        userAdmin = '관리자';
+                    } else {
+                        userAdmin = '일반 회원';
+                    }
+
+                    let userProfile = '';
+                    const userprofileData = data.profile_img
+                    if (userprofileData !== 'null') {
+                        userProfile = `${data.profile_img}`
+                    } else {
+                        userProfile = '프로필이 없습니다';
+                    }
+
                     return `
                     <div class="member_info_table">
                         <div class="member_info">
                             <div class="member_info_title_icon">아이콘</div>
-                            <span class="member_icon"><img src="${data.profile_img}"></span>
+                            <span class="member_icon"><img src="${userProfile}"></span>
                             <button class="edit_btn">삭제하기</button>
                         </div>
                         <div class="member_info">
@@ -234,7 +282,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <div class="member_info_title">부트캠프</div>
                             <div>${data.bootcamp}</div>
                             <div class="member_info_title">권한정보</div>
-                            <div>${data.is_member}</div>
+                            <div>${userAdmin}</div>
                         </div>
                     </div>
                 `;
@@ -252,100 +300,122 @@ document.addEventListener("DOMContentLoaded", async function () {
                 function createStoryList(data) {
                     return `
                     <div class="member_story_content" data_story_id="${data.pk}">
-                        <div class="member_story_title">${data}</div>
+                        <div class="member_story_title">${data.title}</div>
                         <button class="delete_btn deleteStory">삭제하기</button>
                     </div>
                 `;
                 }
 
-                function storyList(user_stories) {
+                function storyList(story) {
                     const memberStoryList = document.getElementById("memberStoryList")
-                    let inHTML3 = '';
-                    user_stories.forEach(story => {
-                        inHTML3 += createStoryList(story);
-                    });
-                    memberStoryList.innerHTML = inHTML3;
+                    let inHTML3 = `${createStoryList(story)}`;
+                    memberStoryList.innerHTML += inHTML3;
 
 
                     // 스토리 삭제
-                    const deleteStoryButtons = document.querySelectorAll(".deleteStory");
-                    deleteStoryButtons.forEach(deleteStory => {
-                        deleteStory.addEventListener('click', async function () {
-                            const storyId = deleteStory.parentElement.dataset_story_id;
-                            const deleteStoryApi = `http://localhost:8000/api/posts/${memberId}/story/${storyId}/delete/`;
-                            const options = {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': `Bearer ${accessToken}`,
-                                    'Content-Type': 'application/json',
-                                },
-                            };
-                            try {
-                                const response = await fetch(deleteStoryApi, options);
-                                if (response.ok) {
-                                    deleteStory.remove();
-                                } else {
-                                    // 삭제 실패 처리
-                                    console.error('Failed to delete comment:', response.status);
-                                }
-                            } catch (error) {
-                                console.error('Error:', error);
-                            }
-                        });
-                    });
+                    // const deleteStoryButtons = document.querySelectorAll(".deleteStory");
+                    // deleteStoryButtons.forEach(deleteStory => {
+                    //     deleteStory.addEventListener('click', async function () {
+                    //         const storyId = deleteStory.parentElement.dataset_story_id;
+                    //         const deleteStoryApi = `http://localhost:8000/api/posts/${memberId}/story/${storyId}/delete/`;
+                    //         const options = {
+                    //             method: 'DELETE',
+                    //             headers: {
+                    //                 'Authorization': `Bearer ${accessToken}`,
+                    //                 'Content-Type': 'application/json',
+                    //             },
+                    //         };
+                    //         try {
+                    //             const response = await fetch(deleteStoryApi, options);
+                    //             if (response.ok) {
+                    //                 deleteStory.remove();
+                    //             } else {
+                    //                 // 삭제 실패 처리
+                    //                 console.error('Failed to delete comment:', response.status);
+                    //             }
+                    //         } catch (error) {
+                    //             console.error('Error:', error);
+                    //         }
+                    //     });
+                    // });
                 }
 
                 // 스터디 목록
                 function createStudyList(data) {
                     return `
                     <div class="member_story_content" data_study_id="${data.pk}">
-                        <div class="member_story_title">${data}</div>
+                        <div class="member_story_title">${data.title}</div>
                         <button class="delete_btn deleteStudy">삭제하기</button>
                     </div>
                 `;
                 }
 
-                function studyList(user_studies) {
+                function studyList(study) {
                     const memberStudyList = document.getElementById("memberStudyList")
-                    let inHTML4 = '';
-                    user_studies.forEach(study => {
-                        inHTML4 += createStudyList(study);
-                    });
-                    memberStudyList.innerHTML = inHTML4;
+                    let inHTML4 = `${createStudyList(study)}`;
+
+                    memberStudyList.innerHTML += inHTML4;
 
                     // 스터디 삭제
-                    const deleteStudyButtons = document.querySelectorAll(".deleteStudy");
-                    deleteStudyButtons.forEach(deleteStudy => {
-                        deleteStudy.addEventListener('click', async function () {
-                            const studyId = memberDetailContent.dataset.dataset_study_id;
-                            const deleteStudyApi = `http://localhost:8000/api/posts/${memberId}/story/${studyId}/delete/`;
-                            const options = {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': `Bearer ${accessToken}`,
-                                    'Content-Type': 'application/json',
-                                },
-                            };
-                            try {
-                                const response = await fetch(deleteStudyApi, options);
-                                if (response.ok) {
-                                    deleteStudy.remove();
-                                } else {
-                                    // 삭제 실패 처리
-                                    console.error('Failed to delete comment:', response.status);
-                                }
-                            } catch (error) {
-                                console.error('Error:', error);
-                            }
-                        });
-                    });
+                    // const deleteStudyButtons = document.querySelectorAll(".deleteStudy");
+                    // deleteStudyButtons.forEach(deleteStudy => {
+                    //     deleteStudy.addEventListener('click', async function () {
+                    //         const studyId = memberDetailContent.dataset.dataset_study_id;
+                    //         const deleteStudyApi = `http://localhost:8000/api/posts/${memberId}/story/${studyId}/delete/`;
+                    //         const options = {
+                    //             method: 'DELETE',
+                    //             headers: {
+                    //                 'Authorization': `Bearer ${accessToken}`,
+                    //                 'Content-Type': 'application/json',
+                    //             },
+                    //         };
+                    //         try {
+                    //             const response = await fetch(deleteStudyApi, options);
+                    //             if (response.ok) {
+                    //                 deleteStudy.remove();
+                    //             } else {
+                    //                 // 삭제 실패 처리
+                    //                 console.error('Failed to delete comment:', response.status);
+                    //             }
+                    //         } catch (error) {
+                    //             console.error('Error:', error);
+                    //         }
+                    //     });
+                    // });
                 }
 
 
                 // 회원 정보 수정
                 const editButtons = memberDetailContent.getElementById("editBtn");
                 editButtons.addEventListener('click', async function () {
-                    // 수정 처리
+                    const updatedIcon = iconImg.value;
+                    const updatedUsername = usernameText.value;
+                    const updatedNickname = nicknameText.value;
+                    const updatedPassword = passwordText.value;
+                    const updateAdmin = isAdmin.value;
+
+
+                    const aditMemberApi = `http://localhost:8000/api/admin/${memberId}/update/`;
+                    const options1 = {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ profile_img: updatedIcon, username: updatedUsername, nickname: updatedNickname, password: updatedPassword, is_admin: updateAdmin }),
+                    };
+                    try {
+                        const response = await fetch(aditMemberApi, options1);
+                        if (response.ok) {
+                            window.location.href = '../html/admin_page.html';
+
+                        } else {
+                            // 삭제 실패 처리
+                            console.error('Failed to delete comment:', response.status);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
 
                 });
 
@@ -354,8 +424,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 deleteButtons.addEventListener('click', async function () {
                     const isConfirmed = window.confirm('회원을 삭제하시겠습니까?');
                     if (isConfirmed) {
-                        const deleteMemberApi = `http://localhost:8000/api/posts/${memberId}/delete/`;
-                        const options = {
+                        const deleteMemberApi = `http://localhost:8000/api/admin/${memberId}/delete/`;
+                        const options2 = {
                             method: 'DELETE',
                             headers: {
                                 'Authorization': `Bearer ${accessToken}`,
@@ -363,7 +433,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             },
                         };
                         try {
-                            const response = await fetch(deleteMemberApi, options);
+                            const response = await fetch(deleteMemberApi, options2);
                             if (response.ok) {
                                 window.location.href = '../html/admin_page.html';
 
