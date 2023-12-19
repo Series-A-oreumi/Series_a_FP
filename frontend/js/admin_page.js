@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async function () {
-
     const apiEndpoint = `http://localhost:8000/api/admin/members/`;
     const accessToken = localStorage.getItem('access_token');
 
@@ -22,14 +21,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             memberList(data);
 
             // 회원 상세
-            const clickDetail = document.getElementById(`data_${data.id}`);
-            console.log(clickDetail)
-            const memberDetailActive = document.getElementById("memberDetail");
+            let clickDetail = document.getElementById(`data_${data.id}`);
+            let memberDetailActive = document.getElementById("memberDetail");
 
             memberDetailActive.style.display = "none";
             let isMemberDetailOpen = false;
 
             document.body.addEventListener("click", function (event) {
+
                 if (!memberDetailActive.contains(event.target)) {
                     memberDetailActive.style.display = "none";
                     isMemberDetailOpen = false;
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 }
             });
 
-
+            // 회원 상세 클릭 이벤트
             clickDetail.addEventListener("click", function (event) {
                 event.stopPropagation();
 
@@ -50,20 +49,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                 currentDetailActive.style.display = "block";
                 isMemberDetailOpen = true;
 
-                if (clickDetail.tagName === "TR" && clickDetail.id.startsWith("data_")) {
-                    const memberId = clickDetail.id.substring(5);
+                if (event.currentTarget.tagName === "TR" && event.currentTarget.id.startsWith("data_")) {
+                    const memberId = event.currentTarget.id.substring(5);
                     showMemberDetail(memberId);
                 }
             });
+        });
 
-            function clearMemberDetail() {
-                let storyInfoContainer = document.getElementById("memberStoryList");
-                let studyInfoContainer = document.getElementById("memberStudyList");
-                storyInfoContainer.innerHTML = ''; // 내용 초기화
-                studyInfoContainer.innerHTML = '';
-            }
-
-        })
+        // 내용 초기화
+        function clearMemberDetail() {
+            let storyInfoContainer = document.getElementById("memberStoryList");
+            let studyInfoContainer = document.getElementById("memberStudyList");
+            storyInfoContainer.innerHTML = '';
+            studyInfoContainer.innerHTML = '';
+        }
 
 
         // 승인 회원 리스트
@@ -154,7 +153,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 try {
                     const response = await fetch(okAPi, options);
                     if (response.ok) {
-                        refreshLists();
+                        window.location.href = '../html/admin_page.html';
                     } else {
                         console.error('승인 실패:', response.status);
                     }
@@ -162,46 +161,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     console.error('Error:', error);
                 }
             }
-
-            async function refreshLists() {
-                const inactiveMemberContent = document.getElementById("inactiveMemberContent");
-                inactiveMemberContent.innerHTML = '';
-
-                const responseInactives = await fetch(inactiveEndpoint, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (responseInactives.ok) {
-                    const responseDataInactive = await responseInactives.json();
-                    responseDataInactive.forEach(data => {
-                        inactiveMemberList(data);
-                    });
-                } else {
-                    console.error('Failed to fetch inactive members:', responseInactives.status);
-                }
-                const memberContent = document.getElementById("memberContent");
-                memberContent.innerHTML = '';
-
-                const responseMembers = await fetch(apiEndpoint, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (responseMembers.ok) {
-                    const membersData = await responseMembers.json();
-                    membersData.forEach(data => {
-                        memberList(data);
-                    });
-                } else {
-                    console.error('Failed to fetch members:', responseMembers.status);
-                }
-            }
-
         } catch (error) {
             console.error('Error:', error);
         }
@@ -227,12 +186,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 const detailData = await responseDetail.json();
                 const { user_info, user_stories, user_studies } = detailData;
+
                 // 상세 정보
                 memberDetail(user_info);
 
                 // 스토리 정보
                 const postStory = user_stories
-
                 if (postStory.length > 0) {
                     postStory.forEach(story => {
                         storyList(story);
@@ -254,7 +213,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     const inHTML4 = `<div>게시글이 없습니다.</div>`;
                     memberStudyList.innerHTML += inHTML4;
                 }
-
 
 
                 // 회원 정보 상세, 프로필 null 값 시 데이터 수정 필요
@@ -362,13 +320,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 `;
                 }
 
+                // 회원 상세
                 function memberDetail(user_info) {
                     const memberDetailContent = document.getElementById("memberDetailContent")
                     const inHTML2 = `${createMemberDetil(user_info)}`;
                     memberDetailContent.innerHTML = inHTML2;
                 }
 
-                // 스토리 목록
+                // 회원 스토리 목록
                 function createStoryList(data) {
                     return `
                     <div class="member_story_content" data-story-id="${data.pk}">
@@ -378,13 +337,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 `;
                 }
 
+                // 스토리 html 반영, 스토리 삭제
                 function storyList(story) {
                     const memberStoryList = document.getElementById("memberStoryList")
                     let inHTML6 = `${createStoryList(story)}`;
                     memberStoryList.innerHTML += inHTML6;
 
 
-                    //스토리 삭제
+                    //스토리 삭제 클릭 이벤트
                     const deleteStoryButtons = document.querySelectorAll(".deleteStory");
                     deleteStoryButtons.forEach(deleteStory => {
                         deleteStory.addEventListener('click', async function () {
@@ -412,7 +372,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     });
                 }
 
-                // 스터디 목록
+                // 회원 스터디 목록
                 function createStudyList(data) {
                     return `
                     <div class="member_story_content" data-study-id="${data.pk}">
@@ -422,6 +382,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 `;
                 }
 
+                //스터디 html 반영, 스터디 삭제
                 function studyList(study) {
                     const memberStudyList = document.getElementById("memberStudyList")
                     let inHTML4 = `${createStudyList(study)}`;
@@ -457,8 +418,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 }
 
 
-
-
                 // 회원 정보 수정하기 클릭 시
                 const editButton = document.getElementById("editBtn");
                 const saveButton = document.getElementById("saveBtn");
@@ -485,7 +444,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const adminEditContent = document.querySelector('.admin_edit_text');
 
 
-                // 수정하기 버튼 클릭 시
+                // 회원 정보 수정하기 버튼 클릭 이벤트
                 editButton.addEventListener("click", function () {
                     // form 변경
                     editForm.forEach(form => {
@@ -539,8 +498,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                                 saveButton.style.display = "none";
                                 editButton.style.display = "block";
+                                deleteButton.style.display = "block";
 
-                                refreshLists();
+                                memberList();
 
                             } else {
                                 console.error('Failed to update comment:', response.status);
@@ -554,9 +514,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 });
 
 
-
-
-                // 회원 정보 삭제
+                // 회원 정보 삭제 버튼 클릭 이벤트
                 const deleteButtons = document.getElementById("deleteBtn");
                 deleteButtons.addEventListener('click', async function () {
                     const isConfirmed = window.confirm('회원을 삭제하시겠습니까?');
@@ -583,10 +541,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                         }
                     }
                 });
-
-
-
-
 
 
 
