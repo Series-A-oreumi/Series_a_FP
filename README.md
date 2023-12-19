@@ -160,89 +160,115 @@
 
 <br />
 
+
 <h1 id="4">4. 주요 기능</h1>
 
-### -User
+### User
 
-  1. JWT 토큰 인증 방식 활용
-     1. [permissions.py](http://permissions.py)
-        
-        ```python
-        from rest_framework.permissions import BasePermission
-        from rest_framework_simplejwt.tokens import AccessToken
-        from .models import UserProfile
-        
-        class IsTokenValid(BasePermission):
-            def has_permission(self, request, view):
-                try:
-                    token = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[1]  # JWT 토큰 추출
-                    access_token = AccessToken(token)
-                    user = access_token.payload.get('user_id')
-                    return user is not None
-                except Exception as e:
-                    return False
-        
-        class IsAdminValid(BasePermission):
-            def has_permission(self, request, view):
-                try:
-                    token = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[1]  # JWT 토큰 추출
-                    access_token = AccessToken(token)
-                    user_id = access_token.payload.get('user_id')
-                    user = UserProfile.objects.get(pk=user_id)
-                    
-                    return user.is_active and user.is_admin
-                except Exception as e:
-                    return False
-        ```
-     2. [utils.py](http://utils.py) 
-        
-        ```python
-        def get_user_from_token(request):
-        
-            # JWT 토큰에서 사용자 정보 디코드
-            token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]  # JWT 토큰 추출
+#### 1. Custom Authentication
+
+* 이 프로젝트에서는 Django의 기본 권한 클래스 대신 JWT 토큰을 활용한 사용자 정의 권한 클래스를 구현하였습니다.
+
+##### permissions.py
+
+```python
+from rest_framework.permissions import BasePermission
+from rest_framework_simplejwt.tokens import AccessToken
+from .models import UserProfile
+
+class IsTokenValid(BasePermission):
+    """
+    사용자의 JWT 토큰이 유효한지 확인하는 권한 클래스.
+    """
+    def has_permission(self, request, view):
+        try:
+            token = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[1]
             access_token = AccessToken(token)
-            user_id = access_token.payload['user_id']
-        
-            # 사용자 정보 가져오기
-            try:
-                user = UserProfile.objects.get(id=user_id)
-                return user
-            except UserProfile.DoesNotExist:
-                return Response({'detail': '사용자를 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
-        ```
-     
-  2. 검색기능
-### -Admin
+            user = access_token.payload.get('user_id')
+            return user is not None
+        except Exception as e:
+            return False
 
-    1.회원관리
+class IsAdminValid(BasePermission):
+    """
+    사용자가 관리자인지 확인하는 권한 클래스.
+    """
+    def has_permission(self, request, view):
+        try:
+            token = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[1]
+            access_token = AccessToken(token)
+            user_id = access_token.payload.get('user_id')
+            user = UserProfile.objects.get(pk=user_id)
+            
+            return user.is_active and user.is_admin
+        except Exception as e:
+            return False
+```
+</br>
 
-### -Study & Project
+#### 2. JWT Token-Based User Authentication
 
+* 장고 기본 `request.user` 대신, JWT 토큰을 사용하여 현재 로그인한 사용자가 데이터베이스에 존재하는지 확인하는 사용자 정의 함수를 구현하였습니다. 이는 표준 Django 유저 모델 대신 장고 기본 모델을 상속받아 사용자 정의 모델을 사용하는 경우 사용.
+
+##### utils.py
+
+```python
+from rest_framework_simplejwt.tokens import AccessToken
+from .models import UserProfile
+from rest_framework.response import Response
+from rest_framework import status
+
+def get_user_from_token(request):
+    """
+    JWT 토큰을 사용하여 현재 로그인한 사용자의 정보를 확인하는 함수.
+    """
+    # JWT 토큰에서 사용자 정보 추출
+    token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]
+    access_token = AccessToken(token)
+    user_id = access_token.payload['user_id']
+
+    # 데이터베이스에서 사용자 정보 확인
+    try:
+        user = UserProfile.objects.get(id=user_id)
+        return user
+    except UserProfile.DoesNotExist:
+        return Response({'detail': '사용자를 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+```
+
+#### 3. 검색기능
+</br>
+
+### Admin
+    1. 회원관리
+    2. 게시글 관리
+
+### Team
+    1. 팀 멤버 관리
+    2. 팀 관리
+    3. 팀 수정
+
+### Study & Project
     1. CRUD
     2. 팀 관리
     3. 댓글 및 좋아요 기능
     4. 검색기능
-    5. 필터 기능
+    5. 필터기능
 
-### -Story
+### Story
+    1. CRUD
+    2. 댓글 및 좋아요 기능
 
-    1.CRUD
-    2.댓글 및 좋아요 기능
+### Chat
+    1. 챗봇 채팅
+    2. 1대1 채팅
 
-### -Chat
-
-    1.챗봇 api 활용 → 재발급 받아야 됨
-      a. secret.json chat ai key 넣어야 됨 (수정요함)
-    2. 1대1 채팅기능
-
-### -Alarm
-
-    1. 실시간 알람 (모달)
-       1. 채팅 알람
-       2. 스터디 및 프로젝트 알람
-       3. 스토리 알람
-       4. 댓글 및 좋아요 알람
+### Alarm
+    1. 실시간 알람 (모달 구현)
+       1-1. 팀 관련 알람
+       1-2. 스터디 및 프로젝트 알람
+       1-3. 스토리 알람
+       1-4. 댓글 및 좋아요 알람
+       1-5. 채팅 알람
 
 <h1 id="5">5. 서비스 소개</h1>
 
@@ -310,154 +336,68 @@
 ```
 - Notion
 - git
-- Discode
+- Discord
+- Jira
 - Figma
 ```   
 
-<h3>❗컨벤션 및 브랜치 전략</h3>
+<h3>❗브랜치 전략</h3>
 
-```md
-## 브랜치 전략
-
-크게 **3종류의 브랜치를 사용**합니다.
+크게 **3가지 종류의 브랜치를 사용**합니다.
 
 - **`main`**
     - **현재 제일 좋은 모델**로 합니다
-    - 언제든지 즉시 **배포(Production)**가 가능한 상태여야 합니다.
-- `**dev**`
+    - 언제든지 즉시 배포(Production)가 가능한 상태여야 합니다.
+
+- **`dev`**
     - feat에서 온 레포를 이전 버전과 합치는 과정입니다.
     - **실행 가능한 코드 단위**이어야 합니다.
     - dev 브랜치로 들어오는 **모든 코드는 리뷰를** 거치게 됩니다.
+
 - **`feat`**
     - 기능 단위로 개발을 진행하는 브랜치입니다.
     - **브랜치 네이밍**은 아래 양식을 지켜주세요 🙏
         - `feat/{기능 이름}`
         - ex) feat/modeling, feat/eda, feat/preprocess
-- **아래 순서와 같이** 작업이 진행됩니다.
-    - **`feat` → PR(코드 리뷰) → `dev` → Testing → `main` → Production**
-        - **`feat` → PR(코드 리뷰)  → `dev`**
-            1. `feat` 에서 각 기능 개발을 수행합니다.
-            2. 완성된 기능은 `dev` 로 PR 합니다.
-            3. PR에 배정된 **코드 리뷰**가 완료되면, `dev`로 merge를 승인합니다.
-        - **`dev` → Testing → `main` → Production**
-            1. 배포할 준비가 완료되면 `dev` 에서 `main` 으로 PR 합니다.
-            2. **Testing**을 수행하고 이상이 없으면, `main`로 merge를 승인합니다.
-            3. 작업이 완료된 `main` 을 바탕으로 **Production**를 진행합니다.
 
-## 컨벤션 가이드
+**아래 순서와 같이** 작업이 진행됩니다:
 
-작업을 진행할 때에는 아래와 같은 컨벤션을 지켜주세요 🙏
+**`feat` → PR(코드 리뷰) → `dev` → Testing → `main` → Production**
+    
+- **`feat` → PR(코드 리뷰)  → `dev`**
+    1. `feat` 에서 각 기능 개발을 수행합니다.
+    2. 완성된 기능은 `dev` 로 PR 합니다.
+    3. PR에 배정된 **코드 리뷰**가 완료되면, `dev`로 merge를 승인합니다.
 
-자세한 내용은 ‣ 참고해주세요.
+- **`dev` → Testing → `main` → Production**
+    1. 배포할 준비가 완료되면 `dev` 에서 `main` 으로 PR 합니다.
+    2. **Testing**을 수행하고 이상이 없으면, `main`로 merge를 승인합니다.
+    3. 작업이 완료된 `main` 을 바탕으로 **Production**를 진행합니다.
+</br>
 
-- 커밋 할때 : **Commit Message** [[링크](https://github.com/EarthCodingLab/ECL-python-template/blob/master/.gitmessage)]
-    
-    [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
-    
-    - 다음과 같은 메시지 양식을 지켜주세요. 🙏
-    - `feat: {커밋메시지 title}`
-    
-    ```python
-    
-    #   ACTION  : Detail
-    #   TASKS   : main / dev / feat - fix
-    
-    #   feat    : 기능 한 줄 설명 (새로운 기능, 새로운 브랜치 생성)
-    #   예시) feat : 알림 읽음 처리 기능 추가
-    
-    #   fix     : 버그 수정 설명
-    #   예시) fix : 스토리 댓글 기능 게시 버튼 작동
-    
-    #   style   : 스타일 (코드 형식, pythonic, 명칭 변경, 주석 추가 또는 수정 -> 동작에 영향 없음)
-    #   예시) style : 알림 리스트 클래스 뷰 변수() 문구 변경
-    
-    #   docs    : 문서 (README 등 각종 Markdown만)
-    #   예시) docs : readme 팀원 추가
-     
-    #   test    : 테스트 (테스트 코드 추가, 수정, 삭제 -> test 코드 외 동작에 변경 없음)
-    #   예시) test : 알람기능 테스트 코드 추가
-    
-    #   chore   : 기타 변경사항 (빌드 스크립트 수정 등 MD 제외 모든 파일)
-    #   예시) chore : gitignore redis 추가, chore : migrations 파일 추가
-    ```
-    
-    ```json
-    feat: add login form. (X)
-    
-    feat: add login form (O)
-    ```
-    
-    ```python
-    docs: fixed typo in README (X)
-    docs: fix typo in README (O)
-    
-    feat: adds auth api (X)
-    feat: add auth api (O)
-    
-    ```
-    
-- Request 요청 왔을 때 : **Pull Request** [[링크](https://github.com/EarthCodingLab/ECL-python-template/blob/master/.github/PULL_REQUEST_TEMPLATE.md?plain=1)]
-    
-    ```python
-    pull request시 작성 가이드
-    
-    ## Description
-    - model.py에 linear lr scheduler 추가
-    - pytorch lightning 라이브러리의 lr_scheduler 사용
-    - https://pytorch-lightning.readthedocs.io/en/stable/common/optimization.html
-    <!-- Add a more detailed description of the changes if needed. -->
-    
-    ## Related Issue
-    - issue #31
-    <!-- If your PR refers to a related issue, link it here. -->
-    ```
-    
-- **PR리뷰**&**Issue** [[링크](https://github.com/EarthCodingLab/ECL-python-template/tree/master/.github/ISSUE_TEMPLATE)]
-    - 새로운 dev가 나왔을 때 같이 리뷰를 해본다.
-    
-     ⇒ 해결하지 못한 오류나 의문이 있을 때는 issue에 남겨두기
-    
+<h3>❗커밋 컨벤션</h3>
 
-## 파일이름 규칙 → 파일 명 통일해야 함
+- 다음과 같은 메시지 양식을 지켜주세요. 🙏
+- `feat: {커밋메시지 title}`
 
-- 스네이크 케이스로 작성
-    - carrot_bunny
+```python
+#   ACTION  : Detail
+#   TASKS   : main / dev / feat - fix
 
-## Series A 브랜치 전략
+#   feat    : 기능 한 줄 설명 (새로운 기능, 새로운 브랜치 생성)
+#   예시) feat : 알림 읽음 처리 기능 추가
 
-- `**main**`
-    - `**dev**` 브랜치에서 최종 배포 테스트 작업 끝난 후 올리기
-- **`dev`**
-    - main 브랜치로 머지 전 배포가 정상적으로 되는 상태의 브랜치
-    - feat/기능 브랜치에서 기능개발이 완료되면 `**dev**` 브랜치로 머지
-- **`feat/기능`**
-    - front : **`feat/f_기능`**
-    - back : **`feat/b_기능`**
-- 커밋 메세지
-    
-    ```json
-    
-    #   ACTION  : Detail
-    #   TASKS   : main / dev / feat - fix
-    
-    #   feat    : 기능 한 줄 설명 (새로운 기능, 새로운 브랜치 생성)
-    #   예시) feat : 알림 읽음 처리 기능 추가
-    
-    #   fix     : 버그 수정 설명
-    #   예시) fix : 스토리 댓글 기능 게시 버튼 작동
-    
-    #   style   : 스타일 (코드 형식, pythonic, 명칭 변경, 주석 추가 또는 수정 -> 동작에 영향 없음)
-    #   예시) style : 알림 리스트 클래스 뷰 변수() 문구 변경
-    
-    #   docs    : 문서 (README 등 각종 Markdown만)
-    #   예시) docs : readme 팀원 추가
-     
-    #   test    : 테스트 (테스트 코드 추가, 수정, 삭제 -> test 코드 외 동작에 변경 없음)
-    #   예시) test : 알람기능 테스트 코드 추가
-    
-    #   chore   : 기타 변경사항 (빌드 스크립트 수정 등 MD 제외 모든 파일)
-    #   예시) chore : gitignore redis 추가, chore : migrations 파일 추가
-    ```
-```  
+#   fix     : 버그 수정 설명
+#   예시) fix : 스토리 댓글 기능 게시 버튼 작동
 
+#   style   : 스타일 (코드 형식, pythonic, 명칭 변경, 주석 추가 또는 수정 -> 동작에 영향 없음)
+#   예시) style : 알림 리스트 클래스 뷰 변수() 문구 변경
 
+#   docs    : 문서 (README 등 각종 Markdown만)
+#   예시) docs : readme 팀원 추가
+
+#   test    : 테스트 (테스트 코드 추가, 수정, 삭제 -> test 코드 외 동작에 변경 없음)
+#   예시) test : 알람기능 테스트 코드 추가
+
+#   chore   : 기타 변경사항 (빌드 스크립트 수정 등 MD 제외 모든 파일)
+#   예시) chore : gitignore redis 추가, chore : migrations 파일 추가
