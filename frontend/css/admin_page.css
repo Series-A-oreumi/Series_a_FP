@@ -161,13 +161,15 @@
     padding-left: 30px;
 }
 
-.member_icon {
+.member_icon,
+.edit_member_icon {
     max-width: 80px;
     max-height: 80px;
     overflow: hidden;
 }
 
-.member_icon img {
+.member_icon img,
+.edit_member_icon img {
     max-width: 80px;
     max-height: 80px;
 
@@ -269,10 +271,11 @@
     gap: 5px;
 }
 
-.delete_btn {
-    background-color: #f2f2f2;
+.resetBtn {
+    background-color: #ccc;
     cursor: pointer;
     margin-left: 8px;
+    font-weight: 700;
 }
 
 .member_edit {
@@ -290,7 +293,8 @@
 }
 
 .member_edit:hover,
-.member_save:hover {
+.member_save:hover,
+.resetBtn:hover {
     color: black;
     border: solid 1px black;
     background-color: white;

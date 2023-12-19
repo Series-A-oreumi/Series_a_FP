@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             });
 
             // 회원 상세 클릭 이벤트
+
             clickDetail.addEventListener("click", function (event) {
                 event.stopPropagation();
 
@@ -84,8 +85,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 ${createMemberList(data)}
             `;
             memberContent.innerHTML += inHTML1;
-
-
         }
 
 
@@ -232,7 +231,18 @@ document.addEventListener("DOMContentLoaded", async function () {
                         <option value="true">관리자</option>`;
                     }
 
-                    const userProfile = data.profile_img ? data.profile_img : '프로필이 없습니다';
+                    let userProfile = '';
+                    if (data.profile_img === null) {
+                        userProfile = '프로필이 없습니다';
+                    } else {
+                        userProfile = `
+                        <div id="iconSet">
+                        <span class="member_icon">
+                            <img src="${data.profile_img}">
+                        </span>
+                        <button class="resetBtn member_data" id="deleteIcon">삭제하기</button>
+                        </div>`;
+                    }
 
                     let bootCampSelect = '';
                     if (data.bootcamp === '백엔드 1기') {
@@ -272,7 +282,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="member_info_table">
                         <div class="member_info" id="iconElement">
                             <div class="member_info_title_icon">아이콘</div>
-                            <span class="member_icon"><img src="${userProfile}"></span>
+                            ${userProfile}
                         </div>
                         <div class="member_info">
                             <div class="member_info_title">이메일</div>
@@ -297,7 +307,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         </div>
                         <div class="member_info">
                             <div class="member_info_title">비밀번호</div>
-                            <div class="member_data password_data">******</div>
+                            <div class="member_data password_data">****** <button class="resetBtn" id="resetButton">비밀번호 초기화</button></div>
                             <div class="edit_form" style="display: none;">******</div>
                         </div>
                         <div class="member_info">
@@ -459,6 +469,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     deleteButton.style.display = "none";
                     editButton.style.display = "none";
 
+
                     // 저장 버튼 클릭 시
                     saveButton.addEventListener('click', async function () {
                         const updateEmail = emailEditContent.value;
@@ -466,7 +477,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                         const updatedNickname = nicknameEditContent.value;
                         const updateBootcamp = bootcampEditContent.value;
                         const updateAdmin = adminEditContent.value;
-
 
                         const aditMemberApi = `http://localhost:8000/api/admin/${memberId}/update/`;
 
@@ -531,6 +541,66 @@ document.addEventListener("DOMContentLoaded", async function () {
                             const response = await fetch(deleteMemberApi, options2);
                             if (response.ok) {
                                 window.location.href = '../html/admin_page.html';
+
+                            } else {
+                                // 삭제 실패 처리
+                                console.error('Failed to delete comment:', response.status);
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                    }
+                });
+
+                // 프로필 아이콘 삭제
+                const iconContent = document.getElementById('iconSet');
+                const deleteIconBtn = document.getElementById('deleteIcon');
+                deleteIconBtn.addEventListener('click', async function () {
+                    const isConfirmed = window.confirm('프로필 이미지를 삭제 하시겠습니까?');
+                    if (isConfirmed) {
+                        const passwordMemberApi = `http://localhost:8000/api/admin/${memberId}/update/`;
+                        const options3 = {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `Bearer ${accessToken}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ profile_img: null }),
+                        };
+                        try {
+                            const response = await fetch(passwordMemberApi, options3);
+                            if (response.ok) {
+                                window.alert('프로필 이미지가 삭제되었습니다.');
+                                iconContent.style.display = 'none';
+                            } else {
+                                // 삭제 실패 처리
+                                console.error('Failed to delete comment:', response.status);
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                    }
+                });
+
+                // 비밀번호 초기화
+                const resetButtons = document.getElementById('resetButton');
+                const newpassword = `${user_info.username}` + `${user_info.id}`
+                resetButtons.addEventListener('click', async function () {
+                    const isConfirmed = window.confirm('비밀번호를 초기화 하시겠습니까?');
+                    if (isConfirmed) {
+                        const passwordMemberApi = `http://localhost:8000/api/admin/${memberId}/update/`;
+                        const options3 = {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `Bearer ${accessToken}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ password: newpassword }),
+                        };
+                        try {
+                            const response = await fetch(passwordMemberApi, options3);
+                            if (response.ok) {
+                                window.alert('비밀번호가 초기화되었습니다.');
 
                             } else {
                                 // 삭제 실패 처리
