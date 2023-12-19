@@ -19,43 +19,46 @@ document.addEventListener("DOMContentLoaded", async function () {
         responseData.forEach(data => {
             // 회원 리스트
             memberList(data);
-
-            // 회원 상세
-            let clickDetail = document.getElementById(`data_${data.id}`);
-            let memberDetailActive = document.getElementById("memberDetail");
-
-            memberDetailActive.style.display = "none";
-            let isMemberDetailOpen = false;
-
-            document.body.addEventListener("click", function (event) {
-
-                if (!memberDetailActive.contains(event.target)) {
-                    memberDetailActive.style.display = "none";
-                    isMemberDetailOpen = false;
-                    clearMemberDetail();
-                }
-            });
-
-            // 회원 상세 클릭 이벤트
-
-            clickDetail.addEventListener("click", function (event) {
-                event.stopPropagation();
-
-                const currentDetailActive = document.getElementById("memberDetail");
-
-                if (isMemberDetailOpen) {
-                    clearMemberDetail();
-                }
-
-                currentDetailActive.style.display = "block";
-                isMemberDetailOpen = true;
-
-                if (event.currentTarget.tagName === "TR" && event.currentTarget.id.startsWith("data_")) {
-                    const memberId = event.currentTarget.id.substring(5);
-                    showMemberDetail(memberId);
-                }
-            });
         });
+
+        // 회원 상세 클릭 이벤트
+        function handleUserDetailClick(event) {
+            event.stopPropagation();
+
+            const currentDetailActive = document.getElementById("memberDetail");
+
+            if (isMemberDetailOpen) {
+                clearMemberDetail();
+            }
+
+            currentDetailActive.style.display = "block";
+            isMemberDetailOpen = true;
+
+            if (event.currentTarget.tagName === "TR" && event.currentTarget.id.startsWith("data_")) {
+                const memberId = event.currentTarget.id.substring(5);
+                showMemberDetail(memberId);
+            }
+        }
+
+        let memberDetailActive = document.getElementById("memberDetail");
+
+        memberDetailActive.style.display = "none";
+        let isMemberDetailOpen = false;
+
+        document.body.addEventListener("click", function (event) {
+
+            if (!memberDetailActive.contains(event.target)) {
+                memberDetailActive.style.display = "none";
+                isMemberDetailOpen = false;
+                clearMemberDetail();
+            }
+        });
+
+        const clickDetails = document.querySelectorAll('[data-user-id]');
+        clickDetails.forEach(function (clickDetail) {
+            clickDetail.addEventListener("click", handleUserDetailClick);
+        });
+
 
         // 내용 초기화
         function clearMemberDetail() {
@@ -69,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         // 승인 회원 리스트
         function createMemberList(data) {
             return `
-                    <tr class="member_active" id="data_${data.id}">
+                    <tr class="member_active" id="data_${data.id}" data-user-id="${data.id}">
                         <td>${data.id}</td>
                         <td>${data.email}</td>
                         <td>${data.username}</td>
