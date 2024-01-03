@@ -329,6 +329,20 @@ def get_user_from_token(request):
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/8225b00f-8c8b-416d-a668-7ef0b65323ee">
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/e4b9ca76-bff1-4710-a63e-c5287c92c8df"><br/><br/>
 
+<h3>7. 팀</h3>
+
+```
+팀원을 모집하고 팀 멤버를 관리할 수 있습니다.
+```
+gif 넣기!!!
+
+<h3>8. 회원관리</h3>
+
+```
+admin 페이지에서 회원 목록과 회원 정보를 수정할 수 있습니다.
+```
+<img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/c194f5f4-df9d-40d2-a3d8-79436faeb724">
+<br/><br/>
 
 
 
