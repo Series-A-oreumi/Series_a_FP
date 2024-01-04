@@ -144,7 +144,6 @@
 ```
 - Docker
 - AWS EC2
-
 ```
 
 <h4>DB</h4>
