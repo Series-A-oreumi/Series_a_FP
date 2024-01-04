@@ -128,6 +128,8 @@
 ```
 - Django
 - Django-restframework
+- Websocket
+- Channels
 ```
 <h4>Frontend</h4>
 
@@ -141,15 +143,22 @@
 
 ```
 - Docker
-- Jenkins
 - AWS EC2
-- AWS S3
+
 ```
 
 <h4>DB</h4>
 
 ```
+- AWS S3
 - postgreSQL
+- Redis
+```
+
+<h4>AI</h4>
+
+```
+- OpenAI API
 ```
 <br />
 
@@ -357,7 +366,7 @@ admin 페이지에서 회원 목록과 회원 정보를 수정할 수 있습니�
 
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/ed7ed179-7a6a-46d8-8073-7e0f3bcf3593">
 
-<h1 id="7">7. 협업툴, 컨벤션</h1> 컨벤션 수정 예정
+<h1 id="7">7. 협업툴, 컨벤션</h1> 
 
 <h3>🗣협업툴</h3>
 
