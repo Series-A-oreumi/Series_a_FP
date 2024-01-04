@@ -156,7 +156,7 @@
 <h3>💻서비스 아키텍처</h3>아키텍처 바꿀 예정
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/462d060a-3642-4f03-b6ce-89ed16e60323">
 <h3>📋ERD</h3>
-<img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/7f00dbae-e88c-4294-90cd-d8c88abca651">
+<img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/30cc277a-d7af-4476-8d82-b3f8a9d08067">
 <h3>👩‍💼유저 플로우</h3> 수정 예정
 <img width="1272" alt="Untitled" src="">   
 
