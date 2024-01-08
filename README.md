@@ -171,9 +171,7 @@
 <h3>📋ERD</h3>
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/30cc277a-d7af-4476-8d82-b3f8a9d08067">
 <h3>👩‍💼유저 플로우</h3>
-<img width="1272" alt="Untitled" src="https://github.com/workflow-engine-project/workflow-engine/assets/105342203/f0327ccc-83c5-4fb4-9dcf-8fd1c9fa16e3">   
-
-
+<img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/3c6c0578-0363-4bb7-98f8-aeb57b2f7e5a">   
 
 
 <br />
