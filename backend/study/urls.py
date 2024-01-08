@@ -16,4 +16,10 @@ urlpatterns = [
 
     # like
     path('liked/<int:study_id>/', views.ToggleLike.as_view()), # 좋아요 기능
+
+    #Team
+    path('team/<int:team_id>/', views.TeamDetailView.as_view()), # 팀 상세
+    path('team/<int:team_id>/apply/', views.TeamApplyView.as_view()), # 팀 지원
+    path('team/<int:team_id>/<int:application_id>/accept/', views.TeamAcceptView.as_view()), # 팀원 승인
+    path('team/<int:team_id>/<int:application_id>/reject/', views.TeamRejectView.as_view()),  # 팀원 거절
 ]

@@ -13,13 +13,14 @@ function formatDate(dateString) {
 }
 
 
-// 제목 ,유저 ~
-// 채팅하기, 수정하기 경로 변경 하기
+// 제목 ,유저
+// 팀 url 바꾸기
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
     const userProfileURL = `../html/profile.html?id=${data.author.id}`;
     const chatURL = `../html/chat.html?data=${data.author.nickname}`;
+    const teampageURL = `../html/profile.html?data=${data.pk}`;
 
     let inviteBtn = '';
     const accessToken = localStorage.getItem('access_token');
@@ -29,11 +30,22 @@ function createDetailSection1(data) {
     if (UserId === studyId) {
         inviteBtn = `<a href="../html/study_edit.html?id=${study_id}"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
     } else {
-        inviteBtn = `<a href="${chatURL}"><div class="goChat">채팅하기</div></a>`
+        inviteBtn = `<a href="${chatURL}"><div class="goChat">채팅하기</div></a><a href="${teampageURL}"><div class="goChat">참가신청</div></a>`
+    }
+
+    let goTeam = '';
+    const teamMembers = data.team_members
+    console.log(UserId)
+    console.log(teamMembers)
+    if (teamMembers.includes(UserId)) {
+        goTeam = `<div class="go_team">팀페이지 바로가기<a href="${teampageURL}"><img src="../imgs/study/goteam.png"></a></div>`
     }
 
     return `
-        <div class="title">${data.title}</div>
+        <div class="outline_title">
+            <div class="title">${data.title}</div>
+            ${goTeam}
+        </div>
         <div class="border">
             <div class="user-section">
                 <a href="${userProfileURL}">
@@ -193,10 +205,8 @@ function createViewAndLikes(user, data) {
     </div>`
 }
 
+
 // 댓글 목록 ~
-
-
-
 function createDetailSection3(data) {
     let commentList = '';
     if (data.comments_list && data.comments_list.length > 0) {

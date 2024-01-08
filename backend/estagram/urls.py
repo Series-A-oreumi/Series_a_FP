@@ -14,7 +14,7 @@ schema_view = get_schema_view(
         default_version = 'v1.0',
         description = 'Estagram API 문서',
         terms_of_service = 'https://127.0.0.1/terms/',
-        contact = openapi.Contact(email= "haminsu5@gmail.com"),
+        contact = openapi.Contact(email= "dlgusrud0322@naver.com"),
         license = openapi.License(name = 'MIT'), # MIT -> 모두가 쓸 수 있는
     ),
     public=True,
@@ -28,7 +28,7 @@ urlpatterns = [
     path('api/study/', include('study.urls')), # study url
     path('api/alarm/', include('alarm.urls')), # alarm url
     path('chat/', include("chat.urls", namespace='chat')), # chat url
-    path('api/alrarm/', include('alrarm.urls')), # alrarm url
+    # path('api/alrarm/', include('alrarm.urls')), # alrarm url
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), # swagger url
 ]
 

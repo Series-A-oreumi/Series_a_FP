@@ -209,7 +209,11 @@ fieldset {
   transition: border-color 0.3s;
   width: 398px;
   height: 256px;
-
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Change the border color when hovering over the container */
@@ -229,6 +233,7 @@ fieldset {
 }
 
 #imagePreview {
+  position: absolute;
   max-width: 100%;
   max-height: 100%;
   display: block;

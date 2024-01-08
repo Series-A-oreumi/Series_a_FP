@@ -158,6 +158,10 @@
     margin-left: 10px;
 }
 
+#my_profileimg img {
+    width: 100%; /* 이미지의 최대 너비를 부모 요소의 크기에 맞게 제한 */
+    height: 100%; /* 이미지의 최대 높이를 부모 요소의 크기에 맞게 제한 */
+}
 
 
 .profile_id {

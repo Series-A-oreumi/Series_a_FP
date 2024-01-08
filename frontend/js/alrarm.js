@@ -1,6 +1,6 @@
 // WebSocket 연결 설정
 const studyId = 1;
-const socket = new WebSocket(`ws://estagram.site/ws/notifications/${studyId}/`);
+const socket = new WebSocket(`ws://localhost:8000/ws/notifications/${studyId}/`);
 const notificationCountElement = document.querySelector('.notification-count');
 const notificationTrigger = document.getElementById('notification-trigger');
 const notificationModal = document.getElementById('notification-modal');

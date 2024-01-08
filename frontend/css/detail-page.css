@@ -24,7 +24,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(200, 200, 200, 0.3) ;
     backdrop-filter: blur(1.5px);
     -webkit-backdrop-filter: blur(1.5px);
     animation: fadeIn 0.5s ease;
@@ -34,7 +34,7 @@
     background: white;
     backdrop-filter: blur(13.5px);
     -webkit-backdrop-filter: blur(13.5px);
-    border-radius: 10px;
+    border-radius: 7px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     width: 620px;
     /* height: 90vh; */
@@ -44,6 +44,7 @@
     animation: fadeIn 0.5s ease;
     display: flex;
     flex-direction: column;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .modal_title {
@@ -53,10 +54,10 @@
     font-weight: bold;
     font-size: 20px;
     width: 100%;
-    border-bottom: 2px solid #efefef;
+    border-bottom: 1px solid #cccccc;
     padding-top: 10px;
     padding-bottom: 10px;
-}
+  }
 
 .modal_title_center {
     flex: 1;
@@ -76,9 +77,9 @@
 }
 
 #close_modal {
-    font-size: 30px;
-    color: white;
-}
+    font-size: 30px; 
+    color: #999999; 
+  }
 
 /* 피드 디테일 페이지 스타일 */
 .contents_detail_box {
@@ -125,6 +126,8 @@
 .trans_inner img {
     width: 590px;
     height: 500px;
+    display: block;
+    margin: 0 auto;
 }
 
 
@@ -167,6 +170,68 @@
     font-size: 11px;
     color: #888;
 }
+.contents_detail_box .nick_name-m_text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.contents_detail_box .span-Container{
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 수정 삭제하기 */
+.contents_detail_box .button-all{
+    display:flex;
+    font-size: 30px;
+    display: inline-block; /* 수정 */
+    padding-left: 400px;
+}
+
+.contents_detail_box .modal2 {
+    display: none;
+    position: absolute; /* absolute로 변경 */
+    top: 100%; /* 아래로 떨어지도록 설정, 조절 가능 */
+    left: 80%; /* 좌측 정렬 */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* 모달 내부 컨텐츠 스타일 */
+.contents_detail_box .modal-content {
+    text-align: center;
+}
+
+/* 수정하기, 삭제하기 버튼 스타일 */
+.contents_detail_box .button-all {
+    position: relative;
+    cursor: pointer;
+}
+
+.contents_detail_box .button-all:hover .modal2 {
+    display: block;
+}
+
+/* 버튼 스타일 */
+.contents_detail_box button {
+    display: block; /* 수정 */
+    width: 100%; /* 수정 */
+    padding: 15px;
+    background-color: transparent;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.contents_detail_box button:hover {
+    background-color: #cccccc;
+}
+
 
 .more_detail {
     list-style: none;
@@ -225,11 +290,11 @@
     display: flex;
     align-items: center;
     margin: 10px;
-    padding: 5px 20px 5px 20px;
-    border-top: 2px solid #efefef;
-    border-bottom: 2px solid #efefef;
+    padding:5px 20px 5px 20px;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
     justify-content: center;
-    width: 550px;
+    width: 560px;
 
 }
 
@@ -285,7 +350,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 560px;
+    width: 580px;
     margin-top: 1rem;
 }
 
@@ -365,31 +430,27 @@
 }
 
 .contents_detail_box .comment_field {
-    height: 40px;
+    height: 50px;
     display: flex;
     align-items: center;
     width: 100%;
     background-color: white;
-    border-bottom-left-radius: 10px;
-    /* 바텀 부분만 둥글게 */
-    border-bottom-right-radius: 10px;
-    /* 바텀 부분만 둥글게 */
+    border-bottom-left-radius: 10px; /* 바텀 부분만 둥글게 */
+    border-bottom-right-radius: 10px; /* 바텀 부분만 둥글게 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
     bottom: 0;
-    border-top: 2px solid #efefef;
-    z-index: 1;
-    /* 추가 */
+    border-top:2px solid #efefef;
+    z-index: 1; /* 추가 */
 }
 
-.contents_detail_box .comment_field input {
+.contents_detail_box .comment_field input{
     width: 100%;
-    height: 30px;
+    height: 40px;
     border: none;
     outline: none;
     background: white;
-    color: none;
-    /* 포커스 시에도 배경 색상 유지 */
+    color: none; /* 포커스 시에도 배경 색상 유지 */
 }
 
 .contents_detail_box .comment_field input:focus {
@@ -406,10 +467,10 @@
 
 .contents_detail_box .comment-form {
     width: 80%;
-    padding: 5px;
+    padding: 5px 5px 5px 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
-}
+} 
 
 .contents_detail_box .upload_btn {
     color: #3897f0;

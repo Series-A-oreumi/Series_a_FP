@@ -131,13 +131,18 @@
 // ---------------------------------------------------------------------- //
 const create_notify = (data) => {
     const notify = document.createElement('a')
-    // // 게시물 상세 페이지로 이동하는 링크 생성
-    // const postLink = document.createElement('a');
+    
+    // story, study, chat, team 각각 이동 링크 (team, chat 링크 테스트중)
     if (data.check_alarm.story) {
         notify.href = `../html/feedDetail.html?id=${data.check_alarm.story}`;
-    } else {
+    } else if (data.check_alarm.study) {
         notify.href = `../html/studyDetail.html?id=${data.check_alarm.study}`;
-    }
+    } else if (data.check_alarm.team) {
+        notify.href = `../html/studyDetail.html?id=${data.check_alarm.team}`;
+    } else { 
+        notify.href = `../html/chat.html?data=${data.check_alarm.sender}`
+    } 
+    
     const sender_img_div = document.createElement('div')
     const sender_img = document.createElement('img')
     const sender_info = document.createElement('div')
@@ -183,7 +188,7 @@ const LoadNotifications = async () => {
     const accessToken = localStorage.getItem('access_token');
 
     try {
-        const response1 = await fetch('http://locatlhost:8000/api/alarm/uncheck/', {
+        const response1 = await fetch('http://localhost:8000/api/alarm/uncheck/', {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
@@ -218,7 +223,7 @@ const LoadNotifications = async () => {
             console.error('Failed to fetch notifications (uncheck)');
         }
 
-        const response2 = await fetch('http://locatlhost:8000/api/alarm/check/', {
+        const response2 = await fetch('http://localhost:8000/api/alarm/check/', {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${accessToken}`,

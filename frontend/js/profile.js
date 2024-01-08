@@ -30,33 +30,47 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // 스토리
         const storyDataArray = user_stories;
-        storyDataArray.forEach(data => {
-            sideCStory(data);
-        });
-
-        // const postDataArray3 = user_studies;
-        // postDataArray3.sort((a, b) => b.likes_count - a.likes_count);
-        // const storyfirst = postDataArray3[0];
-        // sideDStory(storyfirst);
+        if (storyDataArray > 0) {
+            storyDataArray.forEach(data => {
+                sideCStory(data);
+            });
+        } else {
+            const innerContent3 = document.getElementById("sideC")
+            const instudyHTML3 = `
+                <div>게시글이 없습니다.</div>
+            `;
+            innerContent3.innerHTML += instudyHTML3;
+        }
 
         // 스터디/프로젝트
         const postDataArray = user_studies;
-        postDataArray.forEach(data => {
-            sideBStudy2(data);
-        });
+        if (postDataArray.length > 0) {
+            postDataArray.forEach(data => {
+                sideBStudy2(data);
+            });
+        } else {
+            const innerContent2 = document.getElementById("studyVersion2")
+            const instudyHTML2 = `
+                <div class="all-imglist">게시글이 없습니다.</div>
+            `;
+            innerContent2.innerHTML += instudyHTML2;
+        }
 
-        const postDataArray2 = user_studies;
-        postDataArray2.sort((a, b) => b.likes_users.length - a.likes_users.length);
-        const firstData = postDataArray2[0];
-        const secondData = postDataArray2[1];
-        const thirdData = postDataArray2[2];
-        sideBStudy1(firstData, secondData, thirdData);
+        if (user_studies.length > 3) {
+            const postDataArray2 = user_studies;
 
+            postDataArray2.sort((a, b) => b.likes_users.length - a.likes_users.length);
+            const firstData = postDataArray2[0];
+            const secondData = postDataArray2[1];
+            const thirdData = postDataArray2[2];
+            sideBStudy1(firstData, secondData, thirdData);
+        }
 
 
         // 프로필
         function creatProfile(data, story, study) {
             const chatUrl = `../html/chat.html?data=${data.nickname}`
+            console.log(data.profile_img)
 
             return `
             <div class="up-profile">
@@ -445,12 +459,14 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // 인기글
         function sideBStudy1(firstData, secondData, thirdData) {
-
-            const innerContent = document.getElementById("studyVersion")
+            const innerContent = document.getElementById("studyVersion3")
             const instudyHTML = `
-                ${createArticle1(firstData)}
-                ${createArticle2(secondData, thirdData)}
-                
+                <div class="sectiontitle">✨인기글</div>
+                <div class="downside" id="studyVersion">
+                    ${createArticle1(firstData)}
+                    ${createArticle2(secondData, thirdData)}
+                </div>
+                <div class="border"></div>
             `;
             innerContent.innerHTML += instudyHTML;
         }
@@ -508,10 +524,5 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error('요청 실패:', error); // 오류를 콘솔에 출력
         // 오류 처리 로직을 추가할 수 있습니다.
     }
-
-
-
-
-
 
 });
