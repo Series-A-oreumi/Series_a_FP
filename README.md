@@ -362,8 +362,12 @@ admin 페이지에서 회원 목록과 회원 정보를 수정할 수 있습니�
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/3163e5ef-e510-4fc5-84b3-c961a9836905">
 
 <h3>📑API 명세서</h3>
+<p>
+  <img width="450" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/d79f2341-8311-4fa6-b7bc-2d75aca9e403">
+  <img width="450" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/09434bc6-7fc2-4dc2-a3fd-7cd87f5b5761">
+</p>
 
-<img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/ed7ed179-7a6a-46d8-8073-7e0f3bcf3593">
+
 
 <h1 id="7">7. 협업툴, 컨벤션</h1> 
 
