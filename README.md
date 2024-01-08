@@ -112,11 +112,16 @@
 
 * <strong>관리자 페이지</strong> : 회원 가입 승인 및 정보 관리
 * <strong>팀 페이지</strong> : 팀 생성, 팀원 추가 및 삭제
+* <strong>알람</strong> : 팀, 채팅 관련 알람기능 추가 생성
 * <strong>오류 수정</strong>
   * 아이디별로 프로필 페이지가 적용되지 않았던 오류 해결
   * 프로필 페이지 피드, 스터디/프로젝트 클릭 시 작동하지 않는 오류 해결
-  * 알람 ~~~
-  * 채팅 ~~~
+  * 채팅
+    - 본인 프로필에서 채팅버튼 클릭 할 때 본인 채팅방으로 정상 접속되도록 수정
+    - 이미 해당 유저와의 채팅방이 존재한다면 새로 생성되지 않도록 설정
+    - 본인과의 채팅방은 생성되지 않도록 설정
+    - 현재 들어가있지 않은 채팅방 상대로부터 채팅이 올때 현재 들어가있는 채팅방으로 채팅이 오는 버그 문제 해결
+    - 다른 유저의 프로필에서 채팅버튼을 클릭 했을 때 바로 해당 유저와의 채팅방으로 넘어가도록 설정
 <p align="center"><img src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/6a10239c-a2c7-41c0-890a-ad9e4e7babaf" width="700"></p>
 <br />
 <br />
@@ -165,8 +170,9 @@
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/462d060a-3642-4f03-b6ce-89ed16e60323">
 <h3>📋ERD</h3>
 <img width="1272" alt="Untitled" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/137133486/30cc277a-d7af-4476-8d82-b3f8a9d08067">
-<h3>👩‍💼유저 플로우</h3> 수정 예정
-<img width="1272" alt="Untitled" src="">   
+<h3>👩‍💼유저 플로우</h3>
+<img width="1272" alt="Untitled" src="https://github.com/workflow-engine-project/workflow-engine/assets/105342203/f0327ccc-83c5-4fb4-9dcf-8fd1c9fa16e3">   
+
 
 
 
@@ -399,25 +405,11 @@ admin 페이지에서 회원 목록과 회원 정보를 수정할 수 있습니�
     - **브랜치 네이밍**은 아래 양식을 지켜주세요 🙏
         - `feat/{기능 이름}`
         - ex) feat/modeling, feat/eda, feat/preprocess
-
-**아래 순서와 같이** 작업이 진행됩니다:
-
-**`feat` → PR(코드 리뷰) → `dev` → Testing → `main` → Production**
-    
-- **`feat` → PR(코드 리뷰)  → `dev`**
-    1. `feat` 에서 각 기능 개발을 수행합니다.
-    2. 완성된 기능은 `dev` 로 PR 합니다.
-    3. PR에 배정된 **코드 리뷰**가 완료되면, `dev`로 merge를 승인합니다.
-
-- **`dev` → Testing → `main` → Production**
-    1. 배포할 준비가 완료되면 `dev` 에서 `main` 으로 PR 합니다.
-    2. **Testing**을 수행하고 이상이 없으면, `main`로 merge를 승인합니다.
-    3. 작업이 완료된 `main` 을 바탕으로 **Production**를 진행합니다.
 </br>
 
 <h3>❗커밋 컨벤션</h3>
 
-- 다음과 같은 메시지 양식을 지켜주세요. 🙏
+- 다음과 같은 메시지 양식을 지켜주세요.
 - `feat: {커밋메시지 title}`
 
 ```python
