@@ -276,7 +276,7 @@ class UserStoryDelete(APIView):
     '''회원 스토리 글 삭제'''
     permission_classes = [IsAdminValid]
 
-    def delete(self, request, story_id):
+    def delete(self, request, user_id, story_id):
         try:
             story = Post.objects.get(pk=story_id)
             story.delete()
@@ -290,7 +290,7 @@ class UserStudyDelete(APIView):
     '''회원 스터디 글 삭제'''
     permission_classes = [IsAdminValid]
 
-    def delete(self, request, study_id):
+    def delete(self, request, user_id, study_id):
         try:
             study = Study.objects.get(pk=study_id)
             study.delete()

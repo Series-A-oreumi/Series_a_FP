@@ -161,13 +161,15 @@
     padding-left: 30px;
 }
 
-.member_icon {
+.member_icon,
+.edit_member_icon {
     max-width: 80px;
     max-height: 80px;
     overflow: hidden;
 }
 
-.member_icon img {
+.member_icon img,
+.edit_member_icon img {
     max-width: 80px;
     max-height: 80px;
 
@@ -269,10 +271,11 @@
     gap: 5px;
 }
 
-.delete_btn {
-    background-color: #f2f2f2;
+.resetBtn {
+    background-color: #ccc;
     cursor: pointer;
     margin-left: 8px;
+    font-weight: 700;
 }
 
 .member_edit {
@@ -289,7 +292,9 @@
     border: solid 1px #666666;
 }
 
-.member_edit:hover {
+.member_edit:hover,
+.member_save:hover,
+.resetBtn:hover {
     color: black;
     border: solid 1px black;
     background-color: white;
@@ -313,4 +318,37 @@
 .member_delete:hover {
     background-color: white;
     color: rgb(247, 87, 38);
+}
+
+.member_save {
+    margin-top: 15px;
+    padding: 5px 4px;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    background-color: #666666;
+    color: white;
+    margin-left: 8px;
+    border: solid 1px #666666;
+}
+
+.edit_form textarea {
+    resize: none;
+    width: 200px;
+    height: 17px;
+    font-size: 15px;
+    border-radius: 3px;
+}
+
+.edit_form select {
+    background-color: #fafafa;
+    padding: 3px 3px;
+    border-radius: 3px;
+    padding-right: 30px;
+    background-size: 30px 30px;
+    background-color: rgba(250, 250, 250, 0.6);
+    background-repeat: no-repeat;
+    background-position: right center;
 }
