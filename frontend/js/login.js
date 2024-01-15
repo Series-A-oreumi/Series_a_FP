@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 password: password,
             };
 
-            fetch('https://estagram.site/api/login/', {
+            fetch('http://localhost:8000/api/login/', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     } else {
                         response.json().then(data => {
-                            alert('로그인 실패: ' + JSON.stringify(data));
+                            alert('미승인 멤버 입니다');
                         });
                     }
                 })

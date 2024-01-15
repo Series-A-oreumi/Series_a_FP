@@ -12,7 +12,7 @@
 
         const accessToken = localStorage.getItem('access_token');
         console.log(typeof(accessToken))
-        notisocket = new WebSocket(`ws://estagram.site/alarm/${accessToken}`)
+        notisocket = new WebSocket(`ws://localhost:8000/alarm/${accessToken}`)
         notisocket.onmessage = (e) => {
             const receiveData = JSON.parse(e.data)
             localStorage.setItem('myNotify2', JSON.stringify(receiveData.message));

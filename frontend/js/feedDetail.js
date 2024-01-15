@@ -11,7 +11,7 @@ export async function feedDetail(postId) {
         // 백엔드 API에서 포스트 데이터를 가져옵니다.
         const response = await // Fetch 요청 보내기
             // 임시로 story/1 게시물로 선정 -> 추후 변경해야됨!
-            fetch(`https://estagram.site/api/story/${postId}/`, {
+            fetch(`http://localhost:8000/api/story/${postId}/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`, // access_token을 헤더에 추가
@@ -78,7 +78,7 @@ export async function feedDetail(postId) {
         const userName = document.createElement("div");
         userName.className = "user_name";
         const nickName = document.createElement("div");
-        nickName.className = "nick_name m_text";
+        nickName.className = "nick_name-m_text";
         const postTime = formatTimeAgo(`${post.created_at}`);
         const usernameSpan = document.createElement("span");
         usernameSpan.textContent = post.author.username;
@@ -88,8 +88,97 @@ export async function feedDetail(postId) {
         const postTimeSpan = document.createElement("span");
         postTimeSpan.textContent = `${postTime}`;
         postTimeSpan.style.color = "#888";
-        nickName.appendChild(usernameSpan);
-        nickName.appendChild(postTimeSpan);
+
+        const spanContainer = document.createElement("div");
+        spanContainer.className = "span-Container";
+
+
+        //수정하기 삭제하기 ···버튼
+        const buttonall =document.createElement("div");
+        buttonall.className="button-all";
+        buttonall.textContent = "···";
+
+        // 모달 엘리먼트 생성
+        const modal2 = document.createElement('div');
+        modal2.className = 'modal2';
+
+        // 모달 내부 컨텐츠 생성
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+
+        // 수정하기 버튼 생성 및 클릭 이벤트 추가
+        const updateButton = document.createElement('button');
+        updateButton.textContent = '수정하기';
+        updateButton.addEventListener('click', function() {
+            const postIdToUpdate = `${post.pk}`;
+            updatePost(postIdToUpdate);
+        });
+
+        // 삭제하기 버튼 생성 및 클릭 이벤트 추가
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '삭제하기';
+        deleteButton.addEventListener('click', function() {
+            const postIdToDelete = `${post.pk}`;
+            deletePost(postIdToDelete);
+        });
+
+        // 모달에 버튼들 추가
+        modalContent.appendChild(updateButton);
+        modalContent.appendChild(deleteButton);
+
+        // 모달에 컨텐츠 추가
+        modal2.appendChild(modalContent);
+
+        buttonall.appendChild(modal2);
+
+        // 버튼을 클릭하면 모달 열기
+        buttonall.addEventListener('click', function() {
+            // 여기에 모달이 나타나도록 하는 코드를 추가해야 해요.
+            modal2.style.display = 'block'; // 예를 들어, display 속성을 'block'으로 설정하는 식으로 사용할 수 있어요.
+        });
+
+        // 모달 외부를 클릭했을 때 모달 닫기
+        document.addEventListener('click', function(event) {
+            if (event.target !== buttonall && !modal2.contains(event.target)) {
+                // 버튼이나 모달 영역 외의 부분을 클릭했을 때 모달 닫기
+                modal2.style.display = 'none';
+            }
+        });
+
+        //삭제하기
+        function deletePost(postId) {
+            const accessToken = localStorage.getItem('access_token');
+        
+            const apiUrl = `http://localhost:8000/api/story/${postId}/`;
+            const headers = {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            };
+        
+            // 확인 대화상자 띄우기
+            const confirmation = window.confirm('글을 삭제하시겠습니까?');
+        
+            if (confirmation) {
+                // DELETE 요청 보내기
+                fetch(apiUrl, {
+                    method: 'DELETE',
+                    headers: headers,
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    window.location.href = '../html/feed.html';
+                })
+                .catch(error => {
+                    console.error('Error deleting post:', error);
+                });
+            }
+        }
+        spanContainer.appendChild(usernameSpan);
+        spanContainer.appendChild(postTimeSpan);
+        nickName.appendChild(spanContainer);
+        nickName.appendChild(buttonall);
         // const country = document.createElement("div");
         // country.className = "country s_text";
         // country.textContent = "Seoul, South Korea"; // 요것도 아직 지역 필드 없어서 서울로 임의로 설정 추후 변경 예정!
@@ -167,7 +256,7 @@ export async function feedDetail(postId) {
             const postId = likeButton.getAttribute("data-post-id");
 
             try {
-                const response = await fetch(`https://estagram.site/api/story/liked/${postId}/`, {
+                const response = await fetch(`http://localhost:8000/api/story/liked/${postId}/`, {
                     method: "POST",
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,
@@ -310,7 +399,7 @@ export async function feedDetail(postId) {
         publishButton.addEventListener("click", async function (event) {
             const postId = event.currentTarget.id;
             try {
-                const response = await fetch(`https://estagram.site/api/story/${postId}/comments/`, {
+                const response = await fetch(`http://localhost:8000/api/story/${postId}/comments/`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,
@@ -337,7 +426,7 @@ export async function feedDetail(postId) {
 
         // 서버에서 댓글 목록을 받아오는 함수
         async function fetchComments(postId) {
-            const response = await fetch(`https://estagram.site/api/story/${postId}/commentlist/`);
+            const response = await fetch(`http://localhost:8000/api/story/${postId}/commentlist/`);
             const data = await response.json();
             return data;
         }

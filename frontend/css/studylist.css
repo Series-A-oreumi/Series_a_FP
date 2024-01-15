@@ -378,11 +378,23 @@ button {
     padding: 20px 25px 0;
     width: 258px;
     height: 336px;
-    background: #fff;
     border: 2px solid #d1d1d1;
     border-radius: 30px;
     position: relative;
     transition: .2s ease-in;
+}
+
+.dead_line_over {
+    background: #999;
+    opacity: 20%;
+    padding: 20px 25px 0;
+    border-radius: 30px;
+    width: 258px;
+    height: 336px;
+    z-index: 3;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .card {
@@ -430,6 +442,12 @@ button {
     padding: 4px 12px;
     background: #FEB4B4;
     color: #FF3535;
+}
+
+.deadline_over_Tag {
+    border-radius: 20px;
+    padding: 4px 12px;
+    background: #f1f378;
 }
 
 .heart_btn {

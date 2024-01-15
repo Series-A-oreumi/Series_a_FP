@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/studydetail.css">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/global.css">
-    <link rel="shortcut icon" href="../imgs/instagram.png">
 
-    <title>Study/Project Detail</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/admin_page.css">
+    <link rel="stylesheet" href="../css/common.css">
+
+
+    <title>회원관리</title>
 </head>
 
 <body>
@@ -33,7 +33,6 @@
                     <img src="../imgs/common/alarm.png" alt="알림" class="icon" />
                     <!-- 알림 모달 -->
                     <div id="notification-modal">
-
                         <section class="notify_seciton">
                             <span id="closeModal" class="close">&times;</span>
                             <div>
@@ -67,9 +66,7 @@
             </div>
         </div>
     </header>
-
-
-
+    <!--nav바 종료-->
     <!-- side바 시작 -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-container">
@@ -83,7 +80,7 @@
         </div>
         <div id="side1">
             <div class="sidebar-list">
-                <a href="../html/feed.html">
+                <a href="feed.html">
                     <img src="../imgs/common/home.png" />
                     <span class="sidebar-text">홈</span>
                 </a>
@@ -135,74 +132,68 @@
     </div>
     <div id="overlay" onclick="closeSidebar()">
     </div>
-
-
+    <!-- sub-sidebar -->
 
 
     <!-- 메인 -->
-    <div class="content-box">
-        <div class="top-section">
-            <a href="../html/studylist.html">
-                <div class="back-btn">
-                    <img src="../imgs/study/arrow.png">
-                </div>
-            </a>
-        </div>
+    <div class="main">
+        <div class="title">회원 관리</div>
 
-        <!-- api -->
-        <!-- 제목, 유저 -->
-        <div id="detailSection1">
-        </div>
+        <!-- 회원 관리 -->
+        <div class="main_contant">
 
-        <!-- 포스트 -->
-        <div id="detailSection2">
-        </div>
+            <!-- 회원 리스트 -->
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이메일</th>
+                        <th>이름</th>
+                        <th>닉네임</th>
+                        <th>부트캠프</th>
+                    </tr>
+                </thead>
+                <!-- 미승인 멤버 -->
+                <tbody id="inactiveMemberContent" class="inactive_list">
+                </tbody>
+                <!-- 승인 멤버 -->
+                <tbody id="memberContent" class="main_list">
+                </tbody>
+            </table>
 
-        <div id="viewAndLikes"></div>
+            <!-- 상세페이지 -->
+            <div class="member_detail" id="memberDetail">
+                <div id="memberDetailContent" id="memberInfo"></div>
 
-        <!-- 댓글 -->
-        <div class="comment-section">
-            <div id="commentWrite">
-                <div id="commentCount">
-                    <!-- 댓글 수 -->
-                </div>
-
-                <!-- 댓글 목록 -->
-                <div>
-                    <div>
-                        <form method="post" class="comment-form" id="commentForm">
-                            <div class="comment-form-inner">
-                                <div class="comment-input">
-                                    <div class="comment-user-icon userimage"></div>
-                                    <textarea id="commentArea" name="commentArea" placeholder="댓글을 입력하세요."></textarea>
-                                </div>
-                            </div>
-                            <div class="comment-form-btn">
-                                <button type="submit">댓글 등록</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="detailSection3">
-                    </div>
+                <div class="member_story_list">
+                    <div class="member_story_list_title">스토리</div>
+                    <div class="member_story" id="memberStoryList"></div>
                 </div>
 
+                <div class="member_story_list">
+                    <div class="member_story_list_title">스터디/프로젝트</div>
+                    <div class="member_study" id="memberStudyList"></div>
+                </div>
+                <div class="btnDiv">
+                    <div class="member_edit" id="editBtn">회원정보 수정하기</div>
+                    <div class="member_delete" id="deleteBtn">회원 삭제하기</div>
+                    <div class="member_save" id="saveBtn" style="display: none;">저장하기</div>
+                </div>
 
             </div>
 
 
+        </div>
+
+    </div>
+
 
 </body>
-<script type="module" src="../js/studydetail.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="../js/sidebar.js"></script>
 <script src="../js/auth.js"></script>
 
 <script src="../js/login.js"></script>
 
-<script src="../js/alarm.js"></script>
-<script src="../js/alarmCount.js"></script>
-<script src="../js/alrarm.js"></script>
-
-<script src="../js/profilelocation.js" type="module"></script>
+<script src="../js/admin_page.js"></script>
 
 </html>

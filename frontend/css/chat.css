@@ -8,409 +8,239 @@
 .list {
     gap: 15px;
     width: 30%;
-
-    #chat_body {
-        margin: 30px auto;
-        display: flex;
-        width: 1310px;
-    }
-
-
-    .list {
-        gap: 15px;
-        width: 30%;
-        display: flex;
-        flex-direction: column;
-        transition: .2s ease-in;
-        padding: 20px 25px 0;
-        flex-direction: column;
-        transition: .2s ease-in;
-        padding: 20px 25px 0;
-    }
-
-
-
-    .chat_my_nick {
-
-
-
-        .chat_my_nick {
-
-            display: flex;
-            flex-direction: column;
-            flex-direction: column;
-        }
-
-        .chat_my_nick {
-            display: flex;
-        }
-
-        #my_profileimg {
-            border: 2px solid #efefef;
-            max-width: 300px;
-            height: 200px;
-            border-radius: 10px;
-
-            .chat_my_nick {
-                display: flex;
-            }
-
-            #my_profileimg {
-                border: 2px solid #efefef;
-                max-width: 300px;
-                height: 200px;
-                border-radius: 10px;
-            }
-
-            #my_nick {
-                font-size: 22px;
-                font-weight: 700;
-                padding: 10px 0;
-                text-align: center;
-            }
-
-            .chat_nick {
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                align-content: center;
-                gap: 10px;
-                padding: 12px 0;
-                border-bottom: #d1d1d1 solid 1px;
-            }
-
-            .chat_nick:hover {
-                background-color: #d1d1d1;
-                border-radius: 5px;
-
-                #my_nick {
-                    font-size: 22px;
-                    font-weight: 700;
-                    padding: 10px 0;
-                    text-align: center;
-                }
-
-                .chat_nick {
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    align-content: center;
-                    gap: 10px;
-                    padding: 12px 0;
-                    border-bottom: #d1d1d1 solid 1px;
-                }
-
-                .chat_nick:hover {
-                    background-color: #d1d1d1;
-                    border-radius: 5px;
-
-                }
-
-                #bot {
-                    border: solid 1px #efefef;
-                    border-radius: 10px;
-                    background-color: #efefef;
-
-                    #bot {
-                        border: solid 1px #efefef;
-                        border-radius: 10px;
-                        background-color: #efefef;
-                    }
-
-                    #bot:hover {
-                        background-color: #d1d1d1;
-                        ;
-
-                        #bot:hover {
-                            background-color: #d1d1d1;
-                            ;
-                        }
-
-                        .ai_img {
-                            width: 45px;
-                        }
-
-                        .ai_name {
-                            font-size: 20px;
-                            font-weight: 700;
-                            /* color: white; */
-                        }
-
-
-                        /* 채팅공간 */
-                        .chat {
-                            .ai_img {
-                                width: 45px;
-                            }
-
-                            .ai_name {
-                                font-size: 20px;
-                                font-weight: 700;
-                                /* color: white; */
-                            }
-
-
-                            /* 채팅공간 */
-                            .chat {
-                                width: 100%;
-                                height: 770px;
-                                display: flex;
-                                flex-direction: column;
-                                border-left: 2px solid #efefef;
-
-                                transition: .2s ease-in;
-                                /* padding: 20px 25px 0; */
-                                justify-content: flex-end;
-
-                                overflow-y: auto;
-                                overflow-x: hidden;
-                                padding-left: 20px;
-                                height: 770px;
-                                display: flex;
-                                flex-direction: column;
-                                border-left: 2px solid #efefef;
-
-                                transition: .2s ease-in;
-                                /* padding: 20px 25px 0; */
-                                justify-content: flex-end;
-
-                                overflow-y: auto;
-                                overflow-x: hidden;
-                                padding-left: 20px;
-                            }
-
-                            #chat_input {
-                                width: -webkit-fill-available;
-                                resize: none;
-                                min-height: 60px;
-                                font-size: 15px;
-
-                                height: 60px;
-                                /* 형태에 맞게 조절 */
-                                width: -webkit-fill-available;
-                                resize: none;
-                                min-height: 60px;
-                                font-size: 15px;
-
-                                height: 60px;
-                                /* 형태에 맞게 조절 */
-                                text-align: left;
-                                white-space: pre-line;
-                                /* 여러 줄을 처리하기 위한 줄 바꿈 속성 */
-                                line-height: 1.5em;
-                                background-color: #fafafa;
-                                border: 1px solid rgba(0, 0, 0, 0.2);
-                                opacity: 70%;
-                                border-radius: 10px;
-                                padding: 18px;
-                                margin: 10px;
-                                resize: none;
-                                position: sticky;
-                                /* 아래에 고정 */
-                                bottom: 0;
-                                /* 화면 하단에 고정 */
-                                white-space: pre-line;
-                                /* 여러 줄을 처리하기 위한 줄 바꿈 속성 */
-                                line-height: 1.5em;
-                                background-color: #fafafa;
-                                border: 1px solid rgba(0, 0, 0, 0.2);
-                                opacity: 70%;
-                                border-radius: 10px;
-                                padding: 18px;
-                                margin: 10px;
-                                resize: none;
-                                position: sticky;
-                                /* 아래에 고정 */
-                                bottom: 0;
-                                /* 화면 하단에 고정 */
-                            }
-
-
-                            #chat_info {
-                                height: 56px;
-                                /* chat_desc의 높이를 74px로 설정합니다. */
-                                display: flex;
-                                width: 47%;
-                                padding: 25px;
-                                position: sticky;
-                                top: 87px;
-                                z-index: 1;
-                                background-color: white;
-                                position: fixed;
-                            }
-
-                            .ai_img {
-                                width: 60px;
-                                height: 60px;
-
-
-                                #chat_info {
-                                    height: 56px;
-                                    /* chat_desc의 높이를 74px로 설정합니다. */
-                                    display: flex;
-                                    width: 47%;
-                                    padding: 25px;
-                                    position: sticky;
-                                    top: 87px;
-                                    z-index: 1;
-                                    background-color: white;
-                                    position: fixed;
-                                }
-
-                                .ai_img {
-                                    width: 60px;
-                                    height: 60px;
-                                }
-
-                                .profile_img {
-                                    width: 45px;
-                                    height: 45px;
-
-                                    .profile_img {
-                                        width: 45px;
-                                        height: 45px;
-                                        border: 0.5px solid rgb(219, 219, 219);
-                                        border-radius: 50%;
-                                        margin-left: 10px;
-                                    }
-
-
-
-                                    .profile_id {
-                                        font-family: Khmer;
-                                        font-size: 18px;
-                                        font-weight: 600;
-                                        flex: 1;
-                                        display: flex;
-                                        align-items: center;
-                                        /* justify-content: center; */
-                                        padding-left: 10px;
-                                    }
-
-                                    #chat_desc {
-                                        display: flex;
-                                        flex-direction: column;
-                                        max-height: 560px;
-                                        overflow-y: auto;
-                                        overflow-x: hidden;
-                                    }
-
-                                    #chat_desc::-webkit-scrollbar {
-                                        width: 10px;
-                                    }
-
-                                    #chat_desc::-webkit-scrollbar-thumb {
-                                        background-color: #ccc;
-                                        border-radius: 10px;
-                                    }
-
-                                    #chat_desc::-webkit-scrollbar-track {
-                                        background-color: #efefef;
-                                        border-radius: 10px;
-                                        margin: 5px;
-                                    }
-
-                                    .chats_sender .sender {
-                                        #chat_desc {
-                                            display: flex;
-                                            flex-direction: column;
-                                            max-height: 560px;
-                                            overflow-y: auto;
-                                            overflow-x: hidden;
-                                        }
-
-                                        #chat_desc::-webkit-scrollbar {
-                                            width: 10px;
-                                        }
-
-                                        #chat_desc::-webkit-scrollbar-thumb {
-                                            background-color: #ccc;
-                                            border-radius: 10px;
-                                        }
-
-                                        #chat_desc::-webkit-scrollbar-track {
-                                            background-color: #efefef;
-                                            border-radius: 10px;
-                                            margin: 5px;
-                                        }
-
-                                        .chats_sender .sender {
-                                            background-color: rgb(55, 151, 240);
-                                            color: white;
-                                            border: 0.5px solid rgb(219, 219, 219);
-                                            border-radius: 20px;
-                                            /* 형태에 맞게 조절 */
-                                            padding-bottom: 7px;
-                                            border-radius: 20px;
-                                            /* 형태에 맞게 조절 */
-                                            padding-bottom: 7px;
-                                            padding-top: 7px;
-                                            padding-left: 12px;
-                                            padding-right: 12px;
-                                        }
-
-
-                                        .chats_sender,
-                                        .chats_receiver {
-                                            display: flex;
-                                            justify-content: space-between;
-                                            /* 하위 태그를 양끝으로 떨어뜨립니다 */
-                                            width: 96.5%;
-                                            /* container 너비를 100%로 설정하여 가로로 꽉 차게 합니다 */
-                                            justify-content: space-between;
-                                            /* 하위 태그를 양끝으로 떨어뜨립니다 */
-                                            width: 96.5%;
-                                            /* container 너비를 100%로 설정하여 가로로 꽉 차게 합니다 */
-                                            margin: 20px;
-                                        }
-
-                                        .chats_receiver .receiver {
-                                            background-color: #F2F3F5;
-                                            border: 0.5px solid #F2F3F5;
-                                            border-radius: 20px;
-                                            /* 형태에 맞게 조절 */
-                                            padding-bottom: 7px;
-
-                                            .chats_receiver .receiver {
-                                                background-color: #F2F3F5;
-                                                border: 0.5px solid #F2F3F5;
-                                                border-radius: 20px;
-                                                /* 형태에 맞게 조절 */
-                                                padding-bottom: 7px;
-                                                padding-top: 7px;
-                                                padding-left: 12px;
-                                                padding-right: 12px;
-                                                padding-right: 12px;
-                                            }
-
-                                            .receiver,
-                                            .sender {
-                                                max-width: 45%;
-                                            }
-
-                                            .alarm {
-                                                text-align: center;
-                                                color: white;
-                                                width: 15px;
-                                                border: solid 1px #3D96FF;
-                                                background-color: #3D96FF;
-                                                border-radius: 5px;
-                                                margin-right: 10px;
-                                                padding: 2px;
-                                            }
-
-                                            .receiver,
-                                            .sender {
-                                                max-width: 45%;
-                                            }
-
-                                            .alarm {
-                                                text-align: center;
-                                                color: white;
-                                                width: 15px;
-                                                border: solid 1px #3D96FF;
-                                                background-color: #3D96FF;
-                                                border-radius: 5px;
-                                                margin-right: 10px;
-                                                padding: 2px;
-                                            }
+    display: flex;
+    flex-direction: column;
+    transition: .2s ease-in;
+    padding: 20px 25px 0;
+}
+
+
+
+.chat_my_nick {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.chat_my_nick {
+    display: flex;
+}
+
+#my_profileimg {
+    border: 2px solid #efefef;
+    max-width: 300px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+#my_nick {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.chat_nick {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: #d1d1d1 solid 1px;
+}
+
+.chat_nick:hover {
+    background-color: #d1d1d1;
+    border-radius: 5px;
+
+}
+
+#bot {
+    border: solid 1px #efefef;
+    border-radius: 10px;
+    background-color: #efefef;
+}
+
+#bot:hover {
+    background-color: #d1d1d1;
+    ;
+}
+
+.ai_img {
+    width: 45px;
+}
+
+.ai_name {
+    font-size: 20px;
+    font-weight: 700;
+    /* color: white; */
+}
+
+
+/* 채팅공간 */
+.chat {
+    width: 100%;
+    height: 770px;
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid #efefef;
+
+    transition: .2s ease-in;
+    /* padding: 20px 25px 0; */
+    justify-content: flex-end;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 20px;
+}
+
+#chat_input {
+    width: -webkit-fill-available;
+    resize: none;
+    min-height: 60px;
+    font-size: 15px;
+
+    height: 60px;
+    /* 형태에 맞게 조절 */
+    text-align: left;
+    white-space: pre-line;
+    /* 여러 줄을 처리하기 위한 줄 바꿈 속성 */
+    line-height: 1.5em;
+    background-color: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    opacity: 70%;
+    border-radius: 10px;
+    padding: 18px;
+    margin: 10px;
+    resize: none;
+    position: sticky;
+    /* 아래에 고정 */
+    bottom: 0;
+    /* 화면 하단에 고정 */
+}
+
+
+#chat_info {
+    height: 56px;
+    /* chat_desc의 높이를 74px로 설정합니다. */
+    display: flex;
+    width: 47%;
+    padding: 25px;
+    position: sticky;
+    top: 87px;
+    z-index: 1;
+    background-color: white;
+    position: fixed;
+}
+
+.ai_img {
+    width: 60px;
+    height: 60px;
+}
+
+.profile_img {
+    width: 45px;
+    height: 45px;
+    border: 0.5px solid rgb(219, 219, 219);
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+#my_profileimg img {
+    width: 100%; /* 이미지의 최대 너비를 부모 요소의 크기에 맞게 제한 */
+    height: 100%; /* 이미지의 최대 높이를 부모 요소의 크기에 맞게 제한 */
+}
+
+
+.profile_id {
+    font-family: Khmer;
+    font-size: 18px;
+    font-weight: 600;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding-left: 10px;
+}
+
+#chat_desc {
+    display: flex;
+    flex-direction: column;
+    max-height: 560px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#chat_desc::-webkit-scrollbar {
+    width: 10px;
+}
+
+#chat_desc::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+#chat_desc::-webkit-scrollbar-track {
+    background-color: #efefef;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.chats_sender .sender {
+    background-color: rgb(55, 151, 240);
+    color: white;
+    border: 0.5px solid rgb(219, 219, 219);
+    border-radius: 20px;
+    /* 형태에 맞게 조절 */
+    padding-bottom: 7px;
+    border-radius: 20px;
+    /* 형태에 맞게 조절 */
+    padding-bottom: 7px;
+    padding-top: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+
+.chats_sender,
+.chats_receiver {
+    display: flex;
+    justify-content: space-between;
+    /* 하위 태그를 양끝으로 떨어뜨립니다 */
+    width: 96.5%;
+    /* container 너비를 100%로 설정하여 가로로 꽉 차게 합니다 */
+    justify-content: space-between;
+    /* 하위 태그를 양끝으로 떨어뜨립니다 */
+    width: 96.5%;
+    /* container 너비를 100%로 설정하여 가로로 꽉 차게 합니다 */
+    margin: 20px;
+}
+
+.chats_receiver .receiver {
+    background-color: #F2F3F5;
+    border: 0.5px solid #F2F3F5;
+    border-radius: 20px;
+    /* 형태에 맞게 조절 */
+    padding-bottom: 7px;
+    padding-top: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-right: 12px;
+}
+
+.receiver,
+.sender {
+    max-width: 45%;
+}
+
+.alarm {
+    text-align: center;
+    color: white;
+    width: 15px;
+    border: solid 1px #3D96FF;
+    background-color: #3D96FF;
+    border-radius: 5px;
+    margin-right: 10px;
+    padding: 2px;
+}

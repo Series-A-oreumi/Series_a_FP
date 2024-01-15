@@ -192,9 +192,10 @@ function createCardTop(request_user, data) {
         // 마감일이 10일 이내
         const daysLeft = Math.floor(timeDifference / oneDayInMilliseconds);
         deadlineTag = `<div class="deadlineTag">마감 ${daysLeft}일전</div>`;
+    } else if (timeDifference < 0) {
+        deadlineTag = `<div class="deadline_over_Tag">모집 마감</div>`;
     }
 
-    console.log(data)
     const loggedInUser = request_user.username;
     const isUserLiked = data.likes_users && data.likes_users.includes(loggedInUser);
     const heartImageSrc = isUserLiked
@@ -306,14 +307,26 @@ function createCardBottom(data) {
 // 'post' 생성
 function createPost(request_user, data) {
     const innerContainer = document.querySelector(".inner");
+
+    const currentTime = new Date();
+    console.log(currentTime)
+    console.log(data.end_at)
+    let deadLineOver = "";
+    if (new Date(data.end_at) < currentTime) {
+        deadLineOver = `<div class="dead_line_over"></div>`;
+        console.log(new Date(data.end_at))
+    }
+
     const postHTML = `
         <div class="contents_box" id="contentBox">
+        ${deadLineOver}
             <div class="card">
                 ${createCardTop(request_user, data)}
                 ${createPostContent(data)}
                 ${createCardBottom(data)}
             </div>
         </div>
+        
     `;
     innerContainer.innerHTML += postHTML;
 }
@@ -327,7 +340,7 @@ function createLikes(request_user, data) {
 
 async function fetchDataFromAPI() {
     const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = "https://estagram.site/api/study/";
+    const apiEndpoint = "http://localhost:8000/api/study/";
 
     try {
         const response = await fetch(apiEndpoint, {
@@ -371,7 +384,7 @@ document.addEventListener('click', async function (event) {
         const studyElement = LikesButton.closest('.card_top');
         const studyId = studyElement.dataset.studyId;
         const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = `https://estagram.site/api/study/liked/${studyId}/`;
+        const apiEndpoint = `http://localhost:8000/api/study/liked/${studyId}/`;
 
         const options = {
             method: 'POST',

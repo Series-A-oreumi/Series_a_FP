@@ -13,13 +13,14 @@ function formatDate(dateString) {
 }
 
 
-// 제목 ,유저 ~
-// 채팅하기, 수정하기 경로 변경 하기
+// 제목 ,유저
+// 팀 url 바꾸기
 function createDetailSection1(data) {
     const createAt = data.created_at
     const formattedEndDate = formatDate(createAt);
     const userProfileURL = `../html/profile.html?id=${data.author.id}`;
     const chatURL = `../html/chat.html?data=${data.author.nickname}`;
+    const teampageURL = `../html/profile.html?data=${data.pk}`;
 
     let inviteBtn = '';
     const accessToken = localStorage.getItem('access_token');
@@ -29,11 +30,22 @@ function createDetailSection1(data) {
     if (UserId === studyId) {
         inviteBtn = `<a href="../html/study_edit.html?id=${study_id}"><div class="studyEdit">수정하기</div></a><div class="studyDelete">삭제하기</div>`
     } else {
-        inviteBtn = `<a href="${chatURL}"><div class="goChat">채팅하기</div></a>`
+        inviteBtn = `<a href="${chatURL}"><div class="goChat">채팅하기</div></a><a href="${teampageURL}"><div class="goChat">참가신청</div></a>`
+    }
+
+    let goTeam = '';
+    const teamMembers = data.team_members
+    console.log(UserId)
+    console.log(teamMembers)
+    if (teamMembers.includes(UserId)) {
+        goTeam = `<div class="go_team">팀페이지 바로가기<a href="${teampageURL}"><img src="../imgs/study/goteam.png"></a></div>`
     }
 
     return `
-        <div class="title">${data.title}</div>
+        <div class="outline_title">
+            <div class="title">${data.title}</div>
+            ${goTeam}
+        </div>
         <div class="border">
             <div class="user-section">
                 <a href="${userProfileURL}">
@@ -193,10 +205,8 @@ function createViewAndLikes(user, data) {
     </div>`
 }
 
+
 // 댓글 목록 ~
-
-
-
 function createDetailSection3(data) {
     let commentList = '';
     if (data.comments_list && data.comments_list.length > 0) {
@@ -379,7 +389,7 @@ async function fetchDetailFromAPI() {
     const urlParams = new URLSearchParams(window.location.search);
     const dataId = urlParams.get('id');
     const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = `https://estagram.site/api/study/${dataId}/`;
+    const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
 
     try {
         const response = await fetch(apiEndpoint, {
@@ -421,7 +431,7 @@ document.addEventListener('click', async function (event) {
             const urlParams = new URLSearchParams(window.location.search);
             const dataId = urlParams.get('id');
             const accessToken = localStorage.getItem('access_token');
-            const apiEndpoint = `https://estagram.site/api/study/${dataId}/`;
+            const apiEndpoint = `http://localhost:8000/api/study/${dataId}/`;
             const options = {
                 method: 'DELETE',
                 headers: {
@@ -456,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const commentText = commentArea.value;
         const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = `https://estagram.site/api/study/${dataId}/comments/`;
+        const apiEndpoint = `http://localhost:8000/api/study/${dataId}/comments/`;
         const options = {
             method: 'POST',
             headers: {
@@ -486,7 +496,7 @@ async function updateComments() {
     const urlParams = new URLSearchParams(window.location.search);
     const dataId = urlParams.get('id');
     const accessToken = localStorage.getItem('access_token');
-    const apiEndpoint = `https://estagram.site/api/study/${dataId}/comments/`;
+    const apiEndpoint = `http://localhost:8000/api/study/${dataId}/comments/`;
 
     try {
         const response = await fetch(apiEndpoint, {
@@ -544,7 +554,7 @@ document.addEventListener('click', async function (event) {
                     const updatedContent = commentEditText.value;
                     const commentId = commentElement.dataset.commentId;
                     const accessToken = localStorage.getItem('access_token');
-                    const apiEndpoint = `https://estagram.site/api/study/comments/${commentId}/`;
+                    const apiEndpoint = `http://localhost:8000/api/study/comments/${commentId}/`;
 
                     const options = {
                         method: 'PUT',
@@ -582,7 +592,7 @@ document.addEventListener('click', async function (event) {
                 if (isConfirmed) {
                     const commentId = commentElement.dataset.commentId;
                     const accessToken = localStorage.getItem('access_token');
-                    const apiEndpoint = `https://estagram.site/api/study/comments/${commentId}/`;
+                    const apiEndpoint = `http://localhost:8000/api/study/comments/${commentId}/`;
                     const options = {
                         method: 'DELETE',
                         headers: {
@@ -623,7 +633,7 @@ document.addEventListener('click', async function (event) {
         const urlParams = new URLSearchParams(window.location.search);
         const studyId = urlParams.get('id');
         const accessToken = localStorage.getItem('access_token');
-        const apiEndpoint = `https://estagram.site/api/study/liked/${studyId}/`;
+        const apiEndpoint = `http://localhost:8000/api/study/liked/${studyId}/`;
 
         const options = {
             method: 'POST',

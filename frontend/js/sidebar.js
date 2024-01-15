@@ -53,7 +53,7 @@ const updateSearchResults = async () => {
         }
 
         // 서버에 GET 요청 보내기
-        const response = await fetch(`https://estagram.site/api/story/search/?query=${searchQuery}`, {
+        const response = await fetch(`http://localhost:8000/api/story/search/?query=${searchQuery}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,

@@ -196,3 +196,7 @@ button:hover {
     line-height: 35px;
     text-align: center;
 }
+
+.redcolor {
+    color: red;
+}
