@@ -59,12 +59,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                         throw new Error("Network response was not ok");
                     }
                     return response.json();
-                })          
+                })
             //로그인한 유저 정보가 있을때(로그인이 되어 있을때)              
             if (response_json) {
                 //로그인한 유저의 닉네임
                 const username = await response_json.user.nickname;
-                const userimg = await response_json.user.profile_img;
                 var myNickElement = document.getElementById("my_nick");
                 var myProfileimg = document.getElementById("my_profileimg")
                 const defaultImage = document.createElement('img');
