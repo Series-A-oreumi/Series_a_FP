@@ -362,8 +362,13 @@ admin 페이지에서 회원 목록과 회원 정보를 수정할 수 있습니�
 <h1 id="6">6. 설계 문서</h1>
 
 <h3>🎨Figma</h3>
-
+<h4>1️⃣ 1차 개발 </h4>
 <img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/135521917/3163e5ef-e510-4fc5-84b3-c961a9836905">
+</br>
+
+<h4>2️⃣ 2차 개발 </h4>
+<img width="1272" src="https://github.com/Series-A-oreumi/Series_a_FP/assets/105342203/1d67a7c4-ee49-46a8-9e7a-a4c1f0e47f58">
+</br>
 
 <h3>📑API 명세서</h3>
 <p>
